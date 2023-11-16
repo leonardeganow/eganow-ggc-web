@@ -83,7 +83,10 @@ const Mission = [
 
 const MissionVission = (props) => {
   return (
-    <section className="wpo-election-mission-section section-padding">
+    <section
+      id="getggc"
+      className="wpo-election-mission-section section-padding"
+    >
       <div className="container">
         <div className="row justify-content-center">
           <div className="col col-lg-6 col-md-8 col-12">
