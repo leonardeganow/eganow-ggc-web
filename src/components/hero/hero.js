@@ -40,12 +40,15 @@ const Hero = () => {
                   <div className="container-fluid">
                     <div className="slide-content">
                       <div data-swiper-parallax="300" className="slide-title">
-                        <h2>Life Without Liberty, As like Hell.</h2>
+                        <h2 style={{ color: "white", opacity: 0.7 }}>
+                          Donate to the JM 2024 Campaign
+                        </h2>
                       </div>
                       <div data-swiper-parallax="400" className="slide-text">
                         <p>
-                          Lorem Ipsum has been the industry's standard dummy
-                          text ever since the scrambled it to make.
+                          Join the movement and make a difference! Your
+                          contribution can shape the future. Together, let's
+                          make JM 2024 a success.
                         </p>
                       </div>
                       <div className="clearfix"></div>
@@ -71,12 +74,15 @@ const Hero = () => {
                 <div className="container-fluid">
                   <div className="slide-content">
                     <div data-swiper-parallax="300" className="slide-title">
-                      <h2>Let's Make America Great Again</h2>
+                      <h2 style={{ color: "white", opacity: 0.7 }}>
+                        Get your good governance card
+                      </h2>
                     </div>
                     <div data-swiper-parallax="400" className="slide-text">
                       <p>
-                        Lorem Ipsum has been the industry's standard dummy text
-                        ever since the scrambled it to make.
+                        Register for your good governance card and with it make
+                        monthly donation to support our course for a better
+                        Ghana.
                       </p>
                     </div>
                     <div className="clearfix"></div>
@@ -101,12 +107,15 @@ const Hero = () => {
                 <div className="container-fluid">
                   <div className="slide-content">
                     <div data-swiper-parallax="300" className="slide-title">
-                      <h2>Life Without Liberty, As like Hell.</h2>
+                      <h2 style={{ color: "white", opacity: 0.7 }}>
+                        Upgrade your card or request a reprint
+                      </h2>
                     </div>
                     <div data-swiper-parallax="400" className="slide-text">
                       <p>
-                        Lorem Ipsum has been the industry's standard dummy text
-                        ever since the scrambled it to make.
+                        Your good governance Card is your key to making an
+                        impact. Easily upgrade your card or request a reprint if
+                        missing.
                       </p>
                     </div>
                     <div className="clearfix"></div>

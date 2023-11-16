@@ -233,7 +233,7 @@
 
 @media (max-width: 991px) {
 	.wpo-site-header .navigation {
-		padding: 20px 0;
+		padding: 0px 0;
 	}
 }
 
@@ -268,7 +268,7 @@
 		width: 0;
 		height: 4px;
 		transform: translateX(-50%);
-		background: green;
+		background: #006436;
 		content: "";
 		opacity: 0;
 		visibility: hidden;
@@ -987,7 +987,7 @@
 		}
 
 		@include media-query(991px) {
-			padding: 20px 0;
+			padding: 0px 0;
 		}
 	}
 
@@ -1189,7 +1189,7 @@
 		}
 
 		.mobail-menu button {
-			background-color: $theme-primary-color;
+			background-color: #CF122B;
 			width: 40px;
 			height: 35px;
 			border: 0;
