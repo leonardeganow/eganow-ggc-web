@@ -127,7 +127,7 @@
     }
 
     .running-campaign-wrap {
-        background: $white;
+        background: white ;// $white;
         padding: 70px;
         overflow: hidden;
         position: relative;
@@ -157,7 +157,7 @@
             height: 171%;
             transform: translate(-50%, -50%);
             z-index: -1;
-            border: 43px solid #274DCF;
+            border: 43px solid #006436;
             border-radius: 100%;
 
             @media (max-width:991px) {
@@ -173,13 +173,29 @@
             height: 183%;
             transform: translate(-50%, -50%);
             z-index: -1;
-            border: 43px solid #DE2045;
+            border: 43px solid #cf122b;
             border-radius: 100%;
 
             @media (max-width:991px) {
                 display: none;
             }
         }
+        
+        // .shape-3 {
+        //     position: absolute;
+        //     top: 50%;
+        //     left: -22%;
+        //     width: 100%;
+        //     height: 195%;
+        //     transform: translate(-50%, -50%);
+        //     z-index: -1;
+        //     border: 43px solid #cf122b;
+        //     border-radius: 100%;
+
+        //     @media (max-width:991px) {
+        //         display: none;
+        //     }
+        // }
 
         .campaign-img {
             margin-right: 50px;
