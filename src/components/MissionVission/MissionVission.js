@@ -1,61 +1,82 @@
 import React from 'react'
-import mvImg1 from '../../images/election-mission/1.jpg'
-import mvImg2 from '../../images/election-mission/2.jpg'
-import mvImg3 from '../../images/election-mission/3.jpg'
-import mvImg4 from '../../images/election-mission/4.jpg'
-import mvImg5 from '../../images/election-mission/5.jpg'
-import mvImg6 from '../../images/election-mission/6.jpg'
-import mvImg7 from '../../images/election-mission/7.jpg'
-import mvImg8 from '../../images/election-mission/8.jpg'
-
+import arise from '../../images/election-mission/arise.jpg'
+import bronze from '../../images/election-mission/Bronze.jpg'
+import freedom from '../../images/election-mission/Freedom.jpg'
+import gold from '../../images/election-mission/Gold.jpg'
+import justice from '../../images/election-mission/Justice.jpg'
+import loyalty from '../../images/election-mission/Loyalty.jpg'
+import platinum from '../../images/election-mission/Platinum.jpg'
+import pristige from '../../images/election-mission/Prestige.jpg'
+import silver from '../../images/election-mission/Silver.jpg'
+import standard from '../../images/election-mission/Standard.jpg'
+import hope from '../../images/election-mission/Hope.jpg'
 
 const Mission = [
     {
         id: '01',
-        mImg: mvImg1,
-        Title: 'MEDICAL SYSTEM',
+        mImg: standard ,
+        Title: 'Standard',
+        Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
+    },
+    {
+        id: '01',
+        mImg: hope ,
+        Title: 'Hope',
         Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
     },
     {
         id: '02',
-        mImg: mvImg2,
-        Title: 'RESIDENTIAL AREA',
+        mImg: silver,
+        Title: 'silver',
         Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
     },
     {
         id: '03',
-        mImg: mvImg3,
-        Title: 'TRAFFIC JAM',
+        mImg: pristige,
+        Title: 'pristige',
         Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
     },
     {
         id: '04',
-        mImg: mvImg4,
-        Title: 'ECONOMIC ZONE',
+        mImg: platinum,
+        Title: 'platinum',
         Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
     },
     {
         id: '05',
-        mImg: mvImg5,
-        Title: 'FOOD SAFETY',
+        mImg: loyalty ,
+        Title: 'loyalty',
         Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
     },
     {
         id: '06',
-        mImg: mvImg6,
-        Title: 'FOREIGN POLICYE',
+        mImg:justice,
+        Title: 'justice',
         Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
     },
     {
         id: '07',
-        mImg: mvImg7,
-        Title: 'EDUCATION SYSTEM',
+        mImg: gold,
+        Title: 'gold',
         Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
     },
     {
         id: '08',
-        mImg: mvImg8,
-        Title: 'FAMILY SAFETY',
+        mImg: freedom,
+        Title: 'freedom',
+        Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
+    },
+
+    {
+        id: '08',
+        mImg: bronze,
+        Title: 'bronze',
+        Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
+    },
+    {
+        id: '08',
+        mImg:  arise,
+        Title: ' arise',
         Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
     }
 ]
@@ -99,8 +120,8 @@ const MissionVission = (props) => {
                                     </defs>
                                 </svg>
                             </div>
-                            <span>Our Mission & Vission</span>
-                            <h2>We Can Make Solution Everything To Our Demand.</h2>
+                            
+                            <h2>Good Governance Card packages</h2>
                         </div>
                     </div>
                 </div>
@@ -108,7 +129,7 @@ const MissionVission = (props) => {
                     <div className="row">
                         {
                             Mission.map((mvsion, tsm) => (
-                                <div className="col-lg-3 col-md-4 col-sm-6 col-12" key={mvsion}>
+                                <div className="col-lg-4 col-md-4 col-sm-6 col-12" key={mvsion}>
                                     <div className="election-mission-content">
                                         <img src={mvsion.mImg} alt=""/>
                                             <div className="title">{mvsion.Title}</div>
