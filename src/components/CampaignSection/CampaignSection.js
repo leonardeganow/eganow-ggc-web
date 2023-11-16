@@ -23,8 +23,48 @@ const CampaignSection = (props) => {
                         <div className="col-lg-7">
                             <div className="running-campaign-content">
                                 <span className="sub-title">DONATE TODAY!</span>
-                                <h2 className="title">You Can Contribute Our Last Campaign</h2>
-                                <div className="donate-progress-wrap">
+                                {/* <h2 className="title">You Can Contribute Our Last Campaign</h2> */}
+                                <div className="py-4">
+                                    <div className="row g-3">
+                                        <div className="col-md-3">
+                                            <button className="btn w-100 fw-bold btn-outline-success btn-md">10 GH</button>
+                                        </div>
+                                        <div className="col-md-3">
+                                            <button className="btn w-100 btn-outline-success btn-md">20 GH</button>
+                                        </div>
+                                        <div className="col-md-3">
+                                            <button className="btn w-100 btn-outline-success btn-md">50 GH</button>
+                                        </div>
+                                        <div className="col-md-3">
+                                            <button className="btn w-100 btn-outline-success btn-md">100 GH</button>
+                                        </div>
+                                        <div className="col-md-3">
+                                            <button className="btn w-100 btn-outline-success btn-md">150 GH</button>
+                                        </div>
+                                        <div className="col-md-3">
+                                            <button className="btn w-100 btn-outline-success btn-md">200 GH</button>
+                                        </div>
+                                        <div className="col-md-3">
+                                            <button className="btn w-100 btn-outline-success btn-md">250 GH</button>
+                                        </div>
+                                        <div className="col-md-3">
+                                            <button className="btn w-100 btn-outline-success btn-md">300 GH</button>
+                                        </div>
+                                    </div>
+
+                                    {/* FORM FIELD */}
+                                    <form className="row my-4">
+                                        <div className="col-md-9">
+                                            <div>
+                                                <input className="form-control p-2" type="input" placeholder="Enter an amount"/>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-3">
+                                        <button className="btn p-2 w-100 btn-success btn-md fw-bold">DONATE NOW</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                {/* <div className="donate-progress-wrap">
                                     <div className="donate-progress">
                                         <div className="cssProgress-bar" data-percent="75" style={{ width: '75%' }}>
                                             <span className="cssProgress-label">75%</span>
@@ -40,8 +80,8 @@ const CampaignSection = (props) => {
                                             <strong>$74,000</strong>
                                         </div>
                                     </div>
-                                </div>
-                                <Link onClick={ClickHandler} to="/donate" className="theme-btn-s3">DONATE NOW</Link>
+                                </div> */}
+                                {/* <Link onClick={ClickHandler} to="/donate" className="theme-btn-s3">DONATE NOW</Link> */}
                             </div>
                         </div>
                     </div>
