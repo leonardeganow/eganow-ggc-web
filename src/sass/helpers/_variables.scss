@@ -1,0 +1,92 @@
+/*---------------------------
+	Fonts
+----------------------------*/
+
+
+@font-face {
+	font-family: 'Futura PT';
+	src: url('../../fonts/FuturaPT-Demi.woff2') format('woff2'),
+		url('../../fonts/FuturaPT-Demi.woff') format('woff');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Futura PT';
+	src: url('../../fonts/FuturaPT-Heavy.woff2') format('woff2'),
+		url('../../fonts/FuturaPT-Heavy.woff') format('woff');
+	font-weight: 900;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Futura PT';
+	src: url('../../fonts/FuturaPT-Bold.woff2') format('woff2'),
+		url('../../fonts/FuturaPT-Bold.woff') format('woff');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Futura PT';
+	src: url('../../fonts/FuturaPT-Medium.woff2') format('woff2'),
+		url('../../fonts/FuturaPT-Medium.woff') format('woff');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+
+@font-face {
+	font-family: 'Muli';
+	font-style: normal;
+	font-weight: 500;
+	src: local('Muli Regular'), url('../../fonts/text-font/Muli-Regular.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Muli';
+	font-style: normal;
+	font-weight: 600;
+	src: local('Muli SemiBold'), url('../../fonts/text-font/Muli-SemiBold.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Muli';
+	font-style: normal;
+	font-weight: 700;
+	src: local('Muli Bold'), url('../../fonts/text-font/Muli-Bold.woff') format('woff');
+}
+
+
+
+// fonts
+$base-font-size: 15;
+$base-font:'Muli';
+$heading-font:'Futura PT';
+
+
+// color
+$dark-gray: #091854; //
+$body-color: #687693;
+$white: #fff; //
+$light: #FFEBEB; //
+$black: #000;
+$small-black: #333;
+$cyan: #848892; //
+
+$theme-primary-color: #DE2045; //
+$theme-primary-color-s2: #274DCF; //
+$theme-primary-color-s3: #00C99F; //
+$theme-primary-color-gradient:linear-gradient(90deg, rgba(45, 73, 189, 1) 0%, rgba(222, 32, 69, 1) 100%); //
+$body-bg-color: #fff;
+$section-bg-color: #F9F4F4; //
+$section-bg-color-s2: #F8F2F2; //
+$text-color: #6C7187; //
+$text-light-color: #BFC4DC; //
+$text-light-color-s2: #989AA5; //
+$heading-color: $dark-gray;
+$border-color: #ebebeb;
+$border-color-s2: #d8e0f1;
