@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from 'react-router-dom'
-import cImag from '../../images/donate.jpg'
-
+import { Link } from "react-router-dom";
+// import cImag from "../../images/donate.jpg";
+import cImag from "../../images/donate2.webp";
 
 const ClickHandler = () => {
-    window.scrollTo(10, 0);
-}
+  window.scrollTo(10, 0);
+};
 
 const CampaignSection = (props) => {
     return (
@@ -14,6 +14,7 @@ const CampaignSection = (props) => {
                 <div className="running-campaign-wrap">
                     <div className="shape-1"></div>
                     <div className="shape-2"></div>
+
                     <div className="row align-items-center">
                         <div className="col-lg-5">
                             <div className="campaign-img">
@@ -26,34 +27,34 @@ const CampaignSection = (props) => {
                                 {/* <h2 className="title">You Can Contribute Our Last Campaign</h2> */}
                                 <div className="py-4">
                                     <div className="row g-3">
-                                        <div className="col-md-3">
+                                        <div className="col-md-3 col-6">
                                             <button className="btn w-100 fw-bold btn-outline-success btn-md">10 GH</button>
                                         </div>
-                                        <div className="col-md-3">
+                                        <div className="col-md-3 col-6">
                                             <button className="btn w-100 btn-outline-success btn-md">20 GH</button>
                                         </div>
-                                        <div className="col-md-3">
+                                        <div className="col-md-3 col-6">
                                             <button className="btn w-100 btn-outline-success btn-md">50 GH</button>
                                         </div>
-                                        <div className="col-md-3">
+                                        <div className="col-md-3 col-6">
                                             <button className="btn w-100 btn-outline-success btn-md">100 GH</button>
                                         </div>
-                                        <div className="col-md-3">
+                                        <div className="col-md-3 col-6">
                                             <button className="btn w-100 btn-outline-success btn-md">150 GH</button>
                                         </div>
-                                        <div className="col-md-3">
+                                        <div className="col-md-3 col-6">
                                             <button className="btn w-100 btn-outline-success btn-md">200 GH</button>
                                         </div>
-                                        <div className="col-md-3">
+                                        <div className="col-md-3 col-6">
                                             <button className="btn w-100 btn-outline-success btn-md">250 GH</button>
                                         </div>
-                                        <div className="col-md-3">
+                                        <div className="col-md-3 col-6">
                                             <button className="btn w-100 btn-outline-success btn-md">300 GH</button>
                                         </div>
                                     </div>
 
                                     {/* FORM FIELD */}
-                                    <form className="row my-4">
+                                    <form className="row my-4 g-2">
                                         <div className="col-md-9">
                                             <div>
                                                 <input className="form-control p-2" type="input" placeholder="Enter an amount"/>

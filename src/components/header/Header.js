@@ -1,8 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import Logo from "../../images/logo-s3.png";
 import HeaderTopbar from "../HeaderTopbar/HeaderTopbar";
+import { Link } from "react-scroll";
 
 const Header = (props) => {
   const ClickHandler = () => {
@@ -65,12 +66,22 @@ const Header = (props) => {
                       </ul> */}
                     </li>
                     <li>
-                      <Link onClick={ClickHandler} to="/about">
+                      <Link
+                        to="getggc"
+                        smooth={true}
+                        duration={500}
+                        onClick={ClickHandler}
+                      >
                         Get GGC
                       </Link>
                     </li>
                     <li className="menu-item-has-children">
-                      <Link onClick={ClickHandler} to="/">
+                      <Link
+                        to="donate"
+                        smooth={true}
+                        duration={500}
+                        onClick={ClickHandler}
+                      >
                         Donate
                       </Link>
                       {/* <ul className="sub-menu">
