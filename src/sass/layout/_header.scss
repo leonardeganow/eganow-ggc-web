@@ -1534,6 +1534,7 @@
 
 	#navbar>ul>li>a {
 		color: $dark-gray;
+		// cursor: pointer;
 	}
 
 	.header-right .cart-toggle-btn,
@@ -1574,6 +1575,7 @@
 		#navbar>ul>li>a {
 			@media screen and (min-width: 992px) {
 				color: $white;
+				cursor: pointer;
 
 				&:hover {
 					color: #B4C5FF;

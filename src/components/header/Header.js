@@ -1,5 +1,5 @@
 import React from "react";
-// import { Link } from "react-router-dom";
+import { Link as MyLink } from "react-router-dom";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import Logo from "../../images/logo-s3.png";
 import HeaderTopbar from "../HeaderTopbar/HeaderTopbar";
@@ -24,9 +24,13 @@ const Header = (props) => {
               </div>
               <div className="col-lg-2 col-md-5 col-sm-4 col-6">
                 <div className="navbar-header">
-                  <Link onClick={ClickHandler} className="navbar-brand" to="/">
+                  <MyLink
+                    onClick={ClickHandler}
+                    className="navbar-brand"
+                    to="/"
+                  >
                     <img src={Logo} alt="logo" />
-                  </Link>
+                  </MyLink>
                 </div>
               </div>
               <div className="col-lg-8 col-md-1 col-sm-1 col-1">
@@ -39,9 +43,9 @@ const Header = (props) => {
                   </button>
                   <ul className="nav navbar-nav mb-2 mb-lg-0">
                     <li className="menu-item-has-children">
-                      <Link onClick={ClickHandler} to="/">
+                      <MyLink onClick={ClickHandler} to="/">
                         Home
-                      </Link>
+                      </MyLink>
                       {/* <ul className="sub-menu">
                         <li>
                           <Link onClick={ClickHandler} to="/">

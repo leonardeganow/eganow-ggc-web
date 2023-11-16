@@ -71,29 +71,34 @@ const Hero = () => {
                 className="slide-inner slide-bg-image"
                 style={{ backgroundImage: `url(${hero2})` }}
               >
-                <div className="container-fluid">
-                  <div className="slide-content">
-                    <div data-swiper-parallax="300" className="slide-title">
-                      <h2 style={{ color: "white", opacity: 0.7 }}>
-                        Get your good governance card
-                      </h2>
-                    </div>
-                    <div data-swiper-parallax="400" className="slide-text">
-                      <p>
-                        Register for your good governance card and with it make
-                        monthly donation to support our course for a better
-                        Ghana.
-                      </p>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div data-swiper-parallax="500" className="slide-btns">
-                      {/* <Link
-                        onClick={ClickHandler}
-                        to="/about"
-                        className="theme-btn-s3"
-                      >
-                        JOIN THE CAMPAIGN
-                      </Link> */}
+                <div
+                  className="slide-inner slide-bg-image"
+                  data-background="assets/images/slider/slide-6.jpg"
+                >
+                  <div className="container-fluid">
+                    <div className="slide-content">
+                      <div data-swiper-parallax="300" className="slide-title">
+                        <h2 style={{ color: "white", opacity: 0.7 }}>
+                          Get your good governance card
+                        </h2>
+                      </div>
+                      <div data-swiper-parallax="400" className="slide-text">
+                        <p>
+                          Register for your good governance card and with it
+                          make monthly donation to support our course for a
+                          better Ghana.
+                        </p>
+                      </div>
+                      <div className="clearfix"></div>
+                      <div data-swiper-parallax="500" className="slide-btns">
+                        {/* <Link
+                          onClick={ClickHandler}
+                          to="/about"
+                          className="theme-btn-s3"
+                        >
+                          JOIN THE CAMPAIGN
+                        </Link> */}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -104,29 +109,34 @@ const Hero = () => {
                 className="slide-inner slide-bg-image"
                 style={{ backgroundImage: `url(${hero3})` }}
               >
-                <div className="container-fluid">
-                  <div className="slide-content">
-                    <div data-swiper-parallax="300" className="slide-title">
-                      <h2 style={{ color: "white", opacity: 0.7 }}>
-                        Upgrade your card or request a reprint
-                      </h2>
-                    </div>
-                    <div data-swiper-parallax="400" className="slide-text">
-                      <p>
-                        Your good governance Card is your key to making an
-                        impact. Easily upgrade your card or request a reprint if
-                        missing.
-                      </p>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div data-swiper-parallax="500" className="slide-btns">
-                      {/* <Link
-                        onClick={ClickHandler}
-                        to="/about"
-                        className="theme-btn-s3"
-                      >
-                        JOIN THE CAMPAIGN
-                      </Link> */}
+                <div
+                  className="slide-inner slide-bg-image"
+                  data-background="assets/images/slider/slide-6.jpg"
+                >
+                  <div className="container-fluid">
+                    <div className="slide-content">
+                      <div data-swiper-parallax="300" className="slide-title">
+                        <h2 style={{ color: "white", opacity: 0.7 }}>
+                          Upgrade your card or request a reprint
+                        </h2>
+                      </div>
+                      <div data-swiper-parallax="400" className="slide-text">
+                        <p>
+                          Your good governance Card is your key to making an
+                          impact. Easily upgrade your card or request a reprint
+                          if missing.
+                        </p>
+                      </div>
+                      <div className="clearfix"></div>
+                      <div data-swiper-parallax="500" className="slide-btns">
+                        {/* <Link
+                          onClick={ClickHandler}
+                          to="/about"
+                          className="theme-btn-s3"
+                        >
+                          JOIN THE CAMPAIGN
+                        </Link> */}
+                      </div>
                     </div>
                   </div>
                 </div>
