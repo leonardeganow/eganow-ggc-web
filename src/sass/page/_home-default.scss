@@ -108,7 +108,7 @@
 .wpo-running-campaign-section {
     position: relative;
     z-index: 1;
-    background: url(../../images/donate-bg.jpg);
+    // background: url(../../images/donate-bg.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -121,7 +121,7 @@
         top: 0;
         width: 100%;
         height: 100%;
-        background: $dark-gray;
+        background: #006436;
         opacity: 0.88;
         z-index: -1;
     }

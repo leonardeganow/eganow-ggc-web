@@ -21,7 +21,11 @@ function GgcRegForm() {
         Good Gov. Card Registration
       </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl sx={{ mt: 2, minWidth: "100%" }} size="small">
+        <FormControl
+          variant="filled"
+          sx={{ mt: 2, minWidth: "100%" }}
+          size="small"
+        >
           <InputLabel sx={{ fontSize: "16px" }} id="demo-select-small-label">
             Card
           </InputLabel>
@@ -44,7 +48,7 @@ function GgcRegForm() {
           />
         </FormControl>
 
-        <FormControl sx={{ mt: 2, minWidth: "100%" }} variant="standard">
+        <FormControl variant="filled" sx={{ mt: 2, minWidth: "100%" }}>
           <InputLabel htmlFor="full-name">Full Name</InputLabel>
           <Input
             id="full-name"
@@ -52,7 +56,11 @@ function GgcRegForm() {
           />
         </FormControl>
 
-        <FormControl sx={{ mt: 2, minWidth: "100%" }} size="small">
+        <FormControl
+          variant="filled"
+          sx={{ mt: 2, minWidth: "100%" }}
+          size="small"
+        >
           <InputLabel id="demo-simple-select-standard-label">Gender</InputLabel>
           <Controller
             name="gender"
@@ -72,7 +80,11 @@ function GgcRegForm() {
           />
         </FormControl>
 
-        <FormControl sx={{ mt: 2, minWidth: "100%" }} size="small">
+        <FormControl
+          variant="filled"
+          sx={{ mt: 2, minWidth: "100%" }}
+          size="small"
+        >
           <InputLabel id="age-range-label">Age range</InputLabel>
           <Controller
             name="ageRange"
@@ -93,7 +105,11 @@ function GgcRegForm() {
           />
         </FormControl>
 
-        <FormControl sx={{ mt: 2, minWidth: "100%" }} size="small">
+        <FormControl
+          variant="filled"
+          sx={{ mt: 2, minWidth: "100%" }}
+          size="small"
+        >
           <InputLabel id="country-label">Country</InputLabel>
           <Controller
             name="country"
@@ -112,7 +128,11 @@ function GgcRegForm() {
           />
         </FormControl>
 
-        <FormControl sx={{ mt: 2, minWidth: "100%" }} size="small">
+        <FormControl
+          variant="filled"
+          sx={{ mt: 2, minWidth: "100%" }}
+          size="small"
+        >
           <InputLabel id="Industry-label">Industry</InputLabel>
           <Controller
             name="Industry"
@@ -133,7 +153,11 @@ function GgcRegForm() {
           />
         </FormControl>
 
-        <FormControl sx={{ mt: 2, minWidth: "100%" }} size="small">
+        <FormControl
+          variant="filled"
+          sx={{ mt: 2, minWidth: "100%" }}
+          size="small"
+        >
           <InputLabel id="Occupation-label">Occupation</InputLabel>
           <Controller
             name="Occupation"
@@ -154,7 +178,11 @@ function GgcRegForm() {
           />
         </FormControl>
 
-        <FormControl sx={{ mt: 2, minWidth: "100%" }} size="small">
+        <FormControl
+          variant="filled"
+          sx={{ mt: 2, minWidth: "100%" }}
+          size="small"
+        >
           <InputLabel id="Display-name-on-card-label">
             Display name on card
           </InputLabel>
@@ -176,7 +204,11 @@ function GgcRegForm() {
           />
         </FormControl>
 
-        <FormControl sx={{ mt: 2, minWidth: "100%" }} size="small">
+        <FormControl
+          variant="filled"
+          sx={{ mt: 2, minWidth: "100%" }}
+          size="small"
+        >
           <InputLabel id="Card-pickup-location-label">
             Card pickup location
           </InputLabel>

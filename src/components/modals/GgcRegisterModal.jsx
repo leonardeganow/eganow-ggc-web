@@ -10,12 +10,12 @@ const style = {
   top: "54%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 350,
   bgcolor: "background.paper",
   //   border: "2px solid #000",
   boxShadow: 24,
-  // maxHeight: "70vh", // Set a maximum height
-  // overflowY: "auto", // Enable vertical scrolling
+  maxHeight: "70vh", // Set a maximum height
+  overflowY: "auto", // Enable vertical scrolling
   zIndex: 666, // Set a high zIndex value
 
   p: 4,
