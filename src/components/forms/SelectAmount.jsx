@@ -61,9 +61,9 @@ function SelectAmount() {
             </div>
           </div>
           <div className="col-md-3">
-            <button className="btn p-2 w-100 btn-success btn-md fw-bold">
+            {/* <button type="button" className="btn p-2 w-100 btn-success btn-md fw-bold">
               DONATE NOW
-            </button>
+            </button> */}
           </div>
         </form>
       </div>

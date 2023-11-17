@@ -167,7 +167,7 @@ const MissionVission = (props) => {
               <div className="col-lg-4 col-md-4 col-sm-6 col-12" key={mvsion}>
                 <div className="election-mission-content">
                   <img src={mvsion.mImg} alt="" />
-                  <div className="title">{mvsion.Title}</div>
+                  {/* <div className="title">{mvsion.Title}</div> */}
                   <div className="text">
                     <h3>{mvsion.Title}</h3>
                     <p>{mvsion.Des}</p>

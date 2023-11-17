@@ -10,6 +10,7 @@ import { TextField } from "@mui/material";
 function PhoneNumberForm() {
   const [condition, setCondition] = React.useState(false);
   const [showpin, setShowpin] = React.useState(false);
+  const [showInput, setShowInput] = React.useState(true);
   const { control, handleSubmit, register, getValues } = useForm();
   const nextButton = () => {};
   const onSubmit = () => {
@@ -20,58 +21,67 @@ function PhoneNumberForm() {
 
   return (
     <div>
-      <h1>Phone Number</h1>
+      <h1>{showpin ? "Create new pin" : "Phone Number"}</h1>
       <p>
-        Enter your phone number below to view your good governance card or
-        register
+        {showpin
+          ? "Create pin to protect the card you will acquire"
+          : "Enter your phone number below to view your good governance card or register"}
       </p>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="d-flex gap-3  align-content-center ">
-          <FormControl sx={{ maxWidth: 120 }} fullWidth>
-            <InputLabel id="demo-simple-select-label">+233</InputLabel>
-            <Controller
-              name="countryCode"
-              control={control}
-              defaultValue={233}
-              render={({ field }) => (
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  {...field}
-                >
-                  <MenuItem value={233}>+233</MenuItem>
-                </Select>
-              )}
-            />
-          </FormControl>
+        {showInput && (
+          <div className="d-flex gap-3  align-content-center ">
+            <FormControl sx={{ maxWidth: 120 }} fullWidth>
+              {/* <InputLabel id="demo-simple-select-label">+233</InputLabel> */}
+              <Controller
+                name="countryCode"
+                control={control}
+                defaultValue={233}
+                render={({ field }) => (
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    variant="filled"
+                    {...field}
+                  >
+                    <MenuItem value={233}>+233</MenuItem>
+                  </Select>
+                )}
+              />
+            </FormControl>
 
-          <FormControl variant="outlined" sx={{ minWidth: "60%" }}>
-            <Controller
-              name="phoneNumber"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  id="outlined-basic"
-                  label="Phone Number"
-                  variant="outlined"
-                  type="number"
-                  inputProps={{ pattern: "[0-9]*" }}
-                />
-              )}
-            />
-          </FormControl>
+            <FormControl variant="outlined" sx={{ minWidth: "60%" }}>
+              <Controller
+                name="phoneNumber"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    id="outlined-basic"
+                    label="Phone Number"
+                    variant="filled"
+                    type="number"
+                    inputProps={{ pattern: "[0-9]*" }}
+                  />
+                )}
+              />
+            </FormControl>
 
-          <button
-            onClick={() => {
-              setCondition(true);
-            }}
-          >
-            verify
-          </button>
-        </div>
+            <button
+              style={{
+                color: "black",
+                border: "none",
+                padding: "1em",
+              }}
+              onClick={() => {
+                setCondition(true);
+              }}
+            >
+              verify
+            </button>
+          </div>
+        )}
         {/* <button type="submit">Submit</button> */}
 
         {condition && (
@@ -102,9 +112,15 @@ function PhoneNumberForm() {
               </FormControl>
             </div>
             <button
+              style={{
+                color: "black",
+                border: "none",
+                padding: "1em",
+              }}
               onClick={() => {
                 setCondition(false);
                 setShowpin(true);
+                setShowInput(false);
               }}
               className="mt-2"
             >

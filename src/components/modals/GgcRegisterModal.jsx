@@ -19,7 +19,7 @@ const style = {
   width: 700,
   bgcolor: "background.paper",
   boxShadow: 24,
-  maxHeight: "70vh",
+  maxHeight: "80vh",
   overFlow: "scroll",
   p: 4,
   overflowY: "auto",
@@ -47,7 +47,13 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
           {/* <GgcRegForm /> */}
           <MultiStep
             activeStep={0}
-            stepCustomStyle={{ width: "100%", color: "#006436" }}
+            stepCustomStyle={{
+              width: "100%",
+              color: "#006436",
+              ul: {
+                backgroundColor: "blue",
+              },
+            }}
             prevButton={{
               title: "back",
               style: {
