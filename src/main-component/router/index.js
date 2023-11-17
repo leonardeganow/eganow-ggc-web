@@ -32,6 +32,7 @@ import DonatePage from "../DonatePage/DonatePage";
 import LoginPage from "../LoginPage";
 import SignUpPage from "../SignUpPage";
 import ForgotPassword from "../ForgotPassword";
+import GgcRegForm from "../../components/forms/GgcRegForm";
 
 const AllRoute = () => {
   return (
@@ -40,6 +41,7 @@ const AllRoute = () => {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="home" element={<Homepage />} />
+          {/* <Route path="ggcreg" element={<GgcRegForm />} /> */}
           {/* <Route path="home-2" element={<HomePage2 />} />
           <Route path="home-3" element={<HomePage3 />} />
           <Route path="home-4" element={<HomePage4 />} />

@@ -6,8 +6,10 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useForm, Controller } from "react-hook-form";
 import { TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function PhoneNumberForm() {
+  const navigate = useNavigate();
   const [condition, setCondition] = React.useState(false);
   const [showpin, setShowpin] = React.useState(false);
   const [showInput, setShowInput] = React.useState(true);
@@ -58,11 +60,11 @@ function PhoneNumberForm() {
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    id="outlined-basic"
+                    id="phoneNumber"
                     label="Phone Number"
                     variant="filled"
                     type="number"
-                    inputProps={{ pattern: "[0-9]*" }}
+                    inputProps={{ maxLength: "[0-9]*" }}
                   />
                 )}
               />
@@ -78,7 +80,7 @@ function PhoneNumberForm() {
                 setCondition(true);
               }}
             >
-              verify
+              Continue
             </button>
           </div>
         )}
@@ -101,7 +103,7 @@ function PhoneNumberForm() {
                   render={({ field }) => (
                     <TextField
                       {...field}
-                      id="outlined-basic"
+                      id="otp"
                       label="enter Otp"
                       variant="outlined"
                       type="text"
@@ -139,7 +141,7 @@ function PhoneNumberForm() {
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    id="outlined-basic"
+                    id="create-pin"
                     label="create pin"
                     variant="outlined"
                     type="number"
@@ -151,13 +153,13 @@ function PhoneNumberForm() {
 
             <FormControl variant="outlined" sx={{ minWidth: "60%", my: 3 }}>
               <Controller
-                name="create-pin"
+                name="confirm-pin"
                 control={control}
                 defaultValue=""
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    id="outlined-basic"
+                    id="confirm-pin"
                     label="confirm pin"
                     variant="outlined"
                     type="number"
@@ -166,6 +168,19 @@ function PhoneNumberForm() {
                 )}
               />
             </FormControl>
+
+            <button
+              style={{
+                color: "black",
+                border: "none",
+                padding: "1em",
+              }}
+              onClick={() => {
+                navigate("ggcreg");
+              }}
+            >
+              continue
+            </button>
           </div>
         )}
       </form>

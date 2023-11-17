@@ -10,19 +10,21 @@ import CreatePinForm from "../forms/CreatePinForm";
 import EnterOtpForm from "../forms/EnterOtpForm";
 import ChoosePayMethod from "../forms/ChoosePayMethod";
 import SelectAmount from "../forms/SelectAmount";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 700,
+  width: "90vw", // Use viewport width
+  maxWidth: "500px", // Set a maximum width if needed
+  height: "90vh", // Use viewport height
+  maxHeight: "70vh",
+  overflowY: "auto",
   bgcolor: "background.paper",
   boxShadow: 24,
-  maxHeight: "80vh",
-  overFlow: "scroll",
   p: 4,
-  overflowY: "auto",
 };
 function GgcRegisterModal({ open, handleClose, handleOpen }) {
   //   const [open, setOpen] = React.useState(false);
@@ -45,43 +47,12 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
             Text in a modal
           </Typography> */}
           {/* <GgcRegForm /> */}
-          <MultiStep
-            activeStep={0}
-            stepCustomStyle={{
-              width: "100%",
-              color: "#006436",
-              ul: {
-                backgroundColor: "blue",
-              },
-            }}
-            prevButton={{
-              title: "back",
-              style: {
-                color: "black",
-                border: "none",
-                padding: "1em",
-                margin: "15px 0",
-                marginRight: "10px",
-              },
-            }}
-            nextButton={{
-              title: "next",
-              style: {
-                color: "black",
-                border: "none",
-                padding: "1em",
-                margin: "15px 0",
-                marginRight: "10px",
-              },
-            }}
-          >
-            <PhoneNumberForm title="1" />
-            {/* <EnterOtpForm title="2" />
-            <CreatePinForm title="3" /> */}
-            <GgcRegForm title="2" />
-            <SelectAmount title="3" />
-            <ChoosePayMethod title="4" />
-          </MultiStep>
+
+          <Routes>
+            <Route path="/" element={<PhoneNumberForm />}>
+              <Route path="/ggcreg" element={<GgcRegForm />} />
+            </Route>
+          </Routes>
         </Box>
       </Modal>
     </div>
