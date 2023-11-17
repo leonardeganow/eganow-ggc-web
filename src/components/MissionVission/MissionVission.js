@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import arise from "../../images/election-mission/arise.jpg";
 import bronze from "../../images/election-mission/Bronze.jpg";
 import freedom from "../../images/election-mission/Freedom.jpg";
@@ -10,6 +10,7 @@ import pristige from "../../images/election-mission/Prestige.jpg";
 import silver from "../../images/election-mission/Silver.jpg";
 import standard from "../../images/election-mission/Standard.jpg";
 import hope from "../../images/election-mission/Hope.jpg";
+import GgcRegisterModal from "../modals/GgcRegisterModal";
 
 const Mission = [
   {
@@ -82,12 +83,16 @@ const Mission = [
 ];
 
 const MissionVission = (props) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <section
       id="getggc"
       className="wpo-election-mission-section section-padding"
     >
-      <div className="container">
+      <div style={{ cursor: "pointer" }} className="container">
         <div className="row justify-content-center">
           <div className="col col-lg-6 col-md-8 col-12">
             <div className="wpo-section-title">
@@ -156,7 +161,7 @@ const MissionVission = (props) => {
             </div>
           </div>
         </div>
-        <div className="election-mission-wrap">
+        <div onClick={() => setOpen(true)} className="election-mission-wrap">
           <div className="row">
             {Mission.map((mvsion, tsm) => (
               <div className="col-lg-4 col-md-4 col-sm-6 col-12" key={mvsion}>
@@ -209,6 +214,13 @@ const MissionVission = (props) => {
           </defs>
         </svg>
       </div>
+      {open && (
+        <GgcRegisterModal
+          open={open}
+          handleClose={handleClose}
+          handleOpen={handleOpen}
+        />
+      )}
     </section>
   );
 };
