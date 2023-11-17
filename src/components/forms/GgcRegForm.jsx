@@ -6,6 +6,7 @@ import Select from "@mui/material/Select";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
 import { useForm, Controller } from "react-hook-form";
+import MultiStep from "react-multistep";
 
 function GgcRegForm() {
   const { control, handleSubmit, register } = useForm();
