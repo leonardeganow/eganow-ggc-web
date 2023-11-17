@@ -10,6 +10,7 @@ import CreatePinForm from "../forms/CreatePinForm";
 import EnterOtpForm from "../forms/EnterOtpForm";
 import ChoosePayMethod from "../forms/ChoosePayMethod";
 import SelectAmount from "../forms/SelectAmount";
+import { before } from "node:test";
 
 const style = {
   position: "absolute",
@@ -50,9 +51,6 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
             stepCustomStyle={{
               width: "100%",
               color: "#006436",
-              ul: {
-                backgroundColor: "blue",
-              },
             }}
             prevButton={{
               title: "back",
