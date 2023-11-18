@@ -6,65 +6,71 @@ import { useForm } from "react-hook-form";
 import { Button, InputLabel, TextField } from "@mui/material";
 import useStore from "../../formstore/formStore";
 import * as yup from "yup";
+import membersGRPC from "../../api/grpcapi/membersGRPC";
 
 function PhoneNumberForm() {
   const [condition, setCondition] = React.useState(false);
   const [showpin, setShowpin] = React.useState(false);
   const [showInput, setShowInput] = React.useState(true);
-  const { formData, onChange, updateFormData } = useStore();
+  // const { formData, onChange, updateFormData } = useStore();
+
+  const { createMember } = membersGRPC();
 
   const {
     register,
-    handleSubmit,
-    getValues,
     watch,
+    handleSubmit,
+    reset,
+    getValues,
+
     formState: { errors },
   } = useForm();
 
-  const phoneSchema = yup.object().shape({
-    telephoneNo: yup
-      .string()
-      .required("Telephone number is required")
-      .matches(/^\d{10}$/, "Enter a valid 10-digit phone number"),
-    otp: yup
-      .string()
-      .required("OTP is required")
-      .matches(/^\d{6}$/, "Enter a valid 6-digit OTP"),
-    pin: yup
-      .string()
-      .required("PIN is required")
-      .matches(/^\d{4}$/, "Enter a valid 4-digit PIN"),
-    confirmPin: yup
-      .string()
-      .oneOf([yup.ref("pin"), null], "PIN and Confirm PIN must match")
-      .required("Confirm PIN is required"),
-  });
-  const onSubmit = (data) => {
+  const defaultValues = {
+    countryCode: 233,
+    telephoneNo: "",
+    otp: "",
+    pin: "",
+    confirmPin: "",
+  };
+
+  const onSubmit = async (data) => {
     console.log(data);
-    onChange(data);
-  };
-  const handleOtpUpdate = () => {
-    const otp = getValues("otp");
-    console.log(otp);
-    updateFormData("otp", otp);
+    const newData = {
+      ...data,
+      role: "GGC",
+    };
+
+    console.log(newData);
+    try {
+      const response = await createMember(newData);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const handlePinUpdate = () => {
-    const pin = getValues("pin");
-
-    updateFormData("pin", pin);
-  };
-
-  const handleConfirmPinUpdate = () => {
-    const confirmPin = getValues("confirmPin");
-    updateFormData("confirmPin", confirmPin);
-  };
+  // const phoneSchema = yup.object().shape({
+  //   telephoneNo: yup
+  //     .string()
+  //     .required("Telephone number is required")
+  //     .matches(/^\d{10}$/, "Enter a valid 10-digit phone number"),
+  //   otp: yup
+  //     .string()
+  //     .required("OTP is required")
+  //     .matches(/^\d{6}$/, "Enter a valid 6-digit OTP"),
+  //   pin: yup
+  //     .string()
+  //     .required("PIN is required")
+  //     .matches(/^\d{4}$/, "Enter a valid 4-digit PIN"),
+  //   confirmPin: yup
+  //     .string()
+  //     .oneOf([yup.ref("pin"), null], "PIN and Confirm PIN must match")
+  //     .required("Confirm PIN is required"),
+  // });
 
   return (
     <div>
-      <h1>{formData.telephoneNo}</h1>
-      <h1>{formData.countryCode}</h1>
-      <h1>{formData.otp}</h1>
       <h1>{showpin ? "Create new pin" : "Phone Number"}</h1>
       <p>
         {showpin
@@ -74,7 +80,10 @@ function PhoneNumberForm() {
       {showInput && (
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="d-flex gap-3  align-content-center ">
-            <select {...register("countryCode")} defaultValue={233}>
+            <select
+              {...register("countryCode")}
+              defaultValue={defaultValues.countryCode}
+            >
               <option value={233}>+233</option>
             </select>
 
@@ -82,25 +91,12 @@ function PhoneNumberForm() {
               sx={{ width: 1 }}
               variant="filled"
               {...register("telephoneNo")}
+              defaultValue={defaultValues.telephoneNo}
               placeholder="telephoneNo"
             />
-            {errors.fullName && <span>This field is required</span>}
           </div>
 
-          <button
-            style={{
-              color: "black",
-              border: "none",
-              padding: "1em",
-              margin: "2em 0",
-            }}
-            type="submit"
-            onClick={() => {
-              setCondition(true);
-            }}
-          >
-            Continue
-          </button>
+          <input type="submit" />
         </form>
       )}
 
@@ -120,6 +116,7 @@ function PhoneNumberForm() {
             variant="filled"
             type="number"
             placeholder="enter OTP"
+            defaultValue={defaultValues.otp}
           />
 
           <button
@@ -129,7 +126,6 @@ function PhoneNumberForm() {
               padding: "1em",
             }}
             onClick={() => {
-              handleOtpUpdate();
               setCondition(false);
               setShowpin(true);
               setShowInput(false);
@@ -149,6 +145,7 @@ function PhoneNumberForm() {
               {...register("pin")}
               type="number"
               label="enter pin"
+              defaultValue={defaultValues.pin}
               InputProps={{ pattern: "[0-9]*", maxLength: 4 }}
             />
           </FormControl>
@@ -159,6 +156,7 @@ function PhoneNumberForm() {
               label="confirm pin"
               variant="filled"
               type="number"
+              defaultValue={defaultValues.confirmPin}
               InputProps={{ pattern: "[0-9]*", maxLength: 4 }}
             />
           </FormControl>
@@ -171,8 +169,6 @@ function PhoneNumberForm() {
               padding: "1em",
             }}
             onClick={() => {
-              handlePinUpdate();
-              handleConfirmPinUpdate();
               // navigate("ggcreg");
             }}
           >
