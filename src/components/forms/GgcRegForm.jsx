@@ -24,7 +24,7 @@ function GgcRegForm() {
       </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="d-md-flex justify-content-around">
-          <div className="" style={{ width: "40%" }}>
+          <div className="regmodal">
             <FormControl
               variant="filled"
               sx={{ mt: 2, minWidth: "100%" }}
@@ -55,46 +55,50 @@ function GgcRegForm() {
               />
             </FormControl>
 
-            <FormControl variant="filled" sx={{ mt: 2, minWidth: "100%" }}>
-              {/* <InputLabel htmlFor="full-name">Full Name</InputLabel> */}
-              <TextField
-                id="filled-basic"
-                label="full name"
-                variant="filled"
-                size="small"
-              />
-              {/* <Input
+            <div className="marginInput">
+              <FormControl variant="filled" sx={{ mt: 2, minWidth: "100%" }}>
+                {/* <InputLabel htmlFor="full-name">Full Name</InputLabel> */}
+                <TextField
+                  id="filled-basic"
+                  label="full name"
+                  variant="filled"
+                  size="small"
+                />
+                {/* <Input
                 id="full-name"
                 {...register("fullName", {
                   required: "This field is required",
                 })}
               /> */}
-            </FormControl>
+              </FormControl>
+            </div>
 
-            <FormControl
-              variant="filled"
-              sx={{ mt: 2, minWidth: "100%" }}
-              size="small"
-            >
-              <InputLabel id="country-label">Country</InputLabel>
-              <Controller
-                name="country"
-                control={control}
-                defaultValue="Ghana"
-                render={({ field }) => (
-                  <Select
-                    labelId="country-label"
-                    id="country"
-                    label="Country"
-                    {...field}
-                  >
-                    <MenuItem value="Ghana">Ghana</MenuItem>
-                  </Select>
-                )}
-              />
-            </FormControl>
+            <div className="marginInput">
+              <FormControl
+                variant="filled"
+                sx={{ mt: 2, minWidth: "100%" }}
+                size="small"
+              >
+                <InputLabel id="country-label">Country</InputLabel>
+                <Controller
+                  name="country"
+                  control={control}
+                  defaultValue="Ghana"
+                  render={({ field }) => (
+                    <Select
+                      labelId="country-label"
+                      id="country"
+                      label="Country"
+                      {...field}
+                    >
+                      <MenuItem value="Ghana">Ghana</MenuItem>
+                    </Select>
+                  )}
+                />
+              </FormControl>
+            </div>
 
-            <div className="d-flex w-100 justify-content-between ">
+            <div className="d-flex w-100 justify-content-between marginInput">
               <FormControl
                 variant="filled"
                 sx={{ mt: 2, minWidth: 0 }}
@@ -148,7 +152,7 @@ function GgcRegForm() {
             </div>
           </div>
 
-          <div className="" style={{ width: "40%" }}>
+          <div className="regmodal">
             <FormControl
               variant="filled"
               sx={{ mt: 2, minWidth: "100%" }}
@@ -174,84 +178,90 @@ function GgcRegForm() {
               />
             </FormControl>
 
-            <FormControl
-              variant="filled"
-              sx={{ mt: 2, minWidth: "100%" }}
-              size="small"
-            >
-              <InputLabel id="Occupation-label">Occupation</InputLabel>
-              <Controller
-                name="Occupation"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <Select
-                    labelId="Occupation-label"
-                    id="Occupation"
-                    label="Occupation"
-                    {...field}
-                  >
-                    <MenuItem value="software engineer">
-                      software engineer
-                    </MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
-                )}
-              />
-            </FormControl>
+            <div className="marginInput">
+              <FormControl
+                variant="filled"
+                sx={{ mt: 2, minWidth: "100%" }}
+                size="small"
+              >
+                <InputLabel id="Occupation-label">Occupation</InputLabel>
+                <Controller
+                  name="Occupation"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <Select
+                      labelId="Occupation-label"
+                      id="Occupation"
+                      label="Occupation"
+                      {...field}
+                    >
+                      <MenuItem value="software engineer">
+                        software engineer
+                      </MenuItem>
+                      <MenuItem value={20}>Twenty</MenuItem>
+                      <MenuItem value={30}>Thirty</MenuItem>
+                    </Select>
+                  )}
+                />
+              </FormControl>
+            </div>
 
-            <FormControl
-              variant="filled"
-              sx={{ mt: 2, minWidth: "100%" }}
-              size="small"
-            >
-              <InputLabel id="Display-name-on-card-label">
-                Display name on card
-              </InputLabel>
-              <Controller
-                name="Display-name-on-card"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <Select
-                    labelId="Display-name-on-card-label"
-                    id="Display-name-on-card"
-                    label="Display-name-on-card"
-                    {...field}
-                  >
-                    <MenuItem value="yes">Yes</MenuItem>
-                    <MenuItem value={20}>No</MenuItem>
-                  </Select>
-                )}
-              />
-            </FormControl>
+            <div className="marginInput">
+              <FormControl
+                variant="filled"
+                sx={{ mt: 2, minWidth: "100%" }}
+                size="small"
+              >
+                <InputLabel id="Display-name-on-card-label">
+                  Display name on card
+                </InputLabel>
+                <Controller
+                  name="Display-name-on-card"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <Select
+                      labelId="Display-name-on-card-label"
+                      id="Display-name-on-card"
+                      label="Display-name-on-card"
+                      {...field}
+                    >
+                      <MenuItem value="yes">Yes</MenuItem>
+                      <MenuItem value={20}>No</MenuItem>
+                    </Select>
+                  )}
+                />
+              </FormControl>
+            </div>
 
-            <FormControl
-              variant="filled"
-              sx={{ mt: 2, minWidth: "100%" }}
-              size="small"
-            >
-              <InputLabel id="Card-pickup-location-label">
-                Card pickup location
-              </InputLabel>
-              <Controller
-                name="Card-pickup-location"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <Select
-                    labelId="Card-pickup-location-label"
-                    id="Card-pickup-location"
-                    label="Card-pickup-location"
-                    {...field}
-                  >
-                    <MenuItem value="accra">accra</MenuItem>
-                    <MenuItem value={20}>No</MenuItem>
-                  </Select>
-                )}
-              />
-            </FormControl>
+            <div className="marginInput">
+              <FormControl
+                variant="filled"
+                sx={{ mt: 2, minWidth: "100%" }}
+                size="small"
+              >
+                <InputLabel id="Card-pickup-location-label">
+                  Card pickup location
+                </InputLabel>
+                <Controller
+                  name="Card-pickup-location"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <Select
+                      labelId="Card-pickup-location-label"
+                      id="Card-pickup-location"
+                      label="Card-pickup-location"
+                      {...field}
+                    >
+                      <MenuItem value="accra">accra</MenuItem>
+                      <MenuItem value={20}>No</MenuItem>
+                    </Select>
+                  )}
+                />
+              </FormControl>
+            </div>
           </div>
         </div>
 

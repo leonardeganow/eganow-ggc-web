@@ -258,5 +258,31 @@ img{
 }
 
 
+@media (max-width: 600px) {
+    .regmodal {
+      width: 100%;
+      flex-direction: column; /* Stack items vertically on smaller screens */
+    }
+  
+   
+  }
 
+  @media (min-width: 600px) {
+    .regmodal {
+      width: 40%;
+      flex-direction: column; /* Stack items vertically on smaller screens */
+  
+  
+    }
+  
+    .regmodal2 {
+        width: 100%;
+    }
+
+    .marginInput {
+        margin: 30px 0 0 0
+        
+    }
+   
+  }
 

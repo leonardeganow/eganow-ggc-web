@@ -11,16 +11,17 @@ import EnterOtpForm from "../forms/EnterOtpForm";
 import ChoosePayMethod from "../forms/ChoosePayMethod";
 import SelectAmount from "../forms/SelectAmount";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Form, ProgressBar } from "react-bootstrap";
 
 const style = {
   position: "absolute",
-  top: "50%",
+  top: "54%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "90vw", // Use viewport width
-  maxWidth: "500px", // Set a maximum width if needed
-  height: "90vh", // Use viewport height
-  maxHeight: "70vh",
+  maxWidth: "600px", // Set a maximum width if needed
+  height: "80vh", // Use viewport height
+  maxHeight: "80vh",
   overflowY: "auto",
   bgcolor: "background.paper",
   boxShadow: 24,
@@ -28,11 +29,35 @@ const style = {
 };
 function GgcRegisterModal({ open, handleClose, handleOpen }) {
   //   const [open, setOpen] = React.useState(false);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
+  const [currentStep, setCurrentStep] = React.useState(1);
+  const totalSteps = 5;
 
-  const prevButton = () => {};
-  const nextButton = () => {};
+  const handleNext = () => {
+    setCurrentStep((prevStep) => prevStep + 1);
+  };
+
+  const handleBack = () => {
+    setCurrentStep((prevStep) => prevStep - 1);
+  };
+
+  const renderForm = () => {
+    switch (currentStep) {
+      case 1:
+        return <PhoneNumberForm />;
+      // Add more cases for additional steps
+      case 2:
+        return <GgcRegForm />;
+
+      case 3:
+        return <SelectAmount />;
+
+      case 4:
+        return <ChoosePayMethod />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -47,12 +72,45 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
             Text in a modal
           </Typography> */}
           {/* <GgcRegForm /> */}
+          <div>
+            <p>
+              Step {currentStep} of {totalSteps}
+            </p>
+          </div>
 
-          <Routes>
-            <Route path="/" element={<PhoneNumberForm />}>
-              <Route path="/ggcreg" element={<GgcRegForm />} />
-            </Route>
-          </Routes>
+          {renderForm()}
+          <div className=" d-flex justify-content-center gap-4">
+            {currentStep > 1 && (
+              <button
+                style={{
+                  color: "black",
+                  border: "none",
+                  padding: "1em",
+                  marginTop: "2em",
+                  color: " white",
+                }}
+                className="bg-success"
+                onClick={handleBack}
+              >
+                Back
+              </button>
+            )}
+            {currentStep < totalSteps && (
+              <button
+                style={{
+                  color: "black",
+                  border: "none",
+                  padding: "1em",
+                  marginTop: "2em",
+                  color: " white",
+                }}
+                className="bg-success"
+                onClick={handleNext}
+              >
+                Next
+              </button>
+            )}
+          </div>
         </Box>
       </Modal>
     </div>
