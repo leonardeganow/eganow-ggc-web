@@ -45,8 +45,8 @@ function ChoosePayMethod() {
       </div>
       {showMomo && (
         <form action="">
-          <div className="d-flex border justify-content-between ">
-            <div style={{ width: "40%" }} className="">
+          <div className="-flex border justify-content-between ">
+            <div className="">
               <FormControl variant="outlined" sx={{ minWidth: "100%" }}>
                 <Controller
                   name="ggcidnumber"
@@ -66,7 +66,7 @@ function ChoosePayMethod() {
                 />
               </FormControl>
             </div>
-            <div style={{ width: "50%" }}>
+            <div className="mt-4 regmodal2">
               <FormControl
                 variant="filled"
                 sx={{ mt: 0, minWidth: "100%" }}
@@ -155,8 +155,8 @@ function ChoosePayMethod() {
       )}
       {showCard && (
         <form action="">
-          <div className="d-flex border justify-content-between ">
-            <div style={{ width: "40%" }} className="">
+          <div className=" border justify-content-between ">
+            <div className="regmodal2">
               <FormControl variant="outlined" sx={{ minWidth: "100%" }}>
                 <Controller
                   name="ggcidnumber"
@@ -176,8 +176,8 @@ function ChoosePayMethod() {
                 />
               </FormControl>
             </div>
-            <div style={{ width: "50%" }}>
-              <FormControl variant="outlined" sx={{ minWidth: "100%" }}>
+            <div className="regmodal2">
+              <FormControl variant="outlined" sx={{ minWidth: "100%", mt: 2 }}>
                 <Controller
                   name="card-number"
                   control={control}
@@ -215,7 +215,7 @@ function ChoosePayMethod() {
                 />
               </FormControl>
 
-              <div className="d-flex justify-content-between  border">
+              <div className="d-md-flex justify-content-between  border">
                 <FormControl variant="outlined" sx={{ width: "40%" }}>
                   <Controller
                     name="Registered-name"
@@ -225,7 +225,7 @@ function ChoosePayMethod() {
                       <TextField
                         {...field}
                         id="outlined-basic"
-                        label="registered name"
+                        label="expiry date"
                         variant="filled"
                         size="small"
                         type="text"
@@ -244,7 +244,7 @@ function ChoosePayMethod() {
                       <TextField
                         {...field}
                         id="outlined-basic"
-                        label="registered name"
+                        label="cvv"
                         variant="filled"
                         size="small"
                         type="text"

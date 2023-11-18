@@ -10,28 +10,54 @@ import CreatePinForm from "../forms/CreatePinForm";
 import EnterOtpForm from "../forms/EnterOtpForm";
 import ChoosePayMethod from "../forms/ChoosePayMethod";
 import SelectAmount from "../forms/SelectAmount";
-import { before } from "node:test";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Form, ProgressBar } from "react-bootstrap";
 
 const style = {
   position: "absolute",
-  top: "50%",
+  top: "54%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 700,
+  width: "90vw", // Use viewport width
+  maxWidth: "600px", // Set a maximum width if needed
+  height: "80vh", // Use viewport height
+  maxHeight: "80vh",
+  overflowY: "auto",
   bgcolor: "background.paper",
   boxShadow: 24,
-  maxHeight: "80vh",
-  overFlow: "scroll",
   p: 4,
-  overflowY: "auto",
 };
 function GgcRegisterModal({ open, handleClose, handleOpen }) {
   //   const [open, setOpen] = React.useState(false);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
+  const [currentStep, setCurrentStep] = React.useState(1);
+  const totalSteps = 5;
 
-  const prevButton = () => {};
-  const nextButton = () => {};
+  const handleNext = () => {
+    setCurrentStep((prevStep) => prevStep + 1);
+  };
+
+  const handleBack = () => {
+    setCurrentStep((prevStep) => prevStep - 1);
+  };
+
+  const renderForm = () => {
+    switch (currentStep) {
+      case 1:
+        return <PhoneNumberForm />;
+      // Add more cases for additional steps
+      case 2:
+        return <GgcRegForm />;
+
+      case 3:
+        return <SelectAmount />;
+
+      case 4:
+        return <ChoosePayMethod />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -46,40 +72,45 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
             Text in a modal
           </Typography> */}
           {/* <GgcRegForm /> */}
-          <MultiStep
-            activeStep={0}
-            stepCustomStyle={{
-              width: "100%",
-              color: "#006436",
-            }}
-            prevButton={{
-              title: "back",
-              style: {
-                color: "black",
-                border: "none",
-                padding: "1em",
-                margin: "15px 0",
-                marginRight: "10px",
-              },
-            }}
-            nextButton={{
-              title: "next",
-              style: {
-                color: "black",
-                border: "none",
-                padding: "1em",
-                margin: "15px 0",
-                marginRight: "10px",
-              },
-            }}
-          >
-            <PhoneNumberForm title="1" />
-            {/* <EnterOtpForm title="2" />
-            <CreatePinForm title="3" /> */}
-            <GgcRegForm title="2" />
-            <SelectAmount title="3" />
-            <ChoosePayMethod title="4" />
-          </MultiStep>
+          <div>
+            <p>
+              Step {currentStep} of {totalSteps}
+            </p>
+          </div>
+
+          {renderForm()}
+          <div className=" d-flex justify-content-center gap-4">
+            {currentStep > 1 && (
+              <button
+                style={{
+                  color: "black",
+                  border: "none",
+                  padding: "1em",
+                  marginTop: "2em",
+                  color: " white",
+                }}
+                className="bg-success"
+                onClick={handleBack}
+              >
+                Back
+              </button>
+            )}
+            {currentStep < totalSteps && (
+              <button
+                style={{
+                  color: "black",
+                  border: "none",
+                  padding: "1em",
+                  marginTop: "2em",
+                  color: " white",
+                }}
+                className="bg-success"
+                onClick={handleNext}
+              >
+                Next
+              </button>
+            )}
+          </div>
         </Box>
       </Modal>
     </div>
