@@ -1,0 +1,139 @@
+syntax = "proto3";
+
+option csharp_namespace = "NDC_DONATION_2024.Protos";
+
+package Transaction;
+
+service TransactionSvc {
+	rpc PostDataToTransaction(PostDataRequest) returns (TransResponse);
+    rpc PostDataToTransactionCard(CardDataRequest) returns (TransResponse);
+    rpc PostDataToTransactionUSSD(PostDataUssdRequest) returns (TransResponse);
+    rpc GetChargesOnTransaction(ChargesRequest) returns (ChargesResponse);
+    rpc GetChargesOnTransactionUssd(UssdChargesRequest) returns (ChargesResponse);
+    rpc GetCustomerKYC(KycRequest) returns (KycResponse);
+    rpc GetMemberTransactions(TransactionRequest) returns (TransactionResponse);
+    rpc GetMemberTransactionsForAdmin(TransAdminRequest) returns (TransactionResponse);
+    rpc GetTransactionStatus(StatusRequest) returns (StatusResponse);
+    rpc GetTotalAmountDonated(DonatedAmountRequest) returns (DontaedAmountResponse);
+}
+
+
+message PostDataRequest {
+     string mobileNo = 1;
+     string memberId = 3;
+     string transTypeJMOrGCC= 4;
+     double transAmount = 5;
+     string paymentAcctOrMomoNo = 7;
+     string paymentAccountName = 8;
+     string networkId = 9;
+     string narration = 10;
+     string agentId = 11;
+}
+
+message DonatedAmountRequest{
+    string memberType= 1; // jm or ggc
+    string memberId = 2;
+}
+
+message DontaedAmountResponse {
+    bool status = 1;
+    string message = 2;
+}
+
+message PostDataUssdRequest {
+    string mobileNumber = 1;
+    string cardTypeId = 2;
+    string networkId = 3;
+    string transAmount = 4; 
+    string narration = 5;
+    string transTypeJMOrGCC=6;
+    string agentId = 7;
+}
+
+message UssdChargesRequest {
+    double transAmount = 1;
+    string networkId = 2; // MTN |
+    string mobileNumber = 3;
+}
+
+message CardDataRequest {
+    string accountName = 1;
+    string cardNumber = 2;
+    string CVV = 3;
+    int32 expiryDateMonth = 4; // example Jan, pass 1, Feb, pass 2 etc
+    int32 expiryDateYear = 5; // send the last 2 digits. eg : 2023, send 23
+    string transTypeJMOrGCC = 6;
+    string mobileNo = 7;
+    string memberId = 8;
+    double transAmount = 9;
+    string narration = 10;
+    string serviceId = 11; // CARD service ID 
+    string agentId = 12;
+}
+
+
+
+message TransAdminRequest {
+    string transTypeJMOrGGC =1;
+    string startDate = 2; // dd-mm-yyyy
+    string endDate = 3;
+}
+
+message TransResponse {
+	bool status = 1;
+	string message = 2;
+}
+
+message ChargesRequest {
+    double transAmount = 1;
+    string networkId = 2;
+    string mobileNumber = 3;
+}
+
+
+message ChargesResponse {
+    bool status = 1;
+    string message = 2;
+    double charges = 3;
+}
+
+message KycRequest {
+    string mobileNumber = 1;
+    string networkId = 2;
+}
+
+message KycResponse {
+    bool status = 1;
+    string message =2;
+}
+
+message TransactionRequest {
+    string memberId = 1;
+    string startDate = 2; // dd-mm-yyyy
+    string endDate = 3;
+}
+
+message TransactionData { 
+    string transactionId =1;
+    string memberName = 2;
+    double amount =3;
+    string status = 4;
+    string type = 5;
+    string date = 6;
+    string paymentName = 7;
+    string paymentAccountNumberOrMomoNumber = 8;
+}
+
+message TransactionResponse {
+    repeated TransactionData transList =1;
+}
+
+message StatusRequest {
+    string transactionId = 1;
+}
+
+message StatusResponse {
+    bool status = 1;
+    string transStatus= 2;
+    string message = 3;
+}

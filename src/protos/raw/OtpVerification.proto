@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option csharp_namespace = "NDC_DONATION_2024.Protos";
+
+package OtpVerification;
+
+service OtpVerificationSvc {
+	rpc SendSMSOTPToMemberPhoneNumber(MemberOtpRequest) returns (OtpResponse);
+	rpc VerifyOTPForMember(VerifyOtpRequest) returns (OtpResponse);
+	rpc SendOTPToCustomerEmail(OTPRequest) returns (OtpResponse);
+	rpc VerifyCustomerOTP(VerifyCustOTPRequest) returns (OtpResponse);
+	rpc ForgotCustomerPassword(OTPRequest) returns (OtpResponse);
+}
+
+
+message MemberOtpRequest {
+	string mobileNumber = 1;
+}
+
+message OTPRequest {
+	string emailAddress = 1;
+}
+
+message VerifyOtpRequest {
+	string mobileNumber = 1;
+	string otpValue =2;
+}
+
+message VerifyCustOTPRequest {
+	string emailAddress = 1;
+	string otpValue = 2;
+}
+
+message OtpResponse {
+	bool status = 1;
+	string message = 2;
+}
