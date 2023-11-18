@@ -21,11 +21,9 @@ var global =
     (function () { return this; }).call(null) ||
     Function('return this')();
 
-goog.exportSymbol('proto.Members.AccountCreationStatus', null, global);
 goog.exportSymbol('proto.Members.AgentMemberResponse', null, global);
 goog.exportSymbol('proto.Members.CreateMemberResponse', null, global);
 goog.exportSymbol('proto.Members.GetMembersRequest', null, global);
-goog.exportSymbol('proto.Members.JMOrGGCValues', null, global);
 goog.exportSymbol('proto.Members.JMRequest', null, global);
 goog.exportSymbol('proto.Members.JMResponse', null, global);
 goog.exportSymbol('proto.Members.Member', null, global);
@@ -38,7 +36,6 @@ goog.exportSymbol('proto.Members.MemberLoginResponse', null, global);
 goog.exportSymbol('proto.Members.MemberRequest', null, global);
 goog.exportSymbol('proto.Members.MemberResponse', null, global);
 goog.exportSymbol('proto.Members.MemberUssdRequest', null, global);
-goog.exportSymbol('proto.Members.MobileOrUssd', null, global);
 goog.exportSymbol('proto.Members.ResetPinRequest', null, global);
 goog.exportSymbol('proto.Members.ResetPinResponse', null, global);
 /**
@@ -763,7 +760,7 @@ proto.Members.MemberExistRequest.prototype.toObject = function(opt_includeInstan
 proto.Members.MemberExistRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     mobilenumber: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    membertype: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    membertype: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -805,7 +802,7 @@ proto.Members.MemberExistRequest.deserializeBinaryFromReader = function(msg, rea
       msg.setMobilenumber(value);
       break;
     case 2:
-      var value = /** @type {!proto.Members.JMOrGGCValues} */ (reader.readEnum());
+      var value = /** @type {string} */ (reader.readString());
       msg.setMembertype(value);
       break;
     default:
@@ -845,8 +842,8 @@ proto.Members.MemberExistRequest.serializeBinaryToWriter = function(message, wri
     );
   }
   f = message.getMembertype();
-  if (f !== 0.0) {
-    writer.writeEnum(
+  if (f.length > 0) {
+    writer.writeString(
       2,
       f
     );
@@ -873,20 +870,20 @@ proto.Members.MemberExistRequest.prototype.setMobilenumber = function(value) {
 
 
 /**
- * optional JMOrGGCValues memberType = 2;
- * @return {!proto.Members.JMOrGGCValues}
+ * optional string memberType = 2;
+ * @return {string}
  */
 proto.Members.MemberExistRequest.prototype.getMembertype = function() {
-  return /** @type {!proto.Members.JMOrGGCValues} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
 /**
- * @param {!proto.Members.JMOrGGCValues} value
+ * @param {string} value
  * @return {!proto.Members.MemberExistRequest} returns this
  */
 proto.Members.MemberExistRequest.prototype.setMembertype = function(value) {
-  return jspb.Message.setProto3EnumField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -1260,7 +1257,7 @@ proto.Members.MemberRequest.toObject = function(includeInstance, msg) {
     displaynameoncard: jspb.Message.getFieldWithDefault(msg, 16, ""),
     cardpickuplocation: jspb.Message.getFieldWithDefault(msg, 17, ""),
     cardtypeid: jspb.Message.getFieldWithDefault(msg, 18, ""),
-    accountcreationstatus: jspb.Message.getFieldWithDefault(msg, 19, 0)
+    accountcreationstatus: jspb.Message.getFieldWithDefault(msg, 19, "")
   };
 
   if (includeInstance) {
@@ -1370,7 +1367,7 @@ proto.Members.MemberRequest.deserializeBinaryFromReader = function(msg, reader) 
       msg.setCardtypeid(value);
       break;
     case 19:
-      var value = /** @type {!proto.Members.AccountCreationStatus} */ (reader.readEnum());
+      var value = /** @type {string} */ (reader.readString());
       msg.setAccountcreationstatus(value);
       break;
     default:
@@ -1529,8 +1526,8 @@ proto.Members.MemberRequest.serializeBinaryToWriter = function(message, writer) 
     );
   }
   f = message.getAccountcreationstatus();
-  if (f !== 0.0) {
-    writer.writeEnum(
+  if (f.length > 0) {
+    writer.writeString(
       19,
       f
     );
@@ -1863,20 +1860,20 @@ proto.Members.MemberRequest.prototype.setCardtypeid = function(value) {
 
 
 /**
- * optional AccountCreationStatus accountCreationStatus = 19;
- * @return {!proto.Members.AccountCreationStatus}
+ * optional string accountCreationStatus = 19;
+ * @return {string}
  */
 proto.Members.MemberRequest.prototype.getAccountcreationstatus = function() {
-  return /** @type {!proto.Members.AccountCreationStatus} */ (jspb.Message.getFieldWithDefault(this, 19, 0));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 19, ""));
 };
 
 
 /**
- * @param {!proto.Members.AccountCreationStatus} value
+ * @param {string} value
  * @return {!proto.Members.MemberRequest} returns this
  */
 proto.Members.MemberRequest.prototype.setAccountcreationstatus = function(value) {
-  return jspb.Message.setProto3EnumField(this, 19, value);
+  return jspb.Message.setProto3StringField(this, 19, value);
 };
 
 
@@ -2294,7 +2291,7 @@ proto.Members.MemberExistResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     status: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
     message: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    accountstatus: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    accountstatus: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -2340,7 +2337,7 @@ proto.Members.MemberExistResponse.deserializeBinaryFromReader = function(msg, re
       msg.setMessage(value);
       break;
     case 3:
-      var value = /** @type {!proto.Members.AccountCreationStatus} */ (reader.readEnum());
+      var value = /** @type {string} */ (reader.readString());
       msg.setAccountstatus(value);
       break;
     default:
@@ -2387,8 +2384,8 @@ proto.Members.MemberExistResponse.serializeBinaryToWriter = function(message, wr
     );
   }
   f = message.getAccountstatus();
-  if (f !== 0.0) {
-    writer.writeEnum(
+  if (f.length > 0) {
+    writer.writeString(
       3,
       f
     );
@@ -2433,20 +2430,20 @@ proto.Members.MemberExistResponse.prototype.setMessage = function(value) {
 
 
 /**
- * optional AccountCreationStatus accountStatus = 3;
- * @return {!proto.Members.AccountCreationStatus}
+ * optional string accountStatus = 3;
+ * @return {string}
  */
 proto.Members.MemberExistResponse.prototype.getAccountstatus = function() {
-  return /** @type {!proto.Members.AccountCreationStatus} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
 /**
- * @param {!proto.Members.AccountCreationStatus} value
+ * @param {string} value
  * @return {!proto.Members.MemberExistResponse} returns this
  */
 proto.Members.MemberExistResponse.prototype.setAccountstatus = function(value) {
-  return jspb.Message.setProto3EnumField(this, 3, value);
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -3534,8 +3531,8 @@ proto.Members.MemberLoginRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     mobilenumber: jspb.Message.getFieldWithDefault(msg, 1, ""),
     pin: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    accounttype: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    platformtype: jspb.Message.getFieldWithDefault(msg, 4, 0)
+    accounttype: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    platformtype: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -3581,11 +3578,11 @@ proto.Members.MemberLoginRequest.deserializeBinaryFromReader = function(msg, rea
       msg.setPin(value);
       break;
     case 3:
-      var value = /** @type {!proto.Members.JMOrGGCValues} */ (reader.readEnum());
+      var value = /** @type {string} */ (reader.readString());
       msg.setAccounttype(value);
       break;
     case 4:
-      var value = /** @type {!proto.Members.MobileOrUssd} */ (reader.readEnum());
+      var value = /** @type {string} */ (reader.readString());
       msg.setPlatformtype(value);
       break;
     default:
@@ -3632,15 +3629,15 @@ proto.Members.MemberLoginRequest.serializeBinaryToWriter = function(message, wri
     );
   }
   f = message.getAccounttype();
-  if (f !== 0.0) {
-    writer.writeEnum(
+  if (f.length > 0) {
+    writer.writeString(
       3,
       f
     );
   }
   f = message.getPlatformtype();
-  if (f !== 0.0) {
-    writer.writeEnum(
+  if (f.length > 0) {
+    writer.writeString(
       4,
       f
     );
@@ -3685,38 +3682,38 @@ proto.Members.MemberLoginRequest.prototype.setPin = function(value) {
 
 
 /**
- * optional JMOrGGCValues accountType = 3;
- * @return {!proto.Members.JMOrGGCValues}
+ * optional string accountType = 3;
+ * @return {string}
  */
 proto.Members.MemberLoginRequest.prototype.getAccounttype = function() {
-  return /** @type {!proto.Members.JMOrGGCValues} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
 /**
- * @param {!proto.Members.JMOrGGCValues} value
+ * @param {string} value
  * @return {!proto.Members.MemberLoginRequest} returns this
  */
 proto.Members.MemberLoginRequest.prototype.setAccounttype = function(value) {
-  return jspb.Message.setProto3EnumField(this, 3, value);
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional MobileOrUssd platformType = 4;
- * @return {!proto.Members.MobileOrUssd}
+ * optional string platformType = 4;
+ * @return {string}
  */
 proto.Members.MemberLoginRequest.prototype.getPlatformtype = function() {
-  return /** @type {!proto.Members.MobileOrUssd} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
 
 /**
- * @param {!proto.Members.MobileOrUssd} value
+ * @param {string} value
  * @return {!proto.Members.MemberLoginRequest} returns this
  */
 proto.Members.MemberLoginRequest.prototype.setPlatformtype = function(value) {
-  return jspb.Message.setProto3EnumField(this, 4, value);
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -4379,30 +4376,5 @@ proto.Members.JMResponse.prototype.setMemberid = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
-
-/**
- * @enum {number}
- */
-proto.Members.JMOrGGCValues = {
-  JM: 0,
-  GGC: 1
-};
-
-/**
- * @enum {number}
- */
-proto.Members.AccountCreationStatus = {
-  COMPLETE: 0,
-  INCOMPLETE: 1,
-  DOES_NOT_EXIST: 2
-};
-
-/**
- * @enum {number}
- */
-proto.Members.MobileOrUssd = {
-  MOBILE: 0,
-  USSD: 1
-};
 
 goog.object.extend(exports, proto.Members);

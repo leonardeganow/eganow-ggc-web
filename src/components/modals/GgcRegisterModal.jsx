@@ -28,11 +28,12 @@ const style = {
   p: 4,
 };
 function GgcRegisterModal({ open, handleClose, handleOpen }) {
-  //   const [open, setOpen] = React.useState(false);
+  const [btnOpen, setBtnOpen] = React.useState(false);
   const [currentStep, setCurrentStep] = React.useState(1);
   const totalSteps = 5;
 
   const handleNext = () => {
+    setBtnOpen(false);
     setCurrentStep((prevStep) => prevStep + 1);
   };
 
@@ -43,7 +44,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
   const renderForm = () => {
     switch (currentStep) {
       case 1:
-        return <PhoneNumberForm />;
+        return <PhoneNumberForm setBtnOpen={setBtnOpen} />;
       // Add more cases for additional steps
       case 2:
         return <GgcRegForm />;
@@ -97,6 +98,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
             )}
             {currentStep < totalSteps && (
               <button
+                disabled={!btnOpen}
                 style={{
                   color: "black",
                   border: "none",

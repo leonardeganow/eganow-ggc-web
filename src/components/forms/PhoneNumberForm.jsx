@@ -5,26 +5,43 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useForm } from "react-hook-form";
 import { Button, InputLabel, TextField } from "@mui/material";
 import useStore from "../../formstore/formStore";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import membersGRPC from "../../api/grpcapi/membersGRPC";
+import customerGRPC from "../../api/grpcapi/customerGRPC";
 
-function PhoneNumberForm() {
+function PhoneNumberForm({ setBtnOpen }) {
   const [condition, setCondition] = React.useState(false);
   const [showpin, setShowpin] = React.useState(false);
   const [showInput, setShowInput] = React.useState(true);
   // const { formData, onChange, updateFormData } = useStore();
 
   const { createMember } = membersGRPC();
+  const { getUsers } = customerGRPC();
+  const phoneRegExp =
+    " /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/";
 
+  const schema = yup
+    .object()
+    .shape({
+      telephoneNo: yup
+        .string()
+        .required("Phone number is required")
+        .matches(/^\d{10}$/, "Enter a valid 10-digit phone number"),
+    })
+    .required();
   const {
     register,
     watch,
     handleSubmit,
+    setError,
     reset,
     getValues,
 
-    formState: { errors },
-  } = useForm();
+    formState: { errors, touchedFields },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const defaultValues = {
     countryCode: 233,
@@ -35,39 +52,23 @@ function PhoneNumberForm() {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
     const newData = {
       ...data,
-      role: "GGC",
+      role: 0,
     };
 
     console.log(newData);
     try {
       const response = await createMember(newData);
       console.log(response);
+      // if (response) {
+      //   setBtnOpen(true);
+      // }
     } catch (error) {
       console.error(error);
     }
   };
-
-  // const phoneSchema = yup.object().shape({
-  //   telephoneNo: yup
-  //     .string()
-  //     .required("Telephone number is required")
-  //     .matches(/^\d{10}$/, "Enter a valid 10-digit phone number"),
-  //   otp: yup
-  //     .string()
-  //     .required("OTP is required")
-  //     .matches(/^\d{6}$/, "Enter a valid 6-digit OTP"),
-  //   pin: yup
-  //     .string()
-  //     .required("PIN is required")
-  //     .matches(/^\d{4}$/, "Enter a valid 4-digit PIN"),
-  //   confirmPin: yup
-  //     .string()
-  //     .oneOf([yup.ref("pin"), null], "PIN and Confirm PIN must match")
-  //     .required("Confirm PIN is required"),
-  // });
 
   return (
     <div>
@@ -79,24 +80,26 @@ function PhoneNumberForm() {
       </p>
       {showInput && (
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="d-flex gap-3  align-content-center ">
+          <div className="d-flex flex-start gap-3  align-content-center ">
             <select
               {...register("countryCode")}
               defaultValue={defaultValues.countryCode}
             >
               <option value={233}>+233</option>
             </select>
-
-            <TextField
-              sx={{ width: 1 }}
-              variant="filled"
-              {...register("telephoneNo")}
-              defaultValue={defaultValues.telephoneNo}
-              placeholder="telephoneNo"
-            />
+            <div style={{ border: errors.telephoneNo ? "1px red solid" : "" }}>
+              <input
+                sx={{ width: 1, border: "none" }}
+                variant="filled"
+                {...register("telephoneNo")}
+                defaultValue={defaultValues.telephoneNo}
+                placeholder="telephoneNo"
+                className="form-control outline-none"
+              />
+            </div>
+            {/* {errors.telephoneNo && <p>{errors.telephoneNo.message}</p>} */}
+            <input type="submit" />
           </div>
-
-          <input type="submit" />
         </form>
       )}
 

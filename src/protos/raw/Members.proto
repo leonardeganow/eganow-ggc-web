@@ -29,7 +29,7 @@ message GetMembersRequest {
 
 message MemberExistRequest {
 	 string mobileNumber = 1;
-	 JMOrGGCValues memberType = 2;
+	 string memberType = 2;
 
 }
 
@@ -62,7 +62,7 @@ message MemberRequest {
 	string displayNameOnCard =16;
 	string cardPickUpLocation =17;
 	string cardTypeId = 18;
-	AccountCreationStatus accountCreationStatus = 19;
+	string accountCreationStatus = 19;
 }
 
 message MemberUssdRequest {
@@ -82,7 +82,7 @@ message MemberResponse {
 message MemberExistResponse {
 	bool status =1;
 	string message = 2;
-	AccountCreationStatus accountStatus = 3;
+	string accountStatus = 3;
 }
 
 message CreateMemberResponse {
@@ -122,25 +122,9 @@ message MemberListResponse {
 message MemberLoginRequest {
 	string mobileNumber = 1;
 	string PIN = 2;
-	JMOrGGCValues accountType =3;
-	MobileOrUssd platformType = 4;
+	string accountType =3;
+	string platformType = 4;
 
-}
-
-enum JMOrGGCValues {
-	 JM = 0;
-	 GGC = 1;
-}
-
-enum AccountCreationStatus {
-	COMPLETE = 0;
-	INCOMPLETE =1;
-	DOES_NOT_EXIST=2;
-}
-
-enum MobileOrUssd {
-	MOBILE = 0;
-	USSD  = 1;
 }
 
 message MemberLoginResponse {
