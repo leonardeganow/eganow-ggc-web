@@ -14,18 +14,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Form, ProgressBar } from "react-bootstrap";
 
 const style = {
-  position: "absolute",
+  position: "relative",
   top: "54%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "90vw", // Use viewport width
   maxWidth: "600px", // Set a maximum width if needed
-  height: "80vh", // Use viewport height
-  maxHeight: "80vh",
-  overflowY: "auto",
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
+  boxShadow: "40px",
+  borderRadius: "24px",
 };
 function GgcRegisterModal({ open, handleClose, handleOpen }) {
   const [btnOpen, setBtnOpen] = React.useState(false);
@@ -60,7 +56,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
   };
 
   return (
-    <div>
+    <div className="border">
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
         open={open}
@@ -68,7 +64,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <div className="bg-white p-5" style={style} sx={style}>
           {/* <Typography id="modal-modal-title" variant="h6" component="h2">
             Text in a modal
           </Typography> */}
@@ -80,7 +76,12 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
           </div>
 
           {renderForm()}
-          <div className=" d-flex justify-content-center gap-4">
+          <div
+            style={{
+              marginLeft: currentStep === 1 ? "480px" : "",
+            }}
+            className=" d-flex justify-content-between "
+          >
             {currentStep > 1 && (
               <button
                 style={{
@@ -90,7 +91,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
                   marginTop: "2em",
                   color: " white",
                 }}
-                className="bg-success"
+                className="bg-success btn"
                 onClick={handleBack}
               >
                 Back
@@ -106,14 +107,14 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
                   marginTop: "2em",
                   color: " white",
                 }}
-                className="bg-success"
+                className="bg-success btn"
                 onClick={handleNext}
               >
                 Next
               </button>
             )}
           </div>
-        </Box>
+        </div>
       </Modal>
     </div>
   );

@@ -18,8 +18,6 @@ function PhoneNumberForm({ setBtnOpen }) {
 
   const { createMember } = membersGRPC();
   const { getUsers } = customerGRPC();
-  const phoneRegExp =
-    " /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/";
 
   const schema = yup
     .object()
@@ -28,18 +26,29 @@ function PhoneNumberForm({ setBtnOpen }) {
         .string()
         .required("Phone number is required")
         .matches(/^\d{10}$/, "Enter a valid 10-digit phone number"),
+      otp: yup
+        .string()
+        .required("OTP is required")
+        .matches(/^\d{4}$/, "Enter a valid 4-digit OTP"),
+      pin: yup
+        .string()
+        .required("PIN is required")
+        .matches(/^\d{4}$/, "Enter a valid 4-digit PIN"),
+      confirmPin: yup
+        .string()
+        .required("Confirm PIN is required")
+        .oneOf([yup.ref("pin"), null], "PIN and Confirm PIN must match"),
     })
     .required();
   const {
     register,
-    watch,
     handleSubmit,
-    setError,
     reset,
-    getValues,
 
     formState: { errors, touchedFields },
   } = useForm({
+    mode: "onChange",
+
     resolver: yupResolver(schema),
   });
 
@@ -51,54 +60,77 @@ function PhoneNumberForm({ setBtnOpen }) {
     confirmPin: "",
   };
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
+    // setBtnOpen(true);
+    setCondition(true);
+    setShowInput(false);
     // console.log(data);
-    const newData = {
-      ...data,
-      role: 0,
-    };
+    // const newData = {
+    //   ...data,
+    //   role: 0,
+    // };
 
-    console.log(newData);
-    try {
-      const response = await createMember(newData);
-      console.log(response);
-      // if (response) {
-      //   setBtnOpen(true);
-      // }
-    } catch (error) {
-      console.error(error);
-    }
+    // console.log(newData);
+    // try {
+    //   const response = await createMember(newData);
+    //   console.log(response);
+    //   // if (response) {
+    //   //   setBtnOpen(true);
+    //   // }
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   return (
     <div>
-      <h1>{showpin ? "Create new pin" : "Phone Number"}</h1>
-      <p>
+      <h1 className="text-center">
+        {showpin ? "Create new pin" : "Phone Number"}
+      </h1>
+      <p className="text-center">
         {showpin
           ? "Create pin to protect the card you will acquire"
           : "Enter your phone number below to view your good governance card or register"}
       </p>
       {showInput && (
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="d-flex flex-start gap-3  align-content-center ">
-            <select
-              {...register("countryCode")}
-              defaultValue={defaultValues.countryCode}
+          <div className="text-center ">
+            <div
+              style={{ width: "80%" }}
+              className=" mx-auto d-flex justify-content-between "
             >
-              <option value={233}>+233</option>
-            </select>
-            <div style={{ border: errors.telephoneNo ? "1px red solid" : "" }}>
-              <input
-                sx={{ width: 1, border: "none" }}
-                variant="filled"
-                {...register("telephoneNo")}
-                defaultValue={defaultValues.telephoneNo}
-                placeholder="telephoneNo"
-                className="form-control outline-none"
-              />
+              <select
+                style={{ height: "55px", width: "30%" }}
+                className="form-select h-7"
+                {...register("countryCode")}
+                defaultValue={defaultValues.countryCode}
+              >
+                <option value={233}>+233</option>
+              </select>
+              <div style={{ width: "60%" }} className=" ">
+                <input
+                  style={{ width: "100%" }}
+                  {...register("telephoneNo")}
+                  defaultValue={defaultValues.telephoneNo}
+                  placeholder="telephoneNo"
+                  className={`form-control ${
+                    errors.telephoneNo ? "is-invalid" : "is-valid"
+                  }  outline-none p-3`}
+                />
+
+                {errors.telephoneNo && (
+                  <div className="invalid-feedback">
+                    {errors.telephoneNo.message}
+                  </div>
+                )}
+                {!errors.telephoneNo && (
+                  <div className="valid-feedback">Looks good!</div>
+                )}
+              </div>
             </div>
+
             {/* {errors.telephoneNo && <p>{errors.telephoneNo.message}</p>} */}
-            <input type="submit" />
+            <button className="btn btn-success mt-4"> continue</button>
           </div>
         </form>
       )}
@@ -113,7 +145,10 @@ function PhoneNumberForm({ setBtnOpen }) {
             below.
           </p> */}
 
-          <TextField
+          <input
+            className={`form-control ${
+              errors.otp ? "is-invalid" : "is-valid"
+            }  outline-none p-3`}
             sx={{ width: 1 }}
             {...register("otp")}
             variant="filled"
@@ -121,19 +156,17 @@ function PhoneNumberForm({ setBtnOpen }) {
             placeholder="enter OTP"
             defaultValue={defaultValues.otp}
           />
+          {errors.otp && (
+            <p className="invalid-feedback">{errors.otp.message}</p>
+          )}
 
           <button
-            style={{
-              color: "black",
-              border: "none",
-              padding: "1em",
-            }}
             onClick={() => {
               setCondition(false);
               setShowpin(true);
               setShowInput(false);
             }}
-            className="mt-2"
+            className="btn btn-success mt-4"
           >
             submit
           </button>
@@ -141,43 +174,53 @@ function PhoneNumberForm({ setBtnOpen }) {
       )}
 
       {showpin && (
-        <form className="mt-4">
-          <FormControl variant="outlined" sx={{ minWidth: "60%" }}>
-            <TextField
-              variant="filled"
+        <div className="mt-4 ">
+          <form className="">
+            <input
+              className={`form-control p-3 w-25 mx-auto ${
+                errors.pin ? "is-invalid" : "is-valid"
+              }`}
               {...register("pin")}
-              type="number"
-              label="enter pin"
+              type="password"
+              placeholder="enter pin"
               defaultValue={defaultValues.pin}
-              InputProps={{ pattern: "[0-9]*", maxLength: 4 }}
             />
-          </FormControl>
 
-          <FormControl variant="outlined" sx={{ minWidth: "60%", my: 3 }}>
-            <TextField
+            {errors.pin && (
+              <p className="invalid-feedback text-center">
+                {errors.pin.message}
+              </p>
+            )}
+
+            <input
+              className={`form-control p-3 w-25 mx-auto mt-4 ${
+                errors.confirmPin ? "is-invalid" : "is-valid"
+              }`}
               {...register("confirmPin")}
-              label="confirm pin"
-              variant="filled"
-              type="number"
+              placeholder="confirm pin"
+              type="password"
               defaultValue={defaultValues.confirmPin}
-              InputProps={{ pattern: "[0-9]*", maxLength: 4 }}
             />
-          </FormControl>
 
-          <Button
-            sx={{ display: "block", backgroundColor: "lightgray" }}
-            style={{
-              color: "black",
-              border: "none",
-              padding: "1em",
-            }}
-            onClick={() => {
-              // navigate("ggcreg");
-            }}
-          >
-            continue
-          </Button>
-        </form>
+            {errors.confirmPin && (
+              <p className="invalid-feedback text-center">
+                {errors.confirmPin.message}
+              </p>
+            )}
+
+            <div className="d-flex justify-content-center mt-4">
+              <button
+                className="btn btn-success mx-auto text-center w-25 flex justify-content-center"
+                sx={{ display: "block", backgroundColor: "lightgray" }}
+                onClick={() => {
+                  // navigate("ggcreg");
+                }}
+              >
+                continue
+              </button>
+            </div>
+          </form>
+        </div>
       )}
     </div>
   );
