@@ -146,7 +146,7 @@ function PhoneNumberForm({ setBtnOpen, handleNext }) {
       {/* <button type="submit">Submit</button> */}
 
       {condition && (
-        <form action="">
+        <form action="" className="text-center">
           <h1>Enter OTP</h1>
           <p>
             We have sent you a text message to confirm your number. Enter it

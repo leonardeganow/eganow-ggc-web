@@ -1,14 +1,7 @@
 import { create } from "zustand";
 
 const useStore = create((set) => ({
-  formData: {
-    countryCode: "",
-    fullName: "",
-    telephoneNo: "56",
-    otp: "",
-    pin: "",
-    confirmPin: "",
-  },
+  releaseBtn: false,
   //   increasePopulation: () => set((state) => ({ formData: state.formData + 1 })),
   //   removeAllBears: () => set({ formData: {} }),
   onChange: (newFormData) => {

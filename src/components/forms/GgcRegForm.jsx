@@ -3,17 +3,34 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-function GgcRegForm() {
+function GgcRegForm({ handleNext }) {
   const schema = yup
     .object()
     .shape({
       fullName: yup.string().required("name  is required"),
+      gender: yup.string().required(),
+      country: yup.string().required(),
+      ageRange: yup.string().required(),
+      country: yup.string().required(),
+      regions: yup.string().required(),
+      constituencies: yup.string().required(),
+      industry: yup.string().required(),
+      occupation: yup.string().required(),
+      display_name_on_card: yup.string().required(),
+      card_pickup_location: yup.string().required(),
     })
     .required();
-  const {  handleSubmit, register, formState: {errors}  } = useForm({ 
+  const {
+    handleSubmit,
+    register,
+    watch,
+    getValues,
+    formState: { errors },
+  } = useForm({
     mode: "onChange",
     resolver: yupResolver(schema),
   });
+
   const defaultValues = {
     cards: {
       one: "standard",
@@ -38,6 +55,15 @@ function GgcRegForm() {
     country: {
       ghana: "Ghana",
       other: "other",
+    },
+
+    regions: {
+      one: "greater accra",
+      two: "cape coast",
+    },
+    constituencies: {
+      one: "ayawaso",
+      two: "lezokuku",
     },
     ageRange: {
       one: "18-24",
@@ -65,80 +91,96 @@ function GgcRegForm() {
     },
   };
 
+  console.log(watch("country"));
+
   const onSubmit = (data) => {
+    handleNext();
+    console.log(getValues("country"));
+    console.log(watch("country"));
+
     console.log("Form data:", data);
-    // Add your form submission logic here
   };
 
   return (
     <div>
       <h1 className="text-center">Good Gov. Card Registration</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="d-md-flex gap-4 justify-content-between">
-          <div className="">
-            <label htmlFor="" className="mb-1">
-              Card type{" "}
-            </label>
-            <select
-              className="form-select  p-3"
-              {...register("cards")}
-              defaultValue={defaultValues.cards.one}
-            >
-              <option value={defaultValues.cards.one}>
-                {defaultValues.cards.one}
-              </option>
-              <option value={defaultValues.cards.two}>
-                {defaultValues.cards.two}
-              </option>
-              <option value={defaultValues.cards.three}>
-                {defaultValues.cards.three}
-              </option>
-              <option value={defaultValues.cards.four}>
-                {defaultValues.cards.four}
-              </option>
-              <option value={defaultValues.cards.five}>
-                {defaultValues.cards.five}
-              </option>
-              <option value={defaultValues.cards.six}>
-                {defaultValues.cards.six}
-              </option>
-              <option value={defaultValues.cards.seven}>
-                {defaultValues.cards.seven}
-              </option>
-              <option value={defaultValues.cards.eight}>
-                {defaultValues.cards.eight}
-              </option>
-              <option value={defaultValues.cards.nine}>
-                {defaultValues.cards.nine}
-              </option>
-              <option value={defaultValues.cards.ten}>
-                {defaultValues.cards.ten}
-              </option>
-              <option value={defaultValues.cards.eleven}>
-                {defaultValues.cards.eleven}
-              </option>
-            </select>
+        <div className="d-md-flex  gap-2  justify-content-around">
+          <div className=" d-flex gap-2 flex-column">
+            <div>
+              <h6 htmlFor="" className="mb-1">
+                Card type{" "}
+              </h6>
+              <select
+                className="form-select  p-3"
+                {...register("cards")}
+                defaultValue={defaultValues.cards.one}
+              >
+                <option value={defaultValues.cards.one}>
+                  {defaultValues.cards.one}
+                </option>
+                <option value={defaultValues.cards.two}>
+                  {defaultValues.cards.two}
+                </option>
+                <option value={defaultValues.cards.three}>
+                  {defaultValues.cards.three}
+                </option>
+                <option value={defaultValues.cards.four}>
+                  {defaultValues.cards.four}
+                </option>
+                <option value={defaultValues.cards.five}>
+                  {defaultValues.cards.five}
+                </option>
+                <option value={defaultValues.cards.six}>
+                  {defaultValues.cards.six}
+                </option>
+                <option value={defaultValues.cards.seven}>
+                  {defaultValues.cards.seven}
+                </option>
+                <option value={defaultValues.cards.eight}>
+                  {defaultValues.cards.eight}
+                </option>
+                <option value={defaultValues.cards.nine}>
+                  {defaultValues.cards.nine}
+                </option>
+                <option value={defaultValues.cards.ten}>
+                  {defaultValues.cards.ten}
+                </option>
+                <option value={defaultValues.cards.eleven}>
+                  {defaultValues.cards.eleven}
+                </option>
+              </select>
+            </div>
 
-            <div className="marginInput">
+            <div className="">
               {/* <InputLabel htmlFor="full-name">Full Name</InputLabel> */}
-              <label htmlFor="" className="mb-1">
+              <h6 htmlFor="" className="mb-1">
                 Enter your full name{" "}
-              </label>
+              </h6>
 
               <input
-                className="form-control p-3"
+                className={`form-control p-3 ${
+                  errors.fullName ? "is-invalid" : ""
+                }`}
                 placeholder="Full name"
                 {...register("fullName")}
               />
-             {errors.fullName && <p className="invalid-feedback">{errors.fullName.message}</p>}
+              {/* {errors.fullName && (
+                <p className="invalid-feedback">{errors.fullName.message}</p>
+              )} */}
             </div>
 
-            <div className="marginInput">
-              <label htmlFor="" className="mb-1">
+            <div className="">
+              <h6 htmlFor="" className="mb-1">
                 Select country{" "}
-              </label>
+              </h6>
 
-              <select {...register("country")} className="form-select p-3">
+              <select
+                {...register("country")}
+                className={`form-select p-3 ${
+                  errors.country ? "is-invalid" : ""
+                }`}
+              >
                 <option value="" disabled selected hidden>
                   Country
                 </option>
@@ -152,36 +194,97 @@ function GgcRegForm() {
               </select>
             </div>
 
-            <div className="d-flex gap-4 w-100 justify-content-between marginInput">
+            {watch("country") === "Ghana" && (
               <div>
-                <label htmlFor="" className="mb-1">
-                  Gender
-                </label>
+                <h6 htmlFor="" className="mb-1">
+                  Select regions{" "}
+                </h6>
 
                 <select
-                  style={{ width: "100px" }}
-                  {...register("gender")}
-                  className="form-select p-3 "
-                  // defaultValue={defaultValues.gender.male}
+                  {...register("regions")}
+                  className={`form-select p-3 ${
+                    errors.regions ? "is-invalid" : ""
+                  }`}
                 >
                   <option value="" disabled selected hidden>
-                    Gender
+                    Regions
                   </option>
 
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
+                  <option value={defaultValues.regions.one}>
+                    {defaultValues.regions.one}
+                  </option>
+                  <option value={defaultValues.regions.two}>
+                    {defaultValues.regions.two}
+                  </option>
                 </select>
               </div>
+            )}
 
-              <div className="mb">
-                <label htmlFor="" className="mb-1">
+            {watch("country") === "Ghana" &&
+              watch("regions") === "greater accra" && (
+                <div>
+                  <h6 htmlFor="" className="mb-1">
+                    Select constituencies{" "}
+                  </h6>
+
+                  <select
+                    {...register("constituencies")}
+                    className={`form-select p-3 ${
+                      errors.constituencies ? "is-invalid" : ""
+                    }`}
+                  >
+                    <option value="" disabled selected hidden>
+                      constituencies
+                    </option>
+
+                    <option value={defaultValues.constituencies.one}>
+                      {defaultValues.constituencies.one}
+                    </option>
+                    <option value={defaultValues.constituencies.two}>
+                      {defaultValues.constituencies.two}
+                    </option>
+                  </select>
+                </div>
+              )}
+          </div>
+
+          <div className="d-md-flex flex-column  gap-2">
+            <div className="d-flex gap-2">
+              <div className=" ">
+                <div>
+                  <h6 htmlFor="" className="mb-1">
+                    Gender
+                  </h6>
+
+                  <select
+                    // style={{ width: "100px" }}
+                    {...register("gender")}
+                    className={`form-select p-3 ${
+                      errors.gender ? "is-invalid" : ""
+                    }`}
+                    // defaultValue={defaultValues.gender.male}
+                  >
+                    <option value="" disabled selected hidden>
+                      Gender
+                    </option>
+
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="">
+                <h6 htmlFor="" className="mb-1">
                   Age range{" "}
-                </label>
+                </h6>
 
                 <select
                   {...register("ageRange")}
-                  style={{ width: "150px" }}
-                  className="form-select p-3 mb"
+                  // style={{ width: "140px" }}
+                  className={`form-select p-3 ${
+                    errors.ageRange ? "is-invalid" : ""
+                  }`}
                 >
                   <option value="" disabled selected hidden>
                     Age range
@@ -199,14 +302,18 @@ function GgcRegForm() {
                 </select>
               </div>
             </div>
-          </div>
-          <div className=" w-100">
-            <div className="">
-              <label htmlFor="" className="mb-1">
-                Industry
-              </label>
 
-              <select {...register("industry")} className="form-select p-3">
+            <div className="">
+              <h6 htmlFor="" className="mb-1">
+                Industry
+              </h6>
+
+              <select
+                {...register("industry")}
+                className={`form-select p-3 ${
+                  errors.industry ? "is-invalid" : ""
+                }`}
+              >
                 <option value="" disabled selected hidden>
                   Industry
                 </option>
@@ -223,12 +330,17 @@ function GgcRegForm() {
               </select>
             </div>
 
-            <div className="marginInput">
-              <label htmlFor="" className="mb-1">
+            <div className="">
+              <h6 htmlFor="" className="mb-1">
                 Occupation{" "}
-              </label>
+              </h6>
 
-              <select {...register("occupation")} className="form-select p-3">
+              <select
+                {...register("occupation")}
+                className={`form-select p-3 ${
+                  errors.occupation ? "is-invalid" : ""
+                }`}
+              >
                 <option value="" disabled selected hidden>
                   Occupation
                 </option>
@@ -245,14 +357,16 @@ function GgcRegForm() {
               </select>
             </div>
 
-            <div className="marginInput">
-              <label htmlFor="" className="mb-1">
+            <div className="">
+              <h6 htmlFor="" className="mb-1">
                 Display name on card{" "}
-              </label>
+              </h6>
 
               <select
                 {...register("display_name_on_card")}
-                className="form-select p-3"
+                className={`form-select p-3 ${
+                  errors.display_name_on_card ? "is-invalid" : ""
+                }`}
               >
                 <option value="" disabled selected hidden>
                   Display name on card
@@ -267,14 +381,16 @@ function GgcRegForm() {
               </select>
             </div>
 
-            <div className="marginInput">
-              <label htmlFor="" className="mb-1">
+            <div className="">
+              <h6 htmlFor="" className="mb-1">
                 Card pick location{" "}
-              </label>
+              </h6>
 
               <select
                 {...register("card_pickup_location")}
-                className="form-select p-3"
+                className={`form-select p-3 ${
+                  errors.card_pickup_location ? "is-invalid" : ""
+                }`}
               >
                 <option value="" disabled selected hidden>
                   Card pick up location
@@ -291,13 +407,17 @@ function GgcRegForm() {
           </div>
         </div>
 
-        <button
+        {/* <button
+          className="btn btn-success my-2"
           onClick={() => {
             onSubmit();
           }}
         >
-          log
-        </button>
+          Continue
+        </button> */}
+        <div className=" d-flex justify-content-center mt-3">
+          <input type="submit" className="btn btn-success" />
+        </div>
       </form>
     </div>
   );

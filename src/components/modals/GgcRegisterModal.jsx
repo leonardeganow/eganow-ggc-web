@@ -13,8 +13,9 @@ const style = {
   width: "90vw", // Use viewport width
   maxWidth: "600px", // Set a maximum width if needed
   boxShadow: "40px",
+  maxHeight: "85%",
+  // overflowY: "scroll",
   borderRadius: "24px",
-
 };
 function GgcRegisterModal({ open, handleClose, handleOpen }) {
   const [btnOpen, setBtnOpen] = React.useState(false);
@@ -22,7 +23,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
   const totalSteps = 5;
 
   const handleNext = () => {
-    setBtnOpen(false);
+    // setBtnOpen(false);
     setCurrentStep((prevStep) => prevStep + 1);
   };
 
@@ -33,23 +34,27 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
   const renderForm = () => {
     switch (currentStep) {
       case 1:
-        return <PhoneNumberForm setBtnOpen={setBtnOpen} handleNext={handleNext}/>;
+        return (
+          <PhoneNumberForm setBtnOpen={setBtnOpen} handleNext={handleNext} />
+        );
       // Add more cases for additional steps
       case 2:
-        return <GgcRegForm />;
+        return <GgcRegForm setBtnOpen={setBtnOpen} handleNext={handleNext} />;
 
       case 3:
-        return <SelectAmount />;
+        return <SelectAmount setBtnOpen={setBtnOpen} handleNext={handleNext} />;
 
       case 4:
-        return <ChoosePayMethod />;
+        return (
+          <ChoosePayMethod setBtnOpen={setBtnOpen} handleNext={handleNext} />
+        );
       default:
         return null;
     }
   };
 
   return (
-    <div className="border">
+    <div className="">
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
         open={open}
@@ -57,7 +62,11 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div className={`bg-white p-5 ${currentStep === 2 ? "modalbehav": ""} `} style={style} sx={style}>
+        <div
+          className={`bg-white p-5 ${currentStep === 2 ? "modalbehav" : ""} `}
+          style={style}
+          sx={style}
+        >
           {/* <Typography id="modal-modal-title" variant="h6" component="h2">
             Text in a modal
           </Typography> */}
@@ -69,32 +78,30 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
           </div>
 
           {renderForm()}
-          <div
+          {/* <div
             style={{
-              marginLeft: currentStep === 1 ? "480px" : "",
+              display: currentStep === 1 ? "" : "",
             }}
             className=" d-flex justify-content-between "
           >
             {currentStep > 1 && (
-              <button
-            
-                className="bg-success btn"
-                onClick={handleBack}
-              >
+              <button className="bg-success btn" onClick={handleBack}>
                 Back
               </button>
             )}
             {currentStep < totalSteps && (
               <button
-                disabled={!btnOpen}
-           
+              style={{
+                display: currentStep === 1 ? "none" : "",
+              }}
+                // disabled={!btnOpen}
                 className="bg-success btn"
                 onClick={handleNext}
               >
                 Next
               </button>
             )}
-          </div>
+          </div> */}
         </div>
       </Modal>
     </div>

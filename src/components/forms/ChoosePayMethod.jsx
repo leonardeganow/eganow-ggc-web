@@ -1,18 +1,20 @@
 import * as React from "react";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import Input from "@mui/material/Input";
-import Button from "@mui/material/Button";
 import { useForm, Controller } from "react-hook-form";
-import MultiStep from "react-multistep";
-import { TextField } from "@mui/material";
-
+import {
+  PhoneInput,
+  defaultCountries,
+  parseCountry,
+} from "react-international-phone";
+import "react-international-phone/style.css";
 function ChoosePayMethod() {
   const [showMomo, setShowMomo] = React.useState(false);
-  const [showCard, setShowCard] = React.useState(false);
+  const [showCard, setShowCard] = React.useState(true);
   const { control, handleSubmit, register } = useForm();
+
+  const countries = defaultCountries.filter((country) => {
+    const { iso2 } = parseCountry(country);
+    return ["dd", "gh"].includes(iso2);
+  });
 
   const onSubmit = (data) => {
     console.log("Form data:", data);
@@ -23,238 +25,194 @@ function ChoosePayMethod() {
       {" "}
       <h1>Choose payment method</h1>
       <p>Pick the payment option that suits you bests</p>
-      <div className="border d-flex justify-content-center my-3">
-        <a
-          onClick={() => {
-            setShowMomo(false);
-            setShowCard(true);
-          }}
-          className=" w-25 bg-success text-white text-center p-2"
-        >
-          credit card
-        </a>
-        <a
-          onClick={() => {
-            setShowMomo(true);
-            setShowCard(false);
-          }}
-          className=" w-25 text-white bg-success text-center p-2 mx-2"
-        >
-          momo
-        </a>
-      </div>
-      {showMomo && (
-        <form action="">
-          <div className="-flex border justify-content-between ">
-            <div className="">
-              <FormControl variant="outlined" sx={{ minWidth: "100%" }}>
-                <Controller
-                  name="ggcidnumber"
-                  control={control}
-                  defaultValue={12345566}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      id="outlined-basic"
-                      label="ggcidnumber"
-                      variant="filled"
-                      size="small"
-                      type="number"
-                      inputProps={{ pattern: "[0-9]*" }}
-                    />
-                  )}
-                />
-              </FormControl>
+      <div className=" d-flex justify-content-center gap-2 my-1">
+        <div className="pl-2 pr-2 pb-2 ">
+          <div
+            className="d-flex border border-4 border-success rounded
+           "
+          >
+            <div
+              role="button"
+              className={` p-3 ${
+                showCard ? "bg-success text-white" : " text-success"
+              }`}
+              onClick={() => {
+                setShowMomo(false);
+                setShowCard(true);
+              }}
+            >
+              {" "}
+              Credit Card
             </div>
-            <div className="mt-4 regmodal2">
-              <FormControl
-                variant="filled"
-                sx={{ mt: 0, minWidth: "100%" }}
-                size="small"
-              >
-                <InputLabel id="country-label">select network</InputLabel>
-                <Controller
-                  name="select network"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <Select
-                      labelId="country-label"
-                      id="country"
-                      label="select-network"
-                      {...field}
-                    >
-                      <MenuItem value="Ghana">mtn</MenuItem>
-                    </Select>
-                  )}
-                />
-              </FormControl>
-              <div
-                style={{ width: "100%", marginTop: 20 }}
-                className="d-flex border  justify-content-between "
-              >
-                <FormControl sx={{ maxWidth: 80 }} fullWidth>
-                  {/* <InputLabel id="demo-simple-select-label">+233</InputLabel> */}
-                  <Controller
-                    name="countryCode"
-                    control={control}
-                    defaultValue={233}
-                    render={({ field }) => (
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        variant="filled"
-                        size="small"
-                        {...field}
-                      >
-                        <MenuItem value={233}>+233</MenuItem>
-                      </Select>
-                    )}
-                  />
-                </FormControl>
-
-                <FormControl variant="filled" sx={{ minWidth: "40%" }}>
-                  {/* <InputLabel htmlFor="full-name">Full Name</InputLabel> */}
-                  <TextField
-                    id="filled-basic"
-                    label="Phone number"
-                    variant="filled"
-                    size="small"
-                    type="number"
-                  />
-                  {/* <Input
-                id="full-name"
-                {...register("fullName", {
-                  required: "This field is required",
-                })}
-              /> */}
-                </FormControl>
-              </div>
-
-              <FormControl variant="outlined" sx={{ minWidth: "100%", my: 2 }}>
-                <Controller
-                  name="Registered-name"
-                  control={control}
-                  defaultValue={12345566}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      id="outlined-basic"
-                      label="registered name"
-                      variant="filled"
-                      size="small"
-                      type="text"
-                      inputProps={{ pattern: "[0-9]*" }}
-                    />
-                  )}
-                />
-              </FormControl>
+            <div
+              role="button"
+              onClick={() => {
+                setShowMomo(true);
+                setShowCard(false);
+              }}
+              className={` p-3 ${
+                showMomo ? "bg-success text-white" : " text-success"
+              }`}
+            >
+              {" "}
+              momo
             </div>
           </div>
-        </form>
-      )}
+        </div>
+      </div>
       {showCard && (
-        <form action="">
-          <div className=" border justify-content-between ">
-            <div className="regmodal2">
-              <FormControl variant="outlined" sx={{ minWidth: "100%" }}>
-                <Controller
-                  name="ggcidnumber"
-                  control={control}
-                  defaultValue={12345566}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      id="outlined-basic"
-                      label="ggcidnumber"
-                      variant="filled"
-                      size="small"
-                      type="number"
-                      inputProps={{ pattern: "[0-9]*" }}
-                    />
-                  )}
-                />
-              </FormControl>
+        <div id="credit-card" className="tab-pane fade show active pt-2">
+          <form role="form" onSubmit={(event) => event.preventDefault()}>
+            <div className="form-group">
+              <label htmlFor="username">
+                <h6>Good governance card ID number</h6>
+              </label>
+              <input
+                placeholder="Good governance card ID number"
+                required
+                className="form-control"
+              />
             </div>
-            <div className="regmodal2">
-              <FormControl variant="outlined" sx={{ minWidth: "100%", mt: 2 }}>
-                <Controller
-                  name="card-number"
-                  control={control}
-                  defaultValue={12345566}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      id="outlined-basic"
-                      label="card number"
-                      variant="filled"
-                      size="small"
-                      type="text"
-                      inputProps={{ pattern: "[0-9]*" }}
-                    />
-                  )}
+            <div className="form-group my-2">
+              <label htmlFor="cardNumber">
+                <h6>Card number</h6>
+              </label>
+              <div className="input-group">
+                <input
+                  placeholder="Valid card number"
+                  className="form-control"
+                  required
                 />
-              </FormControl>
-
-              <FormControl variant="outlined" sx={{ minWidth: "100%", my: 2 }}>
-                <Controller
-                  name="name-on-card"
-                  control={control}
-                  defaultValue={12345566}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      id="outlined-basic"
-                      label="name on card"
-                      variant="filled"
-                      size="small"
-                      type="text"
-                      inputProps={{ pattern: "[0-9]*" }}
-                    />
-                  )}
-                />
-              </FormControl>
-
-              <div className="d-md-flex justify-content-between  border">
-                <FormControl variant="outlined" sx={{ width: "40%" }}>
-                  <Controller
-                    name="Registered-name"
-                    control={control}
-                    defaultValue={12345566}
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        id="outlined-basic"
-                        label="expiry date"
-                        variant="filled"
-                        size="small"
-                        type="text"
-                        inputProps={{ pattern: "[0-9]*" }}
-                      />
-                    )}
-                  />
-                </FormControl>
-
-                <FormControl variant="outlined" sx={{ width: "30%" }}>
-                  <Controller
-                    name="Registered-name"
-                    control={control}
-                    defaultValue={12345566}
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        id="outlined-basic"
-                        label="cvv"
-                        variant="filled"
-                        size="small"
-                        type="text"
-                        inputProps={{ pattern: "[0-9]*" }}
-                      />
-                    )}
-                  />
-                </FormControl>
+                <div className="input-group-append">
+                  <span className="input-group-text text-muted">
+                    <i className="fab fa-cc-visa mx-1"></i>
+                    <i className="fab fa-cc-mastercard mx-1"></i>
+                    <i className="fab fa-cc-amex mx-1"></i>
+                  </span>
+                </div>
               </div>
             </div>
+
+            <div className="form-group mb-2">
+              <label htmlFor="username">
+                <h6>Name on card</h6>
+              </label>
+              <input
+                placeholder="Name on card"
+                required
+                className="form-control"
+              />
+            </div>
+            <div className="row">
+              <div className="col-sm-8">
+                <div className="form-group">
+                  <label>
+                    <span className="hidden-xs">
+                      <h6>Expiration Date</h6>
+                    </span>
+                  </label>
+                  <div className="input-group">
+                    <input
+                      type="number"
+                      placeholder="MM"
+                      name="expirationMonth"
+                      className="form-control"
+                      required
+                    />
+                    <input
+                      type="number"
+                      placeholder="YY"
+                      name="expirationYear"
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-sm-4">
+                <div className="form-group mb-4">
+                  <label
+                    data-toggle="tooltip"
+                    title="Three digit CV code on the back of your card"
+                  >
+                    <h6>
+                      CVV <i className="fa fa-question-circle d-inline"></i>
+                    </h6>
+                  </label>
+                  <input type="text" required className="form-control" />
+                </div>
+              </div>
+            </div>
+            <div className="d-flex justify-content-center">
+              <button
+                type="button"
+                className="subscribe btn btn-success btn-block shadow-sm"
+              >
+                Make Payment
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+      {showMomo && (
+        <form role="form" onSubmit={(event) => event.preventDefault()}>
+          <div className="form-group">
+            <label htmlFor="username">
+              <h6>Good governance card ID number</h6>
+            </label>
+            <input
+              placeholder="Good governance card ID number"
+              required
+              className="form-control"
+            />
+          </div>
+
+          <div className="d-flex gap-4 align-items-center my-2">
+            <div>
+              <label htmlFor="username">
+                <h6>Phone number</h6>
+              </label>
+              <PhoneInput
+                className="
+            "
+                defaultCountry="gh"
+                countries={countries}
+              />
+            </div>
+
+            <div className="form-group ">
+              <label htmlFor="username">
+                <h6>Select network</h6>
+              </label>
+              <select placeholder="fgdgdf" className="form-select  p-1  w-10">
+                <option value="" disabled selected hidden>
+                  select network
+                </option>
+                <option value="">mtn</option>
+                <option value="">vodafone</option>
+                <option value="">airtel tigo</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="form-group mb-2">
+            <label htmlFor="username">
+              <h6>Registered name</h6>
+            </label>
+            <input
+              placeholder="Registered name"
+              required
+              className="form-control"
+            />
+          </div>
+
+          <div className="d-flex justify-content-center">
+            <button
+              type="button"
+              className="subscribe btn btn-success btn-block shadow-sm"
+            >
+              Make Payment
+            </button>
           </div>
         </form>
       )}
