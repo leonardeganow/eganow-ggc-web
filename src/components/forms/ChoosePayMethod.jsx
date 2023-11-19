@@ -6,7 +6,11 @@ import {
   parseCountry,
 } from "react-international-phone";
 import "react-international-phone/style.css";
-function ChoosePayMethod() {
+import { FaMoneyBill1Wave } from "react-icons/fa6";
+
+import { FaCreditCard } from "react-icons/fa6";
+
+function ChoosePayMethod({ handleNext }) {
   const [showMomo, setShowMomo] = React.useState(false);
   const [showCard, setShowCard] = React.useState(true);
   const { control, handleSubmit, register } = useForm();
@@ -33,7 +37,7 @@ function ChoosePayMethod() {
           >
             <div
               role="button"
-              className={` p-3 ${
+              className={` p-3 d-flex gap-2 align-items-center ${
                 showCard ? "bg-success text-white" : " text-success"
               }`}
               onClick={() => {
@@ -42,7 +46,8 @@ function ChoosePayMethod() {
               }}
             >
               {" "}
-              Credit Card
+              <FaCreditCard className="mr-2" />
+              <span className="ml-1"> Credit Card</span>
             </div>
             <div
               role="button"
@@ -50,12 +55,13 @@ function ChoosePayMethod() {
                 setShowMomo(true);
                 setShowCard(false);
               }}
-              className={` p-3 ${
+              className={` p-3 d-flex gap-2 align-items-center ${
                 showMomo ? "bg-success text-white" : " text-success"
               }`}
             >
               {" "}
-              momo
+              <FaMoneyBill1Wave />
+              <span> momo</span>
             </div>
           </div>
         </div>
@@ -145,6 +151,9 @@ function ChoosePayMethod() {
             </div>
             <div className="d-flex justify-content-center">
               <button
+                onClick={() => {
+                  handleNext();
+                }}
                 type="button"
                 className="subscribe btn btn-success btn-block shadow-sm"
               >
@@ -208,6 +217,9 @@ function ChoosePayMethod() {
 
           <div className="d-flex justify-content-center">
             <button
+              onClick={() => {
+                handleNext();
+              }}
               type="button"
               className="subscribe btn btn-success btn-block shadow-sm"
             >

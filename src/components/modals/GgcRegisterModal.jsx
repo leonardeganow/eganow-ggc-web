@@ -4,6 +4,7 @@ import GgcRegForm from "../forms/GgcRegForm";
 import PhoneNumberForm from "../forms/PhoneNumberForm";
 import ChoosePayMethod from "../forms/ChoosePayMethod";
 import SelectAmount from "../forms/SelectAmount";
+import PaySuccess from "../paymentpages/PaySuccess";
 
 const style = {
   position: "relative",
@@ -48,6 +49,9 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
         return (
           <ChoosePayMethod setBtnOpen={setBtnOpen} handleNext={handleNext} />
         );
+
+      case 5:
+        return <PaySuccess setBtnOpen={setBtnOpen} handleNext={handleNext} />;
       default:
         return null;
     }
