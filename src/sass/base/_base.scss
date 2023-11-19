@@ -264,7 +264,14 @@ img{
       flex-direction: column; /* Stack items vertically on smaller screens */
     }
   
-   
+   .marginInput {
+    margin: 20px 0;
+   }  
+
+   .modalbehav {
+height: 80%;
+overflow: scroll;
+   }
   }
 
   @media (min-width: 600px) {

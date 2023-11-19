@@ -1,17 +1,9 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import GgcRegForm from "../forms/GgcRegForm";
-import MultiStep from "react-multistep";
 import PhoneNumberForm from "../forms/PhoneNumberForm";
-import CreatePinForm from "../forms/CreatePinForm";
-import EnterOtpForm from "../forms/EnterOtpForm";
 import ChoosePayMethod from "../forms/ChoosePayMethod";
 import SelectAmount from "../forms/SelectAmount";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Form, ProgressBar } from "react-bootstrap";
 
 const style = {
   position: "relative",
@@ -22,6 +14,7 @@ const style = {
   maxWidth: "600px", // Set a maximum width if needed
   boxShadow: "40px",
   borderRadius: "24px",
+
 };
 function GgcRegisterModal({ open, handleClose, handleOpen }) {
   const [btnOpen, setBtnOpen] = React.useState(false);
@@ -40,7 +33,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
   const renderForm = () => {
     switch (currentStep) {
       case 1:
-        return <PhoneNumberForm setBtnOpen={setBtnOpen} />;
+        return <PhoneNumberForm setBtnOpen={setBtnOpen} handleNext={handleNext}/>;
       // Add more cases for additional steps
       case 2:
         return <GgcRegForm />;
@@ -64,7 +57,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div className="bg-white p-5" style={style} sx={style}>
+        <div className={`bg-white p-5 ${currentStep === 2 ? "modalbehav": ""} `} style={style} sx={style}>
           {/* <Typography id="modal-modal-title" variant="h6" component="h2">
             Text in a modal
           </Typography> */}
@@ -84,13 +77,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
           >
             {currentStep > 1 && (
               <button
-                style={{
-                  color: "black",
-                  border: "none",
-                  padding: "1em",
-                  marginTop: "2em",
-                  color: " white",
-                }}
+            
                 className="bg-success btn"
                 onClick={handleBack}
               >
@@ -100,13 +87,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
             {currentStep < totalSteps && (
               <button
                 disabled={!btnOpen}
-                style={{
-                  color: "black",
-                  border: "none",
-                  padding: "1em",
-                  marginTop: "2em",
-                  color: " white",
-                }}
+           
                 className="bg-success btn"
                 onClick={handleNext}
               >

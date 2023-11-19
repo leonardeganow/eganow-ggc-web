@@ -164,7 +164,7 @@ const MissionVission = (props) => {
         <div onClick={() => setOpen(true)} className="election-mission-wrap">
           <div className="row">
             {Mission.map((mvsion, tsm) => (
-              <div className="col-lg-4 col-md-4 col-sm-6 col-12" key={mvsion}>
+              <div className="col-lg-4 col-md-4 col-sm-6 col-12" key={tsm}>
                 <div className="election-mission-content">
                   <img src={mvsion.mImg} alt="" />
                   {/* <div className="title">{mvsion.Title}</div> */}

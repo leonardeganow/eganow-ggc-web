@@ -1,16 +1,11 @@
 import * as React from "react";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useForm } from "react-hook-form";
-import { Button, InputLabel, TextField } from "@mui/material";
-import useStore from "../../formstore/formStore";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import membersGRPC from "../../api/grpcapi/membersGRPC";
 import customerGRPC from "../../api/grpcapi/customerGRPC";
 
-function PhoneNumberForm({ setBtnOpen }) {
+function PhoneNumberForm({ setBtnOpen, handleNext }) {
   const [condition, setCondition] = React.useState(false);
   const [showpin, setShowpin] = React.useState(false);
   const [showInput, setShowInput] = React.useState(true);
@@ -44,11 +39,11 @@ function PhoneNumberForm({ setBtnOpen }) {
     register,
     handleSubmit,
     reset,
+    getValues,
 
-    formState: { errors, touchedFields },
+    formState: { errors, isDirty },
   } = useForm({
     mode: "onChange",
-
     resolver: yupResolver(schema),
   });
 
@@ -84,37 +79,42 @@ function PhoneNumberForm({ setBtnOpen }) {
 
   return (
     <div>
-      <h1 className="text-center">
-        {showpin ? "Create new pin" : "Phone Number"}
-      </h1>
-      <p className="text-center">
-        {showpin
-          ? "Create pin to protect the card you will acquire"
-          : "Enter your phone number below to view your good governance card or register"}
-      </p>
       {showInput && (
         <form onSubmit={handleSubmit(onSubmit)}>
+          <h1 className="text-center">
+            {/* "Create new pin" :  */}
+            Phone Number
+          </h1>
+          <p className="text-center">
+            {/* "Create pin to protect the card you will acquire" */}
+            Enter your phone number below to view your good governance card or
+            register
+          </p>
           <div className="text-center ">
             <div
-              style={{ width: "80%" }}
-              className=" mx-auto d-flex justify-content-between "
+              style={{ width: "100%" }}
+              className=" mx-auto d-flex justify-content-center gap-4 "
             >
               <select
-                style={{ height: "55px", width: "30%" }}
-                className="form-select h-7"
+                style={{ height: "55px", width: "90px" }}
+                className="form-select h-7 "
                 {...register("countryCode")}
                 defaultValue={defaultValues.countryCode}
               >
                 <option value={233}>+233</option>
               </select>
-              <div style={{ width: "60%" }} className=" ">
+              <div className=" ">
                 <input
                   style={{ width: "100%" }}
                   {...register("telephoneNo")}
                   defaultValue={defaultValues.telephoneNo}
                   placeholder="telephoneNo"
                   className={`form-control ${
-                    errors.telephoneNo ? "is-invalid" : "is-valid"
+                    errors.telephoneNo
+                      ? "is-invalid"
+                      : isDirty
+                      ? "is-valid"
+                      : ""
                   }  outline-none p-3`}
                 />
 
@@ -130,7 +130,15 @@ function PhoneNumberForm({ setBtnOpen }) {
             </div>
 
             {/* {errors.telephoneNo && <p>{errors.telephoneNo.message}</p>} */}
-            <button className="btn btn-success mt-4"> continue</button>
+            <button
+              disabled={errors.telephoneNo || !getValues("telephoneNo")}
+              onClick={() => onSubmit()}
+              type="submit"
+              className="btn btn-success mt-4"
+            >
+              {" "}
+              continue
+            </button>
           </div>
         </form>
       )}
@@ -139,15 +147,15 @@ function PhoneNumberForm({ setBtnOpen }) {
 
       {condition && (
         <form action="">
-          {/* <h1>Enter OTP</h1>
+          <h1>Enter OTP</h1>
           <p>
             We have sent you a text message to confirm your number. Enter it
             below.
-          </p> */}
+          </p>
 
           <input
             className={`form-control ${
-              errors.otp ? "is-invalid" : "is-valid"
+              errors.otp ? "is-invalid" : getValues("otp") ? "is-valid" : ""
             }  outline-none p-3`}
             sx={{ width: 1 }}
             {...register("otp")}
@@ -161,6 +169,7 @@ function PhoneNumberForm({ setBtnOpen }) {
           )}
 
           <button
+            disabled={errors.otp || !getValues("otp")}
             onClick={() => {
               setCondition(false);
               setShowpin(true);
@@ -175,10 +184,14 @@ function PhoneNumberForm({ setBtnOpen }) {
 
       {showpin && (
         <div className="mt-4 ">
-          <form className="">
+          <h1 className="text-center">Create new pin</h1>
+          <p className="text-center">
+            Create pin to protect the card you will acquire
+          </p>
+          <div className="">
             <input
-              className={`form-control p-3 w-25 mx-auto ${
-                errors.pin ? "is-invalid" : "is-valid"
+              className={`form-control p-3 w-50 mx-auto ${
+                errors.pin ? "is-invalid" : getValues("pin") ? "is-valid" : ""
               }`}
               {...register("pin")}
               type="password"
@@ -193,8 +206,12 @@ function PhoneNumberForm({ setBtnOpen }) {
             )}
 
             <input
-              className={`form-control p-3 w-25 mx-auto mt-4 ${
-                errors.confirmPin ? "is-invalid" : "is-valid"
+              className={`form-control p-3 w-50 mx-auto mt-4 ${
+                errors.confirmPin
+                  ? "is-invalid"
+                  : getValues("confirmPin")
+                  ? "is-valid"
+                  : ""
               }`}
               {...register("confirmPin")}
               placeholder="confirm pin"
@@ -210,16 +227,21 @@ function PhoneNumberForm({ setBtnOpen }) {
 
             <div className="d-flex justify-content-center mt-4">
               <button
-                className="btn btn-success mx-auto text-center w-25 flex justify-content-center"
-                sx={{ display: "block", backgroundColor: "lightgray" }}
+                disabled={
+                  errors.pin ||
+                  errors.confirmPin ||
+                  !getValues("pin") ||
+                  !getValues("confirmPin")
+                }
+                className="btn btn-success mx-auto text-center "
                 onClick={() => {
-                  // navigate("ggcreg");
+                  handleNext();
                 }}
               >
                 continue
               </button>
             </div>
-          </form>
+          </div>
         </div>
       )}
     </div>

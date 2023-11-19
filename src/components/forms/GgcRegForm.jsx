@@ -1,16 +1,69 @@
 import * as React from "react";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import Input from "@mui/material/Input";
-import Button from "@mui/material/Button";
-import { useForm, Controller } from "react-hook-form";
-import MultiStep from "react-multistep";
-import { TextField } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 function GgcRegForm() {
-  const { control, handleSubmit, register } = useForm();
+  const schema = yup
+    .object()
+    .shape({
+      fullName: yup.string().required("name  is required"),
+    })
+    .required();
+  const {  handleSubmit, register, formState: {errors}  } = useForm({ 
+    mode: "onChange",
+    resolver: yupResolver(schema),
+  });
+  const defaultValues = {
+    cards: {
+      one: "standard",
+      two: "hope",
+      three: "silver",
+      four: "prestige",
+      five: "platinum",
+      six: "loyalty",
+      seven: "justice",
+      eight: "gold",
+      nine: "freedom",
+      ten: "bronze",
+      eleven: "stanarisedard",
+    },
+
+    fullName: "",
+    gender: {
+      male: "male",
+      female: "female",
+    },
+
+    country: {
+      ghana: "Ghana",
+      other: "other",
+    },
+    ageRange: {
+      one: "18-24",
+      two: "25-40",
+      three: "above 60",
+    },
+    industry: {
+      one: "finance",
+      two: "agriculture",
+      three: "sports",
+    },
+    occupation: {
+      one: "farmer",
+      two: "teacher",
+      three: "nurse",
+    },
+    display_name_on_card: {
+      one: "yes",
+      two: "no",
+    },
+
+    card_pickup_location: {
+      one: "accra",
+      two: "eastlegon",
+    },
+  };
 
   const onSubmit = (data) => {
     console.log("Form data:", data);
@@ -19,273 +72,232 @@ function GgcRegForm() {
 
   return (
     <div>
-      <h1 style={{ fontSize: "20px", textAlign: "center" }}>
-        Good Gov. Card Registration
-      </h1>
+      <h1 className="text-center">Good Gov. Card Registration</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="d-md-flex justify-content-around">
-          <div className="regmodal">
-            <FormControl
-              variant="filled"
-              sx={{ mt: 2, minWidth: "100%" }}
-              size="small"
+        <div className="d-md-flex gap-4 justify-content-between">
+          <div className="">
+            <label htmlFor="" className="mb-1">
+              Card type{" "}
+            </label>
+            <select
+              className="form-select  p-3"
+              {...register("cards")}
+              defaultValue={defaultValues.cards.one}
             >
-              <InputLabel
-                sx={{ fontSize: "16px" }}
-                id="demo-select-small-label"
-              >
-                Card
-              </InputLabel>
-              <Controller
-                name="card"
-                control={control}
-                defaultValue="Loyalty GHS 250"
-                render={({ field }) => (
-                  <Select
-                    labelId="demo-select-small-label"
-                    id="demo-select-small"
-                    label="Card"
-                    {...field}
-                    sx={{ fontSize: "14px" }}
-                  >
-                    <MenuItem value="Loyalty GHS 250">Loyalty GHS 250</MenuItem>
-                    <MenuItem value="Another Option">Another Option</MenuItem>
-                  </Select>
-                )}
+              <option value={defaultValues.cards.one}>
+                {defaultValues.cards.one}
+              </option>
+              <option value={defaultValues.cards.two}>
+                {defaultValues.cards.two}
+              </option>
+              <option value={defaultValues.cards.three}>
+                {defaultValues.cards.three}
+              </option>
+              <option value={defaultValues.cards.four}>
+                {defaultValues.cards.four}
+              </option>
+              <option value={defaultValues.cards.five}>
+                {defaultValues.cards.five}
+              </option>
+              <option value={defaultValues.cards.six}>
+                {defaultValues.cards.six}
+              </option>
+              <option value={defaultValues.cards.seven}>
+                {defaultValues.cards.seven}
+              </option>
+              <option value={defaultValues.cards.eight}>
+                {defaultValues.cards.eight}
+              </option>
+              <option value={defaultValues.cards.nine}>
+                {defaultValues.cards.nine}
+              </option>
+              <option value={defaultValues.cards.ten}>
+                {defaultValues.cards.ten}
+              </option>
+              <option value={defaultValues.cards.eleven}>
+                {defaultValues.cards.eleven}
+              </option>
+            </select>
+
+            <div className="marginInput">
+              {/* <InputLabel htmlFor="full-name">Full Name</InputLabel> */}
+              <label htmlFor="" className="mb-1">
+                Enter your full name{" "}
+              </label>
+
+              <input
+                className="form-control p-3"
+                placeholder="Full name"
+                {...register("fullName")}
               />
-            </FormControl>
-
-            <div className="marginInput">
-              <FormControl variant="filled" sx={{ mt: 2, minWidth: "100%" }}>
-                {/* <InputLabel htmlFor="full-name">Full Name</InputLabel> */}
-                <TextField
-                  id="filled-basic"
-                  label="full name"
-                  variant="filled"
-                  size="small"
-                />
-                {/* <Input
-                id="full-name"
-                {...register("fullName", {
-                  required: "This field is required",
-                })}
-              /> */}
-              </FormControl>
+             {errors.fullName && <p className="invalid-feedback">{errors.fullName.message}</p>}
             </div>
 
             <div className="marginInput">
-              <FormControl
-                variant="filled"
-                sx={{ mt: 2, minWidth: "100%" }}
-                size="small"
-              >
-                <InputLabel id="country-label">Country</InputLabel>
-                <Controller
-                  name="country"
-                  control={control}
-                  defaultValue="Ghana"
-                  render={({ field }) => (
-                    <Select
-                      labelId="country-label"
-                      id="country"
-                      label="Country"
-                      {...field}
-                    >
-                      <MenuItem value="Ghana">Ghana</MenuItem>
-                    </Select>
-                  )}
-                />
-              </FormControl>
+              <label htmlFor="" className="mb-1">
+                Select country{" "}
+              </label>
+
+              <select {...register("country")} className="form-select p-3">
+                <option value="" disabled selected hidden>
+                  Country
+                </option>
+
+                <option value={defaultValues.country.ghana}>
+                  {defaultValues.country.ghana}
+                </option>
+                <option value={defaultValues.country.other}>
+                  {defaultValues.country.other}
+                </option>
+              </select>
             </div>
 
-            <div className="d-flex w-100 justify-content-between marginInput">
-              <FormControl
-                variant="filled"
-                sx={{ mt: 2, minWidth: 0 }}
-                size="small"
-              >
-                <InputLabel id="demo-simple-select-standard-label">
+            <div className="d-flex gap-4 w-100 justify-content-between marginInput">
+              <div>
+                <label htmlFor="" className="mb-1">
                   Gender
-                </InputLabel>
-                <Controller
-                  name="gender"
-                  control={control}
-                  defaultValue="Male"
-                  render={({ field }) => (
-                    <Select
-                      labelId="demo-simple-select-standard-label"
-                      id="demo-simple-select-standard"
-                      label="Gender"
-                      {...field}
-                    >
-                      <MenuItem value="Male">Male</MenuItem>
-                      <MenuItem value="Female">Female</MenuItem>
-                    </Select>
-                  )}
-                />
-              </FormControl>
+                </label>
 
-              <FormControl
-                variant="filled"
-                sx={{ mt: 2, minWidth: "50%" }}
-                size="small"
-              >
-                <InputLabel id="age-range-label">Age range</InputLabel>
-                <Controller
-                  name="ageRange"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <Select
-                      labelId="age-range-label"
-                      id="age-range"
-                      label="Age range"
-                      {...field}
-                    >
-                      <MenuItem value="10">Ten</MenuItem>
-                      <MenuItem value="20">Twenty</MenuItem>
-                      <MenuItem value="30">Thirty</MenuItem>
-                    </Select>
-                  )}
-                />
-              </FormControl>
+                <select
+                  style={{ width: "100px" }}
+                  {...register("gender")}
+                  className="form-select p-3 "
+                  // defaultValue={defaultValues.gender.male}
+                >
+                  <option value="" disabled selected hidden>
+                    Gender
+                  </option>
+
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+
+              <div className="mb">
+                <label htmlFor="" className="mb-1">
+                  Age range{" "}
+                </label>
+
+                <select
+                  {...register("ageRange")}
+                  style={{ width: "150px" }}
+                  className="form-select p-3 mb"
+                >
+                  <option value="" disabled selected hidden>
+                    Age range
+                  </option>
+
+                  <option value={defaultValues.ageRange.one}>
+                    {defaultValues.ageRange.one}
+                  </option>
+                  <option value={defaultValues.ageRange.two}>
+                    {defaultValues.ageRange.two}
+                  </option>
+                  <option value={defaultValues.ageRange.three}>
+                    {defaultValues.ageRange.three}
+                  </option>
+                </select>
+              </div>
             </div>
           </div>
+          <div className=" w-100">
+            <div className="">
+              <label htmlFor="" className="mb-1">
+                Industry
+              </label>
 
-          <div className="regmodal">
-            <FormControl
-              variant="filled"
-              sx={{ mt: 2, minWidth: "100%" }}
-              size="small"
-            >
-              <InputLabel id="Industry-label">Industry</InputLabel>
-              <Controller
-                name="Industry"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <Select
-                    labelId="Industry-label"
-                    id="Industry"
-                    label="Industry"
-                    {...field}
-                  >
-                    <MenuItem value="technology">technology</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
-                )}
-              />
-            </FormControl>
+              <select {...register("industry")} className="form-select p-3">
+                <option value="" disabled selected hidden>
+                  Industry
+                </option>
 
-            <div className="marginInput">
-              <FormControl
-                variant="filled"
-                sx={{ mt: 2, minWidth: "100%" }}
-                size="small"
-              >
-                <InputLabel id="Occupation-label">Occupation</InputLabel>
-                <Controller
-                  name="Occupation"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <Select
-                      labelId="Occupation-label"
-                      id="Occupation"
-                      label="Occupation"
-                      {...field}
-                    >
-                      <MenuItem value="software engineer">
-                        software engineer
-                      </MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                  )}
-                />
-              </FormControl>
+                <option value={defaultValues.industry.one}>
+                  {defaultValues.industry.one}
+                </option>
+                <option value={defaultValues.industry.two}>
+                  {defaultValues.industry.two}
+                </option>
+                <option value={defaultValues.industry.three}>
+                  {defaultValues.industry.three}
+                </option>
+              </select>
             </div>
 
             <div className="marginInput">
-              <FormControl
-                variant="filled"
-                sx={{ mt: 2, minWidth: "100%" }}
-                size="small"
+              <label htmlFor="" className="mb-1">
+                Occupation{" "}
+              </label>
+
+              <select {...register("occupation")} className="form-select p-3">
+                <option value="" disabled selected hidden>
+                  Occupation
+                </option>
+
+                <option value={defaultValues.occupation.one}>
+                  {defaultValues.occupation.one}
+                </option>
+                <option value={defaultValues.occupation.two}>
+                  {defaultValues.occupation.two}
+                </option>
+                <option value={defaultValues.occupation.three}>
+                  {defaultValues.occupation.three}
+                </option>
+              </select>
+            </div>
+
+            <div className="marginInput">
+              <label htmlFor="" className="mb-1">
+                Display name on card{" "}
+              </label>
+
+              <select
+                {...register("display_name_on_card")}
+                className="form-select p-3"
               >
-                <InputLabel id="Display-name-on-card-label">
+                <option value="" disabled selected hidden>
                   Display name on card
-                </InputLabel>
-                <Controller
-                  name="Display-name-on-card"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <Select
-                      labelId="Display-name-on-card-label"
-                      id="Display-name-on-card"
-                      label="Display-name-on-card"
-                      {...field}
-                    >
-                      <MenuItem value="yes">Yes</MenuItem>
-                      <MenuItem value={20}>No</MenuItem>
-                    </Select>
-                  )}
-                />
-              </FormControl>
+                </option>
+
+                <option value={defaultValues.display_name_on_card.one}>
+                  {defaultValues.display_name_on_card.one}
+                </option>
+                <option value={defaultValues.display_name_on_card.two}>
+                  {defaultValues.display_name_on_card.two}
+                </option>
+              </select>
             </div>
 
             <div className="marginInput">
-              <FormControl
-                variant="filled"
-                sx={{ mt: 2, minWidth: "100%" }}
-                size="small"
+              <label htmlFor="" className="mb-1">
+                Card pick location{" "}
+              </label>
+
+              <select
+                {...register("card_pickup_location")}
+                className="form-select p-3"
               >
-                <InputLabel id="Card-pickup-location-label">
-                  Card pickup location
-                </InputLabel>
-                <Controller
-                  name="Card-pickup-location"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <Select
-                      labelId="Card-pickup-location-label"
-                      id="Card-pickup-location"
-                      label="Card-pickup-location"
-                      {...field}
-                    >
-                      <MenuItem value="accra">accra</MenuItem>
-                      <MenuItem value={20}>No</MenuItem>
-                    </Select>
-                  )}
-                />
-              </FormControl>
+                <option value="" disabled selected hidden>
+                  Card pick up location
+                </option>
+
+                <option value={defaultValues.card_pickup_location.one}>
+                  {defaultValues.card_pickup_location.one}
+                </option>
+                <option value={defaultValues.card_pickup_location.two}>
+                  {defaultValues.card_pickup_location.two}
+                </option>
+              </select>
             </div>
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+        <button
+          onClick={() => {
+            onSubmit();
           }}
         >
-          {/* <Button
-            type="submit"
-            sx={{
-              mt: 3,
-              backgroundColor: "green",
-              color: "white",
-              width: "50%",
-              padding: 1,
-              borderRadius: "8px",
-            }}
-          >
-            Make Payment
-          </Button> */}
-        </div>
+          log
+        </button>
       </form>
     </div>
   );
