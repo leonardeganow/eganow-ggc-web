@@ -4,7 +4,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import fImg1 from "../../images/election-donation/1.svg";
-import jm from "../../images/portfolio/donate2.svg";
+import jm from "../../images/portfolio/donate.png";
+import ggc from "../../images/portfolio/t2.png";
+import follow from "../../images/portfolio/jm1.png";
 import fImg2 from "../../images/election-donation/2.svg";
 import fImg3 from "../../images/election-donation/3.svg";
 import { Link } from "react-scroll";
@@ -97,7 +99,7 @@ const Features = (props) => {
             <div className="wpo-service-item shadow rounded-3">
               <div className="wpo-service-text p-2">
                 <div className="service-icon overflow-hidden rounded-3">
-                  <img src={jm} alt="imag1" />
+                  <img src={ggc} alt="imag1"  className="img-fluid"/>
                 </div>
                 <h2 className="text-center text-danger m-0">GET A GGC CARD</h2>
                 <p className="p-2 m-0 text-center">
@@ -118,7 +120,7 @@ const Features = (props) => {
             <div className="wpo-service-item shadow rounded-3">
               <div className="wpo-service-text p-2">
                 <div className="service-icon overflow-hidden rounded-3">
-                  <img src={jm} alt="imag1" />
+                  <img src={follow} alt="imag1" className="inmg-fluid"/>
                 </div>
                 <h2 className="text-center text-danger m-0">FOLLOW CAMPAIGN</h2>
                 <p className="p-2 m-0 text-center">
@@ -127,7 +129,7 @@ const Features = (props) => {
                 </p>
                 <div className="text-center p-2 m-0">
                   <button type="button" className="btn btn-success">
-                    Click To Donate
+                    Follow Us
                   </button>
                 </div>
               </div>
