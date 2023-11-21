@@ -2294,7 +2294,10 @@ proto.Members.MemberExistResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     status: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
     message: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    accountstatus: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    accountstatus: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    cardno: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    memberid: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    membername: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
 
   if (includeInstance) {
@@ -2343,6 +2346,18 @@ proto.Members.MemberExistResponse.deserializeBinaryFromReader = function(msg, re
       var value = /** @type {!proto.Members.AccountCreationStatus} */ (reader.readEnum());
       msg.setAccountstatus(value);
       break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCardno(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMemberid(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMembername(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -2390,6 +2405,27 @@ proto.Members.MemberExistResponse.serializeBinaryToWriter = function(message, wr
   if (f !== 0.0) {
     writer.writeEnum(
       3,
+      f
+    );
+  }
+  f = message.getCardno();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = message.getMemberid();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = message.getMembername();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
       f
     );
   }
@@ -2447,6 +2483,60 @@ proto.Members.MemberExistResponse.prototype.getAccountstatus = function() {
  */
 proto.Members.MemberExistResponse.prototype.setAccountstatus = function(value) {
   return jspb.Message.setProto3EnumField(this, 3, value);
+};
+
+
+/**
+ * optional string cardNo = 4;
+ * @return {string}
+ */
+proto.Members.MemberExistResponse.prototype.getCardno = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.Members.MemberExistResponse} returns this
+ */
+proto.Members.MemberExistResponse.prototype.setCardno = function(value) {
+  return jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string memberId = 5;
+ * @return {string}
+ */
+proto.Members.MemberExistResponse.prototype.getMemberid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.Members.MemberExistResponse} returns this
+ */
+proto.Members.MemberExistResponse.prototype.setMemberid = function(value) {
+  return jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string MemberName = 6;
+ * @return {string}
+ */
+proto.Members.MemberExistResponse.prototype.getMembername = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.Members.MemberExistResponse} returns this
+ */
+proto.Members.MemberExistResponse.prototype.setMembername = function(value) {
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -3758,7 +3848,8 @@ proto.Members.MemberLoginResponse.toObject = function(includeInstance, msg) {
     memberid: jspb.Message.getFieldWithDefault(msg, 4, ""),
     cardtypeid: jspb.Message.getFieldWithDefault(msg, 5, ""),
     cardtypename: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    fullname: jspb.Message.getFieldWithDefault(msg, 7, "")
+    fullname: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    registrationdate: jspb.Message.getFieldWithDefault(msg, 8, "")
   };
 
   if (includeInstance) {
@@ -3822,6 +3913,10 @@ proto.Members.MemberLoginResponse.deserializeBinaryFromReader = function(msg, re
     case 7:
       var value = /** @type {string} */ (reader.readString());
       msg.setFullname(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setRegistrationdate(value);
       break;
     default:
       reader.skipField();
@@ -3898,6 +3993,13 @@ proto.Members.MemberLoginResponse.serializeBinaryToWriter = function(message, wr
   if (f.length > 0) {
     writer.writeString(
       7,
+      f
+    );
+  }
+  f = message.getRegistrationdate();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
       f
     );
   }
@@ -4030,6 +4132,24 @@ proto.Members.MemberLoginResponse.prototype.setFullname = function(value) {
 };
 
 
+/**
+ * optional string registrationDate = 8;
+ * @return {string}
+ */
+proto.Members.MemberLoginResponse.prototype.getRegistrationdate = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.Members.MemberLoginResponse} returns this
+ */
+proto.Members.MemberLoginResponse.prototype.setRegistrationdate = function(value) {
+  return jspb.Message.setProto3StringField(this, 8, value);
+};
+
+
 
 
 
@@ -4063,7 +4183,8 @@ proto.Members.JMRequest.prototype.toObject = function(opt_includeInstance) {
 proto.Members.JMRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     mobilenumber: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    pin: jspb.Message.getFieldWithDefault(msg, 2, "")
+    pin: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    agentid: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -4108,6 +4229,10 @@ proto.Members.JMRequest.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {string} */ (reader.readString());
       msg.setPin(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAgentid(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -4151,6 +4276,13 @@ proto.Members.JMRequest.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getAgentid();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -4187,6 +4319,24 @@ proto.Members.JMRequest.prototype.getPin = function() {
  */
 proto.Members.JMRequest.prototype.setPin = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string agentId = 3;
+ * @return {string}
+ */
+proto.Members.JMRequest.prototype.getAgentid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.Members.JMRequest} returns this
+ */
+proto.Members.JMRequest.prototype.setAgentid = function(value) {
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 

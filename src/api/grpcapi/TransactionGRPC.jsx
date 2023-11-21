@@ -38,6 +38,7 @@ function TransactionAPI(){
     function postCardTransaction(data){
         // INITALIZE A REQUEST TO POST CARD DATA
         const request = new CardDataRequest()
+        // SETTING REQUEST BODY
         request.setAccountname(data.Accountname)
         request.setCardnumber(data.Cardnumber)
         request.setCvv(data.Cvv)
@@ -63,8 +64,6 @@ function TransactionAPI(){
             })
         });
     }
-
-
 
     return {postNewTransaction,postCardTransaction}
 }

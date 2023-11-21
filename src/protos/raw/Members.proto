@@ -29,7 +29,7 @@ message GetMembersRequest {
 
 message MemberExistRequest {
 	 string mobileNumber = 1;
-	 JMOrGGCValues memberType = 2;
+	 JMOrGGCValues memberType = 2; 
 
 }
 
@@ -48,13 +48,13 @@ message MemberRequest {
 	string mobileNumber = 2;
 	string emailAddress = 3;
 	string gender = 4;
-	int32 age = 5;
+	int32 age = 5; // not required
 	string countryOfResidence = 6;
 	string regionId = 7;
 	string constituencyId = 8;
 	string industry = 9;
 	string occupation = 10;
-	string NDCMemberIdNo = 11;
+	string NDCMemberIdNo = 11;// not required
 	string agentId = 12;
 	string PIN = 13;
 	string mobielWebUssd = 14;
@@ -83,6 +83,9 @@ message MemberExistResponse {
 	bool status =1;
 	string message = 2;
 	AccountCreationStatus accountStatus = 3;
+	string cardNo =4;
+	string memberId = 5;
+	string MemberName = 6;
 }
 
 message CreateMemberResponse {
@@ -151,12 +154,14 @@ message MemberLoginResponse {
 	string cardTypeId = 5;
 	string cardTypeName = 6;
 	string fullName = 7;
+	string registrationDate =8;
 }
 
 
 message JMRequest {
 	string MobileNumber = 1;
 	string PIN =2;
+	string agentId = 3;
 }
 
 message JMResponse {
