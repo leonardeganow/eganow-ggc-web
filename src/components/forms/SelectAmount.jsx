@@ -4,8 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useState } from "react";
 
-function SelectAmount({handleNext}) {
-
+function SelectAmount(props) {
   const schema = yup.object().shape({
     amount: yup
       .number()
@@ -13,36 +12,34 @@ function SelectAmount({handleNext}) {
       .positive("Amount must be positive"),
   });
 
-  const {
-    handleSubmit,
-    register,
-    setValue,
-    getValues,
-    formState: { errors },
-  } = useForm({
-    mode: "onChange",
-    resolver: yupResolver(schema),
-  });
-
+  // const {
+  //   handleSubmit,
+  //   register,
+  //   setValue,
+  //   getValues,
+  //   formState: { errors },
+  // } = useForm({
+  //   mode: "onChange",
+  //   resolver: yupResolver(schema),
+  // });
 
   const defaultValues = {
     amount: "",
   };
-console.log(getValues("fullName"));
-
+  // console.log(getValues("fullName"));
 
   const [selectedAmount, setSelectedAmount] = useState(defaultValues.amount);
 
   // Function to update the form field value when a button is clicked
   const handleButtonClick = (amount) => {
-    setValue("amount", amount); // Set the value in the form
     setSelectedAmount(amount); // Update the state
   };
 
   const onSubmit = () => {
-    handleNext()
-
-  }
+    props.handleNext();
+    const pin = props.formHandler.getValues();
+    console.log(pin);
+  };
   return (
     <div>
       {" "}
@@ -62,15 +59,21 @@ console.log(getValues("fullName"));
         </div>
 
         {/* FORM FIELD */}
-        <form onSubmit={handleSubmit(onSubmit)} className="row my-4 g-2">
+        <form
+          onSubmit={props.formHandler.handleSubmit(onSubmit)}
+          className="row my-4 g-2"
+        >
           <div className="col-md-9 ">
             <div>
               <input
-                {...register("amount")}
-                className={`form-control h-full ${errors.amount ? "is-invalid": null}`}
+                {...props.formHandler.register("amount")}
+                className={`form-control h-full ${
+                  props.formHandler.formState.errors.amount
+                    ? "is-invalid"
+                    : null
+                }`}
                 type="input"
                 placeholder="Enter an amount"
-                defaultValue={defaultValues.amount}
               />
             </div>
           </div>
@@ -79,7 +82,6 @@ console.log(getValues("fullName"));
               Continue
             </button>
           </div>
-        
         </form>
         {/* {errors.amount && <span>{errors.amount.message}</span>} */}
       </div>

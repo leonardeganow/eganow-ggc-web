@@ -5,6 +5,8 @@ import PhoneNumberForm from "../forms/PhoneNumberForm";
 import ChoosePayMethod from "../forms/ChoosePayMethod";
 import SelectAmount from "../forms/SelectAmount";
 import PaySuccess from "../paymentpages/PaySuccess";
+import { useForm } from "react-hook-form";
+import ReviewPaymentPage from "../paymentpages/ReviewPaymentPage";
 
 const style = {
   position: "relative",
@@ -28,6 +30,19 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
     setCurrentStep((prevStep) => prevStep + 1);
   };
 
+  const defaultValues = {
+    countryCode: 233,
+    telephoneNo: "",
+    otp: "",
+    pin: "",
+    confirmPin: "",
+    role: "",
+    cardType: "",
+    paymentMethod: ""
+  };
+
+  const formHandler = useForm({ defaultValues });
+
   const handleBack = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
@@ -36,21 +51,51 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
     switch (currentStep) {
       case 1:
         return (
-          <PhoneNumberForm setBtnOpen={setBtnOpen} handleNext={handleNext} />
+          <PhoneNumberForm
+            setBtnOpen={setBtnOpen}
+            formHandler={formHandler}
+            handleNext={handleNext}
+          />
         );
-      // Add more cases for additional steps
       case 2:
-        return <GgcRegForm setBtnOpen={setBtnOpen} handleNext={handleNext} />;
+        return (
+          <GgcRegForm
+            setBtnOpen={setBtnOpen}
+            handleNext={handleNext}
+            formHandler={formHandler}
+          />
+        );
 
       case 3:
-        return <SelectAmount setBtnOpen={setBtnOpen} handleNext={handleNext} />;
+        return (
+          <SelectAmount
+            setBtnOpen={setBtnOpen}
+            handleNext={handleNext}
+            formHandler={formHandler}
+          />
+        );
 
       case 4:
         return (
-          <ChoosePayMethod setBtnOpen={setBtnOpen} handleNext={handleNext} />
+          <ChoosePayMethod
+            setBtnOpen={setBtnOpen}
+            handleNext={handleNext}
+            handleBack={handleBack}
+            formHandler={formHandler}
+          />
         );
 
-      case 5:
+        case 5:
+          return (
+            <ReviewPaymentPage
+              setBtnOpen={setBtnOpen}
+              handleNext={handleNext}
+              handleBack={handleBack}
+              formHandler={formHandler}
+            />
+          );
+
+      case 6:
         return <PaySuccess setBtnOpen={setBtnOpen} handleNext={handleNext} />;
       default:
         return null;
@@ -82,30 +127,36 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
           </div>
 
           {renderForm()}
-          {/* <div
+          <div
             style={{
               display: currentStep === 1 ? "" : "",
             }}
             className=" d-flex justify-content-between "
           >
             {currentStep > 1 && (
-              <button className="bg-success btn" onClick={handleBack}>
+              <button
+                style={{
+                  display: currentStep === 2 || currentStep === 3 ? "none" : "",
+                }}
+                className="bg-success btn text-light" 
+                onClick={handleBack}
+              >
                 Back
               </button>
             )}
             {currentStep < totalSteps && (
               <button
-              style={{
-                display: currentStep === 1 ? "none" : "",
-              }}
+                style={{
+                  display: currentStep === 0 || currentStep === 2 || currentStep === 3 ? "none" : "",
+                }}
                 // disabled={!btnOpen}
-                className="bg-success btn"
+                className="bg-success btn text-light"
                 onClick={handleNext}
               >
                 Next
               </button>
             )}
-          </div> */}
+          </div>
         </div>
       </Modal>
     </div>

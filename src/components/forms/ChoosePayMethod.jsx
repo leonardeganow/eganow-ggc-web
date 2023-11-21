@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useForm, Controller } from "react-hook-form";
 import {
   PhoneInput,
   defaultCountries,
@@ -7,23 +6,33 @@ import {
 } from "react-international-phone";
 import "react-international-phone/style.css";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
-
 import { FaCreditCard } from "react-icons/fa6";
+import { useState } from "react";
 
-function ChoosePayMethod({ handleNext }) {
+function ChoosePayMethod(props) {
   const [showMomo, setShowMomo] = React.useState(false);
   const [showCard, setShowCard] = React.useState(true);
-  const { control, handleSubmit, register } = useForm();
+  const [phone, setPhone] = useState("");
 
+  //getting ghana flag icon in  phone number input
   const countries = defaultCountries.filter((country) => {
     const { iso2 } = parseCountry(country);
     return ["dd", "gh"].includes(iso2);
   });
 
   const onSubmit = (data) => {
-    console.log("Form data:", data);
-    // Add your form submission logic here
+    const pin = props.formHandler.getValues();
+    console.log(pin);
   };
+
+  const handleMomo = () => {
+    const pin = props.formHandler.getValues();
+    console.log(pin);
+  };
+
+  React.useEffect(() => {
+    props.formHandler.setValue("paymentMethod", "Debit card");
+  });
   return (
     <div>
       {" "}
@@ -41,17 +50,20 @@ function ChoosePayMethod({ handleNext }) {
                 showCard ? "bg-success text-white" : " text-success"
               }`}
               onClick={() => {
+                props.formHandler.setValue("paymentMethod", "Debit card");
                 setShowMomo(false);
                 setShowCard(true);
               }}
             >
               {" "}
               <FaCreditCard className="mr-2" />
-              <span className="ml-1"> Credit Card</span>
+              <span className="ml-1"> Credit/Debit Card</span>
             </div>
             <div
               role="button"
               onClick={() => {
+                props.formHandler.setValue("paymentMethod", "Mobile money");
+
                 setShowMomo(true);
                 setShowCard(false);
               }}
@@ -61,14 +73,14 @@ function ChoosePayMethod({ handleNext }) {
             >
               {" "}
               <FaMoneyBill1Wave />
-              <span> momo</span>
+              <span> Mobile money</span>
             </div>
           </div>
         </div>
       </div>
       {showCard && (
         <div id="credit-card" className="tab-pane fade show active pt-2">
-          <form role="form" onSubmit={(event) => event.preventDefault()}>
+          <form role="form" onSubmit={props.formHandler.handleSubmit(onSubmit)}>
             <div className="form-group">
               <label htmlFor="username">
                 <h6>Good governance card ID number</h6>
@@ -77,6 +89,7 @@ function ChoosePayMethod({ handleNext }) {
                 placeholder="Good governance card ID number"
                 required
                 className="form-control"
+                {...props.formHandler.register("cardId")}
               />
             </div>
             <div className="form-group my-2">
@@ -85,6 +98,7 @@ function ChoosePayMethod({ handleNext }) {
               </label>
               <div className="input-group">
                 <input
+                  {...props.formHandler.register("paymentCardNo")}
                   placeholder="Valid card number"
                   className="form-control"
                   required
@@ -107,6 +121,7 @@ function ChoosePayMethod({ handleNext }) {
                 placeholder="Name on card"
                 required
                 className="form-control"
+                {...props.formHandler.register("nameOnPaymentCard")}
               />
             </div>
             <div className="row">
@@ -121,15 +136,15 @@ function ChoosePayMethod({ handleNext }) {
                     <input
                       type="number"
                       placeholder="MM"
-                      name="expirationMonth"
                       className="form-control"
+                      {...props.formHandler.register("expiryDateMonth")}
                       required
                     />
                     <input
                       type="number"
                       placeholder="YY"
-                      name="expirationYear"
                       className="form-control"
+                      {...props.formHandler.register("expiryDateYear")}
                       required
                     />
                   </div>
@@ -145,16 +160,18 @@ function ChoosePayMethod({ handleNext }) {
                       CVV <i className="fa fa-question-circle d-inline"></i>
                     </h6>
                   </label>
-                  <input type="text" required className="form-control" />
+                  <input
+                    {...props.formHandler.register("cvv")}
+                    type="text"
+                    required
+                    className="form-control"
+                  />
                 </div>
               </div>
             </div>
             <div className="d-flex justify-content-center">
               <button
-                onClick={() => {
-                  handleNext();
-                }}
-                type="button"
+                type="submit"
                 className="subscribe btn btn-success btn-block shadow-sm"
               >
                 Make Payment
@@ -164,7 +181,7 @@ function ChoosePayMethod({ handleNext }) {
         </div>
       )}
       {showMomo && (
-        <form role="form" onSubmit={(event) => event.preventDefault()}>
+        <form role="form" onSubmit={props.formHandler.handleSubmit(handleMomo)}>
           <div className="form-group">
             <label htmlFor="username">
               <h6>Good governance card ID number</h6>
@@ -184,6 +201,8 @@ function ChoosePayMethod({ handleNext }) {
               <PhoneInput
                 className="
             "
+                value={phone}
+                onChange={(phone) => setPhone(phone)}
                 defaultCountry="gh"
                 countries={countries}
               />
@@ -211,16 +230,14 @@ function ChoosePayMethod({ handleNext }) {
             <input
               placeholder="Registered name"
               required
+              {...props.formHandler.register("leonard adjei")}
               className="form-control"
             />
           </div>
 
           <div className="d-flex justify-content-center">
             <button
-              onClick={() => {
-                handleNext();
-              }}
-              type="button"
+              type="submit"
               className="subscribe btn btn-success btn-block shadow-sm"
             >
               Make Payment
