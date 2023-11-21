@@ -25,9 +25,10 @@ function GgcRegisterModal({ open, handleClose, handleOpen ,cardTypeValues }) {
   const [currentStep, setCurrentStep] = React.useState(1);
   const totalSteps = 5;
 
-  const handleNext = () => {
+  const handleNext = (page) => {
     // setBtnOpen(false);
-    setCurrentStep((prevStep) => prevStep + 1);
+    // setCurrentStep((prevStep) => prevStep + 1);
+    setCurrentStep((prevStep) => prevStep + page);
   };
 
   const defaultValues = {
@@ -37,7 +38,9 @@ function GgcRegisterModal({ open, handleClose, handleOpen ,cardTypeValues }) {
     pin: "",
     confirmPin: "",
     role: "",
-    paymentMethod: ""
+    paymentMethod: "",
+    memberId: "",
+    ndcCardNo: ""
   };
 
   const formHandler = useForm({ defaultValues });
@@ -124,7 +127,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen ,cardTypeValues }) {
           </div>
 
           {renderForm()}
-          <div
+          {/* <div
             style={{
               display: currentStep === 1 ? "" : "",
             }}
@@ -153,7 +156,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen ,cardTypeValues }) {
                 Next
               </button>
             )}
-          </div>
+          </div> */}
         </div>
       </Modal>
     </div>

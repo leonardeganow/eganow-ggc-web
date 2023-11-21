@@ -37,7 +37,7 @@ function SelectAmount(props) {
   };
 
   const onSubmit = () => {
-    props.handleNext();
+    props.handleNext(1);
     const pin = props.formHandler.getValues();
     console.log(pin);
   };

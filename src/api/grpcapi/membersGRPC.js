@@ -2,6 +2,7 @@ import { MembersSvcClient } from "../../protos/gen/Members_grpc_web_pb";
 import {
   MemberExistRequest,
   MemberRequest,
+  MemberLoginRequest,
   JMOrGGCValues,
 } from "../../protos/gen/Members_pb";
 import { URL, METADATA } from "../../utils/constants";
@@ -21,6 +22,7 @@ const membersGRPC = () => {
           if (err) {
             reject(err);
           }
+          console.log(response);
 
           resolve(response?.toObject());
         });
@@ -70,8 +72,30 @@ const membersGRPC = () => {
     }
   }
 
+  function loginMember(params) {
+    try {
+      const request = new MemberLoginRequest();
+
+      console.log(request);
+      request.setMobilenumber(params.telephoneNo);
+      request.setPin(params.pin);
+
+      return new Promise((resolve, reject) => {
+        client.checkIfMemberExist(request, METADATA, (err, response) => {
+          if (err) {
+            reject(err);
+          }
+
+          resolve(response?.toObject());
+        });
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   // returning function to use in our app
-  return { createMember, registerMember };
+  return { createMember, registerMember, loginMember };
 };
 
 export default membersGRPC;

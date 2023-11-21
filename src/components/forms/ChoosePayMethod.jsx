@@ -86,6 +86,8 @@ function ChoosePayMethod(props) {
                 <h6>Good governance card ID number</h6>
               </label>
               <input
+                disabled
+                value={props.formHandler.getValues("memberId")}
                 placeholder="Good governance card ID number"
                 required
                 className="form-control"
