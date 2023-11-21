@@ -138,67 +138,6 @@ proto.Transaction.TransactionSvcPromiseClient.prototype.postDataToTransaction =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.Transaction.CardDataRequest,
- *   !proto.Transaction.TransResponse>}
- */
-const methodDescriptor_TransactionSvc_PostDataToTransactionCard = new grpc.web.MethodDescriptor(
-  '/Transaction.TransactionSvc/PostDataToTransactionCard',
-  grpc.web.MethodType.UNARY,
-  proto.Transaction.CardDataRequest,
-  proto.Transaction.TransResponse,
-  /**
-   * @param {!proto.Transaction.CardDataRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.Transaction.TransResponse.deserializeBinary
-);
-
-
-/**
- * @param {!proto.Transaction.CardDataRequest} request The
- *     request proto
- * @param {?Object<string, string>} metadata User defined
- *     call metadata
- * @param {function(?grpc.web.RpcError, ?proto.Transaction.TransResponse)}
- *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.Transaction.TransResponse>|undefined}
- *     The XHR Node Readable Stream
- */
-proto.Transaction.TransactionSvcClient.prototype.postDataToTransactionCard =
-    function(request, metadata, callback) {
-  return this.client_.rpcCall(this.hostname_ +
-      '/Transaction.TransactionSvc/PostDataToTransactionCard',
-      request,
-      metadata || {},
-      methodDescriptor_TransactionSvc_PostDataToTransactionCard,
-      callback);
-};
-
-
-/**
- * @param {!proto.Transaction.CardDataRequest} request The
- *     request proto
- * @param {?Object<string, string>=} metadata User defined
- *     call metadata
- * @return {!Promise<!proto.Transaction.TransResponse>}
- *     Promise that resolves to the response
- */
-proto.Transaction.TransactionSvcPromiseClient.prototype.postDataToTransactionCard =
-    function(request, metadata) {
-  return this.client_.unaryCall(this.hostname_ +
-      '/Transaction.TransactionSvc/PostDataToTransactionCard',
-      request,
-      metadata || {},
-      methodDescriptor_TransactionSvc_PostDataToTransactionCard);
-};
-
-
-/**
- * @const
- * @type {!grpc.web.MethodDescriptor<
  *   !proto.Transaction.PostDataUssdRequest,
  *   !proto.Transaction.TransResponse>}
  */

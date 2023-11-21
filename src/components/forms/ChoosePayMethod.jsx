@@ -8,11 +8,18 @@ import "react-international-phone/style.css";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
 import { FaCreditCard } from "react-icons/fa6";
 import { useState } from "react";
+import useStore from "../../formstore/formStore";
+import TransactionAPI from "../../api/grpcapi/TransactionGRPC";
+import customerSetupsGRPC from "../../api/grpcapi/customerSetupsGRPC";
 
 function ChoosePayMethod(props) {
   const [showMomo, setShowMomo] = React.useState(false);
   const [showCard, setShowCard] = React.useState(true);
+  const [MomoOptions, setMomoOptions] = useState(null);
   const [phone, setPhone] = useState("");
+  const { info } = useStore();
+  const { getPayment } = customerSetupsGRPC();
+  const { getKyc } = TransactionAPI();
 
   //getting ghana flag icon in  phone number input
   const countries = defaultCountries.filter((country) => {
@@ -20,9 +27,26 @@ function ChoosePayMethod(props) {
     return ["dd", "gh"].includes(iso2);
   });
 
-  const onSubmit = (data) => {
-    const pin = props.formHandler.getValues();
-    console.log(pin);
+  const fakeData = [
+    {
+      test: "one",
+      pay: "two",
+      make: "three",
+    },
+    {
+      test: "one",
+      pay: "two",
+      make: "three",
+    },
+    {
+      test: "one",
+      pay: "two",
+      make: "three",
+    },
+  ];
+
+  const onSubmit = async (data) => {
+    props.handleNext(1);
   };
 
   const handleMomo = () => {
@@ -30,9 +54,48 @@ function ChoosePayMethod(props) {
     console.log(pin);
   };
 
+  const getpayMethodsHandler = async () => {
+    try {
+      const response = await getPayment();
+      const pMethod = response.paymethodlistList[0].paymentmethodid;
+      console.log(pMethod);
+      props.formHandler.setValue("paymentMethod", pMethod);
+      setMomoOptions(response.paymethodlistList.slice(1));
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(MomoOptions);
+
   React.useEffect(() => {
-    props.formHandler.setValue("paymentMethod", "Debit card");
-  });
+    console.log(info);
+    getpayMethodsHandler();
+  }, []);
+
+  React.useEffect(() => {
+    props.formHandler.setValue("transType", info.role);
+    props.formHandler.setValue("cardId", info.cardid);
+    props.formHandler.setValue("plan", info.cardType);
+    console.log(props.formHandler.getValues());
+  }, []);
+
+  const watchMomoId = props.formHandler.watch("paymentMethod");
+
+  const getKycHandler = async () => {
+    //if number and network is coorect ---- getkyc
+   
+    try {
+      const response = await getKyc({watchMomoId,phone});
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+    React.useEffect(() => {
+      getKycHandler()
+    }, [watchMomoId,phone]);
+  };
   return (
     <div>
       {" "}
@@ -189,6 +252,8 @@ function ChoosePayMethod(props) {
               <h6>Good governance card ID number</h6>
             </label>
             <input
+              disabled
+              value={props.formHandler.getValues("memberId")}
               placeholder="Good governance card ID number"
               required
               className="form-control"
@@ -201,8 +266,7 @@ function ChoosePayMethod(props) {
                 <h6>Phone number</h6>
               </label>
               <PhoneInput
-                className="
-            "
+                className=""
                 value={phone}
                 onChange={(phone) => setPhone(phone)}
                 defaultCountry="gh"
@@ -214,13 +278,20 @@ function ChoosePayMethod(props) {
               <label htmlFor="username">
                 <h6>Select network</h6>
               </label>
-              <select placeholder="fgdgdf" className="form-select  p-1  w-10">
+              <select
+                {...props.formHandler.register("paymentMethod")}
+                placeholder="fgdgdf"
+                className="form-select  p-1  w-10"
+              >
                 <option value="" disabled selected hidden>
                   select network
                 </option>
-                <option value="">mtn</option>
-                <option value="">vodafone</option>
-                <option value="">airtel tigo</option>
+
+                {MomoOptions.map((network, i) => (
+                  <option key={i} value={network.paymentmethodid}>
+                    {network.paymentmethodname}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -239,6 +310,7 @@ function ChoosePayMethod(props) {
 
           <div className="d-flex justify-content-center">
             <button
+              onClick={() => console.log(props.formHandler.getValues())}
               type="submit"
               className="subscribe btn btn-success btn-block shadow-sm"
             >

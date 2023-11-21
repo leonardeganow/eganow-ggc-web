@@ -6,7 +6,7 @@ package Transaction;
 
 service TransactionSvc {
 	rpc PostDataToTransaction(PostDataRequest) returns (TransResponse);
-    rpc PostDataToTransactionCard(CardDataRequest) returns (TransResponse);
+   // rpc PostDataToTransactionCard(CardDataRequest) returns (TransResponse);
     rpc PostDataToTransactionUSSD(PostDataUssdRequest) returns (TransResponse);
     rpc GetChargesOnTransaction(ChargesRequest) returns (ChargesResponse);
     rpc GetChargesOnTransactionUssd(UssdChargesRequest) returns (ChargesResponse);
@@ -18,16 +18,20 @@ service TransactionSvc {
 }
 
 
+
 message PostDataRequest {
      string mobileNo = 1;
      string memberId = 3;
      string transTypeJMOrGCC= 4;
      double transAmount = 5;
-     string paymentAcctOrMomoNo = 7;
+     string paymentAcctOrMomoNo = 7; // USE FOR CARD NUMBER
      string paymentAccountName = 8;
      string networkId = 9;
      string narration = 10;
      string agentId = 11;
+     string CVV = 20;
+    int32 expiryDateMonth = 21; // example Jan, pass 1, Feb, pass 2 etc
+    int32 expiryDateYear = 22; 
 }
 
 message DonatedAmountRequest{
@@ -56,20 +60,7 @@ message UssdChargesRequest {
     string mobileNumber = 3;
 }
 
-message CardDataRequest {
-    string accountName = 1;
-    string cardNumber = 2;
-    string CVV = 3;
-    int32 expiryDateMonth = 4; // example Jan, pass 1, Feb, pass 2 etc
-    int32 expiryDateYear = 5; // send the last 2 digits. eg : 2023, send 23
-    string transTypeJMOrGCC = 6;
-    string mobileNo = 7;
-    string memberId = 8;
-    double transAmount = 9;
-    string narration = 10;
-    string serviceId = 11; // CARD service ID 
-    string agentId = 12;
-}
+ 
 
 
 
@@ -82,6 +73,7 @@ message TransAdminRequest {
 message TransResponse {
 	bool status = 1;
 	string message = 2;
+    string threedsurl = 3;
 }
 
 message ChargesRequest {
@@ -109,8 +101,9 @@ message KycResponse {
 
 message TransactionRequest {
     string memberId = 1;
-    string startDate = 2; // dd-mm-yyyy
-    string endDate = 3;
+    string memberType = 2;
+    string startDate = 3; // dd-mm-yyyy
+    string endDate = 4;
 }
 
 message TransactionData { 
@@ -122,6 +115,7 @@ message TransactionData {
     string date = 6;
     string paymentName = 7;
     string paymentAccountNumberOrMomoNumber = 8;
+    string transStatus = 9;
 }
 
 message TransactionResponse {

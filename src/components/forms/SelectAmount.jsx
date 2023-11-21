@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useState } from "react";
+import useStore from "../../formstore/formStore";
+
 
 function SelectAmount(props) {
+  const { info } = useStore();
+
   const schema = yup.object().shape({
     amount: yup
       .number()
@@ -33,7 +37,7 @@ function SelectAmount(props) {
   // Function to update the form field value when a button is clicked
   const handleButtonClick = (amount) => {
     setSelectedAmount(amount); // Update the state
-    props.formHandler.setValue("amount",amount)
+    props.formHandler.setValue("amount", amount);
   };
 
   const onSubmit = () => {
@@ -41,6 +45,8 @@ function SelectAmount(props) {
     const pin = props.formHandler.getValues();
     console.log(pin);
   };
+
+
   return (
     <div>
       {" "}

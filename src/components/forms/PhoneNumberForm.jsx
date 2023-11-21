@@ -321,7 +321,7 @@ function PhoneNumberForm(props) {
                 // }
                 className="btn btn-success mx-auto text-center "
                 onClick={() => {
-                  props.handleNext();
+                  props.handleNext(1);
                 }}
               >
                 continue

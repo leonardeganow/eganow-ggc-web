@@ -167,7 +167,7 @@ console.log(data);
       console.log(response);
       if(response.status){
         toast(response.message)
-        props.handleNext()
+        props.handleNext(1)
       } else {
         toast.error(response.message)
       }

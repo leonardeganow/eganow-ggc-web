@@ -40,7 +40,9 @@ function GgcRegisterModal({ open, handleClose, handleOpen ,cardTypeValues }) {
     role: "",
     paymentMethod: "",
     memberId: "",
-    ndcCardNo: ""
+    ndcCardNo: "",
+    transType: "",
+    plan:""
   };
 
   const formHandler = useForm({ defaultValues });

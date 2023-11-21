@@ -61,10 +61,29 @@ const customerSetupsGRPC = () => {
     }
   };
 
+  const getPayment = () => {
+    try {
+      return new Promise((resolve, reject) => {
+        const request = new EmptySetupRequest();
+        client.getPaymentMethods(request, METADATA, (err, response) => {
+          if (err) {
+            reject(err);
+          }
+          const result = response.toObject();
+          //   console.log(result);
+          resolve(result);
+        });
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return {
     getConstituencies,
     getRegions,
-    getAgeRange
+    getAgeRange,
+    getPayment,
   };
 };
 
