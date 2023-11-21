@@ -6,70 +6,18 @@ import "slick-carousel/slick/slick-theme.css";
 import fImg1 from "../../images/election-donation/1.svg";
 import jm from "../../images/portfolio/donate.png";
 import ggc from "../../images/portfolio/t2.png";
-import follow from "../../images/portfolio/jm1.png";
+import follow from "../../images/portfolio/jm1.jpg";
 import fImg2 from "../../images/election-donation/2.svg";
 import fImg3 from "../../images/election-donation/3.svg";
 import { Link } from "react-scroll";
 
-const settings = {
-  dots: false,
-  arrows: false,
-  speed: 1000,
-  centerMode: true,
-  centerPadding: 0,
-  slidesToShow: 3,
-  slidesToScroll: 1,
-  autoplay: false,
-  responsive: [
-    {
-      breakpoint: 1400,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        infinite: true,
-      },
-    },
-    {
-      breakpoint: 1200,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 1,
-        infinite: true,
-        centerMode: false,
-      },
-    },
-    {
-      breakpoint: 991,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 1,
-        centerMode: false,
-      },
-    },
-    {
-      breakpoint: 767,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        centerMode: false,
-      },
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        centerMode: false,
-      },
-    },
-  ],
-};
 
 const ClickHandler = () => {
   window.scrollTo(10, 0);
 };
 
 const Features = (props) => {
+
   return (
     <section
       className={`wpo-election-donation-section-s2 section-padding ${props.fClass}`}
@@ -82,7 +30,7 @@ const Features = (props) => {
                 <div className="service-icon overflow-hidden rounded-3">
                   <img src={jm} alt="imag1" />
                 </div>
-                <h4 className="text-center text-danger m-0">DONATE TO JM</h4>
+                <h4 className="text-center text-danger mt-md-2">DONATE TO JM</h4>
                 <p className="p-2 m-0 text-center">
                   Lorem Ipsum is simply dummy text the industrey's standard
                   dummy text ever scrambled type specimen
@@ -101,7 +49,7 @@ const Features = (props) => {
                 <div className="service-icon overflow-hidden rounded-3">
                   <img src={ggc} alt="imag1"  className="img-fluid"/>
                 </div>
-                <h4 className="text-center text-danger m-0">GET YOUR GOOD GOVERNANCE CARD</h4>
+                <h4 className="text-center text-danger mt-md-2">GET YOUR GOOD GOVERNANCE CARD</h4>
                 <p className="p-2 m-0 text-center">
                   Lorem Ipsum is simply dummy text the industrey's standard
                   dummy text ever scrambled type specimen
@@ -120,9 +68,9 @@ const Features = (props) => {
             <div className="wpo-service-item shadow rounded-3">
               <div className="wpo-service-text p-2">
                 <div className="service-icon overflow-hidden rounded-3">
-                  <img src={follow} alt="imag1" className="inmg-fluid"/>
+                  <img src={follow} alt="imag1" className="img-fluid"/>
                 </div>
-                <h2 className="text-center text-danger m-0">FOLLOW CAMPAIGN</h2>
+                <h4 className="text-center text-danger mt-md-2">FOLLOW JM 2024 CAMPAIGN</h4>
                 <p className="p-2 m-0 text-center">
                   Lorem Ipsum is simply dummy text the industrey's standard
                   dummy text ever scrambled type specimen

@@ -76,7 +76,7 @@ const Header = (props) => {
                         duration={500}
                         onClick={ClickHandler}
                       >
-                        Get GGC
+                        Get GOOD GOVERNANCE CARD
                       </Link>
                     </li>
                     <li className="menu-item-has-children">
