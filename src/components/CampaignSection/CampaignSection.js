@@ -5,34 +5,37 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+// import GgcRegisterModal from "../modals/GgcRegisterModal";
+import GgcRegForm from "../forms/GgcRegForm";
+import PhoneNumberForm from "../forms/PhoneNumberForm";
+import ChoosePayMethod from "../forms/ChoosePayMethod";
+import SelectAmount from "../forms/SelectAmount";
 
-const ClickHandler = () => {
-  window.scrollTo(10, 0);
-};
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 700,
-  bgcolor: 'background.paper',
-  border: '2px solid #006436',
-  borderRadius: 2,
-  boxShadow: 24,
-  p: 2,
+  position: "relative",
+  top: "54%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "90vw", // Use viewport width
+  maxWidth: "600px", // Set a maximum width if needed
+  boxShadow: "40px",
+  maxHeight: "85%",
+  // overflowY: "scroll",
+  borderRadius: "24px",
 };
 
 const CampaignSection = (props) => {
   // MODAL STATES
   const [open, setOpen] = React.useState(false);
+  const [btnOpen, setBtnOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const [amount,setAmount] = useState(0)
   const handleSubmit = (e)=>{
     e.preventDefault()
-    console.log(amount)
+    console.log({amount : amount, donate : "JM"} )
   }
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -49,16 +52,16 @@ const CampaignSection = (props) => {
   const renderForm = () => {
     switch (currentStep) {
       case 1:
-        return <h1>1</h1>;
-      // Add more cases for additional steps
+        return (
+          <PhoneNumberForm setBtnOpen={setBtnOpen} handleNext={handleNext} />
+        );
+
       case 2:
-        return <h1>2</h1>;
-
+        return (
+          <ChoosePayMethod setBtnOpen={setBtnOpen} handleNext={handleNext} />
+        );
       case 3:
-        return <h1>3</h1>;
-
-      case 4:
-        return <h1>4</h1>;
+        return <h3>Review Page</h3>
       default:
         return null;
     }
@@ -200,7 +203,7 @@ const CampaignSection = (props) => {
       </div>
 
       {/* MODAL HERE WITH FORM STEPS HERE*/}
-      <Modal
+      {/* <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -220,12 +223,7 @@ const CampaignSection = (props) => {
           <div className=" d-flex justify-content-between flex-start">
             {currentStep > 1 && (
               <button
-              
                 style={{
-                  // border: "none",
-                  // padding: "0.1em",
-                  // padding : "10px",
-                  // marginTop: "0.5em",
                   color: " white",
                 }}
                 className="bg-danger btn btn-sm"
@@ -237,13 +235,9 @@ const CampaignSection = (props) => {
             {currentStep < totalSteps && (
               <button
                 style={{
-                  color: "white",
-                  // border: "none",
-                  // padding: "1em",
-                  // marginTop: "2em",
-                  // color: " white",
+                  // color: "white",
                 }}
-                className="bg-success btn btn-sm"
+                className="bg-success btn btn-sm text-white"
                 onClick={handleNext}
               >
                 Next
@@ -252,6 +246,28 @@ const CampaignSection = (props) => {
           </div>
           </div>
         </Box>
+      </Modal> */}
+
+<Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <div
+          className={`bg-white p-5 ${currentStep === 2 ? "modalbehav" : ""} `}
+          style={style}
+          sx={style}
+        >
+
+          <div>
+            <p>
+              Step {currentStep} of {totalSteps}
+            </p>
+          </div>
+
+          {renderForm()}
+        </div>
       </Modal>
     </section>
   );

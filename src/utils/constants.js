@@ -1,4 +1,4 @@
-export const URL = "https://192.168.10.25:7252";
+export const URL = "https://192.168.10.26:7252";
 
 export const METADATA = {
   custkey: "keY-a6ee91c7-493a-4e0d-814d-06919674cea1-Ey",

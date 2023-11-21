@@ -67,13 +67,10 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
           style={style}
           sx={style}
         >
-          {/* <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography> */}
-          {/* <GgcRegForm /> */}
+
           <div>
             <p>
-              Step {currentStep} of {totalSteps}
+              {/* Step {currentStep} of {totalSteps} */}
             </p>
           </div>
 

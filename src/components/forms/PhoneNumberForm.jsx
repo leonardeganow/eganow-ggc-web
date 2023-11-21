@@ -11,8 +11,44 @@ function PhoneNumberForm({ setBtnOpen, handleNext }) {
   const [showInput, setShowInput] = React.useState(true);
   // const { formData, onChange, updateFormData } = useStore();
 
-  const { createMember } = membersGRPC();
+  const { createMember,registerMember } = membersGRPC();
   const { getUsers } = customerGRPC();
+
+  async function newMemeber(){
+    console.log()
+    const setdata = await registerMember(
+      {
+        Fullname : "Dekin",
+        Mobilenumber : "test123455",
+        Emailaddress : "test123455@gmail.com",
+        Gender : "male",
+        Age: 20,
+        Countryofresidence :  "Ghana",
+        Regionid : "2",
+        Constituencyid : "5",
+        Industry : "",
+        Occupation : "Tester",
+        Ndcmemberidno : "12345",
+        Agentid : 10,
+        Pin : "0980",
+        Mobilewebussd : "2699",
+        Agerageid : "5",
+        Displaynameoncard : "Dekin Faisal",
+        Cardpickuplocation : "Accra",
+        Cardtype : "loyalty",
+        Accountcreationstatus : "success"
+
+      }
+    )
+    return setdata
+  }
+
+  React.useEffect(()=>{
+    newMemeber()
+  },[])
+
+
+
 
   const schema = yup
     .object()

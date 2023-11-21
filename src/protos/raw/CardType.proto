@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option csharp_namespace = "NDC_DONATION_2024.Protos";
+
+package CardType;
+
+service CardTypeSvc {
+	rpc CreateCardType(CardTypeRequest) returns (CardTypeResponse);
+	rpc UpdateCardType(CardTypeRequest) returns (CardTypeResponse);
+	rpc GetAllCardTypes(CardEmptyRequest) returns (CardListResponse);
+}
+
+
+message CardTypeRequest {
+	string cardTypeId = 1;
+	string cardTypeName = 2;
+	float cardAmount = 3;
+}
+
+
+message CardTypeResponse {
+	bool status = 1;
+	string message = 2;
+}
+
+message CardEmptyRequest {
+
+}
+
+message CardData {
+	string cardTypeId = 1;
+	string cardTypeName = 2;
+	double cardAmount = 3;
+	string description =4;
+}
+
+message CardListResponse {
+	 repeated CardData cardTypes = 1;
+}

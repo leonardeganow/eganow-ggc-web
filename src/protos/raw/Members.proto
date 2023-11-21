@@ -30,7 +30,6 @@ message GetMembersRequest {
 message MemberExistRequest {
 	 string mobileNumber = 1;
 	 string memberType = 2;
-
 }
 
 message ResetPinRequest {
