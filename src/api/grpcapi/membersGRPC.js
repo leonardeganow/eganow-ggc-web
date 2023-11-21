@@ -1,5 +1,5 @@
 import { MembersSvcClient } from "../../protos/gen/Members_grpc_web_pb";
-import { MemberExistRequest,MemberRequest, JMOrGGCValues } from "../../protos/gen/Members_pb";
+import { MemberExistRequest, MemberRequest, JMOrGGCValues } from "../../protos/gen/Members_pb";
 import { URL, METADATA } from "../../utils/constants";
 
 const membersGRPC = () => {
