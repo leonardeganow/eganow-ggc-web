@@ -14,6 +14,7 @@ function PhoneNumberForm(props) {
   const [condition, setCondition] = React.useState(false);
   const [showpin, setShowpin] = React.useState(false);
   const [showInput, setShowInput] = React.useState(true);
+  const [showEnterPin,setShowEnterPin] = React.useState(false)
   const [mobileNumber, setMobileNumber] = React.useState("");
 
   const { createMember } = membersGRPC();
@@ -60,6 +61,11 @@ function PhoneNumberForm(props) {
         setShowInput(false);
         setCondition(true);
       }
+      else {
+        setShowInput(false)
+        setShowEnterPin(true)
+
+      }
     } catch (error) {
       props.formHandler.reset(data);
       if (error.message) {
@@ -97,7 +103,6 @@ function PhoneNumberForm(props) {
   //verify otp function
   const handleOtpVerify = async (data) => {
     const num = props.formHandler.getValues("telephoneNo");
-    console.log(num);
     condition;
     const updatedData = {
       ...data,
@@ -116,7 +121,16 @@ function PhoneNumberForm(props) {
       console.log(response);
     } catch (error) {}
   };
-  // console.log(props.formHandler.watch("telephoneNo"));
+
+  //login user function
+  const handleLogin =(data) =>{
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
+ 
 
   return (
     <div>
@@ -299,15 +313,64 @@ function PhoneNumberForm(props) {
               </button>
             </div>
 
-            {/* <div>
-              <h1 className="text-center">Create new pin</h1>
-              <p className="text-center">
-                Create pin to protect the card you will acquire
-              </p>
-            </div> */}
           </div>
         </div>
       )}
+
+
+      {showEnterPin && <div className="mt-4 ">
+          <h1 className="text-center">Looks like you have an existing card</h1>
+          <p className="text-center">
+            Enter your pin below to access your card
+          </p>
+          <form onSubmit={props.formHandler.handleSubmit(handleLogin)} className="">
+            <input
+              className={`form-control p-3 w-50 mx-auto ${
+                props.formHandler.formState.errors.pin
+                  ? "is-invalid"
+                  : props.formHandler.getValues("pin")
+                  ? "is-valid"
+                  : ""
+              }`}
+              {...props.formHandler.register("pin")}
+              type="password"
+              placeholder="enter pin"
+            />
+
+            {props.formHandler.formState.errors.pin && (
+              <p className="invalid-feedback text-center">
+                {props.formHandler.formState.errors.pin.message}
+              </p>
+            )}
+
+          
+
+            {props.formHandler.formState.errors.confirmPin && (
+              <p className="invalid-feedback text-center">
+                {props.formHandler.formState.errors.confirmPin.message}
+              </p>
+            )}
+
+            <div className="d-flex justify-content-center mt-4">
+              <button type="submit"
+                // disabled={
+                //   props.formHandler.formState.errors.pin ||
+                //   props.formHandler.formState.errors.confirmPin ||
+                //   !props.formHandler.getValues("pin") ||
+                //   !props.formHandler.getValues("confirmPin")
+                // }
+                className="btn btn-success mx-auto text-center "
+                onClick={() => {
+                  props.handleNext();
+                }}
+              >
+                continue
+              </button>
+            </div>
+
+          
+          </form>
+        </div>}
     </div>
   );
 }

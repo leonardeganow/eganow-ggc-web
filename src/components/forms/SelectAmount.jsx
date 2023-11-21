@@ -33,6 +33,7 @@ function SelectAmount(props) {
   // Function to update the form field value when a button is clicked
   const handleButtonClick = (amount) => {
     setSelectedAmount(amount); // Update the state
+    props.formHandler.setValue("amount",amount)
   };
 
   const onSubmit = () => {

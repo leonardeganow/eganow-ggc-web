@@ -435,7 +435,11 @@ function GgcRegForm(props) {
           Continue
         </button> */}
         <div className=" d-flex justify-content-center mt-3">
-          <button type="submit" className="btn btn-success">
+          <button
+            style={{ width: "160px" }}
+            type="submit"
+            className="btn btn-success"
+          >
             {props.formHandler.formState.isSubmitting ? (
               <span className="spinner-border spinner-border-sm mr-1"></span>
             ) : (
