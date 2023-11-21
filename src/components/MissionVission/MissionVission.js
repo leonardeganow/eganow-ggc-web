@@ -11,6 +11,9 @@ import silver from "../../images/election-mission/Silver.jpg";
 import standard from "../../images/election-mission/Standard.jpg";
 import hope from "../../images/election-mission/Hope.jpg";
 import GgcRegisterModal from "../modals/GgcRegisterModal";
+import useStore from "../../formstore/formStore";
+
+
 
 const Mission = [
   {
@@ -87,6 +90,15 @@ const MissionVission = (props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const { info, updateRoleAndCardType } = useStore();
+
+
+  //get ggc card packages and store in zustand state
+  function handleCardGet(cardtype) {
+    const newRole = "GGC";
+   
+      updateRoleAndCardType(newRole, cardtype);
+  }
   return (
     <section
       id="getggc"
@@ -164,7 +176,11 @@ const MissionVission = (props) => {
         <div onClick={() => setOpen(true)} className="election-mission-wrap">
           <div className="row">
             {Mission.map((mvsion, tsm) => (
-              <div className="col-lg-4 col-md-4 col-sm-6 col-12" key={tsm}>
+              <div
+                onClick={() => handleCardGet(mvsion.Title)}
+                className="col-lg-4 col-md-4 col-sm-6 col-12"
+                key={tsm}
+              >
                 <div className="election-mission-content">
                   <img src={mvsion.mImg} alt="" />
                   {/* <div className="title">{mvsion.Title}</div> */}

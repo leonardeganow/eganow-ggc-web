@@ -2,8 +2,10 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import useStore from "../../formstore/formStore";
 
-function GgcRegForm({ handleNext }) {
+function GgcRegForm(props) {
+  const { info } = useStore();
   const schema = yup
     .object()
     .shape({
@@ -20,16 +22,20 @@ function GgcRegForm({ handleNext }) {
       card_pickup_location: yup.string().required(),
     })
     .required();
-  const {
-    handleSubmit,
-    register,
-    watch,
-    getValues,
-    formState: { errors },
-  } = useForm({
-    mode: "onChange",
-    resolver: yupResolver(schema),
-  });
+  // const {
+  //   handleSubmit,
+  //   register,
+  //   watch,
+  //   getValues,
+  //   formState: { errors },
+  // } = useForm({
+  //   mode: "onChange",
+  //   resolver: yupResolver(schema),
+  // });
+
+  React.useEffect(() => {
+    props.formHandler.setValue("cards", info.cardType);
+  }, []);
 
   const defaultValues = {
     cards: {
@@ -91,30 +97,25 @@ function GgcRegForm({ handleNext }) {
     },
   };
 
-  console.log(watch("country"));
-
   const onSubmit = (data) => {
-    handleNext();
-    console.log(getValues("country"));
-    console.log(watch("country"));
-
-    console.log("Form data:", data);
+    props.handleNext();
+    const pin = props.formHandler.getValues();
+    console.log(pin);
   };
 
   return (
     <div>
       <h1 className="text-center">Good Gov. Card Registration</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="d-md-flex  gap-2  justify-content-around">
-          <div className=" d-flex gap-2 flex-column">
+      <form onSubmit={props.formHandler.handleSubmit(onSubmit)}>
+        <div className="d-md-flex  gap-3  justify-content-around">
+          <div className=" d-flex gap-3 flex-column">
             <div>
               <h6 htmlFor="" className="mb-1">
                 Card type{" "}
               </h6>
               <select
                 className="form-select  p-3"
-                {...register("cards")}
-                defaultValue={defaultValues.cards.one}
+                {...props.formHandler.register("cards")}
               >
                 <option value={defaultValues.cards.one}>
                   {defaultValues.cards.one}
@@ -160,10 +161,12 @@ function GgcRegForm({ handleNext }) {
 
               <input
                 className={`form-control p-3 ${
-                  errors.fullName ? "is-invalid" : ""
+                  props.formHandler.formState.errors.fullName
+                    ? "is-invalid"
+                    : ""
                 }`}
                 placeholder="Full name"
-                {...register("fullName")}
+                {...props.formHandler.register("fullName")}
               />
               {/* {errors.fullName && (
                 <p className="invalid-feedback">{errors.fullName.message}</p>
@@ -176,9 +179,9 @@ function GgcRegForm({ handleNext }) {
               </h6>
 
               <select
-                {...register("country")}
+                {...props.formHandler.register("country")}
                 className={`form-select p-3 ${
-                  errors.country ? "is-invalid" : ""
+                  props.formHandler.formState.errors.country ? "is-invalid" : ""
                 }`}
               >
                 <option value="" disabled selected hidden>
@@ -194,16 +197,18 @@ function GgcRegForm({ handleNext }) {
               </select>
             </div>
 
-            {watch("country") === "Ghana" && (
+            {props.formHandler.watch("country") === "Ghana" && (
               <div>
                 <h6 htmlFor="" className="mb-1">
                   Select regions{" "}
                 </h6>
 
                 <select
-                  {...register("regions")}
+                  {...props.formHandler.register("regions")}
                   className={`form-select p-3 ${
-                    errors.regions ? "is-invalid" : ""
+                    props.formHandler.formState.errors.regions
+                      ? "is-invalid"
+                      : ""
                   }`}
                 >
                   <option value="" disabled selected hidden>
@@ -220,17 +225,19 @@ function GgcRegForm({ handleNext }) {
               </div>
             )}
 
-            {watch("country") === "Ghana" &&
-              watch("regions") === "greater accra" && (
+            {props.formHandler.watch("country") === "Ghana" &&
+              props.formHandler.watch("regions") === "greater accra" && (
                 <div>
                   <h6 htmlFor="" className="mb-1">
                     Select constituencies{" "}
                   </h6>
 
                   <select
-                    {...register("constituencies")}
+                    {...props.formHandler.register("constituencies")}
                     className={`form-select p-3 ${
-                      errors.constituencies ? "is-invalid" : ""
+                      props.formHandler.formState.errors.constituencies
+                        ? "is-invalid"
+                        : ""
                     }`}
                   >
                     <option value="" disabled selected hidden>
@@ -248,7 +255,7 @@ function GgcRegForm({ handleNext }) {
               )}
           </div>
 
-          <div className="d-md-flex flex-column  gap-2">
+          <div className="d-md-flex flex-column  gap-4">
             <div className="d-flex gap-2">
               <div className=" ">
                 <div>
@@ -258,9 +265,11 @@ function GgcRegForm({ handleNext }) {
 
                   <select
                     // style={{ width: "100px" }}
-                    {...register("gender")}
+                    {...props.formHandler.register("gender")}
                     className={`form-select p-3 ${
-                      errors.gender ? "is-invalid" : ""
+                      props.formHandler.formState.errors.gender
+                        ? "is-invalid"
+                        : ""
                     }`}
                     // defaultValue={defaultValues.gender.male}
                   >
@@ -280,10 +289,12 @@ function GgcRegForm({ handleNext }) {
                 </h6>
 
                 <select
-                  {...register("ageRange")}
+                  {...props.formHandler.register("ageRange")}
                   // style={{ width: "140px" }}
                   className={`form-select p-3 ${
-                    errors.ageRange ? "is-invalid" : ""
+                    props.formHandler.formState.errors.ageRange
+                      ? "is-invalid"
+                      : ""
                   }`}
                 >
                   <option value="" disabled selected hidden>
@@ -309,9 +320,11 @@ function GgcRegForm({ handleNext }) {
               </h6>
 
               <select
-                {...register("industry")}
+                {...props.formHandler.register("industry")}
                 className={`form-select p-3 ${
-                  errors.industry ? "is-invalid" : ""
+                  props.formHandler.formState.errors.industry
+                    ? "is-invalid"
+                    : ""
                 }`}
               >
                 <option value="" disabled selected hidden>
@@ -336,9 +349,11 @@ function GgcRegForm({ handleNext }) {
               </h6>
 
               <select
-                {...register("occupation")}
+                {...props.formHandler.register("occupation")}
                 className={`form-select p-3 ${
-                  errors.occupation ? "is-invalid" : ""
+                  props.formHandler.formState.errors.occupation
+                    ? "is-invalid"
+                    : ""
                 }`}
               >
                 <option value="" disabled selected hidden>
@@ -363,9 +378,11 @@ function GgcRegForm({ handleNext }) {
               </h6>
 
               <select
-                {...register("display_name_on_card")}
+                {...props.formHandler.register("display_name_on_card")}
                 className={`form-select p-3 ${
-                  errors.display_name_on_card ? "is-invalid" : ""
+                  props.formHandler.formState.errors.display_name_on_card
+                    ? "is-invalid"
+                    : ""
                 }`}
               >
                 <option value="" disabled selected hidden>
@@ -387,9 +404,11 @@ function GgcRegForm({ handleNext }) {
               </h6>
 
               <select
-                {...register("card_pickup_location")}
+                {...props.formHandler.register("card_pickup_location")}
                 className={`form-select p-3 ${
-                  errors.card_pickup_location ? "is-invalid" : ""
+                  props.formHandler.formState.errors.card_pickup_location
+                    ? "is-invalid"
+                    : ""
                 }`}
               >
                 <option value="" disabled selected hidden>
@@ -416,7 +435,18 @@ function GgcRegForm({ handleNext }) {
           Continue
         </button> */}
         <div className=" d-flex justify-content-center mt-3">
-          <input type="submit" className="btn btn-success" />
+          <button
+            style={{ width: "160px" }}
+            type="submit"
+            className="btn btn-success"
+          >
+            {props.formHandler.formState.isSubmitting ? (
+              <span className="spinner-border spinner-border-sm mr-1"></span>
+            ) : (
+              "submit"
+            )}
+          </button>
+          {/* <input type="submit" className="btn btn-success" /> */}
         </div>
       </form>
     </div>
