@@ -20,7 +20,7 @@ const style = {
   // overflowY: "scroll",
   borderRadius: "24px",
 };
-function GgcRegisterModal({ open, handleClose, handleOpen }) {
+function GgcRegisterModal({ open, handleClose, handleOpen ,cardTypeValues }) {
   const [btnOpen, setBtnOpen] = React.useState(false);
   const [currentStep, setCurrentStep] = React.useState(1);
   const totalSteps = 5;
@@ -31,13 +31,12 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
   };
 
   const defaultValues = {
-    countryCode: 233,
+
     telephoneNo: "",
     otp: "",
     pin: "",
     confirmPin: "",
     role: "",
-    cardType: "",
     paymentMethod: ""
   };
 
@@ -61,6 +60,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
         return (
           <GgcRegForm
             setBtnOpen={setBtnOpen}
+            cardTypeValues={cardTypeValues}
             handleNext={handleNext}
             formHandler={formHandler}
           />
@@ -112,7 +112,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen }) {
         aria-describedby="modal-modal-description"
       >
         <div
-          className={`bg-white p-5 ${currentStep === 2 ? "modalbehav" : ""} `}
+          className={`bg-white p-3 p-md-3 ${currentStep === 2 || currentStep === 4 ? "modalbehav" : ""} `}
           style={style}
           sx={style}
         >

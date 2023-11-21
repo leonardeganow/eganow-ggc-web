@@ -1,5 +1,9 @@
 import { MembersSvcClient } from "../../protos/gen/Members_grpc_web_pb";
-import { MemberExistRequest, MemberRequest, JMOrGGCValues } from "../../protos/gen/Members_pb";
+import {
+  MemberExistRequest,
+  MemberRequest,
+  JMOrGGCValues,
+} from "../../protos/gen/Members_pb";
 import { URL, METADATA } from "../../utils/constants";
 
 const membersGRPC = () => {
@@ -10,11 +14,10 @@ const membersGRPC = () => {
       const request = new MemberExistRequest();
       request.setMobilenumber(param.telephoneNo);
       request.setMembertype(JMOrGGCValues[param.role]);
-console.log(param);
+      console.log(param);
 
       return new Promise((resolve, reject) => {
         client.checkIfMemberExist(request, METADATA, (err, response) => {
-        
           if (err) {
             reject(err);
           }
@@ -27,52 +30,48 @@ console.log(param);
     }
   }
 
-
   // REGISTER NEW MEMEBER
-  function registerMember(params){
-    try{
-
-      const request = new MemberRequest() //initialize a new member request
+  function registerMember(params) {
+    try {
+      const request = new MemberRequest(); //initialize a new member request
       // setting request body values
-      request.setFullname(params.Fullname)
-      request.setMobilenumber(params.Mobilenumber)
-      request.setEmailaddress(params.Emailaddress)
-      request.setGender(params.Gender)
-      request.setAgerageid(params.Age)
-      request.setCountryofresidence((params.Countryofresidence))
-      request.setRegionid(params.Regionid)
-      request.setConstituencyid(params.Constituencyid)
-      request.setIndustry(params.Industry)
-      request.setOccupation(params.Occupation)
-      request.setNdcmemberidno(params.Ndcmemberidno)
-      request.setAgentid(params.Agentid)
-      request.setPin(params.Pin)
-      request.setMobielwebussd(params.Mobilewebussd)
-      request.setAgerageid(params.Agerageid)
-      request.setDisplaynameoncard(params.Displaynameoncard)
-      request.setCardpickuplocation(params.Cardpickuplocation)
-      request.setCardtypeid(params.Cardtype)
-      request.setAccountcreationstatus(params.Accountcreationstatus)
+      request.setFullname(params.fullName);
+      request.setMobilenumber(params.telephoneNo);
+      request.setEmailaddress(null);
+      request.setGender(params.gender);
+      request.setAgerageid(params.ageRange);
+      request.setCountryofresidence(params.country);
+      request.setRegionid(params.regions);
+      request.setConstituencyid(params.constituencies);
+      request.setIndustry(params.industry);
+      request.setOccupation(params.occupation);
+      request.setNdcmemberidno(null);
+      request.setAgentid(null);
+      request.setPin(params.pin);
+      request.setMobielwebussd("WEB");
+      request.setAge(null);
+      request.setDisplaynameoncard(params.Displaynameoncard);
+      request.setCardpickuplocation(params.card_pickup_location);
+      request.setCardtypeid(params.cards);
+      // request.setAccountcreationstatus(null);
 
-      console.log(request)
-
-      
-      return new Promise((resolve,reject)=>{
-        client.createMember(request,METADATA,(err,response) => {
-          if(err){
-            reject(err)
+      return new Promise((resolve, reject) => {
+        client.createMember(request, METADATA, (err, response) => {
+          console.log(request);
+          if (err) {
+            reject(err);
           }
           const result = response.toObject(); //getting an object data from the result object.
-          // resolve(result)
-          console.log(result)
-        })
-      })
-    }catch(error){
+          resolve(result);
+        });
+      });
+    } catch (error) {
+      console.log(error);
     }
   }
 
   // returning function to use in our app
-  return {createMember,registerMember};
+  return { createMember, registerMember };
 };
 
 export default membersGRPC;
