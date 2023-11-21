@@ -82,7 +82,7 @@ const Features = (props) => {
                 <div className="service-icon overflow-hidden rounded-3">
                   <img src={jm} alt="imag1" />
                 </div>
-                <h2 className="text-center text-danger m-0">DONATE TO JM</h2>
+                <h4 className="text-center text-danger m-0">DONATE TO JM</h4>
                 <p className="p-2 m-0 text-center">
                   Lorem Ipsum is simply dummy text the industrey's standard
                   dummy text ever scrambled type specimen
@@ -101,7 +101,7 @@ const Features = (props) => {
                 <div className="service-icon overflow-hidden rounded-3">
                   <img src={ggc} alt="imag1"  className="img-fluid"/>
                 </div>
-                <h2 className="text-center text-danger m-0">GET A GGC CARD</h2>
+                <h4 className="text-center text-danger m-0">GET YOUR GOOD GOVERNANCE CARD</h4>
                 <p className="p-2 m-0 text-center">
                   Lorem Ipsum is simply dummy text the industrey's standard
                   dummy text ever scrambled type specimen

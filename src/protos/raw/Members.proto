@@ -29,12 +29,8 @@ message GetMembersRequest {
 
 message MemberExistRequest {
 	 string mobileNumber = 1;
-<<<<<<< HEAD
-	 string memberType = 2;
-=======
 	 JMOrGGCValues memberType = 2;
 
->>>>>>> e99e3df1c08b2b2b6a221b211188b105cda45f85
 }
 
 message ResetPinRequest {
