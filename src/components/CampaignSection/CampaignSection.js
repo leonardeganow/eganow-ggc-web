@@ -10,7 +10,14 @@ import GgcRegForm from "../forms/GgcRegForm";
 import PhoneNumberForm from "../forms/PhoneNumberForm";
 import ChoosePayMethod from "../forms/ChoosePayMethod";
 import SelectAmount from "../forms/SelectAmount";
+import GgcRegisterModal from "../modals/GgcRegisterModal";
+import useStore from "../../formstore/formStore";
 
+import TransactionAPI from "../../api/grpcapi/TransactionGRPC"
+
+
+
+//get ggc card packages and store in zustand state
 
 const style = {
   position: "relative",
@@ -26,6 +33,25 @@ const style = {
 };
 
 const CampaignSection = (props) => {
+
+  // TESTING API REQUEST
+  // const {postNewTransaction,postCardTransaction} = TransactionAPI()
+  // async function testAPi(){
+  //   const getData = await postCardTransaction()
+  //   console.log(getData)
+  // }
+  // testAPi()
+
+
+// SETTING GLOBAL STATE VALUE FOR JM
+  const { info, updateRoleAndCardType } = useStore();
+  function handleCardGet(cardtype) {
+    const newRole = "JM";
+      updateRoleAndCardType(newRole, cardtype);
+
+  }
+  
+
   // MODAL STATES
   const [open, setOpen] = React.useState(false);
   const [btnOpen, setBtnOpen] = React.useState(false);
@@ -36,6 +62,7 @@ const CampaignSection = (props) => {
   const handleSubmit = (e)=>{
     e.preventDefault()
     console.log({amount : amount, donate : "JM"} )
+    handleCardGet(amount)
   }
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -248,7 +275,15 @@ const CampaignSection = (props) => {
         </Box>
       </Modal> */}
 
-<Modal
+      {open && (
+        <GgcRegisterModal
+          open={open}
+          handleClose={handleClose}
+          handleOpen={handleOpen}
+        />
+      )}
+
+    {/* <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -268,7 +303,7 @@ const CampaignSection = (props) => {
 
           {renderForm()}
         </div>
-      </Modal>
+      </Modal> */}
     </section>
   );
 };

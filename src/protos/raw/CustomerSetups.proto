@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+option csharp_namespace = "NDC_DONATION_2024.Protos";
+
+package CustomerSetups;
+
+service CustomerSetupsSvc {
+	rpc GetRegions(EmptySetupRequest) returns (RegionResponse);
+	rpc GetConstituencies(EmptySetupRequest) returns (ConstituenciesResponse);
+	rpc CreateAgents(AgentRequest) returns (AgentResponse);
+	rpc PasswordResetAdminForAgents(PasswordResetRequest) returns (AgentResponse);
+	rpc UpdateAgent(AgentUpdateRequest) returns (AgentResponse);
+	rpc GetListOfAgents(EmptySetupRequest) returns (ListOfAgentsResponse);
+	rpc GetListOfAgeRange(EmptySetupRequest) returns (ListOfAgeRanges);
+	rpc GetPaymentMethods(EmptySetupRequest) returns (ListOfPaymentMethods);
+}
+
+message EmptySetupRequest {
+
+}
+
+message RegionData {
+	string regionId = 1;
+	string regionName = 2;
+}
+
+message PasswordResetRequest {
+	string agentId = 1;
+	string mobileNumber = 2;
+	string updatedBy =3;
+}
+
+
+message RegionResponse {
+	
+repeated RegionData regions = 1;
+}
+
+
+message ConstituencyData {
+
+	string constituencyId = 1;
+	string constituencyName = 2;
+	string regionId = 3;
+}
+
+message ConstituenciesResponse {
+
+   repeated ConstituencyData constituencies = 1;
+}
+
+
+message AgentRequest {
+	string mobileNumber = 1;
+	string agentName =2;
+	string createdBy =3;
+}
+
+message AgentUpdateRequest {
+	string agentId = 1;
+	string mobileNumber = 2;
+	string agentName =3; 
+	string updatedBy = 4;
+}
+
+message AgentResponse {
+	bool status = 1;
+	string message =2;
+
+}
+
+message Agent {
+	string agentId=1;
+	string agentName = 2;
+	string mobileNumber = 3;
+}
+
+
+message ListOfAgentsResponse {
+	repeated Agent listOfAgents = 1;
+}
+
+message AgeRangeData {
+	string ageRangeId = 1;
+	string ageRangeName = 2;
+}
+
+message ListOfAgeRanges {
+	repeated AgeRangeData ageRanges = 1;
+}
+
+
+message PaymentMethod {
+ string paymentMethodId = 1;
+ string PaymentMethodName =2;
+ string paymentMethodType = 3;
+}
+
+
+message ListOfPaymentMethods {
+	repeated PaymentMethod payMethodList = 1;
+}
