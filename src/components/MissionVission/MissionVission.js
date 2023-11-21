@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import arise from "../../images/election-mission/arise.jpg";
 import bronze from "../../images/election-mission/Bronze.jpg";
 import freedom from "../../images/election-mission/Freedom.jpg";
@@ -12,93 +12,97 @@ import standard from "../../images/election-mission/Standard.jpg";
 import hope from "../../images/election-mission/Hope.jpg";
 import GgcRegisterModal from "../modals/GgcRegisterModal";
 import useStore from "../../formstore/formStore";
-
-
+import CardTypeAPI from "../../api/grpcapi/cardTypeGRPC";
 
 const Mission = [
   {
     id: "01",
-    mImg: standard,
-    Title: "Standard",
-    Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
-  },
-  {
-    id: "01",
-    mImg: hope,
-    Title: "Hope",
-    Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
+    mImg: pristige,
   },
   {
     id: "02",
-    mImg: silver,
-    Title: "silver",
-    Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
+    mImg: platinum,
   },
   {
     id: "03",
-    mImg: pristige,
-    Title: "pristige",
-    Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
+    mImg: gold,
   },
   {
     id: "04",
-    mImg: platinum,
-    Title: "platinum",
-    Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
+    mImg: silver,
   },
   {
     id: "05",
-    mImg: loyalty,
-    Title: "loyalty",
-    Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
+    mImg: bronze,
   },
   {
     id: "06",
-    mImg: justice,
-    Title: "justice",
-    Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
+    mImg: standard,
   },
   {
     id: "07",
-    mImg: gold,
-    Title: "gold",
-    Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
-  },
-  {
-    id: "08",
-    mImg: freedom,
-    Title: "freedom",
-    Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
+    mImg: loyalty,
   },
 
   {
     id: "08",
-    mImg: bronze,
-    Title: "bronze",
-    Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
+    mImg: justice,
   },
   {
-    id: "08",
+    id: "9",
+    mImg: hope,
+  },
+  {
+    id: "9",
     mImg: arise,
-    Title: " arise",
-    Des: "Lorem Ipsum has been the industry's standard dummy of the text ever since make.",
+  },
+  {
+    id: "9",
+    mImg: hope,
   },
 ];
 
 const MissionVission = (props) => {
+  const [cardTypeValues, setCardTypeValues] = useState(null);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { info, updateRoleAndCardType } = useStore();
+  const { info, updateRoleAndCardType } = useStore(); //zustand state to hanndle role annd card select
 
+  const { getCardTypes } = CardTypeAPI();
+
+  //
 
   //get ggc card packages and store in zustand state
-  function handleCardGet(cardtype) {
+  function handleCardGet(cardtype, cardamount, cardId) {
     const newRole = "GGC";
-   
-      updateRoleAndCardType(newRole, cardtype);
+
+    const cardDisplay = `${cardtype} card - ${cardamount}`;
+
+    updateRoleAndCardType(newRole, cardDisplay ,cardId);
   }
+
+  const getCardTypeHandler = async () => {
+    console.log("hi");
+    try {
+      const response = await getCardTypes();
+      console.log(response.cardtypesList);
+      const cardsList = response.cardtypesList;
+      const newCards = cardsList.map((card, i) => {
+        return { ...card, img: Mission[i]?.mImg };
+      });
+
+      setCardTypeValues(newCards);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  console.log(cardTypeValues);
+
+  useEffect(() => {
+    getCardTypeHandler();
+  }, []);
   return (
     <section
       id="getggc"
@@ -175,18 +179,21 @@ const MissionVission = (props) => {
         </div>
         <div onClick={() => setOpen(true)} className="election-mission-wrap">
           <div className="row">
-            {Mission.map((mvsion, tsm) => (
+            {cardTypeValues?.map((card, i) => (
               <div
-                onClick={() => handleCardGet(mvsion.Title)}
+                onClick={() =>
+                  handleCardGet(card.cardtypename, card.cardamount, card.cardtypeid)
+                }
                 className="col-lg-4 col-md-4 col-sm-6 col-12"
-                key={tsm}
+                key={card.cardtypeid}
               >
                 <div className="election-mission-content">
-                  <img src={mvsion.mImg} alt="" />
-                  {/* <div className="title">{mvsion.Title}</div> */}
+                  <img src={card.img} alt="" />
+
+                  <div className="title">{card.cardtypename}</div>
                   <div className="text">
-                    <h3>{mvsion.Title}</h3>
-                    <p>{mvsion.Des}</p>
+                    <h3>{card.cardtypename}</h3>
+                    <p>{card.description}</p>
                   </div>
                 </div>
               </div>
@@ -232,6 +239,7 @@ const MissionVission = (props) => {
       </div>
       {open && (
         <GgcRegisterModal
+        cardTypeValues={cardTypeValues}
           open={open}
           handleClose={handleClose}
           handleOpen={handleOpen}

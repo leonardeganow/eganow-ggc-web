@@ -3,9 +3,22 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import useStore from "../../formstore/formStore";
+import customerSetupsGRPC from "../../api/grpcapi/customerSetupsGRPC";
+import membersGRPC from "../../api/grpcapi/membersGRPC";
+import { ToastContainer, toast } from "react-toastify";
 
 function GgcRegForm(props) {
+  const { getRegions, getConstituencies, getAgeRange , } = customerSetupsGRPC();
+  const { registerMember} = membersGRPC()
+
+  const [regions, setRegions] = React.useState([]);
+  const [constituencies, setConstituencies] = React.useState([]);
+  const [ageRange, setAgeRange] = React.useState([]);
+
   const { info } = useStore();
+  const watchCountries = props.formHandler.watch("country");
+  const watchRegions = props.formHandler.watch("regions");
+
   const schema = yup
     .object()
     .shape({
@@ -33,8 +46,56 @@ function GgcRegForm(props) {
   //   resolver: yupResolver(schema),
   // });
 
+  async function handleGetRegions() {
+    try {
+      const response = await getRegions();
+      setRegions(response.regionsList);
+      console.log(response);
+    } catch (error) {}
+  }
+
+  const filteredList = constituencies.filter(
+    (constituency, i) => constituency.regionid === watchRegions
+  );
+
+  // console.log(filteredList);
+  async function handleGetConstituencies() {
+    try {
+      const response = await getConstituencies();
+      setConstituencies(response.constituenciesList);
+      // console.log(response);
+      // console.log(watchRegions);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   React.useEffect(() => {
-    props.formHandler.setValue("cards", info.cardType);
+    // console.log(watchCountries);
+    if (watchCountries === "Ghana") {
+      handleGetRegions();
+      handleGetConstituencies();
+    }
+  }, [watchCountries]);
+
+  // React.useEffect(() => {
+  //   if (watchCountries === "Ghana") {
+  //     handleGetConstituencies();
+  //   }
+
+  // }, [watchCountries]);
+
+  async function getAgeRangeHandler() {
+    try {
+      const response = await getAgeRange();
+      setAgeRange(response.agerangesList);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  React.useEffect(() => {
+    getAgeRangeHandler();
   }, []);
 
   const defaultValues = {
@@ -97,12 +158,32 @@ function GgcRegForm(props) {
     },
   };
 
-  const onSubmit = (data) => {
-    props.handleNext();
-    const pin = props.formHandler.getValues();
-    console.log(pin);
+  const onSubmit = async (data) => {
+console.log(data);
+    try {
+      const response = await registerMember(data)
+
+      props.formHandler.reset(data)
+      console.log(response);
+      if(response.status){
+        toast(response.message)
+        props.handleNext()
+      } else {
+        toast.error(response.message)
+      }
+      console.log(response);
+    } catch (error) {
+      props.formHandler.reset(data);
+      console.error(error)
+    }
+    // props.handleNext();
+    // const pin = props.formHandler.getValues();
+    // console.log(pin);
   };
 
+  const cardDisplay = props.cardTypeValues.filter(
+    (params, i) => params.cardtypeid === info.cardid
+  );
   return (
     <div>
       <h1 className="text-center">Good Gov. Card Registration</h1>
@@ -117,10 +198,18 @@ function GgcRegForm(props) {
                 className="form-select  p-3"
                 {...props.formHandler.register("cards")}
               >
-                <option value={defaultValues.cards.one}>
-                  {defaultValues.cards.one}
+                <option value={info.cardid} selected>
+                  {/* {defaultValues.cards.one} */}
+                  {info.cardType}
                 </option>
-                <option value={defaultValues.cards.two}>
+                {props.cardTypeValues.map((cards, i) => {
+                  return (
+                    <option key={i} value={cards.cardtypeid}>
+                      {cards.cardtypename}
+                    </option>
+                  );
+                })}
+                {/* <option value={defaultValues.cards.two}>
                   {defaultValues.cards.two}
                 </option>
                 <option value={defaultValues.cards.three}>
@@ -149,7 +238,7 @@ function GgcRegForm(props) {
                 </option>
                 <option value={defaultValues.cards.eleven}>
                   {defaultValues.cards.eleven}
-                </option>
+                </option> */}
               </select>
             </div>
 
@@ -173,89 +262,6 @@ function GgcRegForm(props) {
               )} */}
             </div>
 
-            <div className="">
-              <h6 htmlFor="" className="mb-1">
-                Select country{" "}
-              </h6>
-
-              <select
-                {...props.formHandler.register("country")}
-                className={`form-select p-3 ${
-                  props.formHandler.formState.errors.country ? "is-invalid" : ""
-                }`}
-              >
-                <option value="" disabled selected hidden>
-                  Country
-                </option>
-
-                <option value={defaultValues.country.ghana}>
-                  {defaultValues.country.ghana}
-                </option>
-                <option value={defaultValues.country.other}>
-                  {defaultValues.country.other}
-                </option>
-              </select>
-            </div>
-
-            {props.formHandler.watch("country") === "Ghana" && (
-              <div>
-                <h6 htmlFor="" className="mb-1">
-                  Select regions{" "}
-                </h6>
-
-                <select
-                  {...props.formHandler.register("regions")}
-                  className={`form-select p-3 ${
-                    props.formHandler.formState.errors.regions
-                      ? "is-invalid"
-                      : ""
-                  }`}
-                >
-                  <option value="" disabled selected hidden>
-                    Regions
-                  </option>
-
-                  <option value={defaultValues.regions.one}>
-                    {defaultValues.regions.one}
-                  </option>
-                  <option value={defaultValues.regions.two}>
-                    {defaultValues.regions.two}
-                  </option>
-                </select>
-              </div>
-            )}
-
-            {props.formHandler.watch("country") === "Ghana" &&
-              props.formHandler.watch("regions") === "greater accra" && (
-                <div>
-                  <h6 htmlFor="" className="mb-1">
-                    Select constituencies{" "}
-                  </h6>
-
-                  <select
-                    {...props.formHandler.register("constituencies")}
-                    className={`form-select p-3 ${
-                      props.formHandler.formState.errors.constituencies
-                        ? "is-invalid"
-                        : ""
-                    }`}
-                  >
-                    <option value="" disabled selected hidden>
-                      constituencies
-                    </option>
-
-                    <option value={defaultValues.constituencies.one}>
-                      {defaultValues.constituencies.one}
-                    </option>
-                    <option value={defaultValues.constituencies.two}>
-                      {defaultValues.constituencies.two}
-                    </option>
-                  </select>
-                </div>
-              )}
-          </div>
-
-          <div className="d-md-flex flex-column  gap-4">
             <div className="d-flex gap-2">
               <div className=" ">
                 <div>
@@ -301,6 +307,14 @@ function GgcRegForm(props) {
                     Age range
                   </option>
 
+                  {ageRange.map((param, i) => {
+                    return (
+                      <option key={param.agerangeid} value={param.agerangeid}>
+                        {param.agerangename}
+                      </option>
+                    );
+                  })}
+
                   <option value={defaultValues.ageRange.one}>
                     {defaultValues.ageRange.one}
                   </option>
@@ -316,31 +330,106 @@ function GgcRegForm(props) {
 
             <div className="">
               <h6 htmlFor="" className="mb-1">
-                Industry
+                Select country{" "}
               </h6>
 
               <select
-                {...props.formHandler.register("industry")}
+                {...props.formHandler.register("country")}
                 className={`form-select p-3 ${
+                  props.formHandler.formState.errors.country ? "is-invalid" : ""
+                }`}
+              >
+                <option value="" disabled selected hidden>
+                  Country
+                </option>
+
+                <option value={defaultValues.country.ghana}>
+                  {defaultValues.country.ghana}
+                </option>
+                <option value={defaultValues.country.other}>
+                  {defaultValues.country.other}
+                </option>
+              </select>
+            </div>
+
+            {props.formHandler.watch("country") === "Ghana" && (
+              <div>
+                <h6 htmlFor="" className="mb-1">
+                  Select regions{" "}
+                </h6>
+
+                <select
+                  {...props.formHandler.register("regions")}
+                  className={`form-select p-3 ${
+                    props.formHandler.formState.errors.regions
+                      ? "is-invalid"
+                      : ""
+                  }`}
+                >
+                  <option value="" disabled selected hidden>
+                    Regions
+                  </option>
+
+                  {regions.map((region, i) => {
+                    return (
+                      <option key={region.regionid} value={region.regionid}>
+                        {region.regionname}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            )}
+
+            {props.formHandler.watch("country") === "Ghana" &&
+              props.formHandler.watch("regions") && (
+                <div>
+                  <h6 htmlFor="" className="mb-1">
+                    Select constituencies{" "}
+                  </h6>
+
+                  <select
+                    {...props.formHandler.register("constituencies")}
+                    className={`form-select p-3 ${
+                      props.formHandler.formState.errors.constituencies
+                        ? "is-invalid"
+                        : ""
+                    }`}
+                  >
+                    <option value="" disabled selected hidden>
+                      constituencies
+                    </option>
+
+                    {filteredList.map((constituency, i) => {
+                      return (
+                        <option
+                          key={constituency.constituencyid}
+                          value={constituency.constituencyid}
+                        >
+                          {constituency.constituencyname}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              )}
+          </div>
+
+          <div className="d-md-flex flex-column  gap-4">
+            <div className="">
+              <h6 htmlFor="" className="mb-1">
+                Industry
+              </h6>
+
+              <input
+                className={`form-control p-3 ${
                   props.formHandler.formState.errors.industry
                     ? "is-invalid"
                     : ""
                 }`}
-              >
-                <option value="" disabled selected hidden>
-                  Industry
-                </option>
-
-                <option value={defaultValues.industry.one}>
-                  {defaultValues.industry.one}
-                </option>
-                <option value={defaultValues.industry.two}>
-                  {defaultValues.industry.two}
-                </option>
-                <option value={defaultValues.industry.three}>
-                  {defaultValues.industry.three}
-                </option>
-              </select>
+                placeholder="Enter industry"
+                {...props.formHandler.register("industry")}
+              />
             </div>
 
             <div className="">
@@ -348,28 +437,15 @@ function GgcRegForm(props) {
                 Occupation{" "}
               </h6>
 
-              <select
-                {...props.formHandler.register("occupation")}
-                className={`form-select p-3 ${
+              <input
+                className={`form-control p-3 ${
                   props.formHandler.formState.errors.occupation
                     ? "is-invalid"
                     : ""
                 }`}
-              >
-                <option value="" disabled selected hidden>
-                  Occupation
-                </option>
-
-                <option value={defaultValues.occupation.one}>
-                  {defaultValues.occupation.one}
-                </option>
-                <option value={defaultValues.occupation.two}>
-                  {defaultValues.occupation.two}
-                </option>
-                <option value={defaultValues.occupation.three}>
-                  {defaultValues.occupation.three}
-                </option>
-              </select>
+                placeholder="Enter occupation"
+                {...props.formHandler.register("occupation")}
+              />
             </div>
 
             <div className="">
@@ -403,25 +479,15 @@ function GgcRegForm(props) {
                 Card pick location{" "}
               </h6>
 
-              <select
-                {...props.formHandler.register("card_pickup_location")}
-                className={`form-select p-3 ${
+              <input
+                className={`form-control p-3 ${
                   props.formHandler.formState.errors.card_pickup_location
                     ? "is-invalid"
                     : ""
                 }`}
-              >
-                <option value="" disabled selected hidden>
-                  Card pick up location
-                </option>
-
-                <option value={defaultValues.card_pickup_location.one}>
-                  {defaultValues.card_pickup_location.one}
-                </option>
-                <option value={defaultValues.card_pickup_location.two}>
-                  {defaultValues.card_pickup_location.two}
-                </option>
-              </select>
+                placeholder="Enter card pick up location"
+                {...props.formHandler.register("card_pickup_location")}
+              />
             </div>
           </div>
         </div>
@@ -439,6 +505,8 @@ function GgcRegForm(props) {
             style={{ width: "160px" }}
             type="submit"
             className="btn btn-success"
+            disabled={props.formHandler.formState.isSubmitting}
+
           >
             {props.formHandler.formState.isSubmitting ? (
               <span className="spinner-border spinner-border-sm mr-1"></span>
