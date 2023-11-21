@@ -14,10 +14,10 @@ function PhoneNumberForm(props) {
   const [condition, setCondition] = React.useState(false);
   const [showpin, setShowpin] = React.useState(false);
   const [showInput, setShowInput] = React.useState(true);
-  const [showEnterPin,setShowEnterPin] = React.useState(false)
+  const [showEnterPin, setShowEnterPin] = React.useState(false);
   const [mobileNumber, setMobileNumber] = React.useState("");
 
-  const { createMember } = membersGRPC();
+  const { createMember, loginMember } = membersGRPC();
   const { sendOtp, verifyOtp } = otpGRPC();
 
   console.log(info);
@@ -56,15 +56,22 @@ function PhoneNumberForm(props) {
       const response = await createMember(newData);
       props.formHandler.reset(data);
       console.log(response);
-      if (response.status === false) {
+      if (response.message === "COMPLETE") {
+        // handleOtp(data.telephoneNo);
+        props.formHandler.setValue("memberId", response.memberid)
+        props.formHandler.setValue("ndcCardNo", response.cardno)
+        setShowInput(false);
+        setCondition(false);
+        setShowEnterPin(true);
+      } else if (response.message === "DOES_NOT_EXIST") {
         handleOtp(data.telephoneNo);
         setShowInput(false);
+        setShowEnterPin(false);
         setCondition(true);
-      }
-      else {
-        setShowInput(false)
-        setShowEnterPin(true)
-
+      } else {
+        setShowInput(false);
+        setCondition(false);
+        setShowEnterPin(true);
       }
     } catch (error) {
       props.formHandler.reset(data);
@@ -123,14 +130,22 @@ function PhoneNumberForm(props) {
   };
 
   //login user function
-  const handleLogin =(data) =>{
+  const handleLogin = async (data) => {
     try {
-      
+      const response = await loginMember(data);
+      props.formHandler.reset(data);
+      if (response.message === "COMPLETE") {
+        props.handleNext(2);
+      } else if (response.message === "INCOMPLETE") {
+        props.handleNext(1);
+      }
+
+      console.log(response);
     } catch (error) {
-      
+      props.formHandler.reset(data);
+      console.log(error);
     }
-  }
- 
+  };
 
   return (
     <div>
@@ -312,18 +327,20 @@ function PhoneNumberForm(props) {
                 continue
               </button>
             </div>
-
           </div>
         </div>
       )}
 
-
-      {showEnterPin && <div className="mt-4 ">
+      {showEnterPin && (
+        <div className="mt-4 ">
           <h1 className="text-center">Looks like you have an existing card</h1>
           <p className="text-center">
             Enter your pin below to access your card
           </p>
-          <form onSubmit={props.formHandler.handleSubmit(handleLogin)} className="">
+          <form
+            onSubmit={props.formHandler.handleSubmit(handleLogin)}
+            className=""
+          >
             <input
               className={`form-control p-3 w-50 mx-auto ${
                 props.formHandler.formState.errors.pin
@@ -343,8 +360,6 @@ function PhoneNumberForm(props) {
               </p>
             )}
 
-          
-
             {props.formHandler.formState.errors.confirmPin && (
               <p className="invalid-feedback text-center">
                 {props.formHandler.formState.errors.confirmPin.message}
@@ -352,7 +367,8 @@ function PhoneNumberForm(props) {
             )}
 
             <div className="d-flex justify-content-center mt-4">
-              <button type="submit"
+              <button
+                type="submit"
                 // disabled={
                 //   props.formHandler.formState.errors.pin ||
                 //   props.formHandler.formState.errors.confirmPin ||
@@ -360,17 +376,16 @@ function PhoneNumberForm(props) {
                 //   !props.formHandler.getValues("confirmPin")
                 // }
                 className="btn btn-success mx-auto text-center "
-                onClick={() => {
-                  props.handleNext();
-                }}
+                // onClick={() => {
+                //   props.handleNext();
+                // }}
               >
                 continue
               </button>
             </div>
-
-          
           </form>
-        </div>}
+        </div>
+      )}
     </div>
   );
 }
