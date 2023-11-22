@@ -45,24 +45,26 @@ const CampaignSection = (props) => {
 
 // SETTING GLOBAL STATE VALUE FOR JM
   const { info, updateRoleAndCardType } = useStore();
-  function handleCardGet(cardtype) {
-    const newRole = "JM";
-      updateRoleAndCardType(newRole, cardtype);
+  // function to set Global state value
+  function handleCardGet(selectAmount) {
+    const newRole = "JM"; //create the role value
+    updateRoleAndCardType(newRole,"","", selectAmount); //setting values to global state reducer
 
   }
   
-
   // MODAL STATES
   const [open, setOpen] = React.useState(false);
   const [btnOpen, setBtnOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  //creating amount state
   const [amount,setAmount] = useState(0)
+
+
   const handleSubmit = (e)=>{
     e.preventDefault()
-    console.log({amount : amount, donate : "JM"} )
-    handleCardGet(amount)
+    handleCardGet(amount) //passing amount value the donate button is clicked
   }
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -76,23 +78,23 @@ const CampaignSection = (props) => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
-  const renderForm = () => {
-    switch (currentStep) {
-      case 1:
-        return (
-          <PhoneNumberForm setBtnOpen={setBtnOpen} handleNext={handleNext} />
-        );
+  // const renderForm = () => {
+  //   switch (currentStep) {
+  //     case 1:
+  //       return (
+  //         <PhoneNumberForm setBtnOpen={setBtnOpen} handleNext={handleNext} />
+  //       );
 
-      case 2:
-        return (
-          <ChoosePayMethod setBtnOpen={setBtnOpen} handleNext={handleNext} />
-        );
-      case 3:
-        return <h3>Review Page</h3>
-      default:
-        return null;
-    }
-  };
+  //     case 2:
+  //       return (
+  //         <ChoosePayMethod setBtnOpen={setBtnOpen} handleNext={handleNext} />
+  //       );
+  //     case 3:
+  //       return <h3>Review Page</h3>
+  //     default:
+  //       return null;
+  //   }
+  // };
 
   return (
     <section className="wpo-running-campaign-section section-padding">
