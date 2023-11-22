@@ -80,8 +80,47 @@ const MissionVission = (props) => {
 
     const cardDisplay = `${cardtype} card - ${cardamount}`;
 
-    updateRoleAndCardType(newRole, cardDisplay ,cardId);
+    updateRoleAndCardType(newRole, cardDisplay, cardId ,cardamount);
   }
+
+  const fakeCards = [
+    {
+      cardtypeid: "23423",
+      cardtypename: "sdfs",
+      cardamount: 233,
+      carddescription: "sdfsd",
+    },
+    {
+      cardtypeid: "23423",
+      cardtypename: "sdfs",
+      cardamount: 233,
+      carddescription: "sdfsd",
+    },
+    {
+      cardtypeid: "23423",
+      cardtypename: "sdfs",
+      cardamount: 233,
+      carddescription: "sdfsd",
+    },
+    {
+      cardtypeid: "23423",
+      cardtypename: "sdfs",
+      cardamount: 233,
+      carddescription: "sdfsd",
+    },
+    {
+      cardtypeid: "23423",
+      cardtypename: "sdfs",
+      cardamount: 233,
+      carddescription: "sdfsd",
+    },
+    {
+      cardtypeid: "23423",
+      cardtypename: "sdfs",
+      cardamount: 233,
+      carddescription: "sdfsd",
+    },
+  ];
 
   const getCardTypeHandler = async () => {
     console.log("hi");
@@ -108,6 +147,8 @@ const MissionVission = (props) => {
       id="getggc"
       className="wpo-election-mission-section section-padding"
     >
+     
+
       <div style={{ cursor: "pointer" }} className="container">
         <div className="row justify-content-center">
           <div className="col col-lg-6 col-md-8 col-12">
@@ -182,7 +223,11 @@ const MissionVission = (props) => {
             {cardTypeValues?.map((card, i) => (
               <div
                 onClick={() =>
-                  handleCardGet(card.cardtypename, card.cardamount, card.cardtypeid)
+                  handleCardGet(
+                    card.cardtypename,
+                    card.cardamount,
+                    card.cardtypeid
+                  )
                 }
                 className="col-lg-4 col-md-4 col-sm-6 col-12"
                 key={card.cardtypeid}
@@ -239,7 +284,7 @@ const MissionVission = (props) => {
       </div>
       {open && (
         <GgcRegisterModal
-        cardTypeValues={cardTypeValues}
+          cardTypeValues={cardTypeValues}
           open={open}
           handleClose={handleClose}
           handleOpen={handleOpen}

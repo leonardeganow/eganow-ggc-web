@@ -48,7 +48,6 @@ const CampaignSection = (props) => {
   function handleCardGet(cardtype) {
     const newRole = "JM";
       updateRoleAndCardType(newRole, cardtype);
-
   }
   
 
@@ -95,7 +94,7 @@ const CampaignSection = (props) => {
   };
 
   return (
-    <section className="wpo-running-campaign-section section-padding">
+    <section id="donate" className="wpo-running-campaign-section section-padding">
       <div className="container">
         <div className="running-campaign-wrap">
           <div className="shape-1"></div>

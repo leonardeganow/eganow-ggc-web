@@ -7,6 +7,8 @@ import SelectAmount from "../forms/SelectAmount";
 import PaySuccess from "../paymentpages/PaySuccess";
 import { useForm } from "react-hook-form";
 import ReviewPaymentPage from "../paymentpages/ReviewPaymentPage";
+import useStore from "../../formstore/formStore";
+
 
 const style = {
   position: "relative",
@@ -20,9 +22,10 @@ const style = {
   // overflowY: "scroll",
   borderRadius: "24px",
 };
-function GgcRegisterModal({ open, handleClose, handleOpen ,cardTypeValues }) {
+function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
   const [btnOpen, setBtnOpen] = React.useState(false);
   const [currentStep, setCurrentStep] = React.useState(1);
+  const {info} = useStore()
   const totalSteps = 5;
 
   const handleNext = (page) => {
@@ -32,17 +35,19 @@ function GgcRegisterModal({ open, handleClose, handleOpen ,cardTypeValues }) {
   };
 
   const defaultValues = {
-
     telephoneNo: "",
     otp: "",
     pin: "",
     confirmPin: "",
     role: "",
     paymentMethod: "",
+    amount: info.amount,
     memberId: "",
     ndcCardNo: "",
     transType: "",
-    plan:""
+    plan: "",
+    momonumber: "",
+    momoname: ""
   };
 
   const formHandler = useForm({ defaultValues });
@@ -90,15 +95,15 @@ function GgcRegisterModal({ open, handleClose, handleOpen ,cardTypeValues }) {
           />
         );
 
-        case 5:
-          return (
-            <ReviewPaymentPage
-              setBtnOpen={setBtnOpen}
-              handleNext={handleNext}
-              handleBack={handleBack}
-              formHandler={formHandler}
-            />
-          );
+      case 5:
+        return (
+          <ReviewPaymentPage
+            setBtnOpen={setBtnOpen}
+            handleNext={handleNext}
+            handleBack={handleBack}
+            formHandler={formHandler}
+          />
+        );
 
       case 6:
         return <PaySuccess setBtnOpen={setBtnOpen} handleNext={handleNext} />;
@@ -117,15 +122,14 @@ function GgcRegisterModal({ open, handleClose, handleOpen ,cardTypeValues }) {
         aria-describedby="modal-modal-description"
       >
         <div
-          className={`bg-white p-3 p-md-3 ${currentStep === 2 || currentStep === 4 ? "modalbehav" : ""} `}
+          className={`bg-white p-3 p-md-3 ${
+            currentStep === 2 || currentStep === 4 ? "modalbehav" : ""
+          } `}
           style={style}
           sx={style}
         >
-
           <div>
-            <p>
-              {/* Step {currentStep} of {totalSteps} */}
-            </p>
+            <p>{/* Step {currentStep} of {totalSteps} */}</p>
           </div>
 
           {renderForm()}

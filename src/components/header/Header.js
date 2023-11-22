@@ -4,8 +4,13 @@ import MobileMenu from "../MobileMenu/MobileMenu";
 import Logo from "../../images/logo-s3.png";
 import HeaderTopbar from "../HeaderTopbar/HeaderTopbar";
 import { Link } from "react-scroll";
+import TransactionsModal from "../modals/TransactionsModal";
+import { useState } from "react";
 
 const Header = (props) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const ClickHandler = () => {
     window.scrollTo(10, 0);
   };
@@ -278,8 +283,8 @@ const Header = (props) => {
               <div className="col-lg-2 col-md-3 col-sm-4 col-2">
                 <div className="header-right">
                   <div className="close-form">
-                    <Link onClick={ClickHandler} className="theme-btn" to="/">
-                      <span className="text">MAKE DONATION</span>
+                    <Link onClick={handleOpen} className="theme-btn" to="/">
+                      <span className="text">LOGIN</span>
                       <span className="mobile">
                         <i className="fi flaticon-user"></i>
                       </span>
@@ -291,6 +296,7 @@ const Header = (props) => {
           </div>
         </nav>
       </div>
+      <TransactionsModal open={open} handleClose={handleClose} handleOpen={handleOpen}/>
     </header>
   );
 };

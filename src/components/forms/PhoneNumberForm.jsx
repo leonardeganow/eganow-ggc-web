@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import membersGRPC from "../../api/grpcapi/membersGRPC";
 import otpGRPC from "../../api/grpcapi/otpGRPC";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useStore from "../../formstore/formStore";
 
@@ -19,6 +19,8 @@ function PhoneNumberForm(props) {
 
   const { createMember, loginMember } = membersGRPC();
   const { sendOtp, verifyOtp } = otpGRPC();
+
+  console.log(info.role);
 
   console.log(info);
   const schema = yup
@@ -43,8 +45,6 @@ function PhoneNumberForm(props) {
     })
     .required();
 
-  // console.log(props.formHandler);
-
   //check if user exist funnction
   const onSubmit = async (data) => {
     console.log(props.formHandler.getValues());
@@ -58,8 +58,8 @@ function PhoneNumberForm(props) {
       console.log(response);
       if (response.message === "COMPLETE") {
         // handleOtp(data.telephoneNo);
-        props.formHandler.setValue("memberId", response.memberid)
-        props.formHandler.setValue("ndcCardNo", response.cardno)
+        props.formHandler.setValue("memberId", response.memberid);
+        props.formHandler.setValue("ndcCardNo", response.cardno);
         setShowInput(false);
         setCondition(false);
         setShowEnterPin(true);
@@ -81,8 +81,6 @@ function PhoneNumberForm(props) {
       console.error(error);
     }
   };
-
-  //  console.log(props);
 
   //function to send otp
   const handleOtp = async (data) => {
@@ -134,8 +132,11 @@ function PhoneNumberForm(props) {
     try {
       const response = await loginMember(data);
       props.formHandler.reset(data);
-      if (response.message === "COMPLETE") {
+      if (response.message === "COMPLETE" && info.role === "GGC") {
         props.handleNext(2);
+      } else if (response.message === "COMPLETE" && info.role === "JM") {
+        props.handleNext(3);
+        alert("hi")
       } else if (response.message === "INCOMPLETE") {
         props.handleNext(1);
       }

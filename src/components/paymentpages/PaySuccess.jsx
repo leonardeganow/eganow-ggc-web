@@ -14,8 +14,7 @@ function PaySuccess() {
       </div>
 
       <h5 className="text-center my-4">
-        You have successfully donated. You can click on one of the actions below
-        for your next action
+      'Transaction initiated.You will receive a prompt from vodafone to confirm.'
       </h5>
       <div className="d-flex justify-content-center my-2">
         <button className="btn btn-danger">Go back home</button>
