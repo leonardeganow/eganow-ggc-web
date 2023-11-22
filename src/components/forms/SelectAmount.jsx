@@ -5,7 +5,6 @@ import * as yup from "yup";
 import { useState } from "react";
 import useStore from "../../formstore/formStore";
 
-
 function SelectAmount(props) {
   const { info } = useStore();
 
@@ -45,7 +44,6 @@ function SelectAmount(props) {
     const pin = props.formHandler.getValues();
     console.log(pin);
   };
-
 
   return (
     <div>

@@ -35,16 +35,7 @@ function GgcRegForm(props) {
       card_pickup_location: yup.string().required(),
     })
     .required();
-  // const {
-  //   handleSubmit,
-  //   register,
-  //   watch,
-  //   getValues,
-  //   formState: { errors },
-  // } = useForm({
-  //   mode: "onChange",
-  //   resolver: yupResolver(schema),
-  // });
+
 
   async function handleGetRegions() {
     try {
@@ -58,7 +49,7 @@ function GgcRegForm(props) {
     (constituency, i) => constituency.regionid === watchRegions
   );
 
-  // console.log(filteredList);
+
   async function handleGetConstituencies() {
     try {
       const response = await getConstituencies();

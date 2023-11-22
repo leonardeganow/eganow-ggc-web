@@ -13,7 +13,7 @@ function TransactionAPI() {
   function postNewTransaction(data) {
     const request = new PostDataRequest(); //initalize request
     // SETTING REQUEST BODY TO POST
-    request.setMobileno(data.Mobileno);
+    request.setMobileno(data.momonumber);
     request.setMemberid(data.memberId);
     request.setTranstypejmorgcc(data.transType);
     request.setTransamount(data.amount);
@@ -40,8 +40,10 @@ function TransactionAPI() {
   function getKyc(data) {
     const request = new KycRequest(); //initalize request
     // SETTING REQUEST BODY TO POST
-    request.setMobileno(data.Mobileno);
-    request.setNetworkid(data.paymentMethod);
+    console.log(data);
+    console.log(request);
+    request.setMobilenumber(data.watchMomoNumber);
+    request.setNetworkid(data.watchMomoId);
     console.log(request);
     return new Promise((resolve, reject) => {
       client.getCustomerKYC(request, METADATA, (err, resp) => {

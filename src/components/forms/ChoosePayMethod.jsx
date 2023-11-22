@@ -1,9 +1,5 @@
 import * as React from "react";
-import {
-  PhoneInput,
-  defaultCountries,
-  parseCountry,
-} from "react-international-phone";
+
 import "react-international-phone/style.css";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
 import { FaCreditCard } from "react-icons/fa6";
@@ -15,37 +11,19 @@ import customerSetupsGRPC from "../../api/grpcapi/customerSetupsGRPC";
 function ChoosePayMethod(props) {
   const [showMomo, setShowMomo] = React.useState(false);
   const [showCard, setShowCard] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
   const [MomoOptions, setMomoOptions] = useState(null);
   const [phone, setPhone] = useState("");
   const { info } = useStore();
   const { getPayment } = customerSetupsGRPC();
   const { getKyc } = TransactionAPI();
 
-  //getting ghana flag icon in  phone number input
-  const countries = defaultCountries.filter((country) => {
-    const { iso2 } = parseCountry(country);
-    return ["dd", "gh"].includes(iso2);
-  });
-
-  const fakeData = [
-    {
-      test: "one",
-      pay: "two",
-      make: "three",
-    },
-    {
-      test: "one",
-      pay: "two",
-      make: "three",
-    },
-    {
-      test: "one",
-      pay: "two",
-      make: "three",
-    },
-  ];
-
   const onSubmit = async (data) => {
+    console.log(data);
+    props.formHandler.setValue(
+      "paymentCardNo",
+      props.formHandler.getValues("momonumber")
+    );
     props.handleNext(1);
   };
 
@@ -54,10 +32,11 @@ function ChoosePayMethod(props) {
     console.log(pin);
   };
 
+  let pMethod;
   const getpayMethodsHandler = async () => {
     try {
       const response = await getPayment();
-      const pMethod = response.paymethodlistList[0].paymentmethodid;
+      pMethod = response.paymethodlistList[0].paymentmethodid;
       console.log(pMethod);
       props.formHandler.setValue("paymentMethod", pMethod);
       setMomoOptions(response.paymethodlistList.slice(1));
@@ -82,20 +61,31 @@ function ChoosePayMethod(props) {
   }, []);
 
   const watchMomoId = props.formHandler.watch("paymentMethod");
+  const watchMomoNumber = props.formHandler.watch("momonumber");
 
   const getKycHandler = async () => {
-    //if number and network is coorect ---- getkyc
-   
     try {
-      const response = await getKyc({watchMomoId,phone});
+      const response = await getKyc({ watchMomoId, watchMomoNumber });
       console.log(response);
+      if (response.status === true) {
+        setLoading(false);
+
+        props.formHandler.setValue("momoname", response.message);
+        props.formHandler.setValue("nameOnPaymentCard", response.message);
+      } else {
+        toast;
+      }
     } catch (error) {
       console.log(error);
     }
-    React.useEffect(() => {
-      getKycHandler()
-    }, [watchMomoId,phone]);
   };
+
+  React.useEffect(() => {
+    if (watchMomoNumber?.toString().length === 10 && watchMomoId) {
+      setLoading(true);
+      getKycHandler();
+    }
+  }, [watchMomoId, watchMomoNumber]);
   return (
     <div>
       {" "}
@@ -265,35 +255,53 @@ function ChoosePayMethod(props) {
               <label htmlFor="username">
                 <h6>Phone number</h6>
               </label>
-              <PhoneInput
+              <div className="d-flex">
+                <select className="selectPicker w-1 form-select" name="" id="">
+                  <option value="" selected>
+                    🇬🇭 +233
+                  </option>
+                  <div>test</div>
+                </select>
+                <input
+                  style={{
+                    width: "500px",
+                  }}
+                  {...props.formHandler.register("momonumber")}
+                  placeholder="Enter your mobile number"
+                  type="number"
+                  required
+                  className="form-control"
+                />{" "}
+              </div>
+              {/* <PhoneInput
                 className=""
                 value={phone}
                 onChange={(phone) => setPhone(phone)}
                 defaultCountry="gh"
                 countries={countries}
-              />
+              /> */}
             </div>
+          </div>
 
-            <div className="form-group ">
-              <label htmlFor="username">
-                <h6>Select network</h6>
-              </label>
-              <select
-                {...props.formHandler.register("paymentMethod")}
-                placeholder="fgdgdf"
-                className="form-select  p-1  w-10"
-              >
-                <option value="" disabled selected hidden>
-                  select network
+          <div className="form-group ">
+            <label htmlFor="username">
+              <h6>Select network</h6>
+            </label>
+            <select
+              {...props.formHandler.register("paymentMethod")}
+              placeholder="fgdgdf"
+              className="form-select  p-1  w-10"
+            >
+              <option disabled selected hidden>
+                select network
+              </option>
+
+              {MomoOptions.map((network, i) => (
+                <option key={i} value={network.paymentmethodid}>
+                  {network.paymentmethodname}
                 </option>
-
-                {MomoOptions.map((network, i) => (
-                  <option key={i} value={network.paymentmethodid}>
-                    {network.paymentmethodname}
-                  </option>
-                ))}
-              </select>
-            </div>
+              ))}
+            </select>
           </div>
 
           <div className="form-group mb-2">
@@ -301,16 +309,18 @@ function ChoosePayMethod(props) {
               <h6>Registered name</h6>
             </label>
             <input
+              disabled={props.formHandler.getValues("momoname") === true}
               placeholder="Registered name"
               required
-              {...props.formHandler.register("leonard adjei")}
+              {...props.formHandler.register("momoname")}
               className="form-control"
             />
+            {loading && <span>Getting your momo name</span>}
           </div>
 
           <div className="d-flex justify-content-center">
             <button
-              onClick={() => console.log(props.formHandler.getValues())}
+              onClick={() => onSubmit()}
               type="submit"
               className="subscribe btn btn-success btn-block shadow-sm"
             >

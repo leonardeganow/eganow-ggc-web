@@ -4,6 +4,7 @@ import ListItem from "@mui/material/List";
 import Collapse from "@mui/material/Collapse";
 import { NavLink } from "react-router-dom";
 import "./style.css";
+import { Link } from "react-scroll";
 
 const menus = [
   {
@@ -15,7 +16,7 @@ const menus = [
   {
     id: 2,
     title: "Get GGC",
-    link: "",
+    link: ".getggc",
   },
 
   //   {
@@ -158,7 +159,7 @@ const menus = [
   {
     id: 88,
     title: "Donate",
-    link: "",
+    link: "/donate",
   },
 ];
 
@@ -180,7 +181,7 @@ const MobileMenu = () => {
         </div>
 
         <ul className="responsivemenu">
-          {menus.map((item, mn) => {
+          {/* {menus.map((item, mn) => {
             return (
               <ListItem
                 className={item.id === openId ? "active" : null}
@@ -233,7 +234,20 @@ const MobileMenu = () => {
                 )}
               </ListItem>
             );
-          })}
+          })} */}
+
+          <Link onClick={() => setMenuState(!menuActive)}>
+            <li className="active text-white  text-center">Home</li>
+          </Link>
+
+          <Link to="getggc" smooth={true} duration={500} onClick={() => setMenuState(!menuActive)}>
+            <li className="active text-white  text-center my-3">Get GGC</li>
+          </Link>
+
+          
+          <Link to="donate" smooth={true} duration={500} onClick={() => setMenuState(!menuActive)}>
+          <li className="active text-white  text-center">Donate</li>
+          </Link>
         </ul>
       </div>
 
