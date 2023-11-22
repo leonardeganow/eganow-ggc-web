@@ -236,17 +236,26 @@ const MobileMenu = () => {
             );
           })} */}
 
-          <Link onClick={() => setMenuState(!menuActive)}>
+          <Link to="" onClick={() => setMenuState(!menuActive)}>
             <li className="active text-white  text-center">Home</li>
           </Link>
 
-          <Link to="getggc" smooth={true} duration={500} onClick={() => setMenuState(!menuActive)}>
+          <Link
+            to="getggc"
+            smooth={true}
+            duration={500}
+            onClick={() => setMenuState(!menuActive)}
+          >
             <li className="active text-white  text-center my-3">Get GGC</li>
           </Link>
 
-          
-          <Link to="donate" smooth={true} duration={500} onClick={() => setMenuState(!menuActive)}>
-          <li className="active text-white  text-center">Donate</li>
+          <Link
+            to="donate"
+            smooth={true}
+            duration={500}
+            onClick={() => setMenuState(!menuActive)}
+          >
+            <li className="active text-white  text-center">Donate</li>
           </Link>
         </ul>
       </div>

@@ -40,10 +40,17 @@ function SelectAmount(props) {
   };
 
   const onSubmit = () => {
+    if (info.role === "JM") {
+      alert(info.amount);
+      // props.formHandler.setValue("amount", info.amount);
+    }
     props.handleNext(1);
+
     const pin = props.formHandler.getValues();
     console.log(pin);
   };
+
+
 
   return (
     <div>
@@ -68,7 +75,7 @@ function SelectAmount(props) {
           onSubmit={props.formHandler.handleSubmit(onSubmit)}
           className="row my-4 g-2"
         >
-          <div className="col-md-9 ">
+          <div className="col-md-10 ">
             <div>
               <input
                 {...props.formHandler.register("amount")}
@@ -82,7 +89,7 @@ function SelectAmount(props) {
               />
             </div>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-2">
             <button type="submit" className="btn   btn-success   ">
               Continue
             </button>

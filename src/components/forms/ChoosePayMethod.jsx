@@ -4,6 +4,8 @@ import "react-international-phone/style.css";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
 import { FaCreditCard } from "react-icons/fa6";
 import { useState } from "react";
+import { IoCard } from "react-icons/io5";
+
 import useStore from "../../formstore/formStore";
 import TransactionAPI from "../../api/grpcapi/TransactionGRPC";
 import customerSetupsGRPC from "../../api/grpcapi/customerSetupsGRPC";
@@ -18,8 +20,9 @@ function ChoosePayMethod(props) {
   const { getPayment } = customerSetupsGRPC();
   const { getKyc } = TransactionAPI();
 
+  console.log(info);
+
   const onSubmit = async (data) => {
-    console.log(data);
     props.formHandler.setValue(
       "paymentCardNo",
       props.formHandler.getValues("momonumber")
@@ -89,9 +92,11 @@ function ChoosePayMethod(props) {
   return (
     <div>
       {" "}
-      <h1>Choose payment method</h1>
-      <p>Pick the payment option that suits you bests</p>
-      <div className=" d-flex justify-content-center gap-2 my-1">
+      <h1 className="text-center">Choose payment method</h1>
+      <p className="text-center">
+        Pick the payment option that suits you bests
+      </p>
+      <div className=" d-flex justify-content-center gap-4">
         <div className="pl-2 pr-2 pb-2 ">
           <div
             className="d-flex border border-4 border-success rounded
@@ -133,8 +138,12 @@ function ChoosePayMethod(props) {
       </div>
       {showCard && (
         <div id="credit-card" className="tab-pane fade show active pt-2">
-          <form role="form" onSubmit={props.formHandler.handleSubmit(onSubmit)}>
-            <div className="form-group">
+          <form
+            role="form"
+            className="d-flex  flex-column gap-4"
+            onSubmit={props.formHandler.handleSubmit(onSubmit)}
+          >
+            <div className="form-group ">
               <label htmlFor="username">
                 <h6>Good governance card ID number</h6>
               </label>
@@ -143,39 +152,36 @@ function ChoosePayMethod(props) {
                 value={props.formHandler.getValues("memberId")}
                 placeholder="Good governance card ID number"
                 required
-                className="form-control"
-                {...props.formHandler.register("cardId")}
+                className="form-control p-md-2"
               />
             </div>
-            <div className="form-group my-2">
+            <div className="form-group ">
               <label htmlFor="cardNumber">
                 <h6>Card number</h6>
               </label>
-              <div className="input-group">
+              <div className="input-group ">
                 <input
                   {...props.formHandler.register("paymentCardNo")}
                   placeholder="Valid card number"
-                  className="form-control"
+                  className="form-control p-md-2"
                   required
                 />
-                <div className="input-group-append">
-                  <span className="input-group-text text-muted">
-                    <i className="fab fa-cc-visa mx-1"></i>
-                    <i className="fab fa-cc-mastercard mx-1"></i>
-                    <i className="fab fa-cc-amex mx-1"></i>
+                <div className="input-group-append border-none">
+                  <span className="input-group-text text-muted p-md-3 border-none">
+                    <IoCard />
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="form-group mb-2">
+            <div className="form-group ">
               <label htmlFor="username">
                 <h6>Name on card</h6>
               </label>
               <input
                 placeholder="Name on card"
                 required
-                className="form-control"
+                className="form-control p-md-2"
                 {...props.formHandler.register("nameOnPaymentCard")}
               />
             </div>
@@ -191,14 +197,14 @@ function ChoosePayMethod(props) {
                     <input
                       type="number"
                       placeholder="MM"
-                      className="form-control"
+                      className="form-control p-md-2"
                       {...props.formHandler.register("expiryDateMonth")}
                       required
                     />
                     <input
                       type="number"
                       placeholder="YY"
-                      className="form-control"
+                      className="form-control p-md-2"
                       {...props.formHandler.register("expiryDateYear")}
                       required
                     />
@@ -219,7 +225,7 @@ function ChoosePayMethod(props) {
                     {...props.formHandler.register("cvv")}
                     type="text"
                     required
-                    className="form-control"
+                    className="form-control p-md-2"
                   />
                 </div>
               </div>
@@ -236,7 +242,11 @@ function ChoosePayMethod(props) {
         </div>
       )}
       {showMomo && (
-        <form role="form" onSubmit={props.formHandler.handleSubmit(handleMomo)}>
+        <form
+          className="d-flex  flex-column gap-4"
+          role="form"
+          onSubmit={props.formHandler.handleSubmit(handleMomo)}
+        >
           <div className="form-group">
             <label htmlFor="username">
               <h6>Good governance card ID number</h6>
@@ -246,31 +256,31 @@ function ChoosePayMethod(props) {
               value={props.formHandler.getValues("memberId")}
               placeholder="Good governance card ID number"
               required
-              className="form-control"
+              className="form-control p-2"
             />
           </div>
 
           <div className="d-flex gap-4 align-items-center my-2">
-            <div>
+            <div className="w-100">
               <label htmlFor="username">
                 <h6>Phone number</h6>
               </label>
-              <div className="d-flex">
-                <select className="selectPicker w-1 form-select" name="" id="">
+              <div className="d-flex gap-2">
+                <select className="w-25  p-2 form-select" name="" id="">
                   <option value="" selected>
                     🇬🇭 +233
                   </option>
                   <div>test</div>
                 </select>
                 <input
-                  style={{
-                    width: "500px",
-                  }}
+                  // style={{
+                  //   width: "500px",
+                  // }}
                   {...props.formHandler.register("momonumber")}
                   placeholder="Enter your mobile number"
                   type="number"
                   required
-                  className="form-control"
+                  className="form-control w-100"
                 />{" "}
               </div>
               {/* <PhoneInput
@@ -290,9 +300,9 @@ function ChoosePayMethod(props) {
             <select
               {...props.formHandler.register("paymentMethod")}
               placeholder="fgdgdf"
-              className="form-select  p-1  w-10"
+              className="form-select  p-2  w-10"
             >
-              <option disabled selected hidden>
+              <option value="select network" disabled selected hidden>
                 select network
               </option>
 
@@ -313,18 +323,18 @@ function ChoosePayMethod(props) {
               placeholder="Registered name"
               required
               {...props.formHandler.register("momoname")}
-              className="form-control"
+              className="form-control p-2"
             />
             {loading && <span>Getting your momo name</span>}
           </div>
 
-          <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-end">
             <button
               onClick={() => onSubmit()}
               type="submit"
               className="subscribe btn btn-success btn-block shadow-sm"
             >
-              Make Payment
+              Continue
             </button>
           </div>
         </form>

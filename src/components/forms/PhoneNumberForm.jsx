@@ -136,7 +136,6 @@ function PhoneNumberForm(props) {
         props.handleNext(2);
       } else if (response.message === "COMPLETE" && info.role === "JM") {
         props.handleNext(3);
-        alert("hi")
       } else if (response.message === "INCOMPLETE") {
         props.handleNext(1);
       }
@@ -147,6 +146,11 @@ function PhoneNumberForm(props) {
       console.log(error);
     }
   };
+
+  React.useEffect(() => {
+    console.log(info);
+    props.formHandler.setValue("amount", info.amount);
+  }, []);
 
   return (
     <div>
@@ -162,23 +166,20 @@ function PhoneNumberForm(props) {
             register
           </p>
           <div className="text-center ">
-            <div
-              style={{ width: "100%" }}
-              className=" mx-auto d-flex justify-content-center gap-4 "
-            >
+            <div style={{ width: "100%" }} className="  d-flex  gap-4 ">
               <select
                 style={{ height: "55px", width: "90px" }}
-                className="form-select h-7 "
+                className="form-select h-7  "
                 {...props.formHandler.register("countryCode")}
               >
                 <option value={233}>+233</option>
               </select>
-              <div className=" ">
+              <div className=" w-100 ">
                 <input
-                  style={{ width: "100%" }}
+                  // style={{ width: "100%" }}
                   {...props.formHandler.register("telephoneNo")}
                   placeholder="Telephone Number"
-                  className={`form-control ${
+                  className={`form-control w-100 ${
                     props.formHandler.formState.errors.telephoneNo
                       ? "is-invalid"
                       : props.formHandler.formState.isDirty
@@ -200,6 +201,9 @@ function PhoneNumberForm(props) {
 
             {/* {displayError && <p>{displayError}</p>} */}
             {/* <input type="submit" value="" /> */}
+          </div>
+
+          <div className="d-flex justify-content-end">
             <button
               disabled={props.formHandler.formState.isSubmitting}
               type="submit"
@@ -234,7 +238,7 @@ function PhoneNumberForm(props) {
           </p>
 
           <input
-            className={`form-control ${
+            className={`form-control  ${
               props.formHandler.formState.errors.otp
                 ? "is-invalid"
                 : props.formHandler.getValues("otp")
@@ -343,7 +347,7 @@ function PhoneNumberForm(props) {
             className=""
           >
             <input
-              className={`form-control p-3 w-50 mx-auto ${
+              className={`form-control p-3 w-100 mx-auto ${
                 props.formHandler.formState.errors.pin
                   ? "is-invalid"
                   : props.formHandler.getValues("pin")
@@ -367,7 +371,7 @@ function PhoneNumberForm(props) {
               </p>
             )}
 
-            <div className="d-flex justify-content-center mt-4">
+            <div className="d-flex justify-content-end mt-4">
               <button
                 type="submit"
                 // disabled={
@@ -376,7 +380,7 @@ function PhoneNumberForm(props) {
                 //   !props.formHandler.getValues("pin") ||
                 //   !props.formHandler.getValues("confirmPin")
                 // }
-                className="btn btn-success mx-auto text-center "
+                className="btn btn-success  "
                 // onClick={() => {
                 //   props.handleNext();
                 // }}

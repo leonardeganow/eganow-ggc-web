@@ -9,7 +9,6 @@ import { useForm } from "react-hook-form";
 import ReviewPaymentPage from "../paymentpages/ReviewPaymentPage";
 import useStore from "../../formstore/formStore";
 
-
 const style = {
   position: "relative",
   top: "54%",
@@ -20,12 +19,12 @@ const style = {
   boxShadow: "40px",
   maxHeight: "85%",
   // overflowY: "scroll",
-  borderRadius: "24px",
+  borderRadius: "0.25rem",
 };
 function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
   const [btnOpen, setBtnOpen] = React.useState(false);
   const [currentStep, setCurrentStep] = React.useState(1);
-  const {info} = useStore()
+  const { info } = useStore();
   const totalSteps = 5;
 
   const handleNext = (page) => {
@@ -40,14 +39,14 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
     pin: "",
     confirmPin: "",
     role: "",
-    paymentMethod: "",
+    paymentMethod: "Debit card",
     amount: info.amount,
     memberId: "",
     ndcCardNo: "",
     transType: "",
     plan: "",
     momonumber: "",
-    momoname: ""
+    momoname: "",
   };
 
   const formHandler = useForm({ defaultValues });
@@ -126,7 +125,6 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
             currentStep === 2 || currentStep === 4 ? "modalbehav" : ""
           } `}
           style={style}
-          sx={style}
         >
           <div>
             <p>{/* Step {currentStep} of {totalSteps} */}</p>
