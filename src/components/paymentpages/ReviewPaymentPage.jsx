@@ -123,6 +123,7 @@ const ReviewPaymentPage = (props) => {
 
       <div className="d-flex justify-content-end mt-4">
         <button
+          style={{ width: "100px" }}
           disabled={isLoading}
           onClick={completePayment}
           className="btn btn-success"

@@ -78,10 +78,9 @@ const membersGRPC = () => {
       const request = new JMRequest(); //initialize a new member request
       // setting request body values
       request.setMobilenumber(params.telephoneNo);
-      
+
       request.setPin(params.pin);
-      request.setMobielwebussd("WEB");
-   
+
       // request.setAccountcreationstatus(null);
 
       return new Promise((resolve, reject) => {

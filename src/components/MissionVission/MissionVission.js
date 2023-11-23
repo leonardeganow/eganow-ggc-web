@@ -126,13 +126,13 @@ const MissionVission = (props) => {
 
   const getCardTypeHandler = async () => {
     setisLoading(true);
-    console.log("hi");
+    // console.log("hi");
     try {
       const response = await getCardTypes();
       if (response.cardtypesList) {
         setisLoading(false);
       }
-      console.log(response.cardtypesList);
+      // console.log(response.cardtypesList);
       const cardsList = response.cardtypesList;
       const newCards = cardsList.map((card, i) => {
         return { ...card, img: Mission[i]?.mImg };
@@ -145,7 +145,7 @@ const MissionVission = (props) => {
       setisLoading(false);
     }
   };
-  console.log(cardTypeValues);
+  // console.log(cardTypeValues);
 
   useEffect(() => {
     getCardTypeHandler();

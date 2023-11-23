@@ -14,6 +14,7 @@ function GgcRegForm(props) {
   const [regions, setRegions] = React.useState([]);
   const [constituencies, setConstituencies] = React.useState([]);
   const [ageRange, setAgeRange] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const { info } = useStore();
   const watchCountries = props.formHandler.watch("country");
@@ -65,36 +66,51 @@ function GgcRegForm(props) {
     getAgeRangeHandler();
   }, []);
 
-  const onSubmit = async (data) => {
-    console.log(data);
-    // try {
-    //   const response = await registerMember(data);
+  const onSubmit = async () => {
+    const data = props.formHandler.getValues();
+    const result = await props.formHandler.trigger([
+      "cards",
+      "card_pickup_location",
+      "display_name_on_card",
+      "constituencies",
+      "regions",
+      "country",
+      "gender",
+      "fullName",
+    ]);
 
-    //   props.formHandler.reset(data);
-    //   console.log(response);
-    //   if (response.status) {
-    //     toast(response.message);
-    //     props.handleNext(1);
-    //   } else {
-    //     toast.error(response.message);
-    //   }
-    //   console.log(response);
-    // } catch (error) {
-    //   props.formHandler.reset(data);
-    //   console.error(error);
-    // }
-    // props.handleNext();
-    // const pin = props.formHandler.getValues();
-    // console.log(pin);
+    if (!result) {
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await registerMember(data);
+      // toast(response.message);
+      setIsLoading(false);
+      props.formHandler.reset(data);
+      console.log(response);
+      if (response.status) {
+        toast.success(response.message);
+
+        props.handleNext(1);
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      props.formHandler.reset(data);
+      console.error(error);
+    }
   };
 
-  const cardDisplay = props.cardTypeValues.filter(
+  const cardDisplay = props.cardTypeValues?.filter(
     (params, i) => params.cardtypeid === info.cardid
   );
   return (
     <div>
       <h1 className="text-center">Good Gov. Card Registration</h1>
-      <form onSubmit={props.formHandler.handleSubmit(onSubmit)}>
+      <form>
         <div className="">
           <div className=" d-flex flex-column gap-3">
             <div>
@@ -407,11 +423,12 @@ function GgcRegForm(props) {
         <div className=" d-flex justify-content-end py-4">
           <button
             style={{ width: "160px" }}
-            type="submit"
+            type="button"
+            onClick={onSubmit}
             className="btn btn-success"
-            disabled={props.formHandler.formState.isSubmitting}
+            disabled={isLoading}
           >
-            {props.formHandler.formState.isSubmitting ? (
+            {isLoading ? (
               <span className="spinner-border spinner-border-sm mr-1"></span>
             ) : (
               "submit"

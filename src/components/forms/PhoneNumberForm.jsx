@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import useStore from "../../formstore/formStore";
 
 function PhoneNumberForm(props) {
-  const { info } = useStore();
+  const { info, updateRoleAndCardType } = useStore();
 
   const [condition, setCondition] = React.useState(false);
   const [showpin, setShowpin] = React.useState(false);
@@ -18,16 +18,17 @@ function PhoneNumberForm(props) {
   const [showEnterPin, setShowEnterPin] = React.useState(false);
   const [mobileNumber, setMobileNumber] = React.useState("");
 
-  const { createMember, loginMember } = membersGRPC();
+  const { createMember, loginMember, createJmMember } = membersGRPC();
   const { sendOtp, verifyOtp } = otpGRPC();
 
+  console.log(props.formHandler.getValues("userStatus"));
   //check if user exist funnction
   const onSubmit = async () => {
     setIsLoading(true);
     const data = props.formHandler.getValues();
 
     const result = await props.formHandler.trigger("telephoneNo");
-    console.log(result);
+    // console.log(result);
     if (!result) {
       return;
     }
@@ -39,8 +40,11 @@ function PhoneNumberForm(props) {
     try {
       const response = await createMember(newData);
       setIsLoading(false);
-      console.log(newData);
-      console.log(response);
+      // console.log(newData);
+      // console.log(response);
+      props.formHandler.setValue("userStatus", response.message);
+      console.log(props.formHandler.getValues("userStatus"));
+
       props.formHandler.reset(newData);
       if (response.message === "COMPLETE") {
         // handleOtp(data.telephoneNo);
@@ -132,11 +136,13 @@ function PhoneNumberForm(props) {
 
   //login user function
   const handleLogin = async () => {
+    setIsLoading(true);
     const data = props.formHandler.getValues();
 
-    console.log(props.formHandler.getValues());
+    // console.log(props.formHandler.getValues());
     const result = await props.formHandler.trigger("pin");
     console.log(result);
+    setIsLoading(false);
     if (!result) {
       return;
     }
@@ -152,8 +158,18 @@ function PhoneNumberForm(props) {
         props.handleNext(1);
       }
 
+      // console.log(info.role);
+      // console.log(props.formHandler.getValues("userStatus"));
+
+      // if (data.userStatus === "COMPLETE" && info.role === "GGC") {
+      //   alert("jk");
+      //   props.handleNext(3);
+      // } else if (response.message === "DOES_NOT_EXIST" && info.role === "JM") {
+      // }
+
       console.log(response);
     } catch (error) {
+      setIsLoading(false);
       props.formHandler.reset(data);
       console.log(error);
     }
@@ -343,8 +359,24 @@ function PhoneNumberForm(props) {
                 //   !props.formHandler.getValues("confirmPin")
                 // }
                 className="btn btn-success   "
-                onClick={() => {
-                  props.handleNext(1);
+                onClick={async () => {
+                  const result = await props.formHandler.trigger("pin");
+                  console.log(result);
+                  if (!result) {
+                    return;
+                  }
+                  if (info.role === "JM") {
+                    try {
+                      const data = props.formHandler.getValues();
+                      const response = await createJmMember(data);
+                      console.log(response);
+                      props.handleNext(3);
+                    } catch (error) {
+                      console.log(error);
+                    }
+                  } else {
+                    props.handleNext(1);
+                  }
                 }}
               >
                 continue
@@ -388,7 +420,7 @@ function PhoneNumberForm(props) {
 
             <div className="d-flex justify-content-end mt-4">
               <button
-                onClick={() => handleLogin()}
+                onClick={handleLogin}
                 type="button"
                 disabled={isLoading}
                 // disabled={

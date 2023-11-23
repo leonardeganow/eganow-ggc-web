@@ -8,12 +8,12 @@ import useStore from "../../formstore/formStore";
 function SelectAmount(props) {
   const { info } = useStore();
 
-  const schema = yup.object().shape({
-    amount: yup
-      .number()
-      .required("Amount is required")
-      .positive("Amount must be positive"),
-  });
+  // const schema = yup.object().shape({
+  //   amount: yup
+  //     .number()
+  //     .required("Amount is required")
+  //     .positive("Amount must be positive"),
+  // });
 
   // const {
   //   handleSubmit,
@@ -39,18 +39,23 @@ function SelectAmount(props) {
     props.formHandler.setValue("amount", amount);
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    const result = await props.formHandler.trigger("amount");
+    console.log(result);
+    if (!result) {
+      return;
+    }
     if (info.role === "JM") {
       alert(info.amount);
       // props.formHandler.setValue("amount", info.amount);
+    } else {
+      // alert("h");
+      props.handleNext(1);
     }
-    props.handleNext(1);
 
     const pin = props.formHandler.getValues();
     console.log(pin);
   };
-
-
 
   return (
     <div>
@@ -71,10 +76,7 @@ function SelectAmount(props) {
         </div>
 
         {/* FORM FIELD */}
-        <form
-          onSubmit={props.formHandler.handleSubmit(onSubmit)}
-          className="row my-4 g-2"
-        >
+        <form className="row my-4 g-2">
           <div className="col-md-10 ">
             <div>
               <input
@@ -90,7 +92,11 @@ function SelectAmount(props) {
             </div>
           </div>
           <div className="col-md-2">
-            <button type="submit" className="btn   btn-success   ">
+            <button
+              onClick={onSubmit}
+              type="button"
+              className="btn   btn-success   "
+            >
               Continue
             </button>
           </div>

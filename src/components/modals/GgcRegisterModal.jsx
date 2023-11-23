@@ -42,10 +42,35 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
         .string()
         .required("Phone number is required")
         .matches(/^\d{10}$/, "Enter a valid 10-digit phone number"),
+      paymentCardNo: yup
+        .string()
+        .required("credit card is required is required")
+        .matches(/^\d{16}$/, "Enter a valid 16-digit phone number"),
+      nameOnPaymentCard: yup
+        .string()
+        .required("Name on card is required is required"),
+      expiryDateMonth: yup
+        .string()
+        .required("month is required is required")
+        .matches(/^\d{2}$/, "Enter a valid 2-digit exp number"),
+        expiryDateYear: yup
+        .string()
+        .required("year on card is required")
+        .matches(/^\d{2}$/, "Enter a valid 2-digit year number"),
+        cvv: yup
+        .string()
+        .required("cvv  is required")
+        .matches(/^\d{2}$/, "Enter a valid 3-digit cvv number"),
+
+      paymentCardNo: yup
+        .string()
+        .required("Phone number is required")
+        .matches(/^\d{10}$/, "Enter a valid 10-digit phone number"),
       otp: yup
         .string()
         .required("OTP is required")
         .matches(/^\d{4}$/, "Enter a valid 4-digit OTP"),
+      paymentMethodId: yup.string().required("select a network"),
       pin: yup
         .string()
         .required("PIN is required")
@@ -65,6 +90,10 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
       occupation: yup.string().required(),
       display_name_on_card: yup.string().required(),
       card_pickup_location: yup.string().required(),
+      amount: yup
+        .number()
+        .required("Amount is required")
+        .positive("Amount must be positive"),
     })
     .required();
 

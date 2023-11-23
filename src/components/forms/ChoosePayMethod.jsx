@@ -16,6 +16,8 @@ function ChoosePayMethod(props) {
   const [loading, setLoading] = React.useState(false);
   const [isCard, setIsCard] = useState("Debit card");
   const [MomoOptions, setMomoOptions] = useState(null);
+  const [cardId, setCardId] = useState(null);
+
   const [phone, setPhone] = useState("");
   const { info } = useStore();
   const { getPayment } = customerSetupsGRPC();
@@ -24,10 +26,19 @@ function ChoosePayMethod(props) {
   console.log(info);
 
   const onSubmit = async (data) => {
-    // props.formHandler.setValue(
-    //   "paymentCardNo",
-    //   props.formHandler.getValues("momonumber")
-    // );
+    const result = await props.formHandler.trigger([
+      // "paymentCardNo",
+      "paymentMethodId",
+      "cvv",
+      "expiryDateYear",
+      "expiryDateMonth",
+      "nameOnPaymentCard",
+    ]);
+    console.log(result);
+    if (!result) {
+      return;
+    }
+
     props.handleNext(1);
   };
 
@@ -42,7 +53,7 @@ function ChoosePayMethod(props) {
       const response = await getPayment();
       pMethod = response.paymethodlistList[0].paymentmethodid;
       console.log(pMethod);
-      props.formHandler.setValue("paymentMethodId", pMethod);
+      setCardId(response.paymethodlistList[0].paymentmethodid);
       setMomoOptions(response.paymethodlistList.slice(1));
       console.log(response);
     } catch (error) {
@@ -116,6 +127,7 @@ function ChoosePayMethod(props) {
                 props.formHandler.setValue("paymentCardNo", "");
                 props.formHandler.setValue("paymentMethod", "momo");
                 props.formHandler.setValue("momoname", "");
+                props.formHandler.setValue("nameOnPaymentCard", "");
 
                 console.log(props.formHandler.getValues());
                 setShowMomo(true);
@@ -139,7 +151,9 @@ function ChoosePayMethod(props) {
                 props.formHandler.setValue("paymentCardNo", "");
                 props.formHandler.setValue("paymentMethod", "Debit card");
                 props.formHandler.setValue("momoname", "");
-                props.formHandler.setValue("paymentmethodid", pMethod);
+                props.formHandler.setValue("nameOnPaymentCard", "");
+                console.log(cardId);
+                props.formHandler.setValue("paymentMethodId", cardId);
                 setShowMomo(false);
                 setShowCard(true);
               }}
@@ -152,11 +166,7 @@ function ChoosePayMethod(props) {
         </div>
       </div>
       {showMomo && (
-        <form
-          className="d-flex  flex-column gap-4"
-          role="form"
-          onSubmit={props.formHandler.handleSubmit(onSubmit)}
-        >
+        <form className="d-flex  flex-column gap-4" role="form">
           {props.formHandler.getValues("userStatus") === "COMPLETE" && (
             <div className="form-group">
               <label htmlFor="username">
@@ -182,7 +192,6 @@ function ChoosePayMethod(props) {
                   <option value="" selected>
                     🇬🇭 +233
                   </option>
-                  <div>test</div>
                 </select>
                 <input
                   // style={{
@@ -192,7 +201,11 @@ function ChoosePayMethod(props) {
                   placeholder="Enter your mobile number"
                   type="number"
                   required
-                  className="form-control w-100"
+                  className={`form-control w-100 ${
+                    props.formHandler.formState.errors.paymentCardNo
+                      ? " is-invalid"
+                      : ""
+                  }`}
                 />{" "}
               </div>
               {/* <PhoneInput
@@ -209,14 +222,13 @@ function ChoosePayMethod(props) {
             <label htmlFor="username">
               <h6>Select network</h6>
             </label>
+
             <select
               {...props.formHandler.register("paymentMethodId")}
               placeholder="fgdgdf"
               className="form-select  p-2  w-10"
             >
-              <option disabled selected>
-                select network
-              </option>
+              <option selected>select network</option>
 
               {MomoOptions?.map((network, i) => (
                 <option key={i} value={network.paymentmethodid}>
@@ -233,7 +245,6 @@ function ChoosePayMethod(props) {
             <input
               disabled={props.formHandler.getValues("momoname")}
               placeholder="Registered name"
-              required
               {...props.formHandler.register("momoname")}
               className="form-control p-2"
             />
@@ -242,7 +253,18 @@ function ChoosePayMethod(props) {
 
           <div className="d-flex justify-content-end">
             <button
-              onClick={() => onSubmit()}
+              onClick={async () => {
+                const result = await props.formHandler.trigger([
+                  "paymentCardNo",
+                  "paymentMethodId",
+                ]);
+                console.log(result);
+                if (!result) {
+                  return;
+                }
+
+                props.handleNext(1);
+              }}
               type="submit"
               className="subscribe btn btn-success btn-block shadow-sm"
             >
@@ -298,7 +320,11 @@ function ChoosePayMethod(props) {
               <input
                 placeholder="Name on card"
                 required
-                className="form-control p-md-2"
+                className={`form-control p-md-2 ${
+                  props.formHandler.formState.errors.nameOnPaymentCard
+                    ? "is-invalid"
+                    : ""
+                }`}
                 {...props.formHandler.register("nameOnPaymentCard")}
               />
             </div>
@@ -349,7 +375,22 @@ function ChoosePayMethod(props) {
             </div>
             <div className="d-flex justify-content-end">
               <button
-                onClick={onSubmit}
+                onClick={async () => {
+                  // const result = await props.formHandler.trigger([
+                  //   "paymentCardNo",
+                  //   "paymentMethodId",
+                  //   "nameOnPaymentCard",
+                  //   "expiryDateMonth",
+                  //   "expiryDateYear",
+                  //   "cvv",
+                  // ]);
+                  // console.log(result);
+                  // if (!result) {
+                  //   return;
+                  // }
+
+                  props.handleNext(1);
+                }}
                 type="button"
                 className="subscribe btn btn-success btn-block shadow-sm"
               >
