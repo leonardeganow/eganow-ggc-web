@@ -11,9 +11,10 @@ import TransactionAPI from "../../api/grpcapi/TransactionGRPC";
 import customerSetupsGRPC from "../../api/grpcapi/customerSetupsGRPC";
 
 function ChoosePayMethod(props) {
-  const [showMomo, setShowMomo] = React.useState(false);
-  const [showCard, setShowCard] = React.useState(true);
+  const [showMomo, setShowMomo] = React.useState(true);
+  const [showCard, setShowCard] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [isCard, setIsCard] = useState("Debit card");
   const [MomoOptions, setMomoOptions] = useState(null);
   const [phone, setPhone] = useState("");
   const { info } = useStore();
@@ -23,17 +24,17 @@ function ChoosePayMethod(props) {
   console.log(info);
 
   const onSubmit = async (data) => {
-    props.formHandler.setValue(
-      "paymentCardNo",
-      props.formHandler.getValues("momonumber")
-    );
+    // props.formHandler.setValue(
+    //   "paymentCardNo",
+    //   props.formHandler.getValues("momonumber")
+    // );
     props.handleNext(1);
   };
 
-  const handleMomo = () => {
-    const pin = props.formHandler.getValues();
-    console.log(pin);
-  };
+  // const handleMomo = () => {
+  //   const pin = props.formHandler.getValues();
+  //   console.log(pin);
+  // };
 
   let pMethod;
   const getpayMethodsHandler = async () => {
@@ -41,7 +42,7 @@ function ChoosePayMethod(props) {
       const response = await getPayment();
       pMethod = response.paymethodlistList[0].paymentmethodid;
       console.log(pMethod);
-      props.formHandler.setValue("paymentMethod", pMethod);
+      props.formHandler.setValue("paymentMethodId", pMethod);
       setMomoOptions(response.paymethodlistList.slice(1));
       console.log(response);
     } catch (error) {
@@ -60,19 +61,25 @@ function ChoosePayMethod(props) {
     props.formHandler.setValue("transType", info.role);
     props.formHandler.setValue("cardId", info.cardid);
     props.formHandler.setValue("plan", info.cardType);
+    // props.formHandler.setValue("");
     console.log(props.formHandler.getValues());
   }, []);
 
-  const watchMomoId = props.formHandler.watch("paymentMethod");
-  const watchMomoNumber = props.formHandler.watch("momonumber");
+  const watchMomoId = props.formHandler.watch("paymentMethodId");
+  const watchMomoNumber = props.formHandler.watch("paymentCardNo");
+  console.log(watchMomoId);
+  console.log(watchMomoNumber);
+
+  console.log(props.formHandler.watch("paymentCardNo"));
 
   const getKycHandler = async () => {
+    setLoading(true);
+    // alert("hi");
     try {
       const response = await getKyc({ watchMomoId, watchMomoNumber });
       console.log(response);
       if (response.status === true) {
         setLoading(false);
-
         props.formHandler.setValue("momoname", response.message);
         props.formHandler.setValue("nameOnPaymentCard", response.message);
       } else {
@@ -82,10 +89,10 @@ function ChoosePayMethod(props) {
       console.log(error);
     }
   };
+  console.log(props.formHandler.getValues());
 
   React.useEffect(() => {
     if (watchMomoNumber?.toString().length === 10 && watchMomoId) {
-      setLoading(true);
       getKycHandler();
     }
   }, [watchMomoId, watchMomoNumber]);
@@ -104,24 +111,13 @@ function ChoosePayMethod(props) {
           >
             <div
               role="button"
-              className={` p-3 d-flex gap-2 align-items-center ${
-                showCard ? "bg-success text-white" : " text-success"
-              }`}
               onClick={() => {
-                props.formHandler.setValue("paymentMethod", "Debit card");
-                setShowMomo(false);
-                setShowCard(true);
-              }}
-            >
-              {" "}
-              <FaCreditCard className="mr-2" />
-              <span className="ml-1"> Credit/Debit Card</span>
-            </div>
-            <div
-              role="button"
-              onClick={() => {
-                props.formHandler.setValue("paymentMethod", "Mobile money");
+                setIsCard("momo");
+                props.formHandler.setValue("paymentCardNo", "");
+                props.formHandler.setValue("paymentMethod", "momo");
+                props.formHandler.setValue("momoname", "");
 
+                console.log(props.formHandler.getValues());
                 setShowMomo(true);
                 setShowCard(false);
               }}
@@ -133,17 +129,36 @@ function ChoosePayMethod(props) {
               <FaMoneyBill1Wave />
               <span> Mobile money</span>
             </div>
+            <div
+              role="button"
+              className={` p-3 d-flex gap-2 align-items-center ${
+                showCard ? "bg-success text-white" : " text-success"
+              }`}
+              onClick={() => {
+                setIsCard("Debit card");
+                props.formHandler.setValue("paymentCardNo", "");
+                props.formHandler.setValue("paymentMethod", "Debit card");
+                props.formHandler.setValue("momoname", "");
+                props.formHandler.setValue("paymentmethodid", pMethod);
+                setShowMomo(false);
+                setShowCard(true);
+              }}
+            >
+              {" "}
+              <FaCreditCard className="mr-2" />
+              <span className="ml-1"> Credit/Debit Card</span>
+            </div>
           </div>
         </div>
       </div>
-      {showCard && (
-        <div id="credit-card" className="tab-pane fade show active pt-2">
-          <form
-            role="form"
-            className="d-flex  flex-column gap-4"
-            onSubmit={props.formHandler.handleSubmit(onSubmit)}
-          >
-            <div className="form-group ">
+      {showMomo && (
+        <form
+          className="d-flex  flex-column gap-4"
+          role="form"
+          onSubmit={props.formHandler.handleSubmit(onSubmit)}
+        >
+          {props.formHandler.getValues("userStatus") === "COMPLETE" && (
+            <div className="form-group">
               <label htmlFor="username">
                 <h6>Good governance card ID number</h6>
               </label>
@@ -152,9 +167,111 @@ function ChoosePayMethod(props) {
                 value={props.formHandler.getValues("memberId")}
                 placeholder="Good governance card ID number"
                 required
-                className="form-control p-md-2"
+                className="form-control p-2"
               />
             </div>
+          )}
+
+          <div className="d-flex gap-4 align-items-center my-2">
+            <div className="w-100">
+              <label htmlFor="username">
+                <h6>Phone number</h6>
+              </label>
+              <div className="d-flex gap-2">
+                <select className="w-25  p-2 form-select" name="" id="">
+                  <option value="" selected>
+                    🇬🇭 +233
+                  </option>
+                  <div>test</div>
+                </select>
+                <input
+                  // style={{
+                  //   width: "500px",
+                  // }}
+                  {...props.formHandler.register("paymentCardNo")}
+                  placeholder="Enter your mobile number"
+                  type="number"
+                  required
+                  className="form-control w-100"
+                />{" "}
+              </div>
+              {/* <PhoneInput
+                className=""
+                value={phone}
+                onChange={(phone) => setPhone(phone)}
+                defaultCountry="gh"
+                countries={countries}
+              /> */}
+            </div>
+          </div>
+
+          <div className="form-group ">
+            <label htmlFor="username">
+              <h6>Select network</h6>
+            </label>
+            <select
+              {...props.formHandler.register("paymentMethodId")}
+              placeholder="fgdgdf"
+              className="form-select  p-2  w-10"
+            >
+              <option disabled selected>
+                select network
+              </option>
+
+              {MomoOptions?.map((network, i) => (
+                <option key={i} value={network.paymentmethodid}>
+                  {network.paymentmethodname}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group mb-2">
+            <label htmlFor="username">
+              <h6>Registered name</h6>
+            </label>
+            <input
+              disabled={props.formHandler.getValues("momoname")}
+              placeholder="Registered name"
+              required
+              {...props.formHandler.register("momoname")}
+              className="form-control p-2"
+            />
+            {loading && <span>Getting your momo name...</span>}
+          </div>
+
+          <div className="d-flex justify-content-end">
+            <button
+              onClick={() => onSubmit()}
+              type="submit"
+              className="subscribe btn btn-success btn-block shadow-sm"
+            >
+              Continue
+            </button>
+          </div>
+        </form>
+      )}
+      {showCard && (
+        <div id="credit-card" className="tab-pane fade show active pt-2">
+          <form
+            role="form"
+            className="d-flex  flex-column gap-4"
+            // onSubmit={props.formHandler.handleSubmit(onSubmit)}
+          >
+            {props.formHandler.getValues("userStatus") === "COMPLETE" && (
+              <div className="form-group ">
+                <label htmlFor="username">
+                  <h6>Good governance card ID number</h6>
+                </label>
+                <input
+                  disabled
+                  value={props.formHandler.getValues("memberId")}
+                  placeholder="Good governance card ID number"
+                  required
+                  className="form-control p-2"
+                />
+              </div>
+            )}
             <div className="form-group ">
               <label htmlFor="cardNumber">
                 <h6>Card number</h6>
@@ -167,7 +284,7 @@ function ChoosePayMethod(props) {
                   required
                 />
                 <div className="input-group-append border-none">
-                  <span className="input-group-text text-muted p-md-3 border-none">
+                  <span className="input-group-text text-muted p-3 border-none">
                     <IoCard />
                   </span>
                 </div>
@@ -212,7 +329,7 @@ function ChoosePayMethod(props) {
                 </div>
               </div>
               <div className="col-sm-4">
-                <div className="form-group mb-4">
+                <div className="form-group mt-4 mt-md-0">
                   <label
                     data-toggle="tooltip"
                     title="Three digit CV code on the back of your card"
@@ -230,114 +347,17 @@ function ChoosePayMethod(props) {
                 </div>
               </div>
             </div>
-            <div className="d-flex justify-content-center">
+            <div className="d-flex justify-content-end">
               <button
-                type="submit"
+                onClick={onSubmit}
+                type="button"
                 className="subscribe btn btn-success btn-block shadow-sm"
               >
-                Make Payment
+                Continue
               </button>
             </div>
           </form>
         </div>
-      )}
-      {showMomo && (
-        <form
-          className="d-flex  flex-column gap-4"
-          role="form"
-          onSubmit={props.formHandler.handleSubmit(handleMomo)}
-        >
-          <div className="form-group">
-            <label htmlFor="username">
-              <h6>Good governance card ID number</h6>
-            </label>
-            <input
-              disabled
-              value={props.formHandler.getValues("memberId")}
-              placeholder="Good governance card ID number"
-              required
-              className="form-control p-2"
-            />
-          </div>
-
-          <div className="d-flex gap-4 align-items-center my-2">
-            <div className="w-100">
-              <label htmlFor="username">
-                <h6>Phone number</h6>
-              </label>
-              <div className="d-flex gap-2">
-                <select className="w-25  p-2 form-select" name="" id="">
-                  <option value="" selected>
-                    🇬🇭 +233
-                  </option>
-                  <div>test</div>
-                </select>
-                <input
-                  // style={{
-                  //   width: "500px",
-                  // }}
-                  {...props.formHandler.register("momonumber")}
-                  placeholder="Enter your mobile number"
-                  type="number"
-                  required
-                  className="form-control w-100"
-                />{" "}
-              </div>
-              {/* <PhoneInput
-                className=""
-                value={phone}
-                onChange={(phone) => setPhone(phone)}
-                defaultCountry="gh"
-                countries={countries}
-              /> */}
-            </div>
-          </div>
-
-          <div className="form-group ">
-            <label htmlFor="username">
-              <h6>Select network</h6>
-            </label>
-            <select
-              {...props.formHandler.register("paymentMethod")}
-              placeholder="fgdgdf"
-              className="form-select  p-2  w-10"
-            >
-              <option value="select network" disabled selected hidden>
-                select network
-              </option>
-
-              {MomoOptions.map((network, i) => (
-                <option key={i} value={network.paymentmethodid}>
-                  {network.paymentmethodname}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="form-group mb-2">
-            <label htmlFor="username">
-              <h6>Registered name</h6>
-            </label>
-            <input
-              disabled={props.formHandler.getValues("momoname") === true}
-              placeholder="Registered name"
-              required
-              {...props.formHandler.register("momoname")}
-              className="form-control p-2"
-            />
-            {loading && <span>Getting your momo name</span>}
-          </div>
-
-          <div className="d-flex justify-content-end">
-            <button
-              onClick={() => onSubmit()}
-              type="submit"
-              className="subscribe btn btn-success btn-block shadow-sm"
-            >
-              Continue
-            </button>
-          </div>
-        </form>
       )}
     </div>
   );

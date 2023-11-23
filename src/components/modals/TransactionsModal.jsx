@@ -8,11 +8,11 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   // width: "90vw", // Use viewport width
-  maxWidth: "400px", // Set a maximum width if needed
+  maxWidth: "300px", // Set a maximum width if needed
   boxShadow: "40px",
   maxHeight: "85%",
   // overflowY: "scroll",
-  borderRadius: "24px",
+  borderRadius: "0.25rem",
 };
 export default function TransactionsModal({ open, handleClose }) {
   const { showReset, setShowReset } = useState(false);
@@ -32,22 +32,30 @@ export default function TransactionsModal({ open, handleClose }) {
               <input
                 type="number"
                 {...register("mobileNo")}
-                className="form-control w-50"
+                className="form-control w-100"
                 placeholder="Enter your Number"
               />
               <input
                 type="number"
                 {...register("pin")}
-                className="form-control w-50"
+                className="form-control w-100"
                 placeholder="Enter your pin"
               />
-              <button type="submit" className="btn btn-success">
-                Login
-              </button>
 
-              <p onClick={()=>setShowReset(true)} role="button" className="text-info underline">
-                Reset pin
-              </p>
+              <div className="d-flex align-items-center justify-content-between w-100">
+                <p
+                  onClick={() => setShowReset(true)}
+                  role="button"
+                  style={{ fontSize: "12px" }}
+                  className="text-info underline"
+                >
+                  Reset pin
+                </p>
+
+                <button type="submit" className="btn btn-success">
+                  Login
+                </button>
+              </div>
             </form>
           </div>
         </div>

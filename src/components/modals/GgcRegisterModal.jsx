@@ -8,6 +8,8 @@ import PaySuccess from "../paymentpages/PaySuccess";
 import { useForm } from "react-hook-form";
 import ReviewPaymentPage from "../paymentpages/ReviewPaymentPage";
 import useStore from "../../formstore/formStore";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const style = {
   position: "relative",
@@ -17,7 +19,7 @@ const style = {
   width: "90vw", // Use viewport width
   maxWidth: "600px", // Set a maximum width if needed
   boxShadow: "40px",
-  maxHeight: "85%",
+  // maxHeight: "85%",
   // overflowY: "scroll",
   borderRadius: "0.25rem",
 };
@@ -33,13 +35,48 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
     setCurrentStep((prevStep) => prevStep + page);
   };
 
+  const schema = yup
+    .object()
+    .shape({
+      telephoneNo: yup
+        .string()
+        .required("Phone number is required")
+        .matches(/^\d{10}$/, "Enter a valid 10-digit phone number"),
+      otp: yup
+        .string()
+        .required("OTP is required")
+        .matches(/^\d{4}$/, "Enter a valid 4-digit OTP"),
+      pin: yup
+        .string()
+        .required("PIN is required")
+        .matches(/^\d{4}$/, "Enter a valid 4-digit PIN"),
+      confirmPin: yup
+        .string()
+        .required("Confirm PIN is required")
+        .oneOf([yup.ref("pin"), null], "PIN and Confirm PIN must match"),
+      fullName: yup.string().required("name  is required"),
+      gender: yup.string().required(),
+      country: yup.string().required(),
+      ageRange: yup.string().required(),
+      country: yup.string().required(),
+      regions: yup.string().required(),
+      constituencies: yup.string().required(),
+      industry: yup.string().required(),
+      occupation: yup.string().required(),
+      display_name_on_card: yup.string().required(),
+      card_pickup_location: yup.string().required(),
+    })
+    .required();
+
   const defaultValues = {
     telephoneNo: "",
     otp: "",
     pin: "",
+    userStatus: "",
     confirmPin: "",
     role: "",
     paymentMethod: "Debit card",
+    paymentMethodId: "",
     amount: info.amount,
     memberId: "",
     ndcCardNo: "",
@@ -47,9 +84,16 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
     plan: "",
     momonumber: "",
     momoname: "",
+    industry: "other",
+    occupation: "other",
+    ageRange: "other",
   };
 
-  const formHandler = useForm({ defaultValues });
+  const formHandler = useForm({
+    mode: "onChange",
+    defaultValues,
+    resolver: yupResolver(schema),
+  });
 
   const handleBack = () => {
     setCurrentStep((prevStep) => prevStep - 1);
@@ -105,7 +149,13 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
         );
 
       case 6:
-        return <PaySuccess setBtnOpen={setBtnOpen} handleNext={handleNext} />;
+        return (
+          <PaySuccess
+            formHandler={formHandler}
+            setBtnOpen={setBtnOpen}
+            handleNext={handleNext}
+          />
+        );
       default:
         return null;
     }

@@ -14,57 +14,44 @@ function PhoneNumberForm(props) {
   const [condition, setCondition] = React.useState(false);
   const [showpin, setShowpin] = React.useState(false);
   const [showInput, setShowInput] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [showEnterPin, setShowEnterPin] = React.useState(false);
   const [mobileNumber, setMobileNumber] = React.useState("");
 
   const { createMember, loginMember } = membersGRPC();
   const { sendOtp, verifyOtp } = otpGRPC();
 
-  console.log(info.role);
-
-  console.log(info);
-  const schema = yup
-    .object()
-    .shape({
-      telephoneNo: yup
-        .string()
-        .required("Phone number is required")
-        .matches(/^\d{10}$/, "Enter a valid 10-digit phone number"),
-      otp: yup
-        .string()
-        .required("OTP is required")
-        .matches(/^\d{4}$/, "Enter a valid 4-digit OTP"),
-      pin: yup
-        .string()
-        .required("PIN is required")
-        .matches(/^\d{4}$/, "Enter a valid 4-digit PIN"),
-      confirmPin: yup
-        .string()
-        .required("Confirm PIN is required")
-        .oneOf([yup.ref("pin"), null], "PIN and Confirm PIN must match"),
-    })
-    .required();
-
   //check if user exist funnction
-  const onSubmit = async (data) => {
-    console.log(props.formHandler.getValues());
+  const onSubmit = async () => {
+    setIsLoading(true);
+    const data = props.formHandler.getValues();
+
+    const result = await props.formHandler.trigger("telephoneNo");
+    console.log(result);
+    if (!result) {
+      return;
+    }
+
     const newData = {
       ...data,
       role: info.role,
     };
     try {
       const response = await createMember(newData);
-      props.formHandler.reset(data);
+      setIsLoading(false);
+      console.log(newData);
       console.log(response);
+      props.formHandler.reset(newData);
       if (response.message === "COMPLETE") {
         // handleOtp(data.telephoneNo);
         props.formHandler.setValue("memberId", response.memberid);
         props.formHandler.setValue("ndcCardNo", response.cardno);
+        // props.formHandler.setValue("telephoneNo", data.telephoneNo);
         setShowInput(false);
         setCondition(false);
         setShowEnterPin(true);
       } else if (response.message === "DOES_NOT_EXIST") {
-        handleOtp(data.telephoneNo);
+        handleOtp(newData.telephoneNo);
         setShowInput(false);
         setShowEnterPin(false);
         setCondition(true);
@@ -74,7 +61,8 @@ function PhoneNumberForm(props) {
         setShowEnterPin(true);
       }
     } catch (error) {
-      props.formHandler.reset(data);
+      props.formHandler.reset(newData);
+      setIsLoading(false);
       if (error.message) {
         toast.error("Please try again later");
       }
@@ -83,7 +71,10 @@ function PhoneNumberForm(props) {
   };
 
   //function to send otp
-  const handleOtp = async (data) => {
+  const handleOtp = async () => {
+    const data = props.formHandler.getValues("telephoneNo");
+    console.log(data);
+
     try {
       const a = data.slice(0);
       console.log(a);
@@ -91,11 +82,11 @@ function PhoneNumberForm(props) {
         mobileNo: `${233}${a}`,
       };
       const response = await sendOtp(newData);
-
+      console.log(response);
       props.formHandler.reset();
 
       if (response.status === true) {
-        toast.success(response.message);
+        toast.success(response.message); //add field name
       } else {
         toast.warning(response.message);
       }
@@ -106,7 +97,15 @@ function PhoneNumberForm(props) {
   };
 
   //verify otp function
-  const handleOtpVerify = async (data) => {
+  const handleOtpVerify = async () => {
+    setIsLoading(true);
+    const data = props.formHandler.getValues();
+
+    const result = await props.formHandler.trigger("otp");
+    console.log(result);
+    if (!result) {
+      return;
+    }
     const num = props.formHandler.getValues("telephoneNo");
     condition;
     const updatedData = {
@@ -115,6 +114,7 @@ function PhoneNumberForm(props) {
     };
     try {
       const response = await verifyOtp(updatedData);
+      setIsLoading(false);
       props.formHandler.reset();
       if (response.status === false) {
         toast.warning(response.message);
@@ -124,13 +124,25 @@ function PhoneNumberForm(props) {
         toast(response.message);
       }
       console.log(response);
-    } catch (error) {}
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
   };
 
   //login user function
-  const handleLogin = async (data) => {
+  const handleLogin = async () => {
+    const data = props.formHandler.getValues();
+
+    console.log(props.formHandler.getValues());
+    const result = await props.formHandler.trigger("pin");
+    console.log(result);
+    if (!result) {
+      return;
+    }
     try {
       const response = await loginMember(data);
+      props.formHandler.setValue("userStatus", response.message);
       props.formHandler.reset(data);
       if (response.message === "COMPLETE" && info.role === "GGC") {
         props.handleNext(2);
@@ -152,10 +164,11 @@ function PhoneNumberForm(props) {
     props.formHandler.setValue("amount", info.amount);
   }, []);
 
+  // console.log(props.formHandler.formState.errors);
   return (
     <div>
       {showInput && (
-        <form onSubmit={props.formHandler.handleSubmit(onSubmit)}>
+        <form>
           <h1 className="text-center">
             {/* "Create new pin" :  */}
             Phone Number
@@ -205,13 +218,16 @@ function PhoneNumberForm(props) {
 
           <div className="d-flex justify-content-end">
             <button
-              disabled={props.formHandler.formState.isSubmitting}
-              type="submit"
+              onClick={() => {
+                onSubmit();
+              }}
+              disabled={isLoading}
+              type="button"
               style={{ width: "160px" }}
               className="btn btn-success mt-4 "
             >
               {" "}
-              {props.formHandler.formState.isSubmitting ? (
+              {isLoading ? (
                 <span className="spinner-border spinner-border-sm mr-1"></span>
               ) : (
                 "continue"
@@ -226,11 +242,7 @@ function PhoneNumberForm(props) {
       {/* <button type="submit">Submit</button> */}
 
       {condition && (
-        <form
-          onSubmit={props.formHandler.handleSubmit(handleOtpVerify)}
-          action=""
-          className="text-center"
-        >
+        <form action="" className="text-center">
           <h1>Enter OTP</h1>
           <p>
             We have sent you a text message to confirm your number. Enter it
@@ -253,21 +265,26 @@ function PhoneNumberForm(props) {
           />
           {/* {displayError && <p className="invalid-feedback">{displayError}</p>} */}
 
-          <button
-            // disabled={errors.otp || !getValues("otp")}
-            // onClick={() => {
-            //   setCondition(false);
-            //   setShowpin(true);
-            //   setShowInput(false);
-            // }}
-            className="btn btn-success mt-4"
-          >
-            {props.formHandler.formState.isSubmitting ? (
-              <span className="spinner-border spinner-border-sm mr-1"></span>
-            ) : (
-              "submit"
-            )}
-          </button>
+          <div className="d-flex justify-content-end">
+            <button
+              type="button"
+              // disabled={errors.otp || !getValues("otp")}
+              // onClick={() => {
+              //   setCondition(false);
+              //   setShowpin(true);
+              //   setShowInput(false);
+              // }}
+              onClick={handleOtpVerify}
+              disabled={isLoading}
+              className="btn btn-success mt-4"
+            >
+              {isLoading ? (
+                <span className="spinner-border spinner-border-sm mr-1"></span>
+              ) : (
+                "submit"
+              )}
+            </button>
+          </div>
         </form>
       )}
 
@@ -279,7 +296,7 @@ function PhoneNumberForm(props) {
           </p>
           <div className="">
             <input
-              className={`form-control p-3 w-50 mx-auto ${
+              className={`form-control p-3 w-100 mx-auto ${
                 props.formHandler.formState.errors.pin
                   ? "is-invalid"
                   : props.formHandler.getValues("pin")
@@ -298,7 +315,7 @@ function PhoneNumberForm(props) {
             )}
 
             <input
-              className={`form-control p-3 w-50 mx-auto mt-4 ${
+              className={`form-control p-3 w-100 mx-auto mt-4 ${
                 props.formHandler.formState.errors.confirmPin
                   ? "is-invalid"
                   : props.formHandler.getValues("confirmPin")
@@ -316,15 +333,16 @@ function PhoneNumberForm(props) {
               </p>
             )}
 
-            <div className="d-flex justify-content-center mt-4">
+            <div className="d-flex justify-content-end mt-4 ">
               <button
+                type="button"
                 // disabled={
                 //   props.formHandler.formState.errors.pin ||
                 //   props.formHandler.formState.errors.confirmPin ||
                 //   !props.formHandler.getValues("pin") ||
                 //   !props.formHandler.getValues("confirmPin")
                 // }
-                className="btn btn-success mx-auto text-center "
+                className="btn btn-success   "
                 onClick={() => {
                   props.handleNext(1);
                 }}
@@ -342,10 +360,7 @@ function PhoneNumberForm(props) {
           <p className="text-center">
             Enter your pin below to access your card
           </p>
-          <form
-            onSubmit={props.formHandler.handleSubmit(handleLogin)}
-            className=""
-          >
+          <form className="">
             <input
               className={`form-control p-3 w-100 mx-auto ${
                 props.formHandler.formState.errors.pin
@@ -373,7 +388,9 @@ function PhoneNumberForm(props) {
 
             <div className="d-flex justify-content-end mt-4">
               <button
-                type="submit"
+                onClick={() => handleLogin()}
+                type="button"
+                disabled={isLoading}
                 // disabled={
                 //   props.formHandler.formState.errors.pin ||
                 //   props.formHandler.formState.errors.confirmPin ||
@@ -385,7 +402,11 @@ function PhoneNumberForm(props) {
                 //   props.handleNext();
                 // }}
               >
-                continue
+                {isLoading ? (
+                  <span className="spinner-border spinner-border-sm mr-1"></span>
+                ) : (
+                  "continue"
+                )}
               </button>
             </div>
           </form>

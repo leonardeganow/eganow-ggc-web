@@ -65,6 +65,8 @@ const Mission = [
 const MissionVission = (props) => {
   const [cardTypeValues, setCardTypeValues] = useState(null);
   const [open, setOpen] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -80,7 +82,7 @@ const MissionVission = (props) => {
 
     const cardDisplay = `${cardtype} card - ${cardamount}`;
 
-    updateRoleAndCardType(newRole, cardDisplay, cardId ,cardamount);
+    updateRoleAndCardType(newRole, cardDisplay, cardId, cardamount);
   }
 
   const fakeCards = [
@@ -123,9 +125,13 @@ const MissionVission = (props) => {
   ];
 
   const getCardTypeHandler = async () => {
+    setisLoading(true);
     console.log("hi");
     try {
       const response = await getCardTypes();
+      if (response.cardtypesList) {
+        setisLoading(false);
+      }
       console.log(response.cardtypesList);
       const cardsList = response.cardtypesList;
       const newCards = cardsList.map((card, i) => {
@@ -135,6 +141,8 @@ const MissionVission = (props) => {
       setCardTypeValues(newCards);
     } catch (error) {
       console.error(error);
+      setIsError(true);
+      setisLoading(false);
     }
   };
   console.log(cardTypeValues);
@@ -147,8 +155,6 @@ const MissionVission = (props) => {
       id="getggc"
       className="wpo-election-mission-section section-padding"
     >
-     
-
       <div style={{ cursor: "pointer" }} className="container">
         <div className="row justify-content-center">
           <div className="col col-lg-6 col-md-8 col-12">
@@ -218,33 +224,44 @@ const MissionVission = (props) => {
             </div>
           </div>
         </div>
-        <div onClick={() => setOpen(true)} className="election-mission-wrap">
-          <div className="row">
-            {cardTypeValues?.map((card, i) => (
-              <div
-                onClick={() =>
-                  handleCardGet(
-                    card.cardtypename,
-                    card.cardamount,
-                    card.cardtypeid
-                  )
-                }
-                className="col-lg-4 col-md-4 col-sm-6 col-12"
-                key={card.cardtypeid}
-              >
-                <div className="election-mission-content">
-                  <img src={card.img} alt="" />
+        {isLoading ? (
+          <div className=" d-flex justify-content-center">
+            <span
+              style={{ fontSize: "100px" }}
+              className="spinner-border text-success  spinner-border-sm mr-1 text-center"
+            ></span>
+          </div>
+        ) : (
+          <div onClick={() => setOpen(true)} className="election-mission-wrap">
+            <div className="row">
+              {cardTypeValues?.map((card, i) => (
+                <div
+                  onClick={() =>
+                    handleCardGet(
+                      card.cardtypename,
+                      card.cardamount,
+                      card.cardtypeid
+                    )
+                  }
+                  className="col-lg-4 col-md-4 col-sm-6 col-12"
+                  key={card.cardtypeid}
+                >
+                  <div className="election-mission-content">
+                    <img src={card.img} alt="" />
 
-                  <div className="title">{card.cardtypename}</div>
-                  <div className="text">
-                    <h3>{card.cardtypename}</h3>
-                    <p>{card.description}</p>
+                    <div className="title">
+                      {card.cardtypename} - GHS{card.cardamount}
+                    </div>
+                    <div className="text">
+                      <h3>{card.cardtypename} </h3>
+                      <p>{card.description}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <div className="shape-1">
         <svg width="1245" height="1206" viewBox="0 0 1245 1206" fill="none">

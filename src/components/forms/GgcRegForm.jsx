@@ -8,8 +8,8 @@ import membersGRPC from "../../api/grpcapi/membersGRPC";
 import { ToastContainer, toast } from "react-toastify";
 
 function GgcRegForm(props) {
-  const { getRegions, getConstituencies, getAgeRange , } = customerSetupsGRPC();
-  const { registerMember} = membersGRPC()
+  const { getRegions, getConstituencies, getAgeRange } = customerSetupsGRPC();
+  const { registerMember } = membersGRPC();
 
   const [regions, setRegions] = React.useState([]);
   const [constituencies, setConstituencies] = React.useState([]);
@@ -19,24 +19,6 @@ function GgcRegForm(props) {
   const watchCountries = props.formHandler.watch("country");
   const watchRegions = props.formHandler.watch("regions");
 
-  const schema = yup
-    .object()
-    .shape({
-      fullName: yup.string().required("name  is required"),
-      gender: yup.string().required(),
-      country: yup.string().required(),
-      ageRange: yup.string().required(),
-      country: yup.string().required(),
-      regions: yup.string().required(),
-      constituencies: yup.string().required(),
-      industry: yup.string().required(),
-      occupation: yup.string().required(),
-      display_name_on_card: yup.string().required(),
-      card_pickup_location: yup.string().required(),
-    })
-    .required();
-
-
   async function handleGetRegions() {
     try {
       const response = await getRegions();
@@ -45,10 +27,11 @@ function GgcRegForm(props) {
     } catch (error) {}
   }
 
+  console.log(props.formHandler.watch("cards"));
+
   const filteredList = constituencies.filter(
     (constituency, i) => constituency.regionid === watchRegions
   );
-
 
   async function handleGetConstituencies() {
     try {
@@ -69,13 +52,6 @@ function GgcRegForm(props) {
     }
   }, [watchCountries]);
 
-  // React.useEffect(() => {
-  //   if (watchCountries === "Ghana") {
-  //     handleGetConstituencies();
-  //   }
-
-  // }, [watchCountries]);
-
   async function getAgeRangeHandler() {
     try {
       const response = await getAgeRange();
@@ -89,84 +65,24 @@ function GgcRegForm(props) {
     getAgeRangeHandler();
   }, []);
 
-  const defaultValues = {
-    cards: {
-      one: "standard",
-      two: "hope",
-      three: "silver",
-      four: "prestige",
-      five: "platinum",
-      six: "loyalty",
-      seven: "justice",
-      eight: "gold",
-      nine: "freedom",
-      ten: "bronze",
-      eleven: "stanarisedard",
-    },
-
-    fullName: "",
-    gender: {
-      male: "male",
-      female: "female",
-    },
-
-    country: {
-      ghana: "Ghana",
-      other: "other",
-    },
-
-    regions: {
-      one: "greater accra",
-      two: "cape coast",
-    },
-    constituencies: {
-      one: "ayawaso",
-      two: "lezokuku",
-    },
-    ageRange: {
-      one: "18-24",
-      two: "25-40",
-      three: "above 60",
-    },
-    industry: {
-      one: "finance",
-      two: "agriculture",
-      three: "sports",
-    },
-    occupation: {
-      one: "farmer",
-      two: "teacher",
-      three: "nurse",
-    },
-    display_name_on_card: {
-      one: "yes",
-      two: "no",
-    },
-
-    card_pickup_location: {
-      one: "accra",
-      two: "eastlegon",
-    },
-  };
-
   const onSubmit = async (data) => {
-console.log(data);
-    try {
-      const response = await registerMember(data)
+    console.log(data);
+    // try {
+    //   const response = await registerMember(data);
 
-      props.formHandler.reset(data)
-      console.log(response);
-      if(response.status){
-        toast(response.message)
-        props.handleNext(1)
-      } else {
-        toast.error(response.message)
-      }
-      console.log(response);
-    } catch (error) {
-      props.formHandler.reset(data);
-      console.error(error)
-    }
+    //   props.formHandler.reset(data);
+    //   console.log(response);
+    //   if (response.status) {
+    //     toast(response.message);
+    //     props.handleNext(1);
+    //   } else {
+    //     toast.error(response.message);
+    //   }
+    //   console.log(response);
+    // } catch (error) {
+    //   props.formHandler.reset(data);
+    //   console.error(error);
+    // }
     // props.handleNext();
     // const pin = props.formHandler.getValues();
     // console.log(pin);
@@ -179,14 +95,14 @@ console.log(data);
     <div>
       <h1 className="text-center">Good Gov. Card Registration</h1>
       <form onSubmit={props.formHandler.handleSubmit(onSubmit)}>
-        <div className="d-md-flex  gap-3  justify-content-around">
-          <div className=" d-flex gap-3 flex-column">
+        <div className="">
+          <div className=" d-flex flex-column gap-3">
             <div>
               <h6 htmlFor="" className="mb-1">
                 Card type{" "}
               </h6>
               <select
-                className="form-select  p-3"
+                className="form-select w-100 p-3"
                 {...props.formHandler.register("cards")}
               >
                 <option value={info.cardid} selected>
@@ -254,38 +170,58 @@ console.log(data);
             </div>
 
             <div className="d-flex gap-2">
-              <div className=" ">
-                <div>
-                  <h6 htmlFor="" className="mb-1">
-                    Gender
-                  </h6>
-
-                  <select
-                    // style={{ width: "100px" }}
-                    {...props.formHandler.register("gender")}
-                    className={`form-select p-3 ${
-                      props.formHandler.formState.errors.gender
-                        ? "is-invalid"
-                        : ""
-                    }`}
-                    // defaultValue={defaultValues.gender.male}
-                  >
-                    <option value="" disabled selected hidden>
-                      Gender
-                    </option>
-
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="">
+              <div className="w-50">
                 <h6 htmlFor="" className="mb-1">
-                  Age range{" "}
+                  Gender
                 </h6>
 
                 <select
+                  // style={{ width: "100px" }}
+                  {...props.formHandler.register("gender")}
+                  className={`form-select p-3 ${
+                    props.formHandler.formState.errors.gender
+                      ? "is-invalid"
+                      : ""
+                  }`}
+                  // defaultValue={defaultValues.gender.male}
+                >
+                  <option value="" disabled selected hidden>
+                    Gender
+                  </option>
+
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+
+              <div className="w-50">
+                <h6 htmlFor="" className="mb-1">
+                  Select country{" "}
+                </h6>
+
+                <select
+                  {...props.formHandler.register("country")}
+                  className={`form-select p-3 ${
+                    props.formHandler.formState.errors.country
+                      ? "is-invalid"
+                      : ""
+                  }`}
+                >
+                  <option value="" disabled selected hidden>
+                    Country
+                  </option>
+
+                  <option value="Ghana">Ghana</option>
+                  <option value="Other">other</option>
+                </select>
+              </div>
+
+              {/* <div className="">
+                <h6 htmlFor="" className="mb-1">
+                  Age range{" "}
+                </h6> */}
+
+              {/* <select
                   {...props.formHandler.register("ageRange")}
                   // style={{ width: "140px" }}
                   className={`form-select p-3 ${
@@ -315,99 +251,80 @@ console.log(data);
                   <option value={defaultValues.ageRange.three}>
                     {defaultValues.ageRange.three}
                   </option>
-                </select>
-              </div>
+                </select> */}
+              {/* </div> */}
             </div>
 
-            <div className="">
-              <h6 htmlFor="" className="mb-1">
-                Select country{" "}
-              </h6>
+            <div className="d-flex gap-2">
+              <div className="w-50">
+                {props.formHandler.watch("country") === "Ghana" && (
+                  <div>
+                    <h6 htmlFor="" className="mb-1">
+                      Select regions{" "}
+                    </h6>
 
-              <select
-                {...props.formHandler.register("country")}
-                className={`form-select p-3 ${
-                  props.formHandler.formState.errors.country ? "is-invalid" : ""
-                }`}
-              >
-                <option value="" disabled selected hidden>
-                  Country
-                </option>
-
-                <option value={defaultValues.country.ghana}>
-                  {defaultValues.country.ghana}
-                </option>
-                <option value={defaultValues.country.other}>
-                  {defaultValues.country.other}
-                </option>
-              </select>
-            </div>
-
-            {props.formHandler.watch("country") === "Ghana" && (
-              <div>
-                <h6 htmlFor="" className="mb-1">
-                  Select regions{" "}
-                </h6>
-
-                <select
-                  {...props.formHandler.register("regions")}
-                  className={`form-select p-3 ${
-                    props.formHandler.formState.errors.regions
-                      ? "is-invalid"
-                      : ""
-                  }`}
-                >
-                  <option value="" disabled selected hidden>
-                    Regions
-                  </option>
-
-                  {regions.map((region, i) => {
-                    return (
-                      <option key={region.regionid} value={region.regionid}>
-                        {region.regionname}
+                    <select
+                      {...props.formHandler.register("regions")}
+                      className={`form-select p-3 ${
+                        props.formHandler.formState.errors.regions
+                          ? "is-invalid"
+                          : ""
+                      }`}
+                    >
+                      <option value="" disabled selected hidden>
+                        Regions
                       </option>
-                    );
-                  })}
-                </select>
+
+                      {regions.map((region, i) => {
+                        return (
+                          <option key={region.regionid} value={region.regionid}>
+                            {region.regionname}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                )}
               </div>
-            )}
+              <div className="w-50">
+                {props.formHandler.watch("country") === "Ghana" &&
+                  props.formHandler.watch("regions") && (
+                    <div>
+                      <h6 htmlFor="" className="mb-1">
+                        Select constituencies{" "}
+                      </h6>
 
-            {props.formHandler.watch("country") === "Ghana" &&
-              props.formHandler.watch("regions") && (
-                <div>
-                  <h6 htmlFor="" className="mb-1">
-                    Select constituencies{" "}
-                  </h6>
-
-                  <select
-                    {...props.formHandler.register("constituencies")}
-                    className={`form-select p-3 ${
-                      props.formHandler.formState.errors.constituencies
-                        ? "is-invalid"
-                        : ""
-                    }`}
-                  >
-                    <option value="" disabled selected hidden>
-                      constituencies
-                    </option>
-
-                    {filteredList.map((constituency, i) => {
-                      return (
-                        <option
-                          key={constituency.constituencyid}
-                          value={constituency.constituencyid}
-                        >
-                          {constituency.constituencyname}
+                      <select
+                        {...props.formHandler.register("constituencies")}
+                        className={`form-select p-3 ${
+                          props.formHandler.formState.errors.constituencies
+                            ? "is-invalid"
+                            : ""
+                        }`}
+                      >
+                        <option value="" disabled selected hidden>
+                          constituencies
                         </option>
-                      );
-                    })}
-                  </select>
-                </div>
-              )}
+
+                        {filteredList.map((constituency, i) => {
+                          return (
+                            <option
+                              key={constituency.constituencyid}
+                              value={constituency.constituencyid}
+                            >
+                              {constituency.constituencyname}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  )}
+              </div>
+            </div>
           </div>
 
-          <div className="d-md-flex flex-column  gap-4">
-            <div className="">
+          <div className="d-md-flex flex-column  gap-3 mt-3">
+            {/* <div className="">
               <h6 htmlFor="" className="mb-1">
                 Industry
               </h6>
@@ -421,9 +338,9 @@ console.log(data);
                 placeholder="Enter industry"
                 {...props.formHandler.register("industry")}
               />
-            </div>
+            </div> */}
 
-            <div className="">
+            {/* <div className="">
               <h6 htmlFor="" className="mb-1">
                 Occupation{" "}
               </h6>
@@ -437,7 +354,7 @@ console.log(data);
                 placeholder="Enter occupation"
                 {...props.formHandler.register("occupation")}
               />
-            </div>
+            </div> */}
 
             <div className="">
               <h6 htmlFor="" className="mb-1">
@@ -456,12 +373,8 @@ console.log(data);
                   Display name on card
                 </option>
 
-                <option value={defaultValues.display_name_on_card.one}>
-                  {defaultValues.display_name_on_card.one}
-                </option>
-                <option value={defaultValues.display_name_on_card.two}>
-                  {defaultValues.display_name_on_card.two}
-                </option>
+                <option value="yes">yes</option>
+                <option value="no">no</option>
               </select>
             </div>
 
@@ -491,13 +404,12 @@ console.log(data);
         >
           Continue
         </button> */}
-        <div className=" d-flex justify-content-center mt-3">
+        <div className=" d-flex justify-content-end py-4">
           <button
             style={{ width: "160px" }}
             type="submit"
             className="btn btn-success"
             disabled={props.formHandler.formState.isSubmitting}
-
           >
             {props.formHandler.formState.isSubmitting ? (
               <span className="spinner-border spinner-border-sm mr-1"></span>

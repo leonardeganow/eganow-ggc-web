@@ -13,19 +13,21 @@ function TransactionAPI() {
   function postNewTransaction(data) {
     const request = new PostDataRequest(); //initalize request
     // SETTING REQUEST BODY TO POST
-    request.setMobileno(data.momonumber);
+    request.setMobileno(data.telephoneNo);
     request.setMemberid(data.memberId);
     request.setTranstypejmorgcc(data.transType);
     request.setTransamount(data.amount);
     request.setPaymentacctormomono(data.paymentCardNo);
     request.setPaymentaccountname(data.nameOnPaymentCard);
-    request.setNetworkid(data.paymentMethod);
+    request.setNetworkid(data.paymentMethodId);
     request.setNarration(data.narration);
     request.setAgentid(data.Agentid);
     request.setCvv(data.cvv);
     request.setExpirydatemonth(data.expiryDateMonth);
     request.setExpirydateyear(data.expiryDateYear);
     console.log(request);
+
+    
     return new Promise((resolve, reject) => {
       client.postDataToTransaction(request, METADATA, (err, resp) => {
         if (err) {

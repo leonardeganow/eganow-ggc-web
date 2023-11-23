@@ -1,10 +1,10 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import cImag from "../../images/donate2.webp";
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
 // import GgcRegisterModal from "../modals/GgcRegisterModal";
 import GgcRegForm from "../forms/GgcRegForm";
 import PhoneNumberForm from "../forms/PhoneNumberForm";
@@ -13,9 +13,7 @@ import SelectAmount from "../forms/SelectAmount";
 import GgcRegisterModal from "../modals/GgcRegisterModal";
 import useStore from "../../formstore/formStore";
 
-import TransactionAPI from "../../api/grpcapi/TransactionGRPC"
-
-
+import TransactionAPI from "../../api/grpcapi/TransactionGRPC";
 
 //get ggc card packages and store in zustand state
 
@@ -33,7 +31,6 @@ const style = {
 };
 
 const CampaignSection = (props) => {
-
   // TESTING API REQUEST
   // const {postNewTransaction,postCardTransaction} = TransactionAPI()
   // async function testAPi(){
@@ -42,16 +39,14 @@ const CampaignSection = (props) => {
   // }
   // testAPi()
 
-
-// SETTING GLOBAL STATE VALUE FOR JM
+  // SETTING GLOBAL STATE VALUE FOR JM
   const { info, updateRoleAndCardType } = useStore();
   // function to set Global state value
   function handleCardGet(selectAmount) {
     const newRole = "JM"; //create the role value
-    updateRoleAndCardType(newRole,"","", selectAmount); //setting values to global state reducer
-
+    updateRoleAndCardType(newRole, "", "", selectAmount); //setting values to global state reducer
   }
-  
+
   // MODAL STATES
   const [open, setOpen] = React.useState(false);
   const [btnOpen, setBtnOpen] = React.useState(false);
@@ -59,13 +54,13 @@ const CampaignSection = (props) => {
   const handleClose = () => setOpen(false);
 
   //creating amount state
-  const [amount,setAmount] = useState(0)
+  const [amount, setAmount] = useState(0);
 
+  console.log(amount);
 
-  const handleSubmit = (e)=>{
-    e.preventDefault()
-    handleCardGet(amount) //passing amount value the donate button is clicked
-  }
+  const handleSubmit = () => {
+    handleCardGet(amount); //passing amount value the donate button is clicked
+  };
 
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 5;
@@ -97,7 +92,10 @@ const CampaignSection = (props) => {
   // };
 
   return (
-    <section id="donate" className="wpo-running-campaign-section section-padding">
+    <section
+      id="donate"
+      className="wpo-running-campaign-section section-padding"
+    >
       <div className="container">
         <div className="running-campaign-wrap">
           <div className="shape-1"></div>
@@ -115,49 +113,73 @@ const CampaignSection = (props) => {
                 <div className="py-4">
                   <div className="row g-3">
                     <div className="col-md-3 col-6">
-                      <button className="btn w-100 fw-bold btn-outline-success btn-md" onClick={()=>setAmount(20)}>
+                      <button
+                        className="btn w-100 fw-bold btn-outline-success btn-md"
+                        onClick={() => setAmount(20)}
+                      >
                         20 GH
                       </button>
                     </div>
                     <div className="col-md-3 col-6">
-                      <button className="btn w-100 fw-bold btn-outline-success btn-md" onClick={()=>setAmount(50)}>
+                      <button
+                        className="btn w-100 fw-bold btn-outline-success btn-md"
+                        onClick={() => setAmount(50)}
+                      >
                         50 GH
                       </button>
                     </div>
                     <div className="col-md-3 col-6">
-                      <button className="btn w-100 fw-bold btn-outline-success btn-md" onClick={()=>setAmount(100)}>
+                      <button
+                        className="btn w-100 fw-bold btn-outline-success btn-md"
+                        onClick={() => setAmount(100)}
+                      >
                         100 GH
                       </button>
                     </div>
                     <div className="col-md-3 col-6">
-                      <button className="btn w-100 fw-bold btn-outline-success btn-md" onClick={()=>setAmount(150)}>
+                      <button
+                        className="btn w-100 fw-bold btn-outline-success btn-md"
+                        onClick={() => setAmount(150)}
+                      >
                         150 GH
                       </button>
                     </div>
                     <div className="col-md-3 col-6">
-                      <button className="btn w-100 fw-bold btn-outline-success btn-md" onClick={()=>setAmount(200)}>
+                      <button
+                        className="btn w-100 fw-bold btn-outline-success btn-md"
+                        onClick={() => setAmount(200)}
+                      >
                         200 GH
                       </button>
                     </div>
                     <div className="col-md-3 col-6">
-                      <button className="btn w-100 fw-bold btn-outline-success btn-md" onClick={()=>setAmount(250)}>
+                      <button
+                        className="btn w-100 fw-bold btn-outline-success btn-md"
+                        onClick={() => setAmount(250)}
+                      >
                         250 GH
                       </button>
                     </div>
                     <div className="col-md-3 col-6">
-                      <button className="btn w-100 fw-bold btn-outline-success btn-md" onClick={()=>setAmount(300)}>
+                      <button
+                        className="btn w-100 fw-bold btn-outline-success btn-md"
+                        onClick={() => setAmount(300)}
+                      >
                         300 GH
                       </button>
                     </div>
                     <div className="col-md-3 col-6">
-                      <button className="btn w-100 fw-bold btn-outline-success btn-md" onClick={()=>setAmount(350)}>
+                      <button
+                        className="btn w-100 fw-bold btn-outline-success btn-md"
+                        onClick={() => setAmount(350)}
+                      >
                         350 GH
                       </button>
                     </div>
                   </div>
 
                   {/* FORM FIELD */}
-                  <form onSubmit={handleSubmit} className="row my-4 g-2">
+                  <form className="row my-4 g-2">
                     <div className="col-md-9">
                       <div>
                         <input
@@ -166,12 +188,19 @@ const CampaignSection = (props) => {
                           placeholder="Enter an amount"
                           value={amount}
                           step={10}
-                          onChange={(e)=>setAmount(e.target.value)}
+                          onChange={(e) => setAmount(e.target.value)}
                         />
                       </div>
                     </div>
                     <div className="col-md-3">
-                      <button type="submit" className="btn p-2 w-100 btn-success btn-md fw-bold" onClick={handleOpen}>
+                      <button
+                        type="button"
+                        className="btn p-2 w-100 btn-success btn-md fw-bold"
+                        onClick={() => {
+                          handleOpen();
+                          handleSubmit();
+                        }}
+                      >
                         DONATE NOW
                       </button>
                     </div>
@@ -285,7 +314,7 @@ const CampaignSection = (props) => {
         />
       )}
 
-    {/* <Modal
+      {/* <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"

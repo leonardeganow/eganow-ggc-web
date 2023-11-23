@@ -21,14 +21,14 @@ const Header = (props) => {
       <div className="wpo-site-header">
         <nav className="navigation navbar navbar-expand-lg navbar-light">
           <div className="container-fluid">
-            <div className="row align-items-center">
-              <div className="col-lg-3 col-md-3 col-sm-3  col-3 d-lg-none dl-block">
+            <div className="row align-items-center py-3 py-md-0">
+              <div className="col-lg-3 col-md-3 col-sm-6  col-3 d-lg-none dl-block">
                 <div className="mobail-menu">
                   <MobileMenu />
                 </div>
               </div>
-              <div className="col-lg-2 col-md-5 col-sm-4 col-6">
-                <div className="navbar-header">
+              <div className="col-lg-2 col-md-5 col-sm-4 col-6 ">
+                <div className="navbar-header d-none d-md-block">
                   <MyLink
                     onClick={ClickHandler}
                     className="navbar-brand"
@@ -38,7 +38,7 @@ const Header = (props) => {
                   </MyLink>
                 </div>
               </div>
-              <div className="col-lg-8 col-md-1 col-sm-1 col-1">
+              <div className="col-lg-8 col-md-1 col-sm-6 col-1">
                 <div
                   id="navbar"
                   className="collapse navbar-collapse navigation-holder"
@@ -296,7 +296,11 @@ const Header = (props) => {
           </div>
         </nav>
       </div>
-      <TransactionsModal open={open} handleClose={handleClose} handleOpen={handleOpen}/>
+      <TransactionsModal
+        open={open}
+        handleClose={handleClose}
+        handleOpen={handleOpen}
+      />
     </header>
   );
 };

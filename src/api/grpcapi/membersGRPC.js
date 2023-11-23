@@ -3,6 +3,7 @@ import {
   MemberExistRequest,
   MemberRequest,
   MemberLoginRequest,
+  JMRequest,
   JMOrGGCValues,
 } from "../../protos/gen/Members_pb";
 import { URL, METADATA } from "../../utils/constants";
@@ -72,6 +73,32 @@ const membersGRPC = () => {
     }
   }
 
+  function createJmMember(params) {
+    try {
+      const request = new JMRequest(); //initialize a new member request
+      // setting request body values
+      request.setMobilenumber(params.telephoneNo);
+      
+      request.setPin(params.pin);
+      request.setMobielwebussd("WEB");
+   
+      // request.setAccountcreationstatus(null);
+
+      return new Promise((resolve, reject) => {
+        client.createJMMember(request, METADATA, (err, response) => {
+          console.log(request);
+          if (err) {
+            reject(err);
+          }
+          const result = response.toObject(); //getting an object data from the result object.
+          resolve(result);
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   function loginMember(params) {
     try {
       const request = new MemberLoginRequest();
@@ -95,7 +122,7 @@ const membersGRPC = () => {
   }
 
   // returning function to use in our app
-  return { createMember, registerMember, loginMember };
+  return { createMember, registerMember, loginMember, createJmMember };
 };
 
 export default membersGRPC;
