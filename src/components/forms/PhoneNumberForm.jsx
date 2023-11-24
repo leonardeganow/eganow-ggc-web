@@ -40,7 +40,7 @@ function PhoneNumberForm(props) {
       const response = await checkIfUserExist(newData);
       setIsLoading(false);
       // console.log(newData);
-      console.log(response.message);
+      console.log(response);
 
       props.formHandler.reset(newData);
       if (response.message === "COMPLETE") {
@@ -133,9 +133,12 @@ function PhoneNumberForm(props) {
 
   //login user function
   const handleLogin = async () => {
-    props.handleNext(2);
-
     const data = props.formHandler.getValues();
+    // const newData = {
+    //   ...data,
+    //   accountType: info.role,
+    // };
+    // console.log(newData);
     const result = await props.formHandler.trigger("pin");
     if (!result) {
       return;
@@ -147,11 +150,11 @@ function PhoneNumberForm(props) {
       console.log(response);
       setIsLoading(false);
       props.formHandler.setValue("userStatus", response.message);
-      toast(response.message);
+      toast.success(response.message);
       props.formHandler.reset(data);
-      if (response.message === "COMPLETE" && info.role === "GGC") {
+      if (response.message === "Success" && info.role === "GGC") {
         props.handleNext(2);
-      } else if (response.message === "COMPLETE" && info.role === "JM") {
+      } else if (response.message === "Success" && info.role === "JM") {
         props.handleNext(3);
       } else if (response.message === "INCOMPLETE") {
         props.handleNext(1);

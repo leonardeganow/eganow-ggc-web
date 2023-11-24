@@ -17,7 +17,7 @@ const membersGRPC = () => {
       request.setMobilenumber(param.telephoneNo);
       request.setMembertype(JMOrGGCValues[param.role]);
       console.log(param);
-
+      // console.log(request);
       return new Promise((resolve, reject) => {
         client.checkIfMemberExist(request, METADATA, (err, response) => {
           if (err) {
@@ -105,7 +105,9 @@ const membersGRPC = () => {
       console.log(request);
       request.setMobilenumber(params.telephoneNo);
       request.setPin(params.pin);
-      // console.log(params);
+      request.setAccounttype(JMOrGGCValues[params.role]);
+
+      console.log(request);
 
       return new Promise((resolve, reject) => {
         client.loginMember(request, METADATA, (err, response) => {
