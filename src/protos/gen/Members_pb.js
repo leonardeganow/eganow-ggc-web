@@ -1260,7 +1260,8 @@ proto.Members.MemberRequest.toObject = function(includeInstance, msg) {
     displaynameoncard: jspb.Message.getFieldWithDefault(msg, 16, ""),
     cardpickuplocation: jspb.Message.getFieldWithDefault(msg, 17, ""),
     cardtypeid: jspb.Message.getFieldWithDefault(msg, 18, ""),
-    accountcreationstatus: jspb.Message.getFieldWithDefault(msg, 19, 0)
+    accountcreationstatus: jspb.Message.getFieldWithDefault(msg, 19, 0),
+    countrycode: jspb.Message.getFieldWithDefault(msg, 20, "")
   };
 
   if (includeInstance) {
@@ -1372,6 +1373,10 @@ proto.Members.MemberRequest.deserializeBinaryFromReader = function(msg, reader) 
     case 19:
       var value = /** @type {!proto.Members.AccountCreationStatus} */ (reader.readEnum());
       msg.setAccountcreationstatus(value);
+      break;
+    case 20:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCountrycode(value);
       break;
     default:
       reader.skipField();
@@ -1532,6 +1537,13 @@ proto.Members.MemberRequest.serializeBinaryToWriter = function(message, writer) 
   if (f !== 0.0) {
     writer.writeEnum(
       19,
+      f
+    );
+  }
+  f = message.getCountrycode();
+  if (f.length > 0) {
+    writer.writeString(
+      20,
       f
     );
   }
@@ -1877,6 +1889,24 @@ proto.Members.MemberRequest.prototype.getAccountcreationstatus = function() {
  */
 proto.Members.MemberRequest.prototype.setAccountcreationstatus = function(value) {
   return jspb.Message.setProto3EnumField(this, 19, value);
+};
+
+
+/**
+ * optional string countryCode = 20;
+ * @return {string}
+ */
+proto.Members.MemberRequest.prototype.getCountrycode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 20, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.Members.MemberRequest} returns this
+ */
+proto.Members.MemberRequest.prototype.setCountrycode = function(value) {
+  return jspb.Message.setProto3StringField(this, 20, value);
 };
 
 

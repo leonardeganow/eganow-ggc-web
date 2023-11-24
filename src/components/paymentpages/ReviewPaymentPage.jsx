@@ -61,7 +61,7 @@ const ReviewPaymentPage = (props) => {
             <h5 className="fs-5 fs-md-6">
               {props.formHandler.getValues("paymentMethod") === "Debit card"
                 ? data.nameOnPaymentCard
-                : data.momoname}
+                : data.fullName}
             </h5>
           </div>
           <div>

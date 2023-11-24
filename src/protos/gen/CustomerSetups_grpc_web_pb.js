@@ -562,5 +562,66 @@ proto.CustomerSetups.CustomerSetupsSvcPromiseClient.prototype.getPaymentMethods 
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.CustomerSetups.EmptySetupRequest,
+ *   !proto.CustomerSetups.ListOfSetupCountryResponse>}
+ */
+const methodDescriptor_CustomerSetupsSvc_GetSetupCountry = new grpc.web.MethodDescriptor(
+  '/CustomerSetups.CustomerSetupsSvc/GetSetupCountry',
+  grpc.web.MethodType.UNARY,
+  proto.CustomerSetups.EmptySetupRequest,
+  proto.CustomerSetups.ListOfSetupCountryResponse,
+  /**
+   * @param {!proto.CustomerSetups.EmptySetupRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.CustomerSetups.ListOfSetupCountryResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.CustomerSetups.EmptySetupRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.CustomerSetups.ListOfSetupCountryResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.CustomerSetups.ListOfSetupCountryResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.CustomerSetups.CustomerSetupsSvcClient.prototype.getSetupCountry =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/CustomerSetups.CustomerSetupsSvc/GetSetupCountry',
+      request,
+      metadata || {},
+      methodDescriptor_CustomerSetupsSvc_GetSetupCountry,
+      callback);
+};
+
+
+/**
+ * @param {!proto.CustomerSetups.EmptySetupRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.CustomerSetups.ListOfSetupCountryResponse>}
+ *     Promise that resolves to the response
+ */
+proto.CustomerSetups.CustomerSetupsSvcPromiseClient.prototype.getSetupCountry =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/CustomerSetups.CustomerSetupsSvc/GetSetupCountry',
+      request,
+      metadata || {},
+      methodDescriptor_CustomerSetupsSvc_GetSetupCountry);
+};
+
+
 module.exports = proto.CustomerSetups;
 

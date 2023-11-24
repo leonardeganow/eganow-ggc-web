@@ -150,11 +150,15 @@ function PhoneNumberForm(props) {
       console.log(response);
       setIsLoading(false);
       props.formHandler.setValue("userStatus", response.message);
+      props.formHandler.setValue("fullName", response.fullname);
       toast.success(response.message);
       props.formHandler.reset(data);
       if (response.message === "Success" && info.role === "GGC") {
+        props.formHandler.setValue("fullName", response.fullname);
         props.handleNext(2);
       } else if (response.message === "Success" && info.role === "JM") {
+        props.formHandler.setValue("fullName", response.fullname);
+
         props.handleNext(3);
       } else if (response.message === "INCOMPLETE") {
         props.handleNext(1);

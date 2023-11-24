@@ -8,10 +8,12 @@ import membersGRPC from "../../api/grpcapi/membersGRPC";
 import { ToastContainer, toast } from "react-toastify";
 
 function GgcRegForm(props) {
-  const { getRegions, getConstituencies, getAgeRange } = customerSetupsGRPC();
+  const { getRegions, getConstituencies, getAgeRange, getOtherCountries } =
+    customerSetupsGRPC();
   const { registerMember } = membersGRPC();
 
   const [regions, setRegions] = React.useState([]);
+  const [otherCountries, setOtherCountries] = React.useState([]);
   const [constituencies, setConstituencies] = React.useState([]);
   const [ageRange, setAgeRange] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -19,6 +21,16 @@ function GgcRegForm(props) {
   const { info } = useStore();
   const watchCountries = props.formHandler.watch("country");
   const watchRegions = props.formHandler.watch("regions");
+
+  async function handleGetOtherCountries() {
+    try {
+      const response = await getOtherCountries();
+      console.log(response);
+      setOtherCountries(response.countrylistList);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async function handleGetRegions() {
     try {
@@ -47,9 +59,12 @@ function GgcRegForm(props) {
 
   React.useEffect(() => {
     // console.log(watchCountries);
-    if (watchCountries === "Ghana") {
+    console.log(otherCountries);
+    if (watchCountries === "GH0233") {
       handleGetRegions();
       handleGetConstituencies();
+    } else if (watchCountries === "Other") {
+      handleGetOtherCountries();
     }
   }, [watchCountries]);
 
@@ -68,13 +83,13 @@ function GgcRegForm(props) {
 
   const onSubmit = async () => {
     const data = props.formHandler.getValues();
+
     console.log(data);
     const result = await props.formHandler.trigger([
       "cards",
       "card_pickup_location",
       "display_name_on_card",
-      "constituencies",
-      "regions",
+
       "country",
       "gender",
       "fullName",
@@ -90,6 +105,7 @@ function GgcRegForm(props) {
       // toast(response.message);
       setIsLoading(false);
       props.formHandler.reset(data);
+      props.formHandler.setValue("memberId", response.memberid);
       console.log(response);
       if (response.status) {
         toast.success(response.message);
@@ -228,7 +244,7 @@ function GgcRegForm(props) {
                     Country
                   </option>
 
-                  <option value="Ghana">Ghana</option>
+                  <option value="GH0233">Ghana</option>
                   <option value="Other">other</option>
                 </select>
               </div>
@@ -272,9 +288,33 @@ function GgcRegForm(props) {
               {/* </div> */}
             </div>
 
+            {props.formHandler.watch("country") === "Other" && (
+              <div className="">
+                {/* <InputLabel htmlFor="full-name">Full Name</InputLabel> */}
+                <h6 htmlFor="" className="mb-1">
+                  Enter your email address{" "}
+                </h6>
+
+                <input
+                  type="email"
+                  required
+                  className={`form-control p-3 ${
+                    props.formHandler.formState.errors.fullName
+                      ? "is-invalid"
+                      : ""
+                  }`}
+                  placeholder="Email"
+                  {...props.formHandler.register("email")}
+                />
+                {/* {errors.fullName && (
+                <p className="invalid-feedback">{errors.fullName.message}</p>
+              )} */}
+              </div>
+            )}
+
             <div className="d-flex gap-2">
               <div className="w-50">
-                {props.formHandler.watch("country") === "Ghana" && (
+                {props.formHandler.watch("country") === "GH0233" ? (
                   <div>
                     <h6 htmlFor="" className="mb-1">
                       Select regions{" "}
@@ -301,10 +341,33 @@ function GgcRegForm(props) {
                       })}
                     </select>
                   </div>
+                ) : props.formHandler.watch("country") === "Other" ? (
+                  <div>
+                    <h6 htmlFor="" className="mb-1">
+                      Select other Countries{" "}
+                    </h6>
+
+                    <select
+                      {...props.formHandler.register("otherCountry")}
+                      className={`form-select p-3 `}
+                    >
+                      <option value="">Other</option>
+
+                      {otherCountries?.map((country, i) => {
+                        return (
+                          <option key={i} value={country.countrycode}>
+                            {country.countryname}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                ) : (
+                  ""
                 )}
               </div>
               <div className="w-50">
-                {props.formHandler.watch("country") === "Ghana" &&
+                {props.formHandler.watch("country") === "GH0233" &&
                   props.formHandler.watch("regions") && (
                     <div>
                       <h6 htmlFor="" className="mb-1">
@@ -397,18 +460,23 @@ function GgcRegForm(props) {
 
             <div className="">
               <h6 htmlFor="" className="mb-1">
-                Card pick location{" "}
+                Card pick up location{" "}
               </h6>
 
-              <input
-                className={`form-control p-3 ${
+              <select
+                className={`form-select p-3 ${
                   props.formHandler.formState.errors.card_pickup_location
                     ? "is-invalid"
                     : ""
                 }`}
                 placeholder="Enter card pick up location"
                 {...props.formHandler.register("card_pickup_location")}
-              />
+              >
+                <option>select pickup location</option>
+                <option value="National">National</option>
+                <option value="Regional">Regional</option>
+                <option value="District">District</option>
+              </select>
             </div>
           </div>
         </div>

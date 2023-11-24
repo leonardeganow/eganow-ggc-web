@@ -40,10 +40,12 @@ const membersGRPC = () => {
       // setting request body values
       request.setFullname(params.fullName);
       request.setMobilenumber(params.telephoneNo);
-      request.setEmailaddress(null);
+      request.setEmailaddress(params.email);
       request.setGender(params.gender);
       request.setAgerageid(params.ageRange);
-      request.setCountryofresidence(params.country);
+      request.setCountrycode(
+        params.country == "Other" ? params.otherCountry : params.country
+      );
       request.setRegionid(params.regions);
       request.setConstituencyid(params.constituencies);
       request.setIndustry(params.industry);
@@ -57,7 +59,7 @@ const membersGRPC = () => {
       request.setCardpickuplocation(params.card_pickup_location);
       request.setCardtypeid(params.cards);
       // request.setAccountcreationstatus(null);
-
+      console.log(request);
       return new Promise((resolve, reject) => {
         client.createMember(request, METADATA, (err, response) => {
           console.log(request);

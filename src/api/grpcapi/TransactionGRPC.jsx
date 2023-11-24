@@ -21,6 +21,7 @@ function TransactionAPI() {
     request.setCvv(data.cvv);
     request.setExpirydatemonth(data.expiryDateMonth);
     request.setExpirydateyear(data.expiryDateYear);
+    
     console.log(request);
 
     return new Promise((resolve, reject) => {
