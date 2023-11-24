@@ -1,10 +1,6 @@
 import { METADATA, URL } from "../../utils/constants";
 import { TransactionSvcClient } from "../../protos/gen/Transaction_grpc_web_pb";
-import {
-  PostDataRequest,
-  KycRequest,
-  CardDataRequest,
-} from "../../protos/gen/Transaction_pb";
+import { PostDataRequest, KycRequest } from "../../protos/gen/Transaction_pb";
 
 function TransactionAPI() {
   const client = new TransactionSvcClient(URL, null, null); //initalizes the client to use

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import arise from "../../images/election-mission/arise.jpg";
 import bronze from "../../images/election-mission/Bronze.jpg";
-import freedom from "../../images/election-mission/Freedom.jpg";
+// import freedom from "../../images/election-mission/Freedom.jpg";
 import gold from "../../images/election-mission/Gold.jpg";
 import justice from "../../images/election-mission/Justice.jpg";
 import loyalty from "../../images/election-mission/Loyalty.jpg";
@@ -66,11 +66,11 @@ const MissionVission = (props) => {
   const [cardTypeValues, setCardTypeValues] = useState(null);
   const [open, setOpen] = useState(false);
   const [isLoading, setisLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  // const [isError, setIsError] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { info, updateRoleAndCardType } = useStore(); //zustand state to hanndle role annd card select
+  const { updateRoleAndCardType } = useStore(); //zustand state to hanndle role annd card select
 
   const { getCardTypes } = CardTypeAPI();
 
@@ -84,45 +84,6 @@ const MissionVission = (props) => {
 
     updateRoleAndCardType(newRole, cardDisplay, cardId, cardamount);
   }
-
-  const fakeCards = [
-    {
-      cardtypeid: "23423",
-      cardtypename: "sdfs",
-      cardamount: 233,
-      carddescription: "sdfsd",
-    },
-    {
-      cardtypeid: "23423",
-      cardtypename: "sdfs",
-      cardamount: 233,
-      carddescription: "sdfsd",
-    },
-    {
-      cardtypeid: "23423",
-      cardtypename: "sdfs",
-      cardamount: 233,
-      carddescription: "sdfsd",
-    },
-    {
-      cardtypeid: "23423",
-      cardtypename: "sdfs",
-      cardamount: 233,
-      carddescription: "sdfsd",
-    },
-    {
-      cardtypeid: "23423",
-      cardtypename: "sdfs",
-      cardamount: 233,
-      carddescription: "sdfsd",
-    },
-    {
-      cardtypeid: "23423",
-      cardtypename: "sdfs",
-      cardamount: 233,
-      carddescription: "sdfsd",
-    },
-  ];
 
   const getCardTypeHandler = async () => {
     setisLoading(true);
@@ -141,7 +102,7 @@ const MissionVission = (props) => {
       setCardTypeValues(newCards);
     } catch (error) {
       console.error(error);
-      setIsError(true);
+      // setIsError(true);
       setisLoading(false);
     }
   };
@@ -251,7 +212,6 @@ const MissionVission = (props) => {
 
                     <div className="title">
                       {card.cardtypename} - GHS{" "}
-                      
                       {card.cardamount
                         .toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
