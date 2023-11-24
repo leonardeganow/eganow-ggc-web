@@ -44,23 +44,21 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
         .matches(/^\d{10}$/, "Enter a valid 10-digit phone number"),
       paymentCardNo: yup
         .string()
-        .required("credit card is required is required")
+        .required("credit card is required")
         .matches(/^\d{16}$/, "Enter a valid 16-digit phone number"),
-      nameOnPaymentCard: yup
-        .string()
-        .required("Name on card is required is required"),
+      nameOnPaymentCard: yup.string().required("Name on card is required"),
       expiryDateMonth: yup
         .string()
         .required("month is required is required")
         .matches(/^\d{2}$/, "Enter a valid 2-digit exp number"),
-        expiryDateYear: yup
+      expiryDateYear: yup
         .string()
-        .required("year on card is required")
+        .required("Expiry date year is required")
         .matches(/^\d{2}$/, "Enter a valid 2-digit year number"),
-        cvv: yup
+      cvv: yup
         .string()
         .required("cvv  is required")
-        .matches(/^\d{2}$/, "Enter a valid 3-digit cvv number"),
+        .matches(/^\d{3}$/, "Enter a valid 3-digit cvv number"),
 
       paymentCardNo: yup
         .string()

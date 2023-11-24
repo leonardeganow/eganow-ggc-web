@@ -11,7 +11,7 @@ import { URL, METADATA } from "../../utils/constants";
 const membersGRPC = () => {
   const client = new MembersSvcClient(URL, null, null);
 
-  function createMember(param) {
+  function checkIfUserExist(param) {
     try {
       const request = new MemberExistRequest();
       request.setMobilenumber(param.telephoneNo);
@@ -105,9 +105,10 @@ const membersGRPC = () => {
       console.log(request);
       request.setMobilenumber(params.telephoneNo);
       request.setPin(params.pin);
+      // console.log(params);
 
       return new Promise((resolve, reject) => {
-        client.checkIfMemberExist(request, METADATA, (err, response) => {
+        client.loginMember(request, METADATA, (err, response) => {
           if (err) {
             reject(err);
           }
@@ -121,7 +122,7 @@ const membersGRPC = () => {
   }
 
   // returning function to use in our app
-  return { createMember, registerMember, loginMember, createJmMember };
+  return { checkIfUserExist, registerMember, loginMember, createJmMember };
 };
 
 export default membersGRPC;

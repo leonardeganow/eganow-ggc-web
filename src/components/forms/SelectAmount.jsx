@@ -1,30 +1,9 @@
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useState } from "react";
 import useStore from "../../formstore/formStore";
 
 function SelectAmount(props) {
   const { info } = useStore();
-
-  // const schema = yup.object().shape({
-  //   amount: yup
-  //     .number()
-  //     .required("Amount is required")
-  //     .positive("Amount must be positive"),
-  // });
-
-  // const {
-  //   handleSubmit,
-  //   register,
-  //   setValue,
-  //   getValues,
-  //   formState: { errors },
-  // } = useForm({
-  //   mode: "onChange",
-  //   resolver: yupResolver(schema),
-  // });
 
   const defaultValues = {
     amount: "",
@@ -45,16 +24,20 @@ function SelectAmount(props) {
     if (!result) {
       return;
     }
+    console.log(info.role);
     if (info.role === "JM") {
-      alert(info.amount);
-      // props.formHandler.setValue("amount", info.amount);
+      props.formHandler.setValue("transType", info.role);
+
+      props.handleNext(1);
     } else {
       // alert("h");
+      props.formHandler.setValue("transType", info.role);
+
       props.handleNext(1);
     }
 
-    const pin = props.formHandler.getValues();
-    console.log(pin);
+    // const pin = props.formHandler.getValues();
+    // console.log(pin);
   };
 
   return (

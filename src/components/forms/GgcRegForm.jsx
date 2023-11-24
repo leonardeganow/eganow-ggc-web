@@ -68,6 +68,7 @@ function GgcRegForm(props) {
 
   const onSubmit = async () => {
     const data = props.formHandler.getValues();
+    console.log(data);
     const result = await props.formHandler.trigger([
       "cards",
       "card_pickup_location",
@@ -421,8 +422,17 @@ function GgcRegForm(props) {
           Continue
         </button> */}
         <div className=" d-flex justify-content-end py-4">
+          {/* <button
+            onClick={() => {
+            props.han
+            }}
+            type="button"
+            className="btn btn-success "
+          >
+            back
+          </button> */}
           <button
-            style={{ width: "160px" }}
+            // style={{ width: "160px" }}
             type="button"
             onClick={onSubmit}
             className="btn btn-success"

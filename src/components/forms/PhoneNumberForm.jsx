@@ -18,10 +18,9 @@ function PhoneNumberForm(props) {
   const [showEnterPin, setShowEnterPin] = React.useState(false);
   const [mobileNumber, setMobileNumber] = React.useState("");
 
-  const { createMember, loginMember, createJmMember } = membersGRPC();
+  const { checkIfUserExist, loginMember, createJmMember } = membersGRPC();
   const { sendOtp, verifyOtp } = otpGRPC();
 
-  console.log(props.formHandler.getValues("userStatus"));
   //check if user exist funnction
   const onSubmit = async () => {
     setIsLoading(true);
@@ -38,18 +37,18 @@ function PhoneNumberForm(props) {
       role: info.role,
     };
     try {
-      const response = await createMember(newData);
+      const response = await checkIfUserExist(newData);
       setIsLoading(false);
       // console.log(newData);
-      // console.log(response);
-      props.formHandler.setValue("userStatus", response.message);
-      console.log(props.formHandler.getValues("userStatus"));
+      console.log(response.message);
 
       props.formHandler.reset(newData);
       if (response.message === "COMPLETE") {
         // handleOtp(data.telephoneNo);
         props.formHandler.setValue("memberId", response.memberid);
         props.formHandler.setValue("ndcCardNo", response.cardno);
+        props.formHandler.setValue("userStatus", response.message);
+
         // props.formHandler.setValue("telephoneNo", data.telephoneNo);
         setShowInput(false);
         setCondition(false);
@@ -77,11 +76,9 @@ function PhoneNumberForm(props) {
   //function to send otp
   const handleOtp = async () => {
     const data = props.formHandler.getValues("telephoneNo");
-    console.log(data);
 
     try {
       const a = data.slice(0);
-      console.log(a);
       const newData = {
         mobileNo: `${233}${a}`,
       };
@@ -102,7 +99,6 @@ function PhoneNumberForm(props) {
 
   //verify otp function
   const handleOtpVerify = async () => {
-    setIsLoading(true);
     const data = props.formHandler.getValues();
 
     const result = await props.formHandler.trigger("otp");
@@ -117,6 +113,7 @@ function PhoneNumberForm(props) {
       mobileNo: `${233}${num}`,
     };
     try {
+      setIsLoading(true);
       const response = await verifyOtp(updatedData);
       setIsLoading(false);
       props.formHandler.reset();
@@ -136,19 +133,21 @@ function PhoneNumberForm(props) {
 
   //login user function
   const handleLogin = async () => {
-    setIsLoading(true);
-    const data = props.formHandler.getValues();
+    // props.handleNext(2);
 
-    // console.log(props.formHandler.getValues());
+    const data = props.formHandler.getValues();
     const result = await props.formHandler.trigger("pin");
-    console.log(result);
-    setIsLoading(false);
     if (!result) {
       return;
     }
     try {
+      setIsLoading(true);
+
       const response = await loginMember(data);
+      console.log(response);
+      setIsLoading(false);
       props.formHandler.setValue("userStatus", response.message);
+      toast(response.message);
       props.formHandler.reset(data);
       if (response.message === "COMPLETE" && info.role === "GGC") {
         props.handleNext(2);
@@ -157,17 +156,6 @@ function PhoneNumberForm(props) {
       } else if (response.message === "INCOMPLETE") {
         props.handleNext(1);
       }
-
-      // console.log(info.role);
-      // console.log(props.formHandler.getValues("userStatus"));
-
-      // if (data.userStatus === "COMPLETE" && info.role === "GGC") {
-      //   alert("jk");
-      //   props.handleNext(3);
-      // } else if (response.message === "DOES_NOT_EXIST" && info.role === "JM") {
-      // }
-
-      console.log(response);
     } catch (error) {
       setIsLoading(false);
       props.formHandler.reset(data);
@@ -176,7 +164,6 @@ function PhoneNumberForm(props) {
   };
 
   React.useEffect(() => {
-    console.log(info);
     props.formHandler.setValue("amount", info.amount);
   }, []);
 
@@ -281,7 +268,17 @@ function PhoneNumberForm(props) {
           />
           {/* {displayError && <p className="invalid-feedback">{displayError}</p>} */}
 
-          <div className="d-flex justify-content-end">
+          <div className="d-flex justify-content-between ">
+            <button
+              onClick={() => {
+                setCondition(false);
+                setShowInput(true);
+              }}
+              type="button"
+              className="btn btn-success mt-4"
+            >
+              back
+            </button>
             <button
               type="button"
               // disabled={errors.otp || !getValues("otp")}
@@ -349,7 +346,17 @@ function PhoneNumberForm(props) {
               </p>
             )}
 
-            <div className="d-flex justify-content-end mt-4 ">
+            <div className="d-flex justify-content-between mt-4 ">
+              <button
+                onClick={() => {
+                  setShowpin(false);
+                  setCondition(true);
+                }}
+                type="button"
+                className="btn btn-success"
+              >
+                back
+              </button>
               <button
                 type="button"
                 // disabled={
@@ -412,27 +419,22 @@ function PhoneNumberForm(props) {
               </p>
             )}
 
-            {props.formHandler.formState.errors.confirmPin && (
-              <p className="invalid-feedback text-center">
-                {props.formHandler.formState.errors.confirmPin.message}
-              </p>
-            )}
-
-            <div className="d-flex justify-content-end mt-4">
+            <div className="d-flex justify-content-between mt-4">
+              <button
+                onClick={() => {
+                  setShowInput(true);
+                  setShowEnterPin(false);
+                }}
+                type="button"
+                className="btn btn-success  "
+              >
+                back
+              </button>
               <button
                 onClick={handleLogin}
                 type="button"
                 disabled={isLoading}
-                // disabled={
-                //   props.formHandler.formState.errors.pin ||
-                //   props.formHandler.formState.errors.confirmPin ||
-                //   !props.formHandler.getValues("pin") ||
-                //   !props.formHandler.getValues("confirmPin")
-                // }
                 className="btn btn-success  "
-                // onClick={() => {
-                //   props.handleNext();
-                // }}
               >
                 {isLoading ? (
                   <span className="spinner-border spinner-border-sm mr-1"></span>

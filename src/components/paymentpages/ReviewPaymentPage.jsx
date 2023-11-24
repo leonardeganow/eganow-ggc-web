@@ -18,8 +18,9 @@ const ReviewPaymentPage = (props) => {
     return maskedNumbers;
   };
   const data = props.formHandler.getValues();
-  // console.log(data);
+  console.log(data);
 
+  //initiate payment
   const completePayment = async () => {
     setIsLoading(true);
     const newData = {
@@ -33,15 +34,13 @@ const ReviewPaymentPage = (props) => {
 
     try {
       const response = await postNewTransaction(newData);
-      // console.log(response);
+      setIsLoading(false);
       if (response.status === true) {
-        setIsLoading(false);
         props.handleNext(1);
       } else {
         setIsLoading(false);
         toast.error(response.message);
       }
-      // console.log(response);
     } catch (error) {
       setIsLoading(false);
       console.log(error);
@@ -123,13 +122,14 @@ const ReviewPaymentPage = (props) => {
 
       <div className="d-flex justify-content-end mt-4">
         <button
-          style={{ width: "100px" }}
+          // style={{ width: "100px" }}
           disabled={isLoading}
           onClick={completePayment}
           className="btn btn-success"
+          type="button"
         >
           {isLoading ? (
-            <span className="spinner-border text-success  spinner-border-sm mr-1 text-center"></span>
+            <span className="spinner-border spinner-border-sm mr-1"></span>
           ) : (
             "Complete Payment"
           )}

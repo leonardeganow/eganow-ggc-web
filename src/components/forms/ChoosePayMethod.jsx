@@ -14,7 +14,7 @@ function ChoosePayMethod(props) {
   const [showMomo, setShowMomo] = React.useState(true);
   const [showCard, setShowCard] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [isCard, setIsCard] = useState("Debit card");
+  const [isCard, setIsCard] = useState("momo");
   const [MomoOptions, setMomoOptions] = useState(null);
   const [cardId, setCardId] = useState(null);
 
@@ -22,8 +22,6 @@ function ChoosePayMethod(props) {
   const { info } = useStore();
   const { getPayment } = customerSetupsGRPC();
   const { getKyc } = TransactionAPI();
-
-  console.log(info);
 
   const onSubmit = async (data) => {
     const result = await props.formHandler.trigger([
@@ -52,19 +50,15 @@ function ChoosePayMethod(props) {
     try {
       const response = await getPayment();
       pMethod = response.paymethodlistList[0].paymentmethodid;
-      console.log(pMethod);
+      // console.log(pMethod);
       setCardId(response.paymethodlistList[0].paymentmethodid);
       setMomoOptions(response.paymethodlistList.slice(1));
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log(MomoOptions);
-
   React.useEffect(() => {
-    console.log(info);
     getpayMethodsHandler();
   }, []);
 
@@ -72,16 +66,12 @@ function ChoosePayMethod(props) {
     props.formHandler.setValue("transType", info.role);
     props.formHandler.setValue("cardId", info.cardid);
     props.formHandler.setValue("plan", info.cardType);
+    props.formHandler.setValue("paymentMethod", "momo");
     // props.formHandler.setValue("");
-    console.log(props.formHandler.getValues());
   }, []);
 
   const watchMomoId = props.formHandler.watch("paymentMethodId");
   const watchMomoNumber = props.formHandler.watch("paymentCardNo");
-  console.log(watchMomoId);
-  console.log(watchMomoNumber);
-
-  console.log(props.formHandler.watch("paymentCardNo"));
 
   const getKycHandler = async () => {
     setLoading(true);
@@ -100,7 +90,6 @@ function ChoosePayMethod(props) {
       console.log(error);
     }
   };
-  console.log(props.formHandler.getValues());
 
   React.useEffect(() => {
     if (watchMomoNumber?.toString().length === 10 && watchMomoId) {
@@ -152,7 +141,6 @@ function ChoosePayMethod(props) {
                 props.formHandler.setValue("paymentMethod", "Debit card");
                 props.formHandler.setValue("momoname", "");
                 props.formHandler.setValue("nameOnPaymentCard", "");
-                console.log(cardId);
                 props.formHandler.setValue("paymentMethodId", cardId);
                 setShowMomo(false);
                 setShowCard(true);
@@ -167,20 +155,21 @@ function ChoosePayMethod(props) {
       </div>
       {showMomo && (
         <form className="d-flex  flex-column gap-4" role="form">
-          {props.formHandler.getValues("userStatus") === "COMPLETE" && (
-            <div className="form-group">
-              <label htmlFor="username">
-                <h6>Good governance card ID number</h6>
-              </label>
-              <input
-                disabled
-                value={props.formHandler.getValues("memberId")}
-                placeholder="Good governance card ID number"
-                required
-                className="form-control p-2"
-              />
-            </div>
-          )}
+          {props.formHandler.getValues("userStatus") === "COMPLETE" &&
+            info.role === "GGC" && (
+              <div className="form-group">
+                <label htmlFor="username">
+                  <h6>Good governance card ID number</h6>
+                </label>
+                <input
+                  disabled
+                  value={props.formHandler.getValues("memberId")}
+                  placeholder="Good governance card ID number"
+                  required
+                  className="form-control p-2"
+                />
+              </div>
+            )}
 
           <div className="d-flex gap-4 align-items-center my-2">
             <div className="w-100">
@@ -327,6 +316,11 @@ function ChoosePayMethod(props) {
                 }`}
                 {...props.formHandler.register("nameOnPaymentCard")}
               />
+              {props.formHandler.formState.errors.nameOnPaymentCard && (
+                <span className="invalid-feedback">
+                  {props.formHandler.formState.errors.nameOnPaymentCard.message}
+                </span>
+              )}
             </div>
             <div className="row">
               <div className="col-sm-8">
@@ -339,18 +333,44 @@ function ChoosePayMethod(props) {
                   <div className="input-group">
                     <input
                       type="number"
+                      max="02"
                       placeholder="MM"
-                      className="form-control p-md-2"
+                      className={`form-control p-md-2 ${
+                        props.formHandler.formState.errors.expiryDateMonth
+                          ? "is-invalid"
+                          : ""
+                      }`}
                       {...props.formHandler.register("expiryDateMonth")}
                       required
                     />
                     <input
                       type="number"
                       placeholder="YY"
-                      className="form-control p-md-2"
+                      maxlength="2"
+                      className={`form-control p-md-2 ${
+                        props.formHandler.formState.errors.expiryDateYear
+                          ? "is-invalid"
+                          : ""
+                      }`}
                       {...props.formHandler.register("expiryDateYear")}
                       required
                     />
+                    {props.formHandler.formState.errors.expiryDateMonth && (
+                      <span className="invalid-feedback">
+                        {
+                          props.formHandler.formState.errors.expiryDateMonth
+                            .message
+                        }
+                      </span>
+                    )}
+                    {props.formHandler.formState.errors.expiryDateYear && (
+                      <span className="invalid-feedback">
+                        {
+                          props.formHandler.formState.errors.expiryDateYear
+                            .message
+                        }
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -365,29 +385,37 @@ function ChoosePayMethod(props) {
                     </h6>
                   </label>
                   <input
+                    maxlength="3"
                     {...props.formHandler.register("cvv")}
                     type="text"
                     required
-                    className="form-control p-md-2"
+                    className={`form-control p-md-2 ${
+                      props.formHandler.formState.errors.cvv ? "is-invalid" : ""
+                    }`}
                   />
+                  {props.formHandler.formState.errors.cvv && (
+                    <span className="invalid-feedback">
+                      {props.formHandler.formState.errors.cvv.message}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
             <div className="d-flex justify-content-end">
               <button
                 onClick={async () => {
-                  // const result = await props.formHandler.trigger([
-                  //   "paymentCardNo",
-                  //   "paymentMethodId",
-                  //   "nameOnPaymentCard",
-                  //   "expiryDateMonth",
-                  //   "expiryDateYear",
-                  //   "cvv",
-                  // ]);
-                  // console.log(result);
-                  // if (!result) {
-                  //   return;
-                  // }
+                  const result = await props.formHandler.trigger([
+                    // "paymentCardNo",
+                    // "paymentMethodId",
+                    "nameOnPaymentCard",
+                    "expiryDateMonth",
+                    "expiryDateYear",
+                    "cvv",
+                  ]);
+                  console.log(result);
+                  if (!result) {
+                    return;
+                  }
 
                   props.handleNext(1);
                 }}

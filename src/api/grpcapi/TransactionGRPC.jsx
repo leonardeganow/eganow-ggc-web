@@ -27,7 +27,6 @@ function TransactionAPI() {
     request.setExpirydateyear(data.expiryDateYear);
     console.log(request);
 
-    
     return new Promise((resolve, reject) => {
       client.postDataToTransaction(request, METADATA, (err, resp) => {
         if (err) {
