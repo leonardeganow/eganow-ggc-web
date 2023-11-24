@@ -21,7 +21,7 @@ const style = {
   boxShadow: "40px",
   // maxHeight: "85%",
   // overflowY: "scroll",
-  borderRadius: "0.25rem",
+  borderRadius: "1rem",
 };
 function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
   const [btnOpen, setBtnOpen] = React.useState(false);

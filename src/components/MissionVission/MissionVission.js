@@ -250,7 +250,11 @@ const MissionVission = (props) => {
                     <img src={card.img} alt="" />
 
                     <div className="title">
-                      {card.cardtypename} - GHS{card.cardamount}
+                      {card.cardtypename} - GHS{" "}
+                      
+                      {card.cardamount
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                     </div>
                     <div className="text">
                       <h3>{card.cardtypename} </h3>

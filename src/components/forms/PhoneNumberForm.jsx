@@ -133,7 +133,7 @@ function PhoneNumberForm(props) {
 
   //login user function
   const handleLogin = async () => {
-    // props.handleNext(2);
+    props.handleNext(2);
 
     const data = props.formHandler.getValues();
     const result = await props.formHandler.trigger("pin");

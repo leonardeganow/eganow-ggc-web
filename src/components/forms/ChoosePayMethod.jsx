@@ -122,7 +122,7 @@ function ChoosePayMethod(props) {
                 setShowMomo(true);
                 setShowCard(false);
               }}
-              className={` p-3 d-flex gap-2 align-items-center ${
+              className={` p-md-3 p-2 d-flex gap-2 align-items-center ${
                 showMomo ? "bg-success text-white" : " text-success"
               }`}
             >
@@ -132,7 +132,7 @@ function ChoosePayMethod(props) {
             </div>
             <div
               role="button"
-              className={` p-3 d-flex gap-2 align-items-center ${
+              className={` p-md-3 p-2 d-flex gap-2 align-items-center ${
                 showCard ? "bg-success text-white" : " text-success"
               }`}
               onClick={() => {
@@ -177,7 +177,7 @@ function ChoosePayMethod(props) {
                 <h6>Phone number</h6>
               </label>
               <div className="d-flex gap-2">
-                <select className="w-25  p-2 form-select" name="" id="">
+                <select className="w-50  p-2 form-select" name="" id="">
                   <option value="" selected>
                     🇬🇭 +233
                   </option>
