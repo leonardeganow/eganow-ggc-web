@@ -23,19 +23,19 @@ function PhoneNumberForm(props) {
   const [mobileNumber, setMobileNumber] = React.useState("");
 
   const { checkIfUserExist, loginMember, createJmMember } = membersGRPC();
-  const { sendOtp, verifyOtp } = otpGRPC();
+  const { sendOtp, verifyOtp, sendEmailOtp } = otpGRPC();
   const { getOtherCountries } = customerSetupsGRPC();
 
   //check if user exist funnction
   const onSubmit = async () => {
     setIsLoading(true);
     const data = props.formHandler.getValues();
-
-    const result = await props.formHandler.trigger("telephoneNo");
-    // console.log(result);
-    if (!result) {
-      return;
-    }
+    console.log(data);
+    // const result = await props.formHandler.trigger("telephoneNo");
+    // // console.log(result);
+    // if (!result) {
+    //   return;
+    // }
 
     const newData = {
       ...data,
@@ -46,7 +46,7 @@ function PhoneNumberForm(props) {
       setIsLoading(false);
       // console.log(newData);
       console.log(response);
-
+      console.log(newData);
       props.formHandler.reset(newData);
       if (response.message === "COMPLETE") {
         // handleOtp(data.telephoneNo);
@@ -58,15 +58,26 @@ function PhoneNumberForm(props) {
         setShowInput(false);
         setCondition(false);
         setShowEnterPin(true);
-      } else if (response.message === "DOES_NOT_EXIST") {
+      } else if (response.message === "DOES_NOT_EXIST" && data.email) {
+        // console.log(newData.email);
+        handleOtpEmail();
+        // handleOtp(newData.telephoneNo);
+        setShowInput(false);
+        setShowEnterPin(false);
+        setCondition(true);
+        setShowCountries(false);
+        setShowEmail(false);
+      } else if (response.message === "DOES_NOT_EXIST" && data.telephoneNo) {
         handleOtp(newData.telephoneNo);
         setShowInput(false);
         setShowEnterPin(false);
         setCondition(true);
+        setShowCountries(false);
       } else {
         setShowInput(false);
         setCondition(false);
         setShowEnterPin(true);
+        setShowCountries(false);
       }
     } catch (error) {
       props.formHandler.reset(newData);
@@ -99,6 +110,26 @@ function PhoneNumberForm(props) {
         mobileNo: `${233}${a}`,
       };
       const response = await sendOtp(newData);
+      console.log(response);
+      props.formHandler.reset();
+
+      if (response.status === true) {
+        toast.success(response.message); //add field name
+      } else {
+        toast.warning(response.message);
+      }
+    } catch (error) {
+      props.formHandler.reset(data);
+      console.error(error);
+    }
+  };
+
+  //send otp to email
+  const handleOtpEmail = async () => {
+    const data = props.formHandler.getValues("email");
+    console.log(data);
+    try {
+      const response = await sendEmailOtp(data);
       console.log(response);
       props.formHandler.reset();
 

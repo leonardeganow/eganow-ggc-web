@@ -14,7 +14,9 @@ const membersGRPC = () => {
   function checkIfUserExist(param) {
     try {
       const request = new MemberExistRequest();
-      request.setMobilenumberoremailaddress(param.telephoneNo);
+      request.setMobilenumberoremailaddress(
+        param.telephoneNo ? param.telephoneNo : param.email
+      );
       request.setMembertype(JMOrGGCValues[param.role]);
       console.log(request);
       return new Promise((resolve, reject) => {
