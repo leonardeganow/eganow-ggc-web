@@ -138,6 +138,67 @@ proto.OtpVerification.OtpVerificationSvcPromiseClient.prototype.sendSMSOTPToMemb
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.OtpVerification.MemberEmailOtpRequest,
+ *   !proto.OtpVerification.OtpResponse>}
+ */
+const methodDescriptor_OtpVerificationSvc_SendOTPToMemberEmailAddress = new grpc.web.MethodDescriptor(
+  '/OtpVerification.OtpVerificationSvc/SendOTPToMemberEmailAddress',
+  grpc.web.MethodType.UNARY,
+  proto.OtpVerification.MemberEmailOtpRequest,
+  proto.OtpVerification.OtpResponse,
+  /**
+   * @param {!proto.OtpVerification.MemberEmailOtpRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.OtpVerification.OtpResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.OtpVerification.MemberEmailOtpRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.OtpVerification.OtpResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.OtpVerification.OtpResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.OtpVerification.OtpVerificationSvcClient.prototype.sendOTPToMemberEmailAddress =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/OtpVerification.OtpVerificationSvc/SendOTPToMemberEmailAddress',
+      request,
+      metadata || {},
+      methodDescriptor_OtpVerificationSvc_SendOTPToMemberEmailAddress,
+      callback);
+};
+
+
+/**
+ * @param {!proto.OtpVerification.MemberEmailOtpRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.OtpVerification.OtpResponse>}
+ *     Promise that resolves to the response
+ */
+proto.OtpVerification.OtpVerificationSvcPromiseClient.prototype.sendOTPToMemberEmailAddress =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/OtpVerification.OtpVerificationSvc/SendOTPToMemberEmailAddress',
+      request,
+      metadata || {},
+      methodDescriptor_OtpVerificationSvc_SendOTPToMemberEmailAddress);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.OtpVerification.VerifyOtpRequest,
  *   !proto.OtpVerification.OtpResponse>}
  */

@@ -40,11 +40,6 @@ function ChoosePayMethod(props) {
     props.handleNext(1);
   };
 
-  // const handleMomo = () => {
-  //   const pin = props.formHandler.getValues();
-  //   console.log(pin);
-  // };
-
   let pMethod;
   const getpayMethodsHandler = async () => {
     try {
@@ -67,7 +62,6 @@ function ChoosePayMethod(props) {
     props.formHandler.setValue("cardId", info.cardid);
     props.formHandler.setValue("plan", info.cardType);
     props.formHandler.setValue("paymentMethod", "momo");
-    // props.formHandler.setValue("");
   }, []);
 
   const watchMomoId = props.formHandler.watch("paymentMethodId");
@@ -197,13 +191,6 @@ function ChoosePayMethod(props) {
                   }`}
                 />{" "}
               </div>
-              {/* <PhoneInput
-                className=""
-                value={phone}
-                onChange={(phone) => setPhone(phone)}
-                defaultCountry="gh"
-                countries={countries}
-              /> */}
             </div>
           </div>
 

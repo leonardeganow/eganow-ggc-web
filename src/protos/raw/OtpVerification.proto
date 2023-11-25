@@ -5,7 +5,8 @@ option csharp_namespace = "NDC_DONATION_2024.Protos";
 package OtpVerification;
 
 service OtpVerificationSvc {
-	rpc SendSMSOTPToMemberPhoneNumber(MemberOtpRequest) returns (OtpResponse);
+	rpc SendSMSOTPToMemberPhoneNumber(MemberOtpRequest) returns (OtpResponse); // USE THIS PHONE NUMBER
+	rpc SendOTPToMemberEmailAddress(MemberEmailOtpRequest) returns (OtpResponse); // USE THIS TO SEND EMAIL TO NONE GHANAIAN EMAIL ADDRESS
 	rpc VerifyOTPForMember(VerifyOtpRequest) returns (OtpResponse);
 	rpc SendOTPToCustomerEmail(OTPRequest) returns (OtpResponse);
 	rpc VerifyCustomerOTP(VerifyCustOTPRequest) returns (OtpResponse);
@@ -17,12 +18,16 @@ message MemberOtpRequest {
 	string mobileNumber = 1;
 }
 
+message MemberEmailOtpRequest {
+	string emailAddress = 1;
+}
+
 message OTPRequest {
 	string emailAddress = 1;
 }
 
 message VerifyOtpRequest {
-	string mobileNumber = 1;
+	string mobileNumberOrEmailAddress = 1;
 	string otpValue =2;
 }
 

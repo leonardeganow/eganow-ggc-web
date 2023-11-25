@@ -762,7 +762,7 @@ proto.Members.MemberExistRequest.prototype.toObject = function(opt_includeInstan
  */
 proto.Members.MemberExistRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    mobilenumber: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    mobilenumberoremailaddress: jspb.Message.getFieldWithDefault(msg, 1, ""),
     membertype: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
@@ -802,7 +802,7 @@ proto.Members.MemberExistRequest.deserializeBinaryFromReader = function(msg, rea
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setMobilenumber(value);
+      msg.setMobilenumberoremailaddress(value);
       break;
     case 2:
       var value = /** @type {!proto.Members.JMOrGGCValues} */ (reader.readEnum());
@@ -837,7 +837,7 @@ proto.Members.MemberExistRequest.prototype.serializeBinary = function() {
  */
 proto.Members.MemberExistRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getMobilenumber();
+  f = message.getMobilenumberoremailaddress();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -855,10 +855,10 @@ proto.Members.MemberExistRequest.serializeBinaryToWriter = function(message, wri
 
 
 /**
- * optional string mobileNumber = 1;
+ * optional string mobileNumberOrEmailAddress = 1;
  * @return {string}
  */
-proto.Members.MemberExistRequest.prototype.getMobilenumber = function() {
+proto.Members.MemberExistRequest.prototype.getMobilenumberoremailaddress = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -867,7 +867,7 @@ proto.Members.MemberExistRequest.prototype.getMobilenumber = function() {
  * @param {string} value
  * @return {!proto.Members.MemberExistRequest} returns this
  */
-proto.Members.MemberExistRequest.prototype.setMobilenumber = function(value) {
+proto.Members.MemberExistRequest.prototype.setMobilenumberoremailaddress = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 

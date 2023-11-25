@@ -1,7 +1,4 @@
 import * as React from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import useStore from "../../formstore/formStore";
 import customerSetupsGRPC from "../../api/grpcapi/customerSetupsGRPC";
 import membersGRPC from "../../api/grpcapi/membersGRPC";
@@ -139,7 +136,6 @@ function GgcRegForm(props) {
                 {...props.formHandler.register("cards")}
               >
                 <option value={info.cardid} selected>
-                  {/* {defaultValues.cards.one} */}
                   {info.cardType}
                 </option>
                 {props.cardTypeValues.map((cards, i) => {
@@ -149,45 +145,14 @@ function GgcRegForm(props) {
                     </option>
                   );
                 })}
-                {/* <option value={defaultValues.cards.two}>
-                  {defaultValues.cards.two}
-                </option>
-                <option value={defaultValues.cards.three}>
-                  {defaultValues.cards.three}
-                </option>
-                <option value={defaultValues.cards.four}>
-                  {defaultValues.cards.four}
-                </option>
-                <option value={defaultValues.cards.five}>
-                  {defaultValues.cards.five}
-                </option>
-                <option value={defaultValues.cards.six}>
-                  {defaultValues.cards.six}
-                </option>
-                <option value={defaultValues.cards.seven}>
-                  {defaultValues.cards.seven}
-                </option>
-                <option value={defaultValues.cards.eight}>
-                  {defaultValues.cards.eight}
-                </option>
-                <option value={defaultValues.cards.nine}>
-                  {defaultValues.cards.nine}
-                </option>
-                <option value={defaultValues.cards.ten}>
-                  {defaultValues.cards.ten}
-                </option>
-                <option value={defaultValues.cards.eleven}>
-                  {defaultValues.cards.eleven}
-                </option> */}
               </select>
             </div>
 
             <div className="">
-              {/* <InputLabel htmlFor="full-name">Full Name</InputLabel> */}
+              {" "}
               <h6 htmlFor="" className="mb-1">
                 Enter your full name{" "}
               </h6>
-
               <input
                 className={`form-control p-3 ${
                   props.formHandler.formState.errors.fullName
@@ -197,9 +162,6 @@ function GgcRegForm(props) {
                 placeholder="Full name"
                 {...props.formHandler.register("fullName")}
               />
-              {/* {errors.fullName && (
-                <p className="invalid-feedback">{errors.fullName.message}</p>
-              )} */}
             </div>
 
             <div className="d-flex gap-2">
@@ -248,44 +210,6 @@ function GgcRegForm(props) {
                   <option value="Other">other</option>
                 </select>
               </div>
-
-              {/* <div className="">
-                <h6 htmlFor="" className="mb-1">
-                  Age range{" "}
-                </h6> */}
-
-              {/* <select
-                  {...props.formHandler.register("ageRange")}
-                  // style={{ width: "140px" }}
-                  className={`form-select p-3 ${
-                    props.formHandler.formState.errors.ageRange
-                      ? "is-invalid"
-                      : ""
-                  }`}
-                >
-                  <option value="" disabled selected hidden>
-                    Age range
-                  </option>
-
-                  {ageRange.map((param, i) => {
-                    return (
-                      <option key={param.agerangeid} value={param.agerangeid}>
-                        {param.agerangename}
-                      </option>
-                    );
-                  })}
-
-                  <option value={defaultValues.ageRange.one}>
-                    {defaultValues.ageRange.one}
-                  </option>
-                  <option value={defaultValues.ageRange.two}>
-                    {defaultValues.ageRange.two}
-                  </option>
-                  <option value={defaultValues.ageRange.three}>
-                    {defaultValues.ageRange.three}
-                  </option>
-                </select> */}
-              {/* </div> */}
             </div>
 
             {props.formHandler.watch("country") === "Other" && (
@@ -306,9 +230,6 @@ function GgcRegForm(props) {
                   placeholder="Email"
                   {...props.formHandler.register("email")}
                 />
-                {/* {errors.fullName && (
-                <p className="invalid-feedback">{errors.fullName.message}</p>
-              )} */}
               </div>
             )}
 
@@ -404,38 +325,6 @@ function GgcRegForm(props) {
           </div>
 
           <div className="d-md-flex flex-column  gap-3 mt-3">
-            {/* <div className="">
-              <h6 htmlFor="" className="mb-1">
-                Industry
-              </h6>
-
-              <input
-                className={`form-control p-3 ${
-                  props.formHandler.formState.errors.industry
-                    ? "is-invalid"
-                    : ""
-                }`}
-                placeholder="Enter industry"
-                {...props.formHandler.register("industry")}
-              />
-            </div> */}
-
-            {/* <div className="">
-              <h6 htmlFor="" className="mb-1">
-                Occupation{" "}
-              </h6>
-
-              <input
-                className={`form-control p-3 ${
-                  props.formHandler.formState.errors.occupation
-                    ? "is-invalid"
-                    : ""
-                }`}
-                placeholder="Enter occupation"
-                {...props.formHandler.register("occupation")}
-              />
-            </div> */}
-
             <div className="">
               <h6 htmlFor="" className="mb-1">
                 Display name on card{" "}
@@ -481,26 +370,8 @@ function GgcRegForm(props) {
           </div>
         </div>
 
-        {/* <button
-          className="btn btn-success my-2"
-          onClick={() => {
-            onSubmit();
-          }}
-        >
-          Continue
-        </button> */}
         <div className=" d-flex justify-content-end py-4">
-          {/* <button
-            onClick={() => {
-            props.han
-            }}
-            type="button"
-            className="btn btn-success "
-          >
-            back
-          </button> */}
           <button
-            // style={{ width: "160px" }}
             type="button"
             onClick={onSubmit}
             className="btn btn-success"
@@ -512,7 +383,6 @@ function GgcRegForm(props) {
               "submit"
             )}
           </button>
-          {/* <input type="submit" className="btn btn-success" /> */}
         </div>
       </form>
     </div>

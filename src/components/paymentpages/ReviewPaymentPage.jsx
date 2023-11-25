@@ -60,8 +60,10 @@ const ReviewPaymentPage = (props) => {
             <p>Sender name:</p>
             <h5 className="fs-5 fs-md-6">
               {props.formHandler.getValues("paymentMethod") === "Debit card"
-                ? data.nameOnPaymentCard
-                : data.fullName}
+                ? data.fullName || data.nameOnPaymentCard
+                : data.fullName
+                ? data.fullName
+                : data.momoname}
             </h5>
           </div>
           <div>
@@ -93,14 +95,16 @@ const ReviewPaymentPage = (props) => {
           style={{ backgroundColor: "#CFDFD6", borderRadius: "0.25rem" }}
           className="  p-4"
         >
-          <div className="d-flex justify-content-between align-items-center">
-            <p>Good gov. ID:</p>
-            <h5>
-              {props.formHandler.getValues("userStatus") === "INCOMPLETE"
-                ? ""
-                : data.memberId}
-            </h5>
-          </div>
+          {info.role === "GGC" && (
+            <div className="d-flex justify-content-between align-items-center">
+              <p>Good gov. ID:</p>
+              <h5>
+                {props.formHandler.getValues("userStatus") === "INCOMPLETE"
+                  ? ""
+                  : data.memberId}
+              </h5>
+            </div>
+          )}
           {info.role === "GGC" ? (
             <div>
               <div className="d-flex justify-content-between align-items-center">

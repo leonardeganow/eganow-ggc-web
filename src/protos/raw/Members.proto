@@ -28,7 +28,7 @@ message GetMembersRequest {
 }
 
 message MemberExistRequest {
-	 string mobileNumber = 1;
+	 string mobileNumberOrEmailAddress = 1;
 	 JMOrGGCValues memberType = 2; 
 
 }
