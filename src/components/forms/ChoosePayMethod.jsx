@@ -77,8 +77,11 @@ function ChoosePayMethod(props) {
         setLoading(false);
         props.formHandler.setValue("momoname", response.message);
         props.formHandler.setValue("nameOnPaymentCard", response.message);
+<<<<<<< HEAD
       } else {
         // toast;
+=======
+>>>>>>> 6c248114cbec962b519dfafd94916f4805e1825f
       }
     } catch (error) {
       console.log(error);
