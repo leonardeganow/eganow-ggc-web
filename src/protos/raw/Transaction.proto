@@ -32,6 +32,7 @@ message PostDataRequest {
      string CVV = 20;
     int32 expiryDateMonth = 21; // example Jan, pass 1, Feb, pass 2 etc
     int32 expiryDateYear = 22; 
+    string channel = 23;
 }
 
 message DonatedAmountRequest{
@@ -116,6 +117,7 @@ message TransactionData {
     string paymentName = 7;
     string paymentAccountNumberOrMomoNumber = 8;
     string transStatus = 9;
+    string paymentMethod = 10;
 }
 
 message TransactionResponse {

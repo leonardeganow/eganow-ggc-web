@@ -416,7 +416,8 @@ proto.Transaction.PostDataRequest.toObject = function(includeInstance, msg) {
     agentid: jspb.Message.getFieldWithDefault(msg, 11, ""),
     cvv: jspb.Message.getFieldWithDefault(msg, 20, ""),
     expirydatemonth: jspb.Message.getFieldWithDefault(msg, 21, 0),
-    expirydateyear: jspb.Message.getFieldWithDefault(msg, 22, 0)
+    expirydateyear: jspb.Message.getFieldWithDefault(msg, 22, 0),
+    channel: jspb.Message.getFieldWithDefault(msg, 23, "")
   };
 
   if (includeInstance) {
@@ -500,6 +501,10 @@ proto.Transaction.PostDataRequest.deserializeBinaryFromReader = function(msg, re
     case 22:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setExpirydateyear(value);
+      break;
+    case 23:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setChannel(value);
       break;
     default:
       reader.skipField();
@@ -611,6 +616,13 @@ proto.Transaction.PostDataRequest.serializeBinaryToWriter = function(message, wr
   if (f !== 0) {
     writer.writeInt32(
       22,
+      f
+    );
+  }
+  f = message.getChannel();
+  if (f.length > 0) {
+    writer.writeString(
+      23,
       f
     );
   }
@@ -830,6 +842,24 @@ proto.Transaction.PostDataRequest.prototype.getExpirydateyear = function() {
  */
 proto.Transaction.PostDataRequest.prototype.setExpirydateyear = function(value) {
   return jspb.Message.setProto3IntField(this, 22, value);
+};
+
+
+/**
+ * optional string channel = 23;
+ * @return {string}
+ */
+proto.Transaction.PostDataRequest.prototype.getChannel = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 23, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.Transaction.PostDataRequest} returns this
+ */
+proto.Transaction.PostDataRequest.prototype.setChannel = function(value) {
+  return jspb.Message.setProto3StringField(this, 23, value);
 };
 
 
@@ -2993,7 +3023,8 @@ proto.Transaction.TransactionData.toObject = function(includeInstance, msg) {
     date: jspb.Message.getFieldWithDefault(msg, 6, ""),
     paymentname: jspb.Message.getFieldWithDefault(msg, 7, ""),
     paymentaccountnumberormomonumber: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    transstatus: jspb.Message.getFieldWithDefault(msg, 9, "")
+    transstatus: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    paymentmethod: jspb.Message.getFieldWithDefault(msg, 10, "")
   };
 
   if (includeInstance) {
@@ -3065,6 +3096,10 @@ proto.Transaction.TransactionData.deserializeBinaryFromReader = function(msg, re
     case 9:
       var value = /** @type {string} */ (reader.readString());
       msg.setTransstatus(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPaymentmethod(value);
       break;
     default:
       reader.skipField();
@@ -3155,6 +3190,13 @@ proto.Transaction.TransactionData.serializeBinaryToWriter = function(message, wr
   if (f.length > 0) {
     writer.writeString(
       9,
+      f
+    );
+  }
+  f = message.getPaymentmethod();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
       f
     );
   }
@@ -3320,6 +3362,24 @@ proto.Transaction.TransactionData.prototype.getTransstatus = function() {
  */
 proto.Transaction.TransactionData.prototype.setTransstatus = function(value) {
   return jspb.Message.setProto3StringField(this, 9, value);
+};
+
+
+/**
+ * optional string paymentMethod = 10;
+ * @return {string}
+ */
+proto.Transaction.TransactionData.prototype.getPaymentmethod = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.Transaction.TransactionData} returns this
+ */
+proto.Transaction.TransactionData.prototype.setPaymentmethod = function(value) {
+  return jspb.Message.setProto3StringField(this, 10, value);
 };
 
 

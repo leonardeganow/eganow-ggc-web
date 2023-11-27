@@ -106,10 +106,11 @@ const membersGRPC = () => {
       const request = new MemberLoginRequest();
 
       console.log(request);
-      request.setMobilenumber(params.telephoneNo);
+      request.setMobilenumberoremailaddress(
+        params.telephoneNo ? params.telephoneNo : params.email
+      );
       request.setPin(params.pin);
       request.setAccounttype(JMOrGGCValues[params.role]);
-
       console.log(request);
 
       return new Promise((resolve, reject) => {
