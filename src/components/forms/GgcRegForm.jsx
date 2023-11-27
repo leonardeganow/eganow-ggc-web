@@ -82,40 +82,40 @@ function GgcRegForm(props) {
     const data = props.formHandler.getValues();
 
     console.log(data);
-    // const result = await props.formHandler.trigger([
-    //   "cards",
-    //   "card_pickup_location",
-    //   "display_name_on_card",
+    const result = await props.formHandler.trigger([
+      "cards",
+      "card_pickup_location",
+      "display_name_on_card",
 
-    //   "country",
-    //   "gender",
-    //   "fullName",
-    // ]);
+      "country",
+      "gender",
+      "fullName",
+    ]);
 
-    // if (!result) {
-    //   return;
-    // }
+    if (!result) {
+      return;
+    }
 
-    // setIsLoading(true);
-    // try {
-    //   const response = await registerMember(data);
-    //   // toast(response.message);
-    //   setIsLoading(false);
-    //   props.formHandler.reset(data);
-    //   props.formHandler.setValue("memberId", response.memberid);
-    //   console.log(response);
-    //   if (response.status) {
-    //     toast.success(response.message);
+    setIsLoading(true);
+    try {
+      const response = await registerMember(data);
+      // toast(response.message);
+      setIsLoading(false);
+      props.formHandler.reset(data);
+      props.formHandler.setValue("memberId", response.memberid);
+      console.log(response);
+      if (response.status) {
+        toast.success(response.message);
 
-    //     props.handleNext(1);
-    //   } else {
-    //     toast.error(response.message);
-    //   }
-    // } catch (error) {
-    //   setIsLoading(false);
-    //   props.formHandler.reset(data);
-    //   console.error(error);
-    // }
+        props.handleNext(1);
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      props.formHandler.reset(data);
+      console.error(error);
+    }
   };
 
   const cardDisplay = props.cardTypeValues?.filter(

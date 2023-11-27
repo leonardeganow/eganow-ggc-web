@@ -55,6 +55,8 @@ function PhoneNumberForm(props) {
         props.formHandler.setValue("userStatus", response.message);
 
         // props.formHandler.setValue("telephoneNo", data.telephoneNo);
+        setShowCountries(false);
+
         setShowInput(false);
         setCondition(false);
         setShowEnterPin(true);
@@ -73,12 +75,12 @@ function PhoneNumberForm(props) {
         setShowEnterPin(false);
         setCondition(true);
         setShowCountries(false);
-      } else {
-        setShowInput(false);
-        setCondition(false);
-        setShowEnterPin(true);
-        setShowCountries(false);
       }
+      // } else {
+      //   setShowInput(false);
+      //   setCondition(false);
+      //   setShowEnterPin(true);
+      // }
     } catch (error) {
       props.formHandler.reset(newData);
       setIsLoading(false);
@@ -237,37 +239,40 @@ function PhoneNumberForm(props) {
   return (
     <div>
       {showCountries && (
-        <div>
-          <h6 htmlFor="" className="mb-1">
-            Select your Country{" "}
-          </h6>
+        <div className=" w-100 d-flex justify-content-center pb-4">
+          <div>
+            <h1 className="pb-3"> Select your country</h1>
+            {/* <h6 htmlFor="" className="mb-1">
+              Select your Country{" "}
+            </h6> */}
 
-          <select
-            {...props.formHandler.register("country")}
-            className={`form-select p-3 `}
-            // onChange={() => {
-            //   // setShowCountries(false)
-            //   if (props.formHandler.getValues("country") === "GHA0233") {
-            //     setCondition(true);
-            //   }
+            <select
+              {...props.formHandler.register("country")}
+              className={`form-select p-3 `}
+              // onChange={() => {
+              //   // setShowCountries(false)
+              //   if (props.formHandler.getValues("country") === "GHA0233") {
+              //     setCondition(true);
+              //   }
 
-            //   // alert("hi");
-            // }}
-          >
-            <option value="default" selected>
-              Select your Country
-            </option>
-            <option value="GHA0233">Ghana</option>
-            <option value="other">other</option>
+              //   // alert("hi");
+              // }}
+            >
+              <option value="default" selected>
+                Select your Country
+              </option>
+              <option value="GHA0233">Ghana</option>
+              <option value="other">other</option>
 
-            {/* {country?.map((counti, i) => {
-              return (
-                <option key={i} value={counti.countrycode}>
-                  {counti.countryname}
-                </option>
-              );
-            })} */}
-          </select>
+              {/* {country?.map((counti, i) => {
+                return (
+                  <option key={i} value={counti.countrycode}>
+                    {counti.countryname}
+                  </option>
+                );
+              })} */}
+            </select>
+          </div>
         </div>
       )}
       {/* {
@@ -282,13 +287,10 @@ function PhoneNumberForm(props) {
       <div>
         {showInput && (
           <form>
-            <h1 className="text-center">
-              {/* "Create new pin" :  */}
-              Phone Number
-            </h1>
+            <h3 className="text-center">Phone Number</h3>
             <p className="text-center">
               {/* "Create pin to protect the card you will acquire" */}
-              Enter your phone number below to view your good governance card or
+              Enter your phone number to view your good governance card or
               register
             </p>
             <div className="text-center ">
@@ -346,7 +348,7 @@ function PhoneNumberForm(props) {
         )}{" "}
         {showEmail && (
           <form>
-            <h1 className="text-center">Email</h1>
+            <h3 className="text-center">Email</h3>
             <p className="text-center">
               Enter your email below to view your good governance card or
               register
@@ -355,15 +357,14 @@ function PhoneNumberForm(props) {
               <div style={{ width: "100%" }} className="   ">
                 <div className=" w-100 ">
                   <input
+                    required
                     type="email"
                     // style={{ width: "100%" }}
                     {...props.formHandler.register("email")}
-                    placeholder="Telephone Number"
+                    placeholder="Email"
                     className={`form-control w-100 ${
                       props.formHandler.formState.errors.email
                         ? "is-invalid"
-                        : props.formHandler.formState.isDirty
-                        ? "is-valid"
                         : ""
                     }  outline-none p-3`}
                   />
@@ -429,8 +430,13 @@ function PhoneNumberForm(props) {
           <div className="d-flex justify-content-between ">
             <button
               onClick={() => {
-                setCondition(false);
-                setShowInput(true);
+                if (props.formHandler.getValues("email")) {
+                  setCondition(false);
+                  setShowEmail(true);
+                } else {
+                  setCondition(false);
+                  setShowInput(true);
+                }
               }}
               type="button"
               className="btn btn-success mt-4"
@@ -572,6 +578,10 @@ function PhoneNumberForm(props) {
             <div className="d-flex justify-content-between mt-4">
               <button
                 onClick={() => {
+                  if (props.formHandler.getValues("email")) {
+                    setShowEnterPin(false);
+                    setShowEmail(true);
+                  }
                   setShowInput(true);
                   setShowEnterPin(false);
                 }}

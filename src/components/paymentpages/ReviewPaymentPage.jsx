@@ -34,6 +34,7 @@ const ReviewPaymentPage = (props) => {
 
     try {
       const response = await postNewTransaction(newData);
+      console.log(response);
       setIsLoading(false);
       if (response.status === true) {
         props.handleNext(1);
