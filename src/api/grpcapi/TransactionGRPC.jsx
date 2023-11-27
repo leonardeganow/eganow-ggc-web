@@ -1,6 +1,6 @@
 import { METADATA, URL } from "../../utils/constants";
 import { TransactionSvcClient } from "../../protos/gen/Transaction_grpc_web_pb";
-import { PostDataRequest, KycRequest } from "../../protos/gen/Transaction_pb";
+import { PostDataRequest, KycRequest,TransactionRequest } from "../../protos/gen/Transaction_pb";
 
 function TransactionAPI() {
   const client = new TransactionSvcClient(URL, null, null); //initalizes the client to use
@@ -86,7 +86,28 @@ function TransactionAPI() {
   //     });
   //   }
 
-  return { postNewTransaction, getKyc };
+
+  function getTransactions(data) {
+    const request = new TransactionRequest(); //initalize request
+    request.setEnddate()
+    request.setMemberid()
+    request.setMembertype()
+    request.setStartdate()
+
+    return new Promise((resolve, reject) => {
+      client.getMemberTransactions(request, METADATA, (err, resp) => {
+        if (err) {
+          reject(err);
+        }
+        const result = resp?.toObject();
+        resolve(result);
+      });
+    });
+  }
+
+
+
+  return { postNewTransaction, getKyc,getTransactions };
 }
 
 export default TransactionAPI;

@@ -123,7 +123,7 @@ function PhoneNumberForm(props) {
       return;
     }
     const num = props.formHandler.getValues("telephoneNo");
-    condition;
+    // condition;
     const updatedData = {
       ...data,
       mobileNo: `${233}${num}`,
