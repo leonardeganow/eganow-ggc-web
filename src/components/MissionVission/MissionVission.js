@@ -193,17 +193,18 @@ const MissionVission = (props) => {
             ></span>
           </div>
         ) : (
-          <div onClick={() => setOpen(true)} className="election-mission-wrap">
+          <div className="election-mission-wrap">
             <div className="row">
               {cardTypeValues?.map((card, i) => (
                 <div
-                  onClick={() =>
+                  onClick={() => {
+                    setOpen(true);
                     handleCardGet(
                       card.cardtypename,
                       card.cardamount,
                       card.cardtypeid
-                    )
-                  }
+                    );
+                  }}
                   className="col-lg-4 col-md-4 col-sm-6 col-12"
                   key={card.cardtypeid}
                 >

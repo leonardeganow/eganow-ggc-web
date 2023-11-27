@@ -56,6 +56,7 @@ function PhoneNumberForm(props) {
 
         // props.formHandler.setValue("telephoneNo", data.telephoneNo);
         setShowCountries(false);
+        setShowEmail(false);
 
         setShowInput(false);
         setCondition(false);
