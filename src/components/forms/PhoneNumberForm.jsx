@@ -222,9 +222,9 @@ function PhoneNumberForm(props) {
   React.useEffect(() => {
     // setShowEmail(false);
     console.log(props.formHandler.getValues());
-    // handleGetOtherCountries();
+    handleGetOtherCountries();
     props.formHandler.setValue("amount", info.amount);
-    if (props.formHandler.watch("country") === "GHA0233") {
+    if (props.formHandler.watch("country") === "GH0233") {
       setShowInput(true);
       setShowEmail(false);
     } else if (props.formHandler.watch("country") === "default") {
@@ -261,16 +261,16 @@ function PhoneNumberForm(props) {
               <option value="default" selected>
                 Select your Country
               </option>
-              <option value="GHA0233">Ghana</option>
-              <option value="other">other</option>
+              {/* <option value="GHA0233">Ghana</option> */}
+              {/* <option value="other">other</option> */}
 
-              {/* {country?.map((counti, i) => {
+              {country?.map((counti, i) => {
                 return (
                   <option key={i} value={counti.countrycode}>
                     {counti.countryname}
                   </option>
                 );
-              })} */}
+              })}
             </select>
           </div>
         </div>
