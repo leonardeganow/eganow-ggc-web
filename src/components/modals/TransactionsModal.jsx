@@ -126,7 +126,7 @@ export default function TransactionsModal({ open, handleClose }) {
           <div>
             {/* if show login is true show the login page else hide */}
             {showLogin == true && (
-              <div>
+              <div className="">
                 <h1 className="text-center">Login</h1>
                 <p className="text-center">Login to view transactions</p>
                 <form
@@ -192,7 +192,7 @@ export default function TransactionsModal({ open, handleClose }) {
                   {/* SELECT START AND END DATES */}
                   <form
                     onSubmit={handleSubmit(onSubmitTransaction)}
-                    className="d-flex flex-wrap gap-2 my-md-3"
+                    className="d-flex flex-wrap gap-2 my-md-3 justify-content-center py-2"
                   >
                     <div>
                       <label htmlFor="">Start Date</label> <br />
@@ -231,7 +231,7 @@ export default function TransactionsModal({ open, handleClose }) {
                   {showTable == false ? (
                     ""
                   ) : (
-                    <TableContainer component={Paper}>
+                    <TableContainer component={Paper} className="bg-white py-3" style={{height:"450px", overflow:"auto"}}>
                       <Table aria-label="simple table">
                         <TableHead>
                           <TableRow>

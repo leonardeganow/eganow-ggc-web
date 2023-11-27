@@ -84,7 +84,7 @@ const Header = (props) => {
                         Get GOOD GOVERNANCE CARD
                       </Link>
                     </li>
-                    <li className="menu-item-has-children">
+                    {/* <li className="menu-item-has-children">
                       <Link
                         to="donate"
                         smooth={true}
@@ -93,22 +93,7 @@ const Header = (props) => {
                       >
                         Donate
                       </Link>
-                      {/* <ul className="sub-menu">
-                        <li>
-                          <Link onClick={ClickHandler} to="/events">
-                            EVENTS
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            onClick={ClickHandler}
-                            to="/event-single/Support-for-Womans"
-                          >
-                            EVENTS single
-                          </Link>
-                        </li>
-                      </ul> */}
-                    </li>
+                    </li> */}
                     {/* <li className="menu-item-has-children">
                       <Link onClick={ClickHandler} to="/">
                         Pages

@@ -17,7 +17,7 @@ const HomePage = () => {
       <Hero />
       <Features />
       {/* <About /> */}
-      <CampaignSection />
+      {/* <CampaignSection /> */}
       <MissionVission />
       {/* <EventSection /> */}
       {/* <BlogSection /> */}

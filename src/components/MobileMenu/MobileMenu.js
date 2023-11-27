@@ -249,14 +249,14 @@ const MobileMenu = () => {
             <li className="active text-white  text-center my-3">Get GGC</li>
           </Link>
 
-          <Link
+          {/* <Link
             to="donate"
             smooth={true}
             duration={500}
             onClick={() => setMenuState(!menuActive)}
           >
             <li className="active text-white  text-center">Donate</li>
-          </Link>
+          </Link> */}
         </ul>
       </div>
 
