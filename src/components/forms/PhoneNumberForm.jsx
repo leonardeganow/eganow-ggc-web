@@ -512,7 +512,11 @@ function PhoneNumberForm(props) {
                 type="button"
                 className="btn btn-success"
               >
-                back
+                {isLoading ? (
+                  <span className="spinner-border spinner-border-sm mr-1"></span>
+                ) : (
+                  "continue"
+                )}
               </button>
               <button
                 type="button"
@@ -524,6 +528,7 @@ function PhoneNumberForm(props) {
                 // }
                 className="btn btn-success   "
                 onClick={async () => {
+                  setIsLoading(true);
                   const result = await props.formHandler.trigger("pin");
                   console.log(result);
                   if (!result) {
@@ -533,8 +538,13 @@ function PhoneNumberForm(props) {
                     try {
                       const data = props.formHandler.getValues();
                       const response = await createJmMember(data);
+                      setIsLoading(false);
+                      if (response.status === false) {
+                        toast(response.message);
+                      } else {
+                        props.handleNext(3);
+                      }
                       console.log(response);
-                      props.handleNext(3);
                     } catch (error) {
                       console.log(error);
                     }

@@ -124,7 +124,7 @@ message MemberListResponse {
 }
 
 message MemberLoginRequest {
-	string mobileNumber = 1;
+	string mobileNumberOrEmailAddress = 1;
 	string PIN = 2;
 	JMOrGGCValues accountType =3;
 	MobileOrUssd platformType = 4;

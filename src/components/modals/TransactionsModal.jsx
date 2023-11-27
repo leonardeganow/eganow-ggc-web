@@ -44,7 +44,7 @@ export default function TransactionsModal({ open, handleClose }) {
 
   }
 
-  getMemberTransaction()
+  // getMemberTransaction()
 
   //login member
   const login = async (data) => {

@@ -1,6 +1,10 @@
 import { METADATA, URL } from "../../utils/constants";
 import { TransactionSvcClient } from "../../protos/gen/Transaction_grpc_web_pb";
-import { PostDataRequest, KycRequest,TransactionRequest } from "../../protos/gen/Transaction_pb";
+import {
+  PostDataRequest,
+  KycRequest,
+  TransactionRequest,
+} from "../../protos/gen/Transaction_pb";
 
 function TransactionAPI() {
   const client = new TransactionSvcClient(URL, null, null); //initalizes the client to use
@@ -8,6 +12,7 @@ function TransactionAPI() {
   // FUNCTION TO POST A NEW TRANSACTION
   function postNewTransaction(data) {
     const request = new PostDataRequest(); //initalize request
+    console.log(request);
     // SETTING REQUEST BODY TO POST
     request.setMobileno(data.telephoneNo);
     request.setMemberid(data.memberId);
@@ -21,8 +26,7 @@ function TransactionAPI() {
     request.setCvv(data.cvv);
     request.setExpirydatemonth(data.expiryDateMonth);
     request.setExpirydateyear(data.expiryDateYear);
-    
-    console.log(request);
+    request.setChannel("WEB");
 
     return new Promise((resolve, reject) => {
       client.postDataToTransaction(request, METADATA, (err, resp) => {
@@ -86,13 +90,12 @@ function TransactionAPI() {
   //     });
   //   }
 
-
   function getTransactions(data) {
     const request = new TransactionRequest(); //initalize request
-    request.setEnddate()
-    request.setMemberid()
-    request.setMembertype()
-    request.setStartdate()
+    request.setEnddate();
+    request.setMemberid();
+    request.setMembertype();
+    request.setStartdate();
 
     return new Promise((resolve, reject) => {
       client.getMemberTransactions(request, METADATA, (err, resp) => {
@@ -105,9 +108,7 @@ function TransactionAPI() {
     });
   }
 
-
-
-  return { postNewTransaction, getKyc,getTransactions };
+  return { postNewTransaction, getKyc, getTransactions };
 }
 
 export default TransactionAPI;

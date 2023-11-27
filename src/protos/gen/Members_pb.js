@@ -3652,7 +3652,7 @@ proto.Members.MemberLoginRequest.prototype.toObject = function(opt_includeInstan
  */
 proto.Members.MemberLoginRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    mobilenumber: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    mobilenumberoremailaddress: jspb.Message.getFieldWithDefault(msg, 1, ""),
     pin: jspb.Message.getFieldWithDefault(msg, 2, ""),
     accounttype: jspb.Message.getFieldWithDefault(msg, 3, 0),
     platformtype: jspb.Message.getFieldWithDefault(msg, 4, 0)
@@ -3694,7 +3694,7 @@ proto.Members.MemberLoginRequest.deserializeBinaryFromReader = function(msg, rea
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setMobilenumber(value);
+      msg.setMobilenumberoremailaddress(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
@@ -3737,7 +3737,7 @@ proto.Members.MemberLoginRequest.prototype.serializeBinary = function() {
  */
 proto.Members.MemberLoginRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getMobilenumber();
+  f = message.getMobilenumberoremailaddress();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -3769,10 +3769,10 @@ proto.Members.MemberLoginRequest.serializeBinaryToWriter = function(message, wri
 
 
 /**
- * optional string mobileNumber = 1;
+ * optional string mobileNumberOrEmailAddress = 1;
  * @return {string}
  */
-proto.Members.MemberLoginRequest.prototype.getMobilenumber = function() {
+proto.Members.MemberLoginRequest.prototype.getMobilenumberoremailaddress = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -3781,7 +3781,7 @@ proto.Members.MemberLoginRequest.prototype.getMobilenumber = function() {
  * @param {string} value
  * @return {!proto.Members.MemberLoginRequest} returns this
  */
-proto.Members.MemberLoginRequest.prototype.setMobilenumber = function(value) {
+proto.Members.MemberLoginRequest.prototype.setMobilenumberoremailaddress = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
