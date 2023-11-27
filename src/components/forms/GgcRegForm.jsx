@@ -118,6 +118,8 @@ function GgcRegForm(props) {
     }
   };
 
+  console.log(props.formHandler.getValues());
+
   const cardDisplay = props.cardTypeValues?.filter(
     (params, i) => params.cardtypeid === info.cardid
   );
@@ -165,7 +167,7 @@ function GgcRegForm(props) {
             </div>
 
             <div className="d-flex gap-2">
-              <div className="w-50">
+              <div className="w-100">
                 <h6 htmlFor="" className="mb-1">
                   Gender
                 </h6>
@@ -189,7 +191,7 @@ function GgcRegForm(props) {
                 </select>
               </div>
 
-              <div className="w-50">
+              {/* <div className="w-50">
                 <h6 htmlFor="" className="mb-1">
                   Select country{" "}
                 </h6>
@@ -209,7 +211,7 @@ function GgcRegForm(props) {
                   <option value="GH0233">Ghana</option>
                   <option value="Other">other</option>
                 </select>
-              </div>
+              </div> */}
             </div>
 
             {props.formHandler.watch("country") === "Other" && (
@@ -235,7 +237,7 @@ function GgcRegForm(props) {
 
             <div className="d-flex gap-2">
               <div className="w-50">
-                {props.formHandler.watch("country") === "GH0233" ? (
+                {props.formHandler.getValues("country") === "GH0233" && (
                   <div>
                     <h6 htmlFor="" className="mb-1">
                       Select regions{" "}
@@ -249,9 +251,7 @@ function GgcRegForm(props) {
                           : ""
                       }`}
                     >
-                      <option value="" disabled selected hidden>
-                        Regions
-                      </option>
+                      <option>Regions</option>
 
                       {regions.map((region, i) => {
                         return (
@@ -262,34 +262,11 @@ function GgcRegForm(props) {
                       })}
                     </select>
                   </div>
-                ) : props.formHandler.watch("country") === "Other" ? (
-                  <div>
-                    <h6 htmlFor="" className="mb-1">
-                      Select other Countries{" "}
-                    </h6>
-
-                    <select
-                      {...props.formHandler.register("otherCountry")}
-                      className={`form-select p-3 `}
-                    >
-                      <option value="">Other</option>
-
-                      {otherCountries?.map((country, i) => {
-                        return (
-                          <option key={i} value={country.countrycode}>
-                            {country.countryname}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </div>
-                ) : (
-                  ""
                 )}
               </div>
               <div className="w-50">
                 {props.formHandler.watch("country") === "GH0233" &&
-                  props.formHandler.watch("regions") && (
+                  props.formHandler.watch("regions") !== "other" && (
                     <div>
                       <h6 htmlFor="" className="mb-1">
                         Select constituencies{" "}
@@ -303,9 +280,7 @@ function GgcRegForm(props) {
                             : ""
                         }`}
                       >
-                        <option value="" disabled selected hidden>
-                          constituencies
-                        </option>
+                        <option>constituencies</option>
 
                         {filteredList.map((constituency, i) => {
                           return (
