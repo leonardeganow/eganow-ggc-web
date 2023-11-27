@@ -60,25 +60,34 @@ const Footer = (props) => {
                 <p>We led with integrity. We’ll do even better again.</p>
                 <ul>
                   <li>
-                    <Link onClick={ClickHandler} to="/">
+                    <Link
+                      onClick={ClickHandler}
+                      to="https://www.facebook.com/ndcgreenarmy"
+                    >
                       <i className="ti-facebook"></i>
                     </Link>
                   </li>
                   <li>
-                    <Link onClick={ClickHandler} to="/">
+                    <Link
+                      onClick={ClickHandler}
+                      to="https://twitter.com/ndcgreenarmy"
+                    >
                       <i className="ti-twitter-alt"></i>
                     </Link>
                   </li>
                   <li>
-                    <Link onClick={ClickHandler} to="/">
+                    <Link
+                      onClick={ClickHandler}
+                      to="https://www.instagram.com/ndcgreenarmy/"
+                    >
                       <i className="ti-instagram"></i>
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link onClick={ClickHandler} to="/">
                       <i className="ti-google"></i>
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>
