@@ -13,6 +13,7 @@ service CustomerSetupsSvc {
 	rpc GetListOfAgents(EmptySetupRequest) returns (ListOfAgentsResponse);
 	rpc GetListOfAgeRange(EmptySetupRequest) returns (ListOfAgeRanges);
 	rpc GetPaymentMethods(EmptySetupRequest) returns (ListOfPaymentMethods);
+	rpc GetSetupCountry(EmptySetupRequest) returns (ListOfSetupCountryResponse);
 }
 
 message EmptySetupRequest {
@@ -99,4 +100,14 @@ message PaymentMethod {
 
 message ListOfPaymentMethods {
 	repeated PaymentMethod payMethodList = 1;
+}
+
+message SetupCountry {
+	string countryCode = 1;
+	string countryName = 2;
+	string countryDialCode = 3;
+}
+
+message ListOfSetupCountryResponse {
+	 repeated SetupCountry countryList = 1;
 }

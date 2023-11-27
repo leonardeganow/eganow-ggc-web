@@ -14,10 +14,11 @@ const membersGRPC = () => {
   function checkIfUserExist(param) {
     try {
       const request = new MemberExistRequest();
-      request.setMobilenumber(param.telephoneNo);
+      request.setMobilenumberoremailaddress(
+        param.telephoneNo ? param.telephoneNo : param.email
+      );
       request.setMembertype(JMOrGGCValues[param.role]);
-      console.log(param);
-
+      console.log(request);
       return new Promise((resolve, reject) => {
         client.checkIfMemberExist(request, METADATA, (err, response) => {
           if (err) {
@@ -40,10 +41,12 @@ const membersGRPC = () => {
       // setting request body values
       request.setFullname(params.fullName);
       request.setMobilenumber(params.telephoneNo);
-      request.setEmailaddress(null);
+      request.setEmailaddress(params.email);
       request.setGender(params.gender);
       request.setAgerageid(params.ageRange);
-      request.setCountryofresidence(params.country);
+      request.setCountrycode(
+        params.country == "Other" ? params.otherCountry : params.country
+      );
       request.setRegionid(params.regions);
       request.setConstituencyid(params.constituencies);
       request.setIndustry(params.industry);
@@ -57,7 +60,7 @@ const membersGRPC = () => {
       request.setCardpickuplocation(params.card_pickup_location);
       request.setCardtypeid(params.cards);
       // request.setAccountcreationstatus(null);
-
+      console.log(request);
       return new Promise((resolve, reject) => {
         client.createMember(request, METADATA, (err, response) => {
           console.log(request);
@@ -105,7 +108,9 @@ const membersGRPC = () => {
       console.log(request);
       request.setMobilenumber(params.telephoneNo);
       request.setPin(params.pin);
-      // console.log(params);
+      request.setAccounttype(JMOrGGCValues[params.role]);
+
+      console.log(request);
 
       return new Promise((resolve, reject) => {
         client.loginMember(request, METADATA, (err, response) => {

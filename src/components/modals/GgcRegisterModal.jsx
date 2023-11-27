@@ -21,7 +21,7 @@ const style = {
   boxShadow: "40px",
   // maxHeight: "85%",
   // overflowY: "scroll",
-  borderRadius: "0.25rem",
+  borderRadius: "1rem",
 };
 function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
   const [btnOpen, setBtnOpen] = React.useState(false);
@@ -99,6 +99,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
     telephoneNo: "",
     otp: "",
     pin: "",
+    fullName: "",
     userStatus: "",
     confirmPin: "",
     role: "",
@@ -108,6 +109,8 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
     memberId: "",
     ndcCardNo: "",
     transType: "",
+    constituencies: "other",
+    regions: "other",
     plan: "",
     momonumber: "",
     momoname: "",

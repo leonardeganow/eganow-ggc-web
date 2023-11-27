@@ -40,11 +40,6 @@ function ChoosePayMethod(props) {
     props.handleNext(1);
   };
 
-  // const handleMomo = () => {
-  //   const pin = props.formHandler.getValues();
-  //   console.log(pin);
-  // };
-
   let pMethod;
   const getpayMethodsHandler = async () => {
     try {
@@ -67,7 +62,6 @@ function ChoosePayMethod(props) {
     props.formHandler.setValue("cardId", info.cardid);
     props.formHandler.setValue("plan", info.cardType);
     props.formHandler.setValue("paymentMethod", "momo");
-    // props.formHandler.setValue("");
   }, []);
 
   const watchMomoId = props.formHandler.watch("paymentMethodId");
@@ -83,8 +77,11 @@ function ChoosePayMethod(props) {
         setLoading(false);
         props.formHandler.setValue("momoname", response.message);
         props.formHandler.setValue("nameOnPaymentCard", response.message);
+<<<<<<< HEAD
       } else {
-        toast;
+        // toast;
+=======
+>>>>>>> 129b661eb04dd921a7a60244c459f24462effa29
       }
     } catch (error) {
       console.log(error);
@@ -122,7 +119,7 @@ function ChoosePayMethod(props) {
                 setShowMomo(true);
                 setShowCard(false);
               }}
-              className={` p-3 d-flex gap-2 align-items-center ${
+              className={` p-md-3 p-2 d-flex gap-2 align-items-center ${
                 showMomo ? "bg-success text-white" : " text-success"
               }`}
             >
@@ -132,7 +129,7 @@ function ChoosePayMethod(props) {
             </div>
             <div
               role="button"
-              className={` p-3 d-flex gap-2 align-items-center ${
+              className={` p-md-3 p-2 d-flex gap-2 align-items-center ${
                 showCard ? "bg-success text-white" : " text-success"
               }`}
               onClick={() => {
@@ -177,7 +174,7 @@ function ChoosePayMethod(props) {
                 <h6>Phone number</h6>
               </label>
               <div className="d-flex gap-2">
-                <select className="w-25  p-2 form-select" name="" id="">
+                <select className="w-50  p-2 form-select" name="" id="">
                   <option value="" selected>
                     🇬🇭 +233
                   </option>
@@ -197,13 +194,6 @@ function ChoosePayMethod(props) {
                   }`}
                 />{" "}
               </div>
-              {/* <PhoneInput
-                className=""
-                value={phone}
-                onChange={(phone) => setPhone(phone)}
-                defaultCountry="gh"
-                countries={countries}
-              /> */}
             </div>
           </div>
 

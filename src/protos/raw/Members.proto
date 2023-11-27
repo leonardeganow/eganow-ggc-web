@@ -28,7 +28,7 @@ message GetMembersRequest {
 }
 
 message MemberExistRequest {
-	 string mobileNumber = 1;
+	 string mobileNumberOrEmailAddress = 1;
 	 JMOrGGCValues memberType = 2; 
 
 }
@@ -63,6 +63,7 @@ message MemberRequest {
 	string cardPickUpLocation =17;
 	string cardTypeId = 18;
 	AccountCreationStatus accountCreationStatus = 19;
+	string countryCode = 20;
 }
 
 message MemberUssdRequest {

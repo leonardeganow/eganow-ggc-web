@@ -23,6 +23,24 @@ const customerSetupsGRPC = () => {
     }
   };
 
+  const getOtherCountries = () => {
+    try {
+      return new Promise((resolve, reject) => {
+        const request = new EmptySetupRequest();
+        client.getSetupCountry(request, METADATA, (err, response) => {
+          if (err) {
+            reject(err);
+          }
+          const result = response.toObject();
+          //   console.log(result);
+          resolve(result);
+        });
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const getConstituencies = () => {
     try {
       return new Promise((resolve, reject) => {
@@ -84,6 +102,7 @@ const customerSetupsGRPC = () => {
     getRegions,
     getAgeRange,
     getPayment,
+    getOtherCountries,
   };
 };
 
