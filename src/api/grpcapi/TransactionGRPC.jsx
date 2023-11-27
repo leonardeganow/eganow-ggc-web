@@ -90,12 +90,14 @@ function TransactionAPI() {
   //     });
   //   }
 
+
+  // FUNCTION TO GET TRANSACTIONS
   function getTransactions(data) {
     const request = new TransactionRequest(); //initalize request
-    request.setEnddate();
-    request.setMemberid();
-    request.setMembertype();
-    request.setStartdate();
+    request.setEnddate(data.endDate)
+    request.setMemberid(data.memberid)
+    request.setMembertype(data.role)
+    request.setStartdate(data.startDate)
 
     return new Promise((resolve, reject) => {
       client.getMemberTransactions(request, METADATA, (err, resp) => {

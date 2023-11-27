@@ -111,7 +111,6 @@ const membersGRPC = () => {
       );
       request.setPin(params.pin);
       request.setAccounttype(JMOrGGCValues[params.role]);
-
       console.log(request);
 
       return new Promise((resolve, reject) => {
