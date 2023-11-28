@@ -13,6 +13,7 @@ import platinum from "../../images/cardImages/Platinum_105319.png";
 import prestige from "../../images/cardImages/prestige_105320.png";
 import silver from "../../images/cardImages/Silver_105322.png";
 import standard from "../../images/cardImages/Standard_105323.png";
+import "jspdf-autotable";
 
 // MATERIAL UI FOR TABLE
 import Table from "@mui/material/Table";
@@ -26,6 +27,7 @@ import TransactionAPI from "../../api/grpcapi/TransactionGRPC";
 import { Avatar, Skeleton } from "@mui/material";
 import { IoSearchCircleSharp } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
+import { jsPDF } from "jspdf";
 
 const TransactionsTwo = (props) => {
   const { getTransactions, getTotalDonations } = TransactionAPI();
@@ -106,6 +108,7 @@ const TransactionsTwo = (props) => {
       startDate: start, //sending formated startDate
       endDate: end, //seending formated endDate
     };
+    console.log(formatedData);
     try {
       // sending api request
       const transaction = await getTransactions(formatedData);
@@ -128,16 +131,17 @@ const TransactionsTwo = (props) => {
     setValue("endDate", formatDate(formattedCurrentDate));
     setValue("startDate", formatDate(formattedLastMonthDate));
     totalDonationsHandler();
+
     onSubmitTransaction(
-      formatDate(formattedCurrentDate),
-      formatDate(formattedLastMonthDate)
+      formatDate(formattedLastMonthDate),
+      formatDate(formattedCurrentDate)
     );
   }, []);
 
   // function to search date
   function submitTransaction(startDate, endDate) {
     onSubmitTransaction(formatDate(startDate), formatDate(endDate));
-    console.log(getValues());
+    // console.log(getValues());
   }
 
   // STATUS STYLINg
@@ -197,6 +201,49 @@ const TransactionsTwo = (props) => {
   }
 
   const cardType = getValues("cardTypeId"); //store card type here
+
+  function downloadHistory() {
+    const pdf = new jsPDF();
+
+    const columns = [
+      { header: "Transaction ID", dataKey: "transactionid" },
+      { header: "Member Name", dataKey: "membername" },
+      { header: "Amount", dataKey: "amount" },
+      { header: "Status", dataKey: "status" },
+      { header: "Type", dataKey: "type" },
+      // Add more columns as needed
+    ];
+
+    pdf.autoTable({
+      head: [columns.map((column) => column.header)],
+      body: transactions.map((item) =>
+        columns.map((column) => {
+          return item[column.dataKey];
+        })
+      ),
+      startY: 20,
+    });
+
+    // transactions.forEach((item, index) => {
+    //   const xPos = 10;
+    //   const yPos = index * 40 + 20;
+
+    //   pdf.text(`Transaction ID: ${item.transactionid}`, xPos, yPos);
+    //   pdf.text(`Member Name: ${item.membername}`, xPos, yPos + 10);
+    //   pdf.text(`Amount: ${item.amount}`, xPos, yPos + 20);
+    //   pdf.text(`Status: ${item.status}`, xPos, yPos + 30);
+    //   pdf.text(`Type: ${item.type}`, xPos, yPos + 40);
+
+    //   // Add more fields as needed
+
+    //   // Add a new page for every item (optional)
+    //   // if (index < transactions.length - 1) {
+    //   //   pdf.addPage();
+    //   // }
+    // });
+
+    pdf.save("GGChistory.pdf");
+  }
 
   return (
     <div>
@@ -326,10 +373,20 @@ const TransactionsTwo = (props) => {
           </div>
           <div className="row justify-content-around my-3  align-items-center">
             <div className="col-6">
-              <button className="btn btn-danger w-100">Top Up</button>
+              <button
+                onClick={() => props.handleBack(4)}
+                className="btn btn-danger w-100"
+              >
+                Top Up
+              </button>
             </div>
             <div className="col-6">
-              <button className="btn btn-success w-100">Download</button>
+              <button
+                onClick={downloadHistory}
+                className="btn btn-success w-100"
+              >
+                Download
+              </button>
             </div>
           </div>
           {/*  */}
