@@ -43,6 +43,7 @@ const style = {
   overflow: "auto",
   maxHeight: "600px",
   borderRadius: "1rem",
+  zIndex : "1099px"
 };
 export default function TransactionsModal({ open, handleClose }) {
   const { getTransactions, getTotalDonations } = TransactionAPI();
@@ -55,6 +56,9 @@ export default function TransactionsModal({ open, handleClose }) {
   const { showReset, setShowReset } = useState(false);
   const [showTable, setShowTable] = useState(false);
   const [totalDonations, setTotalDonations] = useState(null);
+  const [startDate,setStartDate] = useState("")
+  const [endDate,setEndDate] = useState("")
+
 
   // DATE FORMATTER FUNCTION
   const formatDate = (dateString) => {
@@ -78,8 +82,8 @@ export default function TransactionsModal({ open, handleClose }) {
   const { register, handleSubmit, setValue, watch, getValues } = useForm({
     defaultValues: {
       memeberType: "",
-      startDate: formatDate(formattedLastMonthDate),
-      endDate: formatDate(formattedCurrentDate),
+      startDate: "" , //formatDate(formattedLastMonthDate),
+      endDate: "", // formatDate(formattedCurrentDate),
       memberid: "",
       cardTypeId: "",
     },
@@ -101,7 +105,7 @@ export default function TransactionsModal({ open, handleClose }) {
   }
 
   // function to get all tranactions
-  const onSubmitTransaction = async () => {
+  const onSubmitTransaction = async (start,end) => {
     const data = getValues();
     console.log(data);
     setIsLoading(true);
@@ -109,6 +113,8 @@ export default function TransactionsModal({ open, handleClose }) {
       ...data,
       // startDate: formatDate(data?.startDate), //sending formated startDate
       // endDate: formatDate(data?.endDate), //seending formated endDate
+      startDate: start, //sending formated startDate
+      endDate: end, //seending formated endDate
     };
     try {
       // sending api request
@@ -131,11 +137,14 @@ export default function TransactionsModal({ open, handleClose }) {
   useEffect(() => {
     setValue("endDate", formatDate(formattedCurrentDate));
     setValue("startDate", formatDate(formattedLastMonthDate));
-
     // onSubmitTransaction();
   }, []);
 
-  // onSubmitTransaction()
+  // function to search date
+  function submitTransaction(startDate,endDate){
+    onSubmitTransaction(formatDate(startDate),formatDate(endDate));
+    console.log(getValues())
+  }
 
   //login member
   const login = async (data) => {
@@ -154,7 +163,7 @@ export default function TransactionsModal({ open, handleClose }) {
         setCardNo(response.cardnumber);
         console.log("loginresp", response);
         toast(response.message);
-        onSubmitTransaction();
+        onSubmitTransaction(formatDate(formattedLastMonthDate), formatDate(formattedCurrentDate));
         totalDonationsHandler();
         setIsLoading(false);
       } else {
@@ -265,6 +274,7 @@ export default function TransactionsModal({ open, handleClose }) {
                     className="form-control w-100"
                     placeholder="Enter your Number or Email"
                     required
+                    
                   />
                   <input
                     type="password"
@@ -376,10 +386,12 @@ export default function TransactionsModal({ open, handleClose }) {
                               <div>
                                 <label htmlFor="">Start Date</label> <br />
                                 <input
+                                value={startDate}
                                   type="date"
                                   placeholder="End Date"
                                   className="form-control"
-                                  {...register("startDate")}
+                                  onChange={(e)=>setStartDate(e.target.value)}
+                                  // {...register("startDate")}
                                   required
                                 />
                               </div>
@@ -388,11 +400,13 @@ export default function TransactionsModal({ open, handleClose }) {
                               <div>
                                 <label htmlFor="">End Dates</label> <br />
                                 <input
+                                  value={endDate}
                                   type="date"
-                                  placeholder="Start Date"
+                                  placeholder="End Date"
                                   className="form-control"
-                                  {...register("endDate")}
+                                  // {...register("endDate")}
                                   required
+                                  onChange={(e)=>setEndDate(e.target.value)}
                                 />
                               </div>
                             </div>
@@ -401,7 +415,8 @@ export default function TransactionsModal({ open, handleClose }) {
                               style={{ paddingLeft: "10px" }}
                             >
                               <button
-                                onClick={() => onSubmitTransaction()}
+                                // onClick={() => onSubmitTransaction()}
+                                onClick={()=>submitTransaction(startDate,endDate)}
                                 style={{ marginTop: "20px" }}
                                 type="button"
                                 className="btn btn-success w-100"
