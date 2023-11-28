@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useStore from "../../formstore/formStore";
 import customerSetupsGRPC from "../../api/grpcapi/customerSetupsGRPC";
+import { RpcError } from "grpc-web";
+// import Select from "react-select";
 
 function PhoneNumberForm(props) {
   const { info, updateRoleAndCardType } = useStore();
@@ -83,10 +85,14 @@ function PhoneNumberForm(props) {
       //   setShowEnterPin(true);
       // }
     } catch (error) {
+      console.log('err', error instanceof RpcError)
       props.formHandler.reset(newData);
       setIsLoading(false);
-      if (error.message) {
-        toast.error("Please try again later");
+      if (error instanceof RpcError) {
+        toast.error("Network Error");
+        return;
+      }else{
+        toast.error("Please try again");
       }
       console.error(error);
     }
@@ -99,7 +105,7 @@ function PhoneNumberForm(props) {
       console.log(response);
       setCountry(response.countrylistList);
     } catch (error) {
-      console.log(error);
+      console.log(error.type);
     }
   }
 
@@ -215,6 +221,12 @@ function PhoneNumberForm(props) {
       }
     } catch (error) {
       setIsLoading(false);
+      if(error instanceof RpcError){
+        toast("Network Error");
+        return;
+      }else{
+        toast("Please try again");
+      }
       props.formHandler.reset(data);
       console.log(error);
     }
@@ -242,10 +254,12 @@ function PhoneNumberForm(props) {
       {showCountries && (
         <div className=" w-100 d-flex justify-content-center pb-4">
           <div>
-            <h1 className="pb-3"> Select your country</h1>
+            <h3 className="pb-3 text-center"> Select your country</h3>
             {/* <h6 htmlFor="" className="mb-1">
               Select your Country{" "}
             </h6> */}
+
+            {/* <Select options={country} /> */}
 
             <select
               {...props.formHandler.register("country")}
@@ -295,7 +309,10 @@ function PhoneNumberForm(props) {
               register
             </p>
             <div className="text-center ">
-              <div style={{ width: "100%" }} className="  d-flex  gap-4 ">
+              <div
+                style={{ width: "100%", padding: "0px 40px" }}
+                className="  d-flex    gap-4 "
+              >
                 <select
                   style={{ height: "55px", width: "90px" }}
                   className="form-select h-7  "

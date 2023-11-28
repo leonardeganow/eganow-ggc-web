@@ -67,7 +67,7 @@ const membersGRPC = () => {
           if (err) {
             reject(err);
           }
-          const result = response.toObject(); //getting an object data from the result object.
+          const result = response?.toObject(); //getting an object data from the result object.
           resolve(result);
         });
       });
@@ -92,7 +92,7 @@ const membersGRPC = () => {
           if (err) {
             reject(err);
           }
-          const result = response.toObject(); //getting an object data from the result object.
+          const result = response?.toObject(); //getting an object data from the result object.
           resolve(result);
         });
       });

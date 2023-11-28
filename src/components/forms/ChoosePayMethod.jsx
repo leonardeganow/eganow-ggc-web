@@ -61,8 +61,9 @@ function ChoosePayMethod(props) {
     props.formHandler.setValue("transType", info.role);
     props.formHandler.setValue("cardId", info.cardid);
     props.formHandler.setValue("plan", info.cardType);
-    props.formHandler.setValue("paymentMethod", "momo");
-  }, []);
+    props.formHandler.setValue("paymentMethod", isCard);
+    // props.formHandler.setValue("paymentMethod", "momo");
+  }, [isCard]);
 
   const watchMomoId = props.formHandler.watch("paymentMethodId");
   const watchMomoNumber = props.formHandler.watch("paymentCardNo");
@@ -88,6 +89,8 @@ function ChoosePayMethod(props) {
       getKycHandler();
     }
   }, [watchMomoId, watchMomoNumber]);
+
+
   return (
     <div>
       {" "}
@@ -225,7 +228,16 @@ function ChoosePayMethod(props) {
             {loading && <span>Getting your momo name...</span>}
           </div>
 
-          <div className="d-flex justify-content-end">
+          <div className="d-flex  justify-content-between">
+            <button
+              onClick={async () => {
+                props.handleBack(1);
+              }}
+              type="button"
+              className="subscribe btn btn-success btn-block shadow-sm"
+            >
+              back
+            </button>
             <button
               onClick={async () => {
                 const result = await props.formHandler.trigger([
@@ -278,6 +290,8 @@ function ChoosePayMethod(props) {
                   placeholder="Valid card number"
                   className="form-control p-md-2"
                   required
+                  type="text"
+                  maxlength="16"
                 />
                 <div className="input-group-append border-none">
                   <span className="input-group-text text-muted p-3 border-none">
@@ -386,7 +400,16 @@ function ChoosePayMethod(props) {
                 </div>
               </div>
             </div>
-            <div className="d-flex justify-content-end">
+            <div className="d-flex justify-content-between">
+              <button
+                onClick={async () => {
+                  props.handleBack(1);
+                }}
+                type="button"
+                className="subscribe btn btn-success btn-block shadow-sm"
+              >
+                back
+              </button>
               <button
                 onClick={async () => {
                   const result = await props.formHandler.trigger([

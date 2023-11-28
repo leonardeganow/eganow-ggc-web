@@ -14,7 +14,7 @@ const customerGRPC = () => {
           if (err) {
             reject(err);
           }
-          const result = response.toObject();
+          const result = response?.toObject();
           //   console.log(result);
           resolve(result);
         });

@@ -46,13 +46,13 @@ function SelectAmount(props) {
       <h1>Make payment</h1>
       <div className="py-4">
         <div className="row g-3">
-          {[10, 20, 50, 100, 150, 200, 250, 300].map((amount) => (
+          {[20000, 10000, 5000, 2000, 1000, 500, 250, 200].map((amount) => (
             <div key={amount} className="col-md-3 col-6">
               <button
                 className="btn w-100 fw-bold btn-outline-success btn-md"
                 onClick={() => handleButtonClick(amount)}
               >
-                {amount} GH
+                {amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} GH
               </button>
             </div>
           ))}

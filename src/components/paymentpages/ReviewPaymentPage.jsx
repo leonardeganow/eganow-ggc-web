@@ -128,7 +128,16 @@ const ReviewPaymentPage = (props) => {
         </div>
       </div>
 
-      <div className="d-flex justify-content-end mt-4">
+      <div className="d-flex justify-content-between mt-4">
+        <button
+          onClick={async () => {
+            props.handleBack(1);
+          }}
+          type="button"
+          className="subscribe btn btn-success btn-block shadow-sm"
+        >
+          back
+        </button>
         <button
           // style={{ width: "100px" }}
           disabled={isLoading}

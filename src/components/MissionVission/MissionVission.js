@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
-import arise from "../../images/election-mission/arise.jpg";
-import bronze from "../../images/election-mission/Bronze.jpg";
-// import freedom from "../../images/election-mission/Freedom.jpg";
-import gold from "../../images/election-mission/Gold.jpg";
-import justice from "../../images/election-mission/Justice.jpg";
-import loyalty from "../../images/election-mission/Loyalty.jpg";
-import platinum from "../../images/election-mission/Platinum.jpg";
-import pristige from "../../images/election-mission/Prestige.jpg";
-import silver from "../../images/election-mission/Silver.jpg";
-import standard from "../../images/election-mission/Standard.jpg";
-import hope from "../../images/election-mission/Hope.jpg";
+// import arise from "../../images/election-mission/arise.jpg";
+import bronze from "../../images/Bronze_Doner_card.svg";
+import freedom from "../../images/Freedom_Doner_card.svg";
+// import gold from "../../images/election-mission/Gold.jpg";
+import justice from "../../images/Justice_Doner_card.svg";
+import loyalty from "../../images/Loyalty_Doner_card.svg";
+import platinum from "../../images/Platinum_Doner_card.svg";
+import pristige from "../../images/Prestige_Doner_card.svg";
+import silver from "../../images/Silver_Doner_card.svg";
+import standard from "../../images/Standard_Doner_card.svg";
+import hope from "../../images/Hope_Doner_card.svg";
+import arise from "../../images/arise_Doner_card.svg";
 import GgcRegisterModal from "../modals/GgcRegisterModal";
 import useStore from "../../formstore/formStore";
+import gold from "../../images/Gold_Doner_card.svg";
 import CardTypeAPI from "../../api/grpcapi/cardTypeGRPC";
+import { RpcError } from "grpc-web";
+import { toast } from "react-toastify";
+import Skeleton from '@mui/material/Skeleton';
+import { Avatar } from "@mui/material";
 
 const Mission = [
   {
@@ -46,18 +52,18 @@ const Mission = [
 
   {
     id: "08",
+    mImg: freedom,
+  },
+  {
+    id: "9",
     mImg: justice,
   },
   {
-    id: "9",
-    mImg: hope,
-  },
-  {
-    id: "9",
+    id: "10",
     mImg: arise,
   },
   {
-    id: "9",
+    id: "11",
     mImg: hope,
   },
 ];
@@ -92,9 +98,16 @@ const MissionVission = (props) => {
       const response = await getCardTypes();
       if (response.cardtypesList) {
         setisLoading(false);
+      }else{
+        alert('err')
       }
       // console.log(response.cardtypesList);
       const cardsList = response.cardtypesList;
+
+      if(cardsList.length < 0){
+        alert('NO cards')
+        return;
+      }
       const newCards = cardsList.map((card, i) => {
         return { ...card, img: Mission[i]?.mImg };
       });
@@ -102,6 +115,12 @@ const MissionVission = (props) => {
       setCardTypeValues(newCards);
     } catch (error) {
       console.error(error);
+      if(error instanceof RpcError){
+        toast("Network Error");
+        return
+      }else{
+        toast("Please try again");
+      }
       // setIsError(true);
       setisLoading(false);
     }
@@ -186,11 +205,38 @@ const MissionVission = (props) => {
           </div>
         </div>
         {isLoading ? (
-          <div className=" d-flex justify-content-center">
-            <span
+          <div className=" d-flex flex-wrap justify-content-center gap-3">
+            {/* <span
               style={{ fontSize: "100px" }}
               className="spinner-border text-success  spinner-border-sm mr-1 text-center"
-            ></span>
+            ></span> */}
+  <Skeleton variant="rectangular" width={410} height={200}>
+    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
+  </Skeleton>
+  <Skeleton variant="rectangular" width={410} height={200}>
+    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
+  </Skeleton>
+  <Skeleton variant="rectangular" width={410} height={200}>
+    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
+  </Skeleton>
+  <Skeleton variant="rectangular" width={410} height={200}>
+    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
+  </Skeleton>
+  <Skeleton variant="rectangular" width={410} height={200}>
+    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
+  </Skeleton>
+  <Skeleton variant="rectangular" width={410} height={200}>
+    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
+  </Skeleton>
+  <Skeleton variant="rectangular" width={410} height={200}>
+    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
+  </Skeleton>
+  <Skeleton variant="rectangular" width={410} height={200}>
+    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
+  </Skeleton>
+  <Skeleton variant="rectangular" width={410} height={200}>
+    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
+  </Skeleton>
           </div>
         ) : (
           <div className="election-mission-wrap">
