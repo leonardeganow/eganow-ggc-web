@@ -68,6 +68,10 @@ export default function TransactionsModal({ open, handleClose }) {
       setShowTable(true);
       setTransaction(transaction.translistList); //assigning the reponse to the state
     } catch (err) {
+      if (err.message) {
+        setIsLoading(false);
+        toast("Network Error");
+      }
       console.log(err);
     }
   };
@@ -105,13 +109,13 @@ export default function TransactionsModal({ open, handleClose }) {
   function statusStyles(status) {
     switch (status) {
       case "FAILED":
-        return "bg-danger text-white p-2 rounded fw-semibold";
+        return "bg-danger text-white p-1 rounded fw-semibold";
         break;
       case "PENDING":
-        return "bg-warning text-black p-2 rounded fw-semibold";
+        return "bg-warning text-black p-1 rounded fw-semibold";
         break;
       case "SUCCESSFUL":
-        return "bg-success text-white p-2 rounded fw-semibold";
+        return "bg-success text-white p-1 rounded fw-semibold";
         break;
       default:
         return "";
@@ -130,19 +134,20 @@ export default function TransactionsModal({ open, handleClose }) {
           <div>
             {/* if show login is true show the login page else hide */}
             {showLogin == true && (
-              <div className="w-50 mx-auto">
+              <div className="mx-auto ">
                 <h1 className="text-center">Login</h1>
                 <p className="text-center">Login to view transactions</p>
                 <form
                   onSubmit={handleSubmit(login)}
-                  className="d-flex flex-column align-items-center gap-4"
+                  className="d-flex flex-column gap-4 align-items-center"
                 >
                   {/* SELECT INPUT FOR USER TO SELECT HIS MEMBER TYPE */}
                   <select
                     name=""
                     id=""
-                    className="form-control w-md-50 w-100"
+                    className="form-control w-100"
                     {...register("role")}
+                    required
                   >
                     <option value="GGC">Select Type</option>
                     <option value="GGC">Good Governance</option>
@@ -151,16 +156,17 @@ export default function TransactionsModal({ open, handleClose }) {
                   <input
                     type="text"
                     {...register("telephoneNo")}
-                    className="form-control w-md-50 w-100"
+                    className="form-control w-100"
                     placeholder="Enter your Number or Email"
                     required
                   />
                   <input
                     type="password"
                     {...register("pin")}
-                    className="form-control w-md-50 w-100"
+                    className="form-control w-100"
                     placeholder="Enter your pin"
                     required
+                    maxlength={4}
                   />
 
                   <div className="d-flex  justify-content-center w-md-50 w-100">
@@ -196,7 +202,7 @@ export default function TransactionsModal({ open, handleClose }) {
                   {/* SELECT START AND END DATES */}
                   <form
                     onSubmit={handleSubmit(onSubmitTransaction)}
-                    className="d-flex flex-wrap gap-2 my-md-3 justify-content-center py-2"
+                    className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
                   >
                     <div>
                       <label htmlFor="">Start Date</label> <br />
@@ -235,14 +241,14 @@ export default function TransactionsModal({ open, handleClose }) {
                   {showTable == false ? (
                     ""
                   ) : (
-                    <TableContainer component={Paper} className="bg-white py-3" style={{height:"450px", overflow:"auto"}}>
+                    <TableContainer component={Paper} className="bg-white py-3" style={{height:"400px", overflow:"auto"}}>
                       <Table aria-label="simple table">
                         <TableHead>
                           <TableRow>
-                            <TableCell>Date</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Amount</TableCell>
-                            <TableCell>Status</TableCell>
+                            <TableCell className="fw-bold">Date</TableCell>
+                            <TableCell className="fw-bold">Name</TableCell>
+                            <TableCell className="fw-bold text-center">Amount</TableCell>
+                            <TableCell className="fw-bold">Status</TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody className="p-3">
@@ -255,9 +261,9 @@ export default function TransactionsModal({ open, handleClose }) {
                                   {new Date(each.date).toDateString()}
                                 </TableCell>
                                 <TableCell>{each.membername}</TableCell>
-                                <TableCell>{each.amount}</TableCell>
+                                <TableCell className="text-center">GH {each.amount}</TableCell>
                                 <TableCell>
-                                  <span className={statusStyles(each.status)}>
+                                  <span className={`${statusStyles(each.status)}`}>
                                     {each.status}
                                   </span>
                                 </TableCell>
