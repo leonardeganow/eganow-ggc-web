@@ -339,7 +339,7 @@ const TransactionsTwo = (props) => {
                     props.formHandler.getValues("cardId")
                   )})`,
                   backgroundSize: "cover",
-                  // backgroundAttachment: "fixed",
+                  backgroundAttachment: "fixed",
                   backgroundPosition: "center",
                   height: "150px",
                   width: "100%",
@@ -352,7 +352,7 @@ const TransactionsTwo = (props) => {
                   style={{
                     position: "absolute",
                     bottom: "15px",
-                    left: "25px",
+                    left: "35px",
                     color: "white",
                     fontSize: "13px",
                     color: "darkgray",
@@ -364,10 +364,11 @@ const TransactionsTwo = (props) => {
                   style={{
                     position: "absolute",
                     top: "40%",
-                    left: "25px",
+                    left: "35px",
                     color: "white",
-                    letterSpacing: "4px",
+                    // letterSpacing: "1px",
                     color: "darkgray",
+                    fontSize: "14px",
                   }}
                 >
                   {props.formHandler.getValues("ndcCardNo")}
@@ -445,8 +446,8 @@ const TransactionsTwo = (props) => {
             </div>
             {/* end of search form */}
           </div>
-          <div className="row justify-content-around my-3  align-items-center">
-            <div className="col-4">
+          <div className="row my-3 align-items-center">
+            <div className="col-4 col-md-4">
               <button
                 onClick={() => props.handleBack(4)}
                 className="btn btn-danger w-100"
@@ -454,7 +455,7 @@ const TransactionsTwo = (props) => {
                 Top Up
               </button>
             </div>
-            <div className="col-4">
+            <div className="col-8 col-md-4">
               <button
                 onClick={handleDownload}
                 className="btn btn-success w-100"
@@ -462,7 +463,7 @@ const TransactionsTwo = (props) => {
                 Download card
               </button>
             </div>
-            <div className="col-4">
+            <div className="col-12 col-md-4 mt-2 mt-md-0">
               <button
                 onClick={downloadHistory}
                 className="btn btn-success w-100"
