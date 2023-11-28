@@ -14,6 +14,8 @@ import prestige from "../../images/cardImages/prestige_105320.png";
 import silver from "../../images/cardImages/Silver_105322.png";
 import standard from "../../images/cardImages/Standard_105323.png";
 import "jspdf-autotable";
+import html2canvas from "html2canvas";
+import { IoIosRefresh } from "react-icons/io";
 
 // MATERIAL UI FOR TABLE
 import Table from "@mui/material/Table";
@@ -254,6 +256,54 @@ const TransactionsTwo = (props) => {
     pdf.save("GGChistory.pdf");
   }
 
+  const handleDownload = () => {
+    const divToPrint = document.getElementById("divId"); // Replace 'divId' with the actual id of your div
+
+    html2canvas(divToPrint).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      const scaleFactor = 0.5;
+
+      const xPosition =
+        (pdf.internal.pageSize.width - pdfWidth * scaleFactor) / 2;
+      const yPosition =
+        (pdf.internal.pageSize.height - pdfHeight * scaleFactor) / 2;
+      pdf.addImage(
+        imgData,
+        "PNG",
+        xPosition,
+        yPosition,
+        pdfWidth * scaleFactor,
+        pdfHeight * scaleFactor
+      );
+
+      const heading = "My Good governance card";
+      const fontSize = 16;
+      const textWidth =
+        (pdf.getStringUnitWidth(heading) * fontSize) / pdf.internal.scaleFactor;
+      const textXPosition = (pdf.internal.pageSize.width - textWidth) / 2;
+      const textYPosition = 15; // Adjust the Y position as needed
+
+      pdf.setFontSize(fontSize);
+      pdf.text(heading, textXPosition, textYPosition);
+
+      pdf.save("output.pdf");
+    });
+  };
+
+  const refreshData = () => {
+    totalDonationsHandler();
+
+    onSubmitTransaction(
+      formatDate(formattedLastMonthDate),
+      formatDate(formattedCurrentDate)
+    );
+  };
+
   return (
     <div>
       <div className="">
@@ -267,9 +317,23 @@ const TransactionsTwo = (props) => {
           <div className="row">
             <div className="col-md-6 text-center ">
               <h6>Donated Amount</h6>
-              <h2 className="display-5 text-success">GH₵ {totalDonations}</h2>
+              <h2 className="display-5  align-items-center text-success">
+                GH₵ {totalDonations}{" "}
+                <span
+                  className="ml-2"
+                  style={{
+                    fontSize: "15px",
+                    marginLeft: "5px",
+                    cursor: "pointer",
+                  }}
+                >
+                  <IoIosRefresh onClick={refreshData} />
+                </span>
+              </h2>
+
               {/* card */}
               <div
+                id="divId"
                 style={{
                   backgroundImage: `url(${memberCards(
                     props.formHandler.getValues("cardId")
@@ -382,7 +446,7 @@ const TransactionsTwo = (props) => {
             {/* end of search form */}
           </div>
           <div className="row justify-content-around my-3  align-items-center">
-            <div className="col-6">
+            <div className="col-4">
               <button
                 onClick={() => props.handleBack(4)}
                 className="btn btn-danger w-100"
@@ -390,12 +454,20 @@ const TransactionsTwo = (props) => {
                 Top Up
               </button>
             </div>
-            <div className="col-6">
+            <div className="col-4">
+              <button
+                onClick={handleDownload}
+                className="btn btn-success w-100"
+              >
+                Download card
+              </button>
+            </div>
+            <div className="col-4">
               <button
                 onClick={downloadHistory}
                 className="btn btn-success w-100"
               >
-                Download
+                Download to pdf
               </button>
             </div>
           </div>
