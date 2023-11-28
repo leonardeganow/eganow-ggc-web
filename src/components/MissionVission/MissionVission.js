@@ -237,6 +237,7 @@ const MissionVission = (props) => {
   <Skeleton variant="rectangular" width={410} height={200}>
     <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
   </Skeleton>
+
           </div>
         ) : (
           <div className="election-mission-wrap">
