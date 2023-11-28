@@ -315,22 +315,21 @@ const TransactionsTwo = (props) => {
 
         <div className="p-3">
           <div className="row">
+            <h6 className="text-center">Donated Amount</h6>
+            <h2 className="display-5  align-items-center text-success text-center">
+              GH₵ {totalDonations}{" "}
+              <span
+                className="ml-2"
+                style={{
+                  fontSize: "15px",
+                  marginLeft: "5px",
+                  cursor: "pointer",
+                }}
+              >
+                <IoIosRefresh onClick={refreshData} />
+              </span>
+            </h2>
             <div className="col-md-6 text-center ">
-              <h6>Donated Amount</h6>
-              <h2 className="display-5  align-items-center text-success">
-                GH₵ {totalDonations}{" "}
-                <span
-                  className="ml-2"
-                  style={{
-                    fontSize: "15px",
-                    marginLeft: "5px",
-                    cursor: "pointer",
-                  }}
-                >
-                  <IoIosRefresh onClick={refreshData} />
-                </span>
-              </h2>
-
               {/* card */}
               <div
                 id="divId"
