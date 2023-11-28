@@ -13,18 +13,22 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TransactionAPI from "../../api/grpcapi/TransactionGRPC";
+import { Avatar, Skeleton } from "@mui/material";
+import { IoSearchCircleSharp } from "react-icons/io5";
+import { FaSearch } from "react-icons/fa";
 
 const style = {
   position: "relative",
   top: "54%",
   left: "50%",
   transform: "translate(-50%, -50%)",
+  height: "auto",
   width: "95vw", // Use viewport width
   maxWidth: "800px", // Set a maximum width if needed
   boxShadow: "40px",
   padding: "1rem",
-  overflowY: "auto",
-  height : "auto",
+  overflow: "auto",
+  maxHeight: "600px",
   borderRadius: "1rem",
 };
 export default function TransactionsModal({ open, handleClose }) {
@@ -92,7 +96,7 @@ export default function TransactionsModal({ open, handleClose }) {
         console.log("loginresp", response);
         toast(response.message);
         setIsLoading(false);
-      }else{
+      } else {
         toast(response.message);
         setIsLoading(false);
 
@@ -194,58 +198,103 @@ export default function TransactionsModal({ open, handleClose }) {
               if showLogin turns to false then we'll show list of transactions
              */}
             {!showLogin && (
-              <div>
-                <h1 className="text-center">Transactions</h1>
-                <p className="text-center">View your transaction</p>
+
+              <div className="">
+                <div className="">
+                  <h1 className="text-center m-0 p-0">Transactions</h1>
+                  <p className="text-center m-0 p-0">View your transaction</p>
+                  <hr />
+                </div>
 
                 <div className="p-3">
+                  <div className="row">
+                    <div className="col-md-6 text-center">
+                      <h6>Donated Amount</h6>
+                      <h2 className="display-5 text-success">GH₵ 3000</h2>
+                      {/* card */}
+                      <div className="  ">
+                        <Skeleton variant="rectangular" width={"100%"} height={150}>
+                          <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25" />
+                        </Skeleton>
+                      </div>
+                    </div>
+
+
+                    {/* search form */}
+                    <div className="col-md-6 align-self-end">
+                      <div>
+                        <form
+                          onSubmit={handleSubmit(onSubmitTransaction)}
+                          className="mt-3"
+                          // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
+                        >
+                          {/* forms cards */}
+                          <div className="row">
+                            <div className="col-5 col-md-12">
+                              <div>
+                                <label htmlFor="">Start Date</label> <br />
+                                <input
+                                  type="date"
+                                  placeholder="End Date"
+                                  className="form-control"
+                                  {...register("startDate")}
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-5 col-md-12">
+                              <div>
+                                <label htmlFor="">End Date</label> <br />
+                                <input
+                                  type="date"
+                                  placeholder="Start Date"
+                                  className="form-control"
+                                  {...register("endDate")}
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-2 col-md-12" style={{paddingLeft: "5px"}}>
+                              <button
+                              style={{marginTop: "20px"}}
+                                type="submit"
+                                className="btn btn-success w-100"
+                              >
+                                {isLoading ? (
+                                  <span className="spinner-border spinner-border-sm mr-1"></span>
+                                ) : (
+                                  <FaSearch  className=""/>
+                                )}
+                              </button>
+                            </div>
+                          </div>
+
+
+
+                        </form>
+                      </div>
+                    </div>
+                    {/* end of search form */}
+                  </div>
+                  <div className="row justify-content-around my-3  align-items-center">
+                    <div className="col-6"><button className="btn btn-danger w-100">Top Up</button></div>
+                    <div className="col-6"><button className="btn btn-success w-100">Download</button></div>
+
+                  </div>
+                  {/*  */}
                   {/* SELECT START AND END DATES */}
-                  <form
-                    onSubmit={handleSubmit(onSubmitTransaction)}
-                    className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
-                  >
-                    <div>
-                      <label htmlFor="">Start Date</label> <br />
-                      <input
-                        type="date"
-                        placeholder="End Date"
-                        className="form-control"
-                        {...register("startDate")}
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="">End Date</label> <br />
-                      <input
-                        type="date"
-                        placeholder="Start Date"
-                        className="form-control"
-                        {...register("endDate")}
-                        required
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      className="btn btn-success align-self-end"
-                    >
-                      {isLoading ? (
-                        <span className="spinner-border spinner-border-sm mr-1"></span>
-                      ) : (
-                        "Search"
-                      )}
-                    </button>
-                  </form>
+
                   {/* END OF START AND END DATE */}
 
                   {/* LISTING OUT TRANSACTIONS TABLES */}
                   {showTable == false ? (
                     ""
                   ) : (
-                    <TableContainer component={Paper} className="bg-white py-3" style={{height:"400px", overflow:"auto"}}>
+                    <TableContainer component={Paper} className=" py-3" style={{ height: "400px", overflow: "auto",backgroundColor:"#fafaff" }}>
                       <Table aria-label="simple table">
                         <TableHead>
                           <TableRow>
-                            <TableCell className="fw-bold">Date</TableCell>
+                            <TableCell className="fw-bold" style={{minWidth:"110px"}}>Date</TableCell>
                             <TableCell className="fw-bold">Name</TableCell>
                             <TableCell className="fw-bold text-center">Amount</TableCell>
                             <TableCell className="fw-bold">Status</TableCell>
