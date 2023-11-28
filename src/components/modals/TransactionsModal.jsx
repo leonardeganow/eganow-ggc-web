@@ -14,6 +14,8 @@ import platinum from "../../images/cardImages/Platinum_105319.png";
 import prestige from "../../images/cardImages/prestige_105320.png";
 import silver from "../../images/cardImages/Silver_105322.png";
 import standard from "../../images/cardImages/Standard_105323.png";
+import jsPDF from "jspdf";
+// import "jspdf-autotable";
 
 // MATERIAL UI FOR TABLE
 import Table from "@mui/material/Table";
@@ -53,7 +55,6 @@ export default function TransactionsModal({ open, handleClose }) {
   const { showReset, setShowReset } = useState(false);
   const [showTable, setShowTable] = useState(false);
   const [totalDonations, setTotalDonations] = useState(null);
-
 
   // DATE FORMATTER FUNCTION
   const formatDate = (dateString) => {
@@ -98,8 +99,6 @@ export default function TransactionsModal({ open, handleClose }) {
       console.error(error);
     }
   }
-
-
 
   // function to get all tranactions
   const onSubmitTransaction = async () => {
@@ -335,6 +334,7 @@ export default function TransactionsModal({ open, handleClose }) {
                             left: "50px",
                             color: "white",
                             fontSize: "13px",
+                            color: "darkgray",
                           }}
                         >
                           {cardName}
@@ -346,6 +346,7 @@ export default function TransactionsModal({ open, handleClose }) {
                             left: "50px",
                             color: "white",
                             letterSpacing: "4px",
+                            color: "darkgray",
                           }}
                         >
                           {cardNo}
@@ -375,7 +376,6 @@ export default function TransactionsModal({ open, handleClose }) {
                               <div>
                                 <label htmlFor="">Start Date</label> <br />
                                 <input
-                                value={getValues("startDate")}
                                   type="date"
                                   placeholder="End Date"
                                   className="form-control"
@@ -386,7 +386,7 @@ export default function TransactionsModal({ open, handleClose }) {
                             </div>
                             <div className="col-5 col-md-12">
                               <div>
-                                <label htmlFor="">End Date</label> <br />
+                                <label htmlFor="">End Dates</label> <br />
                                 <input
                                   type="date"
                                   placeholder="Start Date"
@@ -398,7 +398,7 @@ export default function TransactionsModal({ open, handleClose }) {
                             </div>
                             <div
                               className="col-2 col-md-12"
-                              style={{ paddingLeft: "5px" }}
+                              style={{ paddingLeft: "10px" }}
                             >
                               <button
                                 onClick={() => onSubmitTransaction()}
@@ -424,7 +424,10 @@ export default function TransactionsModal({ open, handleClose }) {
                       <button className="btn btn-danger w-100">Top Up</button>
                     </div>
                     <div className="col-6">
-                      <button className="btn btn-success w-100">
+                      <button
+                        onClick={handleDownloadPDF}
+                        className="btn btn-success w-100"
+                      >
                         Download
                       </button>
                     </div>
@@ -470,7 +473,9 @@ export default function TransactionsModal({ open, handleClose }) {
                             transactions.map((each, i) => (
                               <TableRow key={i}>
                                 <TableCell>
-                                  {new Date(each.date).toLocaleDateString("en-GB")}
+                                  {new Date(each.date).toLocaleDateString(
+                                    "en-GB"
+                                  )}
                                 </TableCell>
                                 <TableCell>{each.membername}</TableCell>
                                 <TableCell className="text-center">
