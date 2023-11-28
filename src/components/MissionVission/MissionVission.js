@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import arise from "../../images/election-mission/arise.jpg";
-import bronze from "../../images/election-mission/Bronze.jpg";
-// import freedom from "../../images/election-mission/Freedom.jpg";
-import gold from "../../images/election-mission/Gold.jpg";
-import justice from "../../images/election-mission/Justice.jpg";
-import loyalty from "../../images/election-mission/Loyalty.jpg";
-import platinum from "../../images/election-mission/Platinum.jpg";
-import pristige from "../../images/election-mission/Prestige.jpg";
-import silver from "../../images/election-mission/Silver.jpg";
-import standard from "../../images/election-mission/Standard.jpg";
-import hope from "../../images/election-mission/Hope.jpg";
+// import arise from "../../images/election-mission/arise.jpg";
+import bronze from "../../images/Bronze_Doner_card.svg";
+import freedom from "../../images/Freedom_Doner_card.svg";
+// import gold from "../../images/election-mission/Gold.jpg";
+import justice from "../../images/Justice_Doner_card.svg";
+import loyalty from "../../images/Loyalty_Doner_card.svg";
+import platinum from "../../images/Platinum_Doner_card.svg";
+import pristige from "../../images/Prestige_Doner_card.svg";
+import silver from "../../images/Silver_Doner_card.svg";
+import standard from "../../images/Standard_Doner_card.svg";
+import hope from "../../images/Hope_Doner_card.svg";
+import arise from "../../images/arise_Doner_card.svg";
 import GgcRegisterModal from "../modals/GgcRegisterModal";
 import useStore from "../../formstore/formStore";
+import gold from "../../images/Gold_Doner_card.svg";
 import CardTypeAPI from "../../api/grpcapi/cardTypeGRPC";
 
 const Mission = [
@@ -46,18 +48,18 @@ const Mission = [
 
   {
     id: "08",
+    mImg: freedom,
+  },
+  {
+    id: "9",
     mImg: justice,
   },
   {
-    id: "9",
-    mImg: hope,
-  },
-  {
-    id: "9",
+    id: "10",
     mImg: arise,
   },
   {
-    id: "9",
+    id: "11",
     mImg: hope,
   },
 ];
