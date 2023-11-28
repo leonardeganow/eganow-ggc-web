@@ -351,7 +351,7 @@ const TransactionsTwo = (props) => {
                   style={{
                     position: "absolute",
                     bottom: "15px",
-                    left: "35px",
+                    left: "25px",
                     color: "white",
                     fontSize: "13px",
                     color: "darkgray",
@@ -363,7 +363,7 @@ const TransactionsTwo = (props) => {
                   style={{
                     position: "absolute",
                     top: "40%",
-                    left: "35px",
+                    left: "25px",
                     color: "white",
                     letterSpacing: "3px",
                     color: "darkgray",
