@@ -4,6 +4,7 @@ import {
   PostDataRequest,
   KycRequest,
   TransactionRequest,
+  DonatedAmountRequest,
 } from "../../protos/gen/Transaction_pb";
 
 function TransactionAPI() {
@@ -30,6 +31,24 @@ function TransactionAPI() {
 
     return new Promise((resolve, reject) => {
       client.postDataToTransaction(request, METADATA, (err, resp) => {
+        if (err) {
+          reject(err);
+        }
+        const result = resp?.toObject();
+        resolve(result);
+      });
+    });
+  }
+
+  //get total transactions by member
+  function getTotalDonations(data) {
+    const request = new DonatedAmountRequest(); //initalize request
+    console.log(request);
+    request.setMemberid(data.memberid);
+    request.setMembertype(data.role);
+
+    return new Promise((resolve, reject) => {
+      client.getTotalAmountDonated(request, METADATA, (err, resp) => {
         if (err) {
           reject(err);
         }
@@ -90,14 +109,13 @@ function TransactionAPI() {
   //     });
   //   }
 
-
   // FUNCTION TO GET TRANSACTIONS
   function getTransactions(data) {
     const request = new TransactionRequest(); //initalize request
-    request.setEnddate(data.endDate)
-    request.setMemberid(data.memberid)
-    request.setMembertype(data.role)
-    request.setStartdate(data.startDate)
+    request.setEnddate(data.endDate);
+    request.setMemberid(data.memberid);
+    request.setMembertype(data.role);
+    request.setStartdate(data.startDate);
 
     return new Promise((resolve, reject) => {
       client.getMemberTransactions(request, METADATA, (err, resp) => {
@@ -110,7 +128,7 @@ function TransactionAPI() {
     });
   }
 
-  return { postNewTransaction, getKyc, getTransactions };
+  return { postNewTransaction, getKyc, getTransactions, getTotalDonations };
 }
 
 export default TransactionAPI;

@@ -15,6 +15,8 @@ service TransactionSvc {
     rpc GetMemberTransactionsForAdmin(TransAdminRequest) returns (TransactionResponse);
     rpc GetTransactionStatus(StatusRequest) returns (StatusResponse);
     rpc GetTotalAmountDonated(DonatedAmountRequest) returns (DontaedAmountResponse);
+    rpc GetCardTypeDetailsPerTransactionByMemberId(CardTypePerTransactionRequest) returns (CardTypePerTransactionResponse);
+    rpc GetTotalTransactionsDoneByAgent(TotalTransactionDoneByAgentRequest) returns (TotalTransactionDoneByAgentResponse);
 }
 
 
@@ -132,4 +134,23 @@ message StatusResponse {
     bool status = 1;
     string transStatus= 2;
     string message = 3;
+}
+
+message CardTypePerTransactionRequest {
+    string memberId = 1;
+}
+
+
+message CardTypePerTransactionResponse {
+    string cardTypeId = 1;
+    string cardTypeDescription = 2;
+    string cardTypeName = 3;
+    double totalDonation = 4;
+}
+message TotalTransactionDoneByAgentRequest {
+    string agentId = 1;
+}
+
+message TotalTransactionDoneByAgentResponse {
+    double totalAmount = 1;
 }

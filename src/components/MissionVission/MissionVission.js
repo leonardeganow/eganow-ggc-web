@@ -17,7 +17,7 @@ import gold from "../../images/Gold_Doner_card.svg";
 import CardTypeAPI from "../../api/grpcapi/cardTypeGRPC";
 import { RpcError } from "grpc-web";
 import { toast } from "react-toastify";
-import Skeleton from '@mui/material/Skeleton';
+import Skeleton from "@mui/material/Skeleton";
 import { Avatar } from "@mui/material";
 
 const Mission = [
@@ -96,16 +96,16 @@ const MissionVission = (props) => {
     // console.log("hi");
     try {
       const response = await getCardTypes();
-      if (response.cardtypesList) {
+     if (response.cardtypesList) {
         setisLoading(false);
-      }else{
-        alert('err')
+      } else {
+        alert("err");
       }
       // console.log(response.cardtypesList);
       const cardsList = response.cardtypesList;
 
-      if(cardsList.length < 0){
-        alert('NO cards')
+      if (cardsList.length < 0) {
+        alert("NO cards");
         return;
       }
       const newCards = cardsList.map((card, i) => {
@@ -115,10 +115,10 @@ const MissionVission = (props) => {
       setCardTypeValues(newCards);
     } catch (error) {
       console.error(error);
-      if(error instanceof RpcError){
+      if (error instanceof RpcError) {
         toast("Network Error");
-        return
-      }else{
+        return;
+      } else {
         toast("Please try again");
       }
       // setIsError(true);
@@ -210,34 +210,60 @@ const MissionVission = (props) => {
               style={{ fontSize: "100px" }}
               className="spinner-border text-success  spinner-border-sm mr-1 text-center"
             ></span> */}
-  <Skeleton variant="rectangular" width={410} height={200}>
-    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
-  </Skeleton>
-  <Skeleton variant="rectangular" width={410} height={200}>
-    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
-  </Skeleton>
-  <Skeleton variant="rectangular" width={410} height={200}>
-    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
-  </Skeleton>
-  <Skeleton variant="rectangular" width={410} height={200}>
-    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
-  </Skeleton>
-  <Skeleton variant="rectangular" width={410} height={200}>
-    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
-  </Skeleton>
-  <Skeleton variant="rectangular" width={410} height={200}>
-    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
-  </Skeleton>
-  <Skeleton variant="rectangular" width={410} height={200}>
-    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
-  </Skeleton>
-  <Skeleton variant="rectangular" width={410} height={200}>
-    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
-  </Skeleton>
-  <Skeleton variant="rectangular" width={410} height={200}>
-    <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" className="w-25"/>
-  </Skeleton>
-
+            <Skeleton variant="rectangular" width={410} height={200}>
+              <Avatar
+                src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg"
+                className="w-25"
+              />
+            </Skeleton>
+            <Skeleton variant="rectangular" width={410} height={200}>
+              <Avatar
+                src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg"
+                className="w-25"
+              />
+            </Skeleton>
+            <Skeleton variant="rectangular" width={410} height={200}>
+              <Avatar
+                src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg"
+                className="w-25"
+              />
+            </Skeleton>
+            <Skeleton variant="rectangular" width={410} height={200}>
+              <Avatar
+                src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg"
+                className="w-25"
+              />
+            </Skeleton>
+            <Skeleton variant="rectangular" width={410} height={200}>
+              <Avatar
+                src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg"
+                className="w-25"
+              />
+            </Skeleton>
+            <Skeleton variant="rectangular" width={410} height={200}>
+              <Avatar
+                src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg"
+                className="w-25"
+              />
+            </Skeleton>
+            <Skeleton variant="rectangular" width={410} height={200}>
+              <Avatar
+                src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg"
+                className="w-25"
+              />
+            </Skeleton>
+            <Skeleton variant="rectangular" width={410} height={200}>
+              <Avatar
+                src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg"
+                className="w-25"
+              />
+            </Skeleton>
+            <Skeleton variant="rectangular" width={410} height={200}>
+              <Avatar
+                src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg"
+                className="w-25"
+              />
+            </Skeleton>
           </div>
         ) : (
           <div className="election-mission-wrap">

@@ -90,7 +90,6 @@ function ChoosePayMethod(props) {
     }
   }, [watchMomoId, watchMomoNumber]);
 
-
   return (
     <div>
       {" "}
@@ -220,12 +219,14 @@ function ChoosePayMethod(props) {
               <h6>Registered name</h6>
             </label>
             <input
-              disabled={props.formHandler.getValues("momoname")}
+              disabled={props.formHandler.getValues("momoname") || loading}
               placeholder="Registered name"
               {...props.formHandler.register("momoname")}
               className="form-control p-2"
             />
-            {loading && <span>Getting your momo name...</span>}
+            {loading && (
+              <span className="spinner-border spinner-border-sm mr-1"></span>
+            )}
           </div>
 
           <div className="d-flex  justify-content-between">

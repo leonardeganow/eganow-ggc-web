@@ -19,7 +19,9 @@ function PaySuccess(props) {
           : "You will receive a prompt from your mobile operator to confirm."}
       </h5>
       <div className="d-flex justify-content-end my-2">
-        {/* <button className="btn btn-success"></button> */}
+        <button onClick={() => props.handleNext(1)} className="btn btn-success">
+          View transactions
+        </button>
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import ReviewPaymentPage from "../paymentpages/ReviewPaymentPage";
 import useStore from "../../formstore/formStore";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import TransactionsTwo from "../forms/TransactionsTwo";
 
 const style = {
   position: "relative",
@@ -100,6 +101,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
     otp: "",
     pin: "",
     fullName: "",
+    country: "GH0233",
     userStatus: "",
     confirmPin: "",
     role: "",
@@ -184,6 +186,15 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
             formHandler={formHandler}
             setBtnOpen={setBtnOpen}
             handleNext={handleNext}
+          />
+        );
+
+      case 7:
+        return (
+          <TransactionsTwo
+            handleNext={handleNext}
+            handleBack={handleBack}
+            formHandler={formHandler}
           />
         );
       default:

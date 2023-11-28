@@ -85,14 +85,14 @@ const Header = (props) => {
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        to="#"
+                      <MyLink
+                        to="/agentlogin"
                         smooth={true}
                         duration={500}
                         onClick={ClickHandler}
                       >
                         AGENT
-                      </Link>
+                      </MyLink>
                     </li>
                     {/* <li className="menu-item-has-children">
                       <Link
