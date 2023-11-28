@@ -57,6 +57,7 @@ export default function TransactionsModal({ open, handleClose }) {
     return `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`;
   };
 
+
   // function to get all tranactions
   const onSubmitTransaction = async (data) => {
     setIsLoading(true);
@@ -152,6 +153,7 @@ export default function TransactionsModal({ open, handleClose }) {
                     className="form-control w-100"
                     {...register("role")}
                     required
+                    hidden
                   >
                     <option value="GGC">Select Type</option>
                     <option value="GGC">Good Governance</option>
@@ -208,9 +210,9 @@ export default function TransactionsModal({ open, handleClose }) {
 
                 <div className="p-3">
                   <div className="row">
-                    <div className="col-md-6 text-center">
-                      <h6>Donated Amount</h6>
-                      <h2 className="display-5 text-success">GH₵ 3000</h2>
+                    <div className="col-md-6 text-center text-md-start">
+                      <h6 className="text-muted">Donated Amount</h6>
+                      <h2 className="display-5 text-success fw-bold">GH₵ 3000</h2>
                       {/* card */}
                       <div className="  ">
                         <Skeleton variant="rectangular" width={"100%"} height={150}>
@@ -268,9 +270,6 @@ export default function TransactionsModal({ open, handleClose }) {
                               </button>
                             </div>
                           </div>
-
-
-
                         </form>
                       </div>
                     </div>
@@ -290,11 +289,11 @@ export default function TransactionsModal({ open, handleClose }) {
                   {showTable == false ? (
                     ""
                   ) : (
-                    <TableContainer component={Paper} className=" py-3" style={{ height: "400px", overflow: "auto",backgroundColor:"#fafaff" }}>
-                      <Table aria-label="simple table">
+                    <TableContainer component={Paper} className=" py-3" style={{ height: "400px",width:'100%', overflow: "scroll",backgroundColor:"lightgray" }}>
+                      <Table aria-label="simple table" sx={{ minWidth: 650,overflow:"scroll" }}>
                         <TableHead>
                           <TableRow>
-                            <TableCell className="fw-bold" style={{minWidth:"110px"}}>Date</TableCell>
+                            <TableCell className="fw-bold" >Date</TableCell>
                             <TableCell className="fw-bold">Name</TableCell>
                             <TableCell className="fw-bold text-center">Amount</TableCell>
                             <TableCell className="fw-bold">Status</TableCell>
@@ -307,7 +306,7 @@ export default function TransactionsModal({ open, handleClose }) {
                             transactions.map((each, i) => (
                               <TableRow key={i}>
                                 <TableCell>
-                                  {new Date(each.date).toDateString()}
+                                  {new Date(each.date).toLocaleDateString("en-GB")}
                                 </TableCell>
                                 <TableCell>{each.membername}</TableCell>
                                 <TableCell className="text-center">GH {each.amount}</TableCell>
