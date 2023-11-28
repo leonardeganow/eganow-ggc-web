@@ -342,7 +342,7 @@ const TransactionsTwo = (props) => {
                   backgroundPosition: "center",
                   height: "150px",
                   width: "100%",
-                  // position: "relative",
+                  position: "relative",
                   borderRadius: "15px",
                 }}
                 className="rounded"
@@ -351,7 +351,7 @@ const TransactionsTwo = (props) => {
                   style={{
                     position: "absolute",
                     bottom: "15px",
-                    left: "20px",
+                    left: "35px",
                     color: "white",
                     fontSize: "13px",
                     color: "darkgray",
@@ -363,10 +363,11 @@ const TransactionsTwo = (props) => {
                   style={{
                     position: "absolute",
                     top: "40%",
-                    left: "20px",
+                    left: "35px",
                     color: "white",
-                    letterSpacing: "4px",
+                    letterSpacing: "3px",
                     color: "darkgray",
+                    fontSize: "12px",
                   }}
                 >
                   {props.formHandler.getValues("ndcCardNo")}
