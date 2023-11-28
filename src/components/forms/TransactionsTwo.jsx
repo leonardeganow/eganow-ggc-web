@@ -341,9 +341,9 @@ const TransactionsTwo = (props) => {
                   backgroundSize: "cover",
                   // backgroundAttachment: "fixed",
                   backgroundPosition: "center",
-                  height: "200px",
+                  height: "150px",
                   width: "100%",
-                  position: "relative",
+                  // position: "relative",
                   borderRadius: "15px",
                 }}
                 className="rounded"
@@ -351,7 +351,7 @@ const TransactionsTwo = (props) => {
                 <p
                   style={{
                     position: "absolute",
-                    bottom: "20px",
+                    bottom: "15px",
                     left: "20px",
                     color: "white",
                     fontSize: "13px",
@@ -363,7 +363,7 @@ const TransactionsTwo = (props) => {
                 <p
                   style={{
                     position: "absolute",
-                    top: "50%",
+                    top: "40%",
                     left: "20px",
                     color: "white",
                     letterSpacing: "4px",

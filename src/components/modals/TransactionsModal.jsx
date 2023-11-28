@@ -440,12 +440,17 @@ export default function TransactionsModal({ open, handleClose }) {
                     {/* end of search form */}
                   </div>
                   <div className="row justify-content-around my-3  align-items-center">
-                    <div className="col-6">
+                    <div className="col-4">
                       <button className="btn btn-danger w-100">Top Up</button>
                     </div>
-                    <div className="col-6">
+                    <div className="col-4">
                       <button className="btn btn-success w-100">
-                        Download
+                        Download Card
+                      </button>
+                    </div>
+                    <div className="col-4">
+                      <button className="btn btn-success w-100">
+                        Download Statement
                       </button>
                     </div>
                   </div>
