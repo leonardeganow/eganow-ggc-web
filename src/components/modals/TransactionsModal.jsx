@@ -43,7 +43,7 @@ const style = {
   overflow: "auto",
   maxHeight: "600px",
   borderRadius: "1rem",
-  zIndex : "1099px"
+  zIndex: "1099px",
 };
 export default function TransactionsModal({ open, handleClose }) {
   const { getTransactions, getTotalDonations } = TransactionAPI();
@@ -56,9 +56,8 @@ export default function TransactionsModal({ open, handleClose }) {
   const { showReset, setShowReset } = useState(false);
   const [showTable, setShowTable] = useState(false);
   const [totalDonations, setTotalDonations] = useState(null);
-  const [startDate,setStartDate] = useState("")
-  const [endDate,setEndDate] = useState("")
-
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   // DATE FORMATTER FUNCTION
   const formatDate = (dateString) => {
@@ -82,7 +81,7 @@ export default function TransactionsModal({ open, handleClose }) {
   const { register, handleSubmit, setValue, watch, getValues } = useForm({
     defaultValues: {
       memeberType: "",
-      startDate: "" , //formatDate(formattedLastMonthDate),
+      startDate: "", //formatDate(formattedLastMonthDate),
       endDate: "", // formatDate(formattedCurrentDate),
       memberid: "",
       cardTypeId: "",
@@ -105,7 +104,7 @@ export default function TransactionsModal({ open, handleClose }) {
   }
 
   // function to get all tranactions
-  const onSubmitTransaction = async (start,end) => {
+  const onSubmitTransaction = async (start, end) => {
     const data = getValues();
     console.log(data);
     setIsLoading(true);
@@ -141,9 +140,9 @@ export default function TransactionsModal({ open, handleClose }) {
   }, []);
 
   // function to search date
-  function submitTransaction(startDate,endDate){
-    onSubmitTransaction(formatDate(startDate),formatDate(endDate));
-    console.log(getValues())
+  function submitTransaction(startDate, endDate) {
+    onSubmitTransaction(formatDate(startDate), formatDate(endDate));
+    console.log(getValues());
   }
 
   //login member
@@ -163,7 +162,10 @@ export default function TransactionsModal({ open, handleClose }) {
         setCardNo(response.cardnumber);
         console.log("loginresp", response);
         toast(response.message);
-        onSubmitTransaction(formatDate(formattedLastMonthDate), formatDate(formattedCurrentDate));
+        onSubmitTransaction(
+          formatDate(formattedLastMonthDate),
+          formatDate(formattedCurrentDate)
+        );
         totalDonationsHandler();
         setIsLoading(false);
       } else {
@@ -274,7 +276,6 @@ export default function TransactionsModal({ open, handleClose }) {
                     className="form-control w-100"
                     placeholder="Enter your Number or Email"
                     required
-                    
                   />
                   <input
                     type="password"
@@ -386,11 +387,11 @@ export default function TransactionsModal({ open, handleClose }) {
                               <div>
                                 <label htmlFor="">Start Date</label> <br />
                                 <input
-                                value={startDate}
+                                  value={startDate}
                                   type="date"
                                   placeholder="End Date"
                                   className="form-control"
-                                  onChange={(e)=>setStartDate(e.target.value)}
+                                  onChange={(e) => setStartDate(e.target.value)}
                                   // {...register("startDate")}
                                   required
                                 />
@@ -406,7 +407,7 @@ export default function TransactionsModal({ open, handleClose }) {
                                   className="form-control"
                                   // {...register("endDate")}
                                   required
-                                  onChange={(e)=>setEndDate(e.target.value)}
+                                  onChange={(e) => setEndDate(e.target.value)}
                                 />
                               </div>
                             </div>
@@ -416,7 +417,9 @@ export default function TransactionsModal({ open, handleClose }) {
                             >
                               <button
                                 // onClick={() => onSubmitTransaction()}
-                                onClick={()=>submitTransaction(startDate,endDate)}
+                                onClick={() =>
+                                  submitTransaction(startDate, endDate)
+                                }
                                 style={{ marginTop: "20px" }}
                                 type="button"
                                 className="btn btn-success w-100"
@@ -439,10 +442,7 @@ export default function TransactionsModal({ open, handleClose }) {
                       <button className="btn btn-danger w-100">Top Up</button>
                     </div>
                     <div className="col-6">
-                      <button
-                        onClick={handleDownloadPDF}
-                        className="btn btn-success w-100"
-                      >
+                      <button className="btn btn-success w-100">
                         Download
                       </button>
                     </div>
