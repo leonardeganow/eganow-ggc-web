@@ -289,14 +289,14 @@ export default function TransactionsModal({ open, handleClose }) {
                   {showTable == false ? (
                     ""
                   ) : (
-                    <TableContainer component={Paper} className=" py-3" style={{ height: "400px",width:'100%', overflow: "scroll",backgroundColor:"lightgray" }}>
-                      <Table aria-label="simple table" sx={{ minWidth: 650,overflow:"scroll" }}>
+                    <TableContainer component={Paper} className=" py-3" style={{ height: "400px", overflow: "auto",backgroundColor:"#f0fcfc" }}>
+                      <Table aria-label="simple table">
                         <TableHead>
                           <TableRow>
-                            <TableCell className="fw-bold" >Date</TableCell>
-                            <TableCell className="fw-bold">Name</TableCell>
-                            <TableCell className="fw-bold text-center">Amount</TableCell>
-                            <TableCell className="fw-bold">Status</TableCell>
+                            <TableCell className="fw-bold" style={{minWidth:"100px"}}>Date</TableCell>
+                            <TableCell className="fw-bold" style={{minWidth:"150px"}}>Name</TableCell>
+                            <TableCell className="fw-bold text-center" style={{minWidth:"100px"}}>Amount</TableCell>
+                            <TableCell className="fw-bold" style={{minWidth:"100px"}}>Status</TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody className="p-3">
