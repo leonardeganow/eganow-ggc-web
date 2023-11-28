@@ -330,7 +330,7 @@ export default function TransactionsModal({ open, handleClose }) {
                       {/* card */}
                       <div
                         style={{
-                          backgroundImage: `url(${memberCards(cardType)})`,
+                          backgroundImage: `url(${memberCards(AG050)})`,
                           backgroundSize: "cover",
                           backgroundAttachment: "fixed",
                           backgroundPosition: "center",
