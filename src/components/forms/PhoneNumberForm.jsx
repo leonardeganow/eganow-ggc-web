@@ -317,12 +317,12 @@ function PhoneNumberForm(props) {
               >
                 <select
                   style={{ height: "55px", width: "90px" }}
-                  className="form-select h-7  "
+                  className="form-select h-7  d-none"
                   {...props.formHandler.register("countryCode")}
                 >
                   <option value={233}>+233</option>
                 </select>
-                <div className=" w-100 ">
+                <div className=" w-75 w-md-50 mx-auto ">
                   <input
                     // style={{ width: "100%" }}
                     {...props.formHandler.register("telephoneNo")}
