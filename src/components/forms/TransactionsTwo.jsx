@@ -131,8 +131,8 @@ const TransactionsTwo = (props) => {
     setValue("endDate", formatDate(formattedCurrentDate));
     setValue("startDate", formatDate(formattedLastMonthDate));
     totalDonationsHandler();
-    setStartDate(formattedLastMonthDate) //setting form fields value
-    setEndDate(formattedCurrentDate) //setting form fields value
+    setStartDate(formattedLastMonthDate); //setting form fields value
+    setEndDate(formattedCurrentDate); //setting form fields value
 
     onSubmitTransaction(
       formatDate(formattedLastMonthDate),
@@ -207,6 +207,13 @@ const TransactionsTwo = (props) => {
   function downloadHistory() {
     const pdf = new jsPDF();
 
+    const title = "GGC Transaction Details Report";
+    const titleWidth =
+      (pdf.getStringUnitWidth(title) * pdf.internal.getFontSize()) /
+      pdf.internal.scaleFactor;
+    const centerX = (pdf.internal.pageSize.width - titleWidth) / 2;
+
+    pdf.text(title, centerX, 15);
     const columns = [
       { header: "Transaction ID", dataKey: "transactionid" },
       { header: "Member Name", dataKey: "membername" },
@@ -273,7 +280,7 @@ const TransactionsTwo = (props) => {
                   height: "200px",
                   width: "100%",
                   position: "relative",
-                  borderRadius: "15px"
+                  borderRadius: "15px",
                 }}
                 className="rounded"
               >
