@@ -112,6 +112,7 @@ function TransactionAPI() {
   // FUNCTION TO GET TRANSACTIONS
   function getTransactions(data) {
     const request = new TransactionRequest(); //initalize request
+    console.log(request);
     request.setEnddate(data.endDate);
     request.setMemberid(data.memberid);
     request.setMembertype(data.role);

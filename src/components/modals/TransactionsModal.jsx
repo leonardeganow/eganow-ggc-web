@@ -14,6 +14,8 @@ import platinum from "../../images/cardImages/Platinum_105319.png";
 import prestige from "../../images/cardImages/prestige_105320.png";
 import silver from "../../images/cardImages/Silver_105322.png";
 import standard from "../../images/cardImages/Standard_105323.png";
+// import jsPDF from "jspdf";
+// import "jspdf-autotable";
 
 // MATERIAL UI FOR TABLE
 import Table from "@mui/material/Table";
@@ -41,7 +43,7 @@ const style = {
   overflow: "auto",
   maxHeight: "600px",
   borderRadius: "1rem",
-  zIndex : "1099px"
+  zIndex: "1099px",
 };
 export default function TransactionsModal({ open, handleClose }) {
   const { getTransactions, getTotalDonations } = TransactionAPI();
@@ -54,9 +56,8 @@ export default function TransactionsModal({ open, handleClose }) {
   const { showReset, setShowReset } = useState(false);
   const [showTable, setShowTable] = useState(false);
   const [totalDonations, setTotalDonations] = useState(null);
-  const [startDate,setStartDate] = useState("")
-  const [endDate,setEndDate] = useState("")
-
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   // DATE FORMATTER FUNCTION
   const formatDate = (dateString) => {
@@ -80,7 +81,7 @@ export default function TransactionsModal({ open, handleClose }) {
   const { register, handleSubmit, setValue, watch, getValues } = useForm({
     defaultValues: {
       memeberType: "",
-      startDate: "" , //formatDate(formattedLastMonthDate),
+      startDate: "", //formatDate(formattedLastMonthDate),
       endDate: "", // formatDate(formattedCurrentDate),
       memberid: "",
       cardTypeId: "",
@@ -102,10 +103,8 @@ export default function TransactionsModal({ open, handleClose }) {
     }
   }
 
-
-
   // function to get all tranactions
-  const onSubmitTransaction = async (start,end) => {
+  const onSubmitTransaction = async (start, end) => {
     const data = getValues();
     console.log(data);
     setIsLoading(true);
@@ -138,12 +137,14 @@ export default function TransactionsModal({ open, handleClose }) {
     setValue("endDate", formatDate(formattedCurrentDate));
     setValue("startDate", formatDate(formattedLastMonthDate));
     // onSubmitTransaction();
+    setStartDate(formattedLastMonthDate) //setting form fields
+    setEndDate(formattedCurrentDate) //setting form fields
   }, []);
 
   // function to search date
-  function submitTransaction(startDate,endDate){
-    onSubmitTransaction(formatDate(startDate),formatDate(endDate));
-    console.log(getValues())
+  function submitTransaction(startDate, endDate) {
+    onSubmitTransaction(formatDate(startDate), formatDate(endDate));
+    console.log(getValues());
   }
 
   //login member
@@ -163,7 +164,10 @@ export default function TransactionsModal({ open, handleClose }) {
         setCardNo(response.cardnumber);
         console.log("loginresp", response);
         toast(response.message);
-        onSubmitTransaction(formatDate(formattedLastMonthDate), formatDate(formattedCurrentDate));
+        onSubmitTransaction(
+          formatDate(formattedLastMonthDate),
+          formatDate(formattedCurrentDate)
+        );
         totalDonationsHandler();
         setIsLoading(false);
       } else {
@@ -274,7 +278,6 @@ export default function TransactionsModal({ open, handleClose }) {
                     className="form-control w-100"
                     placeholder="Enter your Number or Email"
                     required
-                    
                   />
                   <input
                     type="password"
@@ -344,6 +347,7 @@ export default function TransactionsModal({ open, handleClose }) {
                             left: "50px",
                             color: "white",
                             fontSize: "13px",
+                            color: "darkgray",
                           }}
                         >
                           {cardName}
@@ -355,6 +359,7 @@ export default function TransactionsModal({ open, handleClose }) {
                             left: "50px",
                             color: "white",
                             letterSpacing: "4px",
+                            color: "darkgray",
                           }}
                         >
                           {cardNo}
@@ -384,11 +389,11 @@ export default function TransactionsModal({ open, handleClose }) {
                               <div>
                                 <label htmlFor="">Start Date</label> <br />
                                 <input
-                                value={startDate}
+                                  value={startDate}
                                   type="date"
                                   placeholder="End Date"
                                   className="form-control"
-                                  onChange={(e)=>setStartDate(e.target.value)}
+                                  onChange={(e) => setStartDate(e.target.value)}
                                   // {...register("startDate")}
                                   required
                                 />
@@ -396,7 +401,7 @@ export default function TransactionsModal({ open, handleClose }) {
                             </div>
                             <div className="col-5 col-md-12">
                               <div>
-                                <label htmlFor="">End Date</label> <br />
+                                <label htmlFor="">End Dates</label> <br />
                                 <input
                                   value={endDate}
                                   type="date"
@@ -404,17 +409,19 @@ export default function TransactionsModal({ open, handleClose }) {
                                   className="form-control"
                                   // {...register("endDate")}
                                   required
-                                  onChange={(e)=>setEndDate(e.target.value)}
+                                  onChange={(e) => setEndDate(e.target.value)}
                                 />
                               </div>
                             </div>
                             <div
                               className="col-2 col-md-12"
-                              style={{ paddingLeft: "5px" }}
+                              style={{ paddingLeft: "10px" }}
                             >
                               <button
                                 // onClick={() => onSubmitTransaction()}
-                                onClick={()=>submitTransaction(startDate,endDate)}
+                                onClick={() =>
+                                  submitTransaction(startDate, endDate)
+                                }
                                 style={{ marginTop: "20px" }}
                                 type="button"
                                 className="btn btn-success w-100"
@@ -483,7 +490,9 @@ export default function TransactionsModal({ open, handleClose }) {
                             transactions.map((each, i) => (
                               <TableRow key={i}>
                                 <TableCell>
-                                  {new Date(each.date).toLocaleDateString("en-GB")}
+                                  {new Date(each.date).toLocaleDateString(
+                                    "en-GB"
+                                  )}
                                 </TableCell>
                                 <TableCell>{each.membername}</TableCell>
                                 <TableCell className="text-center">
