@@ -623,5 +623,127 @@ proto.Transaction.TransactionSvcPromiseClient.prototype.getTotalAmountDonated =
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.Transaction.CardTypePerTransactionRequest,
+ *   !proto.Transaction.CardTypePerTransactionResponse>}
+ */
+const methodDescriptor_TransactionSvc_GetCardTypeDetailsPerTransactionByMemberId = new grpc.web.MethodDescriptor(
+  '/Transaction.TransactionSvc/GetCardTypeDetailsPerTransactionByMemberId',
+  grpc.web.MethodType.UNARY,
+  proto.Transaction.CardTypePerTransactionRequest,
+  proto.Transaction.CardTypePerTransactionResponse,
+  /**
+   * @param {!proto.Transaction.CardTypePerTransactionRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.Transaction.CardTypePerTransactionResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.Transaction.CardTypePerTransactionRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.Transaction.CardTypePerTransactionResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.Transaction.CardTypePerTransactionResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.Transaction.TransactionSvcClient.prototype.getCardTypeDetailsPerTransactionByMemberId =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/Transaction.TransactionSvc/GetCardTypeDetailsPerTransactionByMemberId',
+      request,
+      metadata || {},
+      methodDescriptor_TransactionSvc_GetCardTypeDetailsPerTransactionByMemberId,
+      callback);
+};
+
+
+/**
+ * @param {!proto.Transaction.CardTypePerTransactionRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.Transaction.CardTypePerTransactionResponse>}
+ *     Promise that resolves to the response
+ */
+proto.Transaction.TransactionSvcPromiseClient.prototype.getCardTypeDetailsPerTransactionByMemberId =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/Transaction.TransactionSvc/GetCardTypeDetailsPerTransactionByMemberId',
+      request,
+      metadata || {},
+      methodDescriptor_TransactionSvc_GetCardTypeDetailsPerTransactionByMemberId);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.Transaction.TotalTransactionDoneByAgentRequest,
+ *   !proto.Transaction.TotalTransactionDoneByAgentResponse>}
+ */
+const methodDescriptor_TransactionSvc_GetTotalTransactionsDoneByAgent = new grpc.web.MethodDescriptor(
+  '/Transaction.TransactionSvc/GetTotalTransactionsDoneByAgent',
+  grpc.web.MethodType.UNARY,
+  proto.Transaction.TotalTransactionDoneByAgentRequest,
+  proto.Transaction.TotalTransactionDoneByAgentResponse,
+  /**
+   * @param {!proto.Transaction.TotalTransactionDoneByAgentRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.Transaction.TotalTransactionDoneByAgentResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.Transaction.TotalTransactionDoneByAgentRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.Transaction.TotalTransactionDoneByAgentResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.Transaction.TotalTransactionDoneByAgentResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.Transaction.TransactionSvcClient.prototype.getTotalTransactionsDoneByAgent =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/Transaction.TransactionSvc/GetTotalTransactionsDoneByAgent',
+      request,
+      metadata || {},
+      methodDescriptor_TransactionSvc_GetTotalTransactionsDoneByAgent,
+      callback);
+};
+
+
+/**
+ * @param {!proto.Transaction.TotalTransactionDoneByAgentRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.Transaction.TotalTransactionDoneByAgentResponse>}
+ *     Promise that resolves to the response
+ */
+proto.Transaction.TransactionSvcPromiseClient.prototype.getTotalTransactionsDoneByAgent =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/Transaction.TransactionSvc/GetTotalTransactionsDoneByAgent',
+      request,
+      metadata || {},
+      methodDescriptor_TransactionSvc_GetTotalTransactionsDoneByAgent);
+};
+
+
 module.exports = proto.Transaction;
 

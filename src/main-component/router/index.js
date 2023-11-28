@@ -33,6 +33,7 @@ import LoginPage from "../LoginPage";
 import SignUpPage from "../SignUpPage";
 import ForgotPassword from "../ForgotPassword";
 import GgcRegForm from "../../components/forms/GgcRegForm";
+import AgentLoginPage from "../AgentLogin/AgentLoginPage";
 
 const AllRoute = () => {
   return (
@@ -41,6 +42,7 @@ const AllRoute = () => {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="home" element={<Homepage />} />
+          <Route path="/agentlogin" element={<AgentLoginPage />} />
         </Routes>
       </BrowserRouter>
     </div>

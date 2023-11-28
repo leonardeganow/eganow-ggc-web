@@ -85,13 +85,13 @@ function PhoneNumberForm(props) {
       //   setShowEnterPin(true);
       // }
     } catch (error) {
-      console.log('err', error instanceof RpcError)
+      console.log("err", error instanceof RpcError);
       props.formHandler.reset(newData);
       setIsLoading(false);
       if (error instanceof RpcError) {
         toast.error("Network Error");
         return;
-      }else{
+      } else {
         toast.error("Please try again");
       }
       console.error(error);
@@ -221,10 +221,10 @@ function PhoneNumberForm(props) {
       }
     } catch (error) {
       setIsLoading(false);
-      if(error instanceof RpcError){
+      if (error instanceof RpcError) {
         toast("Network Error");
         return;
-      }else{
+      } else {
         toast("Please try again");
       }
       props.formHandler.reset(data);
@@ -273,10 +273,12 @@ function PhoneNumberForm(props) {
               //   // alert("hi");
               // }}
             >
-              <option value="default" selected>
+              {/* <option value="default" selected>
                 Select your Country
+              </option> */}
+              <option value="GH0233" selected>
+                Ghana
               </option>
-              {/* <option value="GHA0233">Ghana</option> */}
               {/* <option value="other">other</option> */}
 
               {country?.map((counti, i) => {
