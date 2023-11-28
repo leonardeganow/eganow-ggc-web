@@ -14,7 +14,7 @@ import platinum from "../../images/cardImages/Platinum_105319.png";
 import prestige from "../../images/cardImages/prestige_105320.png";
 import silver from "../../images/cardImages/Silver_105322.png";
 import standard from "../../images/cardImages/Standard_105323.png";
-import jsPDF from "jspdf";
+// import jsPDF from "jspdf";
 // import "jspdf-autotable";
 
 // MATERIAL UI FOR TABLE
@@ -137,6 +137,8 @@ export default function TransactionsModal({ open, handleClose }) {
     setValue("endDate", formatDate(formattedCurrentDate));
     setValue("startDate", formatDate(formattedLastMonthDate));
     // onSubmitTransaction();
+    setStartDate(formattedLastMonthDate) //setting form fields
+    setEndDate(formattedCurrentDate) //setting form fields
   }, []);
 
   // function to search date

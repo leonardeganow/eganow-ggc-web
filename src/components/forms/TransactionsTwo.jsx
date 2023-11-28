@@ -131,6 +131,8 @@ const TransactionsTwo = (props) => {
     setValue("endDate", formatDate(formattedCurrentDate));
     setValue("startDate", formatDate(formattedLastMonthDate));
     totalDonationsHandler();
+    setStartDate(formattedLastMonthDate) //setting form fields value
+    setEndDate(formattedCurrentDate) //setting form fields value
 
     onSubmitTransaction(
       formatDate(formattedLastMonthDate),
@@ -266,13 +268,14 @@ const TransactionsTwo = (props) => {
                     props.formHandler.getValues("cardId")
                   )})`,
                   backgroundSize: "cover",
-                  backgroundAttachment: "fixed",
+                  // backgroundAttachment: "fixed",
                   backgroundPosition: "center",
                   height: "200px",
                   width: "100%",
                   position: "relative",
+                  borderRadius: "15px"
                 }}
-                className=" "
+                className="rounded"
               >
                 <p
                   style={{
