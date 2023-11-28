@@ -84,6 +84,16 @@ const Header = (props) => {
                         Get GOOD GOVERNANCE CARD
                       </Link>
                     </li>
+                    <li>
+                      <Link
+                        to="#"
+                        smooth={true}
+                        duration={500}
+                        onClick={ClickHandler}
+                      >
+                        AGENT
+                      </Link>
+                    </li>
                     {/* <li className="menu-item-has-children">
                       <Link
                         to="donate"

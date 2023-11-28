@@ -30,7 +30,7 @@ const Features = (props) => {
                 <div className="service-icon overflow-hidden rounded-3">
                   <img src={jm} alt="imag1" />
                 </div>
-                <h4 className="text-center text-danger mt-md-2">DONATE TO JM</h4>
+                <h4 className="text-center text-danger mt-md-2">DONATE TO SUPPORT THE NDC 2024 CAMPAIGN</h4>
                 <p className="p-2 m-0 text-center">
                   Lorem Ipsum is simply dummy text the industrey's standard
                   dummy text ever scrambled type specimen

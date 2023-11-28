@@ -8,7 +8,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useStore from "../../formstore/formStore";
 import customerSetupsGRPC from "../../api/grpcapi/customerSetupsGRPC";
-import Select from "react-select";
+import { RpcError } from "grpc-web";
+// import Select from "react-select";
 
 function PhoneNumberForm(props) {
   const { info, updateRoleAndCardType } = useStore();
@@ -84,10 +85,14 @@ function PhoneNumberForm(props) {
       //   setShowEnterPin(true);
       // }
     } catch (error) {
+      console.log('err', error instanceof RpcError)
       props.formHandler.reset(newData);
       setIsLoading(false);
-      if (error.message) {
-        toast.error("Please try again later");
+      if (error instanceof RpcError) {
+        toast.error("Network Error");
+        return;
+      }else{
+        toast.error("Please try again");
       }
       console.error(error);
     }
@@ -100,7 +105,7 @@ function PhoneNumberForm(props) {
       console.log(response);
       setCountry(response.countrylistList);
     } catch (error) {
-      console.log(error);
+      console.log(error.type);
     }
   }
 
@@ -216,6 +221,12 @@ function PhoneNumberForm(props) {
       }
     } catch (error) {
       setIsLoading(false);
+      if(error instanceof RpcError){
+        toast("Network Error");
+        return;
+      }else{
+        toast("Please try again");
+      }
       props.formHandler.reset(data);
       console.log(error);
     }

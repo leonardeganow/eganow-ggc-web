@@ -61,8 +61,9 @@ function ChoosePayMethod(props) {
     props.formHandler.setValue("transType", info.role);
     props.formHandler.setValue("cardId", info.cardid);
     props.formHandler.setValue("plan", info.cardType);
-    props.formHandler.setValue("paymentMethod", "momo");
-  }, []);
+    props.formHandler.setValue("paymentMethod", isCard);
+    // props.formHandler.setValue("paymentMethod", "momo");
+  }, [isCard]);
 
   const watchMomoId = props.formHandler.watch("paymentMethodId");
   const watchMomoNumber = props.formHandler.watch("paymentCardNo");
@@ -88,6 +89,8 @@ function ChoosePayMethod(props) {
       getKycHandler();
     }
   }, [watchMomoId, watchMomoNumber]);
+
+
   return (
     <div>
       {" "}
@@ -287,6 +290,8 @@ function ChoosePayMethod(props) {
                   placeholder="Valid card number"
                   className="form-control p-md-2"
                   required
+                  type="text"
+                  maxlength="16"
                 />
                 <div className="input-group-append border-none">
                   <span className="input-group-text text-muted p-3 border-none">
