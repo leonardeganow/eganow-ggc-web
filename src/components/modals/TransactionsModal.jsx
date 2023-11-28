@@ -88,6 +88,10 @@ export default function TransactionsModal({ open, handleClose }) {
         console.log("loginresp", response);
         toast(response.message);
         setIsLoading(false);
+      }else{
+        toast(response.message);
+        setIsLoading(false);
+
       }
     } catch (error) {
       if (error.message) {
@@ -126,7 +130,7 @@ export default function TransactionsModal({ open, handleClose }) {
           <div>
             {/* if show login is true show the login page else hide */}
             {showLogin == true && (
-              <div className="">
+              <div className="w-50 mx-auto">
                 <h1 className="text-center">Login</h1>
                 <p className="text-center">Login to view transactions</p>
                 <form

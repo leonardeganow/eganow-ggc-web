@@ -225,7 +225,16 @@ function ChoosePayMethod(props) {
             {loading && <span>Getting your momo name...</span>}
           </div>
 
-          <div className="d-flex justify-content-end">
+          <div className="d-flex  justify-content-between">
+            <button
+              onClick={async () => {
+                props.handleBack(1);
+              }}
+              type="button"
+              className="subscribe btn btn-success btn-block shadow-sm"
+            >
+              back
+            </button>
             <button
               onClick={async () => {
                 const result = await props.formHandler.trigger([
@@ -386,7 +395,16 @@ function ChoosePayMethod(props) {
                 </div>
               </div>
             </div>
-            <div className="d-flex justify-content-end">
+            <div className="d-flex justify-content-between">
+              <button
+                onClick={async () => {
+                  props.handleBack(1);
+                }}
+                type="button"
+                className="subscribe btn btn-success btn-block shadow-sm"
+              >
+                back
+              </button>
               <button
                 onClick={async () => {
                   const result = await props.formHandler.trigger([

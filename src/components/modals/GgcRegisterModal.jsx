@@ -125,8 +125,8 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
     resolver: yupResolver(schema),
   });
 
-  const handleBack = () => {
-    setCurrentStep((prevStep) => prevStep - 1);
+  const handleBack = (page) => {
+    setCurrentStep((prevStep) => prevStep - page);
   };
 
   const renderForm = () => {
