@@ -254,6 +254,7 @@ export default function TransactionsModal({ open, handleClose }) {
                     className="form-control w-100"
                     {...register("role")}
                     required
+                    hidden
                   >
                     <option value="GGC">Select Type</option>
                     <option value="GGC">Good Governance</option>
@@ -468,7 +469,7 @@ export default function TransactionsModal({ open, handleClose }) {
                             transactions.map((each, i) => (
                               <TableRow key={i}>
                                 <TableCell>
-                                  {new Date(each.date).toDateString()}
+                                  {new Date(each.date).toLocaleDateString("en-GB")}
                                 </TableCell>
                                 <TableCell>{each.membername}</TableCell>
                                 <TableCell className="text-center">
