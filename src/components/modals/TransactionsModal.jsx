@@ -375,6 +375,7 @@ export default function TransactionsModal({ open, handleClose }) {
                               <div>
                                 <label htmlFor="">Start Date</label> <br />
                                 <input
+                                value={getValues("startDate")}
                                   type="date"
                                   placeholder="End Date"
                                   className="form-control"
