@@ -14,8 +14,10 @@ import platinum from "../../images/cardImages/Platinum_105319.png";
 import prestige from "../../images/cardImages/prestige_105320.png";
 import silver from "../../images/cardImages/Silver_105322.png";
 import standard from "../../images/cardImages/Standard_105323.png";
-// import jsPDF from "jspdf";
-// import "jspdf-autotable";
+import "jspdf-autotable";
+import html2canvas from "html2canvas";
+import { IoIosRefresh } from "react-icons/io";
+import { jsPDF } from "jspdf";
 
 // MATERIAL UI FOR TABLE
 import Table from "@mui/material/Table";
@@ -28,7 +30,8 @@ import Paper from "@mui/material/Paper";
 import TransactionAPI from "../../api/grpcapi/TransactionGRPC";
 import { Avatar, Skeleton } from "@mui/material";
 import { IoSearchCircleSharp } from "react-icons/io5";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch,FaWindowClose } from "react-icons/fa";
+
 
 const style = {
   position: "relative",
@@ -137,8 +140,8 @@ export default function TransactionsModal({ open, handleClose }) {
     setValue("endDate", formatDate(formattedCurrentDate));
     setValue("startDate", formatDate(formattedLastMonthDate));
     // onSubmitTransaction();
-    setStartDate(formattedLastMonthDate) //setting form fields
-    setEndDate(formattedCurrentDate) //setting form fields
+    setStartDate(formattedLastMonthDate); //setting form fields
+    setEndDate(formattedCurrentDate); //setting form fields
   }, []);
 
   // function to search date
@@ -240,6 +243,103 @@ export default function TransactionsModal({ open, handleClose }) {
 
   const cardType = getValues("cardTypeId"); //store card type here
 
+  function downloadHistory() {
+    const pdf = new jsPDF();
+
+    const title = "GGC Transaction Details Report";
+    const titleWidth =
+      (pdf.getStringUnitWidth(title) * pdf.internal.getFontSize()) /
+      pdf.internal.scaleFactor;
+    const centerX = (pdf.internal.pageSize.width - titleWidth) / 2;
+
+    pdf.text(title, centerX, 15);
+    const columns = [
+      { header: "Transaction ID", dataKey: "transactionid" },
+      { header: "Member Name", dataKey: "membername" },
+      { header: "Amount", dataKey: "amount" },
+      { header: "Status", dataKey: "status" },
+      { header: "Type", dataKey: "type" },
+      // Add more columns as needed
+    ];
+
+    pdf.autoTable({
+      head: [columns.map((column) => column.header)],
+      body: transactions.map((item) =>
+        columns.map((column) => {
+          return item[column.dataKey];
+        })
+      ),
+      startY: 20,
+    });
+
+    // transactions.forEach((item, index) => {
+    //   const xPos = 10;
+    //   const yPos = index * 40 + 20;
+
+    //   pdf.text(`Transaction ID: ${item.transactionid}`, xPos, yPos);
+    //   pdf.text(`Member Name: ${item.membername}`, xPos, yPos + 10);
+    //   pdf.text(`Amount: ${item.amount}`, xPos, yPos + 20);
+    //   pdf.text(`Status: ${item.status}`, xPos, yPos + 30);
+    //   pdf.text(`Type: ${item.type}`, xPos, yPos + 40);
+
+    //   // Add more fields as needed
+
+    //   // Add a new page for every item (optional)
+    //   // if (index < transactions.length - 1) {
+    //   //   pdf.addPage();
+    //   // }
+    // });
+
+    pdf.save("GGChistory.pdf");
+  }
+
+  const handleDownload = () => {
+    const divToPrint = document.getElementById("divId"); // Replace 'divId' with the actual id of your div
+
+    html2canvas(divToPrint).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      const scaleFactor = 0.5;
+
+      const xPosition =
+        (pdf.internal.pageSize.width - pdfWidth * scaleFactor) / 2;
+      const yPosition =
+        (pdf.internal.pageSize.height - pdfHeight * scaleFactor) / 2;
+      pdf.addImage(
+        imgData,
+        "PNG",
+        xPosition,
+        yPosition,
+        pdfWidth * scaleFactor,
+        pdfHeight * scaleFactor
+      );
+
+      const heading = "My Good governance card";
+      const fontSize = 16;
+      const textWidth =
+        (pdf.getStringUnitWidth(heading) * fontSize) / pdf.internal.scaleFactor;
+      const textXPosition = (pdf.internal.pageSize.width - textWidth) / 2;
+      const textYPosition = 15; // Adjust the Y position as needed
+
+      pdf.setFontSize(fontSize);
+      pdf.text(heading, textXPosition, textYPosition);
+
+      pdf.save("output.pdf");
+    });
+  };
+
+  const refreshData = () => {
+    totalDonationsHandler();
+
+    onSubmitTransaction(
+      formatDate(formattedLastMonthDate),
+      formatDate(formattedCurrentDate)
+    );
+  };
   return (
     <div>
       <Modal
@@ -314,23 +414,44 @@ export default function TransactionsModal({ open, handleClose }) {
              */}
             {!showLogin && (
               <div className="">
-                <div className="">
-                  <h3 className="text-center m-0 p-0">Transactions</h3>
+                <div className="position-relative">
+                  {/* <h3 className="text-center m-0 p-0">Transactions</h3>
                   <p className="text-center m-0 p-0">View your transaction</p>
-                  <hr />
+                  <hr /> */}
+                    <h3 className="text-center m-0 p-0">Transactions</h3>
+                    <p className="text-center m-0 p-0">View your transaction</p>
+                    <FaWindowClose className="position-absolute end-0 top-0 text-danger" onClick={()=>handleClose()} />
+
+                    <hr />
                 </div>
 
+
                 <div className="p-3">
-                  <div className="row">
+                  <div className="text-center">
+                    <h6>Donated Amount</h6>
+                    <h2 className="display-5 text-success">
+                      GH₵ {totalDonations}
+                      <span
+                        className="ml-2"
+                        style={{
+                          fontSize: "15px",
+                          marginLeft: "5px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <IoIosRefresh onClick={refreshData} />
+                      </span>
+                    </h2>
+                  </div>
+                  <div className="row ">
+
                     <div className="col-md-6 text-center ">
-                      <h6>Donated Amount</h6>
-                      <h2 className="display-5 text-success">
-                        GH₵ {totalDonations}
-                      </h2>
+
                       {/* card */}
                       <div
+                        id="divId"
                         style={{
-                          backgroundImage: `url(${memberCards(AG050)})`,
+                          backgroundImage: `url(${memberCards(cardType)})`,
                           backgroundSize: "cover",
                           backgroundAttachment: "fixed",
                           backgroundPosition: "center",
@@ -381,7 +502,7 @@ export default function TransactionsModal({ open, handleClose }) {
                         <form
                           // onSubmit={handleSubmit(onSubmitTransaction)}
                           className="mt-3"
-                          // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
+                        // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
                         >
                           {/* forms cards */}
                           <div className="row">
@@ -440,16 +561,22 @@ export default function TransactionsModal({ open, handleClose }) {
                     {/* end of search form */}
                   </div>
                   <div className="row justify-content-around my-3  align-items-center">
-                    <div className="col-4">
+                    {/* <div className="col-4">
                       <button className="btn btn-danger w-100">Top Up</button>
-                    </div>
+                    </div> */}
                     <div className="col-4">
-                      <button className="btn btn-success w-100">
+                      <button
+                        onClick={handleDownload}
+                        className="btn btn-success w-100"
+                      >
                         Download Card
                       </button>
                     </div>
                     <div className="col-4">
-                      <button className="btn btn-success w-100">
+                      <button
+                        onClick={downloadHistory}
+                        className="btn btn-success w-100"
+                      >
                         Download Statement
                       </button>
                     </div>

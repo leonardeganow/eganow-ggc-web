@@ -28,7 +28,7 @@ import Paper from "@mui/material/Paper";
 import TransactionAPI from "../../api/grpcapi/TransactionGRPC";
 import { Avatar, Skeleton } from "@mui/material";
 import { IoSearchCircleSharp } from "react-icons/io5";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaWindowClose } from "react-icons/fa";
 import { jsPDF } from "jspdf";
 
 const TransactionsTwo = (props) => {
@@ -306,31 +306,30 @@ const TransactionsTwo = (props) => {
 
   return (
     <div>
-      <div className="">
-        <div className="">
-          <h3 className="text-center m-0 p-0">Transactions</h3>
-          <p className="text-center m-0 p-0">View your transaction</p>
-          <hr />
-        </div>
 
-        <div className="p-3">
+      <div className="position-relative">
+        <h3 className="text-center m-0 p-0">Transactions</h3>
+        <p className="text-center m-0 p-0">View your transaction</p>
+        <FaWindowClose className="position-absolute end-0 top-0 text-danger" onClick={()=>props.handleClose()}/>
+
+        <hr />
+        <div className="px-3">
           <div className="row">
+            <h6 className="text-center">Donated Amount</h6>
+            <h2 className="display-5  align-items-center text-success text-center">
+              GH₵ {totalDonations}{" "}
+              <span
+                className="ml-2"
+                style={{
+                  fontSize: "15px",
+                  marginLeft: "5px",
+                  cursor: "pointer",
+                }}
+              >
+                <IoIosRefresh onClick={refreshData} />
+              </span>
+            </h2>
             <div className="col-md-6 text-center ">
-              <h6>Donated Amount</h6>
-              <h2 className="display-5  align-items-center text-success">
-                GH₵ {totalDonations}{" "}
-                <span
-                  className="ml-2"
-                  style={{
-                    fontSize: "15px",
-                    marginLeft: "5px",
-                    cursor: "pointer",
-                  }}
-                >
-                  <IoIosRefresh onClick={refreshData} />
-                </span>
-              </h2>
-
               {/* card */}
               <div
                 id="divId"
@@ -390,7 +389,7 @@ const TransactionsTwo = (props) => {
                 <form
                   // onSubmit={handleSubmit(onSubmitTransaction)}
                   className="mt-3"
-                  // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
+                // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
                 >
                   {/* forms cards */}
                   <div className="row">
