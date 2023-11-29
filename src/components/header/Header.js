@@ -10,7 +10,10 @@ import { useState } from "react";
 const Header = (props) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () =>{
+    setOpen(false);
+    window.location.reload(true);
+  }
   const ClickHandler = () => {
     window.scrollTo(10, 0);
   };

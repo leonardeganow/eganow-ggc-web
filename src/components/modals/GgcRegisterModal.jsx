@@ -195,6 +195,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
             handleNext={handleNext}
             handleBack={handleBack}
             formHandler={formHandler}
+            handleClose={handleClose}
           />
         );
       default:

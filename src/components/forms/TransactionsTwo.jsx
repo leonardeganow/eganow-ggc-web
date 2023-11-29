@@ -306,15 +306,13 @@ const TransactionsTwo = (props) => {
 
   return (
     <div>
-  
-        <div className="position-relative">
-          <h3 className="text-center m-0 p-0">Transactions</h3>
-          <p className="text-center m-0 p-0">View your transaction</p>
-          <FaWindowClose  className="position-absolute end-0 top-0 text-danger"/>
 
-          <hr />
-     
+      <div className="position-relative">
+        <h3 className="text-center m-0 p-0">Transactions</h3>
+        <p className="text-center m-0 p-0">View your transaction</p>
+        <FaWindowClose className="position-absolute end-0 top-0 text-danger" onClick={()=>props.handleClose()}/>
 
+        <hr />
         <div className="px-3">
           <div className="row">
             <h6 className="text-center">Donated Amount</h6>
@@ -391,7 +389,7 @@ const TransactionsTwo = (props) => {
                 <form
                   // onSubmit={handleSubmit(onSubmitTransaction)}
                   className="mt-3"
-                  // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
+                // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
                 >
                   {/* forms cards */}
                   <div className="row">
