@@ -28,7 +28,7 @@ import Paper from "@mui/material/Paper";
 import TransactionAPI from "../../api/grpcapi/TransactionGRPC";
 import { Avatar, Skeleton } from "@mui/material";
 import { IoSearchCircleSharp } from "react-icons/io5";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaWindowClose } from "react-icons/fa";
 import { jsPDF } from "jspdf";
 
 const TransactionsTwo = (props) => {
@@ -306,14 +306,16 @@ const TransactionsTwo = (props) => {
 
   return (
     <div>
-      <div className="">
-        <div className="">
+  
+        <div className="position-relative">
           <h3 className="text-center m-0 p-0">Transactions</h3>
           <p className="text-center m-0 p-0">View your transaction</p>
-          <hr />
-        </div>
+          <FaWindowClose  className="position-absolute end-0 top-0 text-danger"/>
 
-        <div className="p-3">
+          <hr />
+     
+
+        <div className="px-3">
           <div className="row">
             <h6 className="text-center">Donated Amount</h6>
             <h2 className="display-5  align-items-center text-success text-center">
