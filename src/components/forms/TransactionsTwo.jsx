@@ -13,6 +13,7 @@ import platinum from "../../images/cardImages/Platinum_105319.png";
 import prestige from "../../images/cardImages/prestige_105320.png";
 import silver from "../../images/cardImages/Silver_105322.png";
 import standard from "../../images/cardImages/Standard_105323.png";
+import starter from "../../images/cardImages/starter.png";
 import "jspdf-autotable";
 import html2canvas from "html2canvas";
 import { IoIosRefresh } from "react-icons/io";
@@ -201,6 +202,8 @@ const TransactionsTwo = (props) => {
       case "AG010":
         return arise;
         break;
+      default:
+        return starter;
     }
   }
 
@@ -326,11 +329,13 @@ const TransactionsTwo = (props) => {
 
   return (
     <div>
-
       <div className="position-relative">
         <h3 className="text-center m-0 p-0">Transactions</h3>
         <p className="text-center m-0 p-0">View your transaction</p>
-        <FaWindowClose className="position-absolute end-0 top-0 text-danger" onClick={()=>props.handleClose()}/>
+        <FaWindowClose
+          className="position-absolute end-0 top-0 text-danger"
+          onClick={() => props.handleClose()}
+        />
 
         <hr />
         <div className="px-3">
@@ -355,7 +360,7 @@ const TransactionsTwo = (props) => {
                 id="divId"
                 style={{
                   backgroundImage: `url(${memberCards(
-                    props.formHandler.getValues("cardId")
+                    props.formHandler.getValues("userCardType")
                   )})`,
                   backgroundSize: "cover",
                   backgroundAttachment: "fixed",
@@ -409,7 +414,7 @@ const TransactionsTwo = (props) => {
                 <form
                   // onSubmit={handleSubmit(onSubmitTransaction)}
                   className="mt-3"
-                // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
+                  // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
                 >
                   {/* forms cards */}
                   <div className="row">

@@ -55,6 +55,7 @@ function PhoneNumberForm(props) {
         props.formHandler.setValue("memberId", response.memberid);
         props.formHandler.setValue("ndcCardNo", response.cardno);
         props.formHandler.setValue("userStatus", response.message);
+        props.formHandler.setValue("userCardType", response.cardtypeid);
 
         // props.formHandler.setValue("telephoneNo", data.telephoneNo);
         setShowCountries(false);
