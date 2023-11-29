@@ -332,7 +332,7 @@ export default function TransactionsModal({ open, handleClose }) {
         imgData,
         "PNG",
         xPosition,
-        yPosition,
+        20,
         pdfWidth * scaleFactor,
         pdfHeight * scaleFactor
       );
@@ -377,7 +377,7 @@ export default function TransactionsModal({ open, handleClose }) {
                 <form
                   onSubmit={handleSubmit(login)}
                   className="d-flex flex-column gap-4 align-items-center justify-content-center w-75 mx-auto"
-                  style={{maxWidth:"100%"}}
+                  style={{ maxWidth: "100%" }}
                 >
                   {/* SELECT INPUT FOR USER TO SELECT HIS MEMBER TYPE */}
                   <select
