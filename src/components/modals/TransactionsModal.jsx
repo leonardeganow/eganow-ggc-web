@@ -333,7 +333,7 @@ export default function TransactionsModal({ open, handleClose,loginState,setLogi
         imgData,
         "PNG",
         xPosition,
-        yPosition,
+        20,
         pdfWidth * scaleFactor,
         pdfHeight * scaleFactor
       );
@@ -378,7 +378,7 @@ export default function TransactionsModal({ open, handleClose,loginState,setLogi
                 <form
                   onSubmit={handleSubmit(login)}
                   className="d-flex flex-column gap-4 align-items-center justify-content-center w-75 mx-auto"
-                  style={{maxWidth:"100%"}}
+                  style={{ maxWidth: "100%" }}
                 >
                   {/* SELECT INPUT FOR USER TO SELECT HIS MEMBER TYPE */}
                   <select
@@ -487,9 +487,11 @@ export default function TransactionsModal({ open, handleClose,loginState,setLogi
                             position: "absolute",
                             bottom: "20px",
                             left: "50px",
-                            color: "black",
+                            color: `${
+                              cardType === "AG050" ? "white" : "black"
+                            }`,
                             fontSize: "13px",
-                            fontWeight : "bold"
+                            fontWeight: "bold",
 
                             // color: "darkgray",
                           }}
@@ -501,11 +503,12 @@ export default function TransactionsModal({ open, handleClose,loginState,setLogi
                             position: "absolute",
                             top: "50%",
                             left: "50px",
-                            color: "black",
+                            color: `${
+                              cardType === "AG050" ? "white" : "black"
+                            }`,
                             letterSpacing: "4px",
                             // color: "darkgray",
-                            fontWeight : "bold"
-
+                            fontWeight: "bold",
                           }}
                         >
                           {cardNo}

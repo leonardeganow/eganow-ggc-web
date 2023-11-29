@@ -70,6 +70,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
         .required("OTP is required")
         .matches(/^\d{4}$/, "Enter a valid 4-digit OTP"),
       paymentMethodId: yup.string().required("select a network"),
+
       pin: yup
         .string()
         .required("PIN is required")
@@ -96,7 +97,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
     })
     .required();
 
-  const defaultValues = {
+   const defaultValues = {
     telephoneNo: "",
     otp: "",
     pin: "",
@@ -109,6 +110,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
     paymentMethodId: "",
     amount: info.amount,
     memberId: "",
+    paymentCardNo: "",
     ndcCardNo: "",
     transType: "",
     constituencies: "other",
@@ -120,6 +122,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
     occupation: "other",
     ageRange: "other",
     userCardType: "",
+    paymentUrl: "",
   };
 
   const formHandler = useForm({
@@ -199,6 +202,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
             handleClose={handleClose}
           />
         );
+
       default:
         return null;
     }
@@ -215,7 +219,11 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
       >
         <div
           className={`bg-white p-3 p-md-3 ${
-            currentStep === 2 || currentStep === 4 ? "modalbehav" : currentStep === 7 ? "sevenModal":""
+            currentStep === 2 || currentStep === 4
+              ? "modalbehav"
+              : currentStep === 7
+              ? "sevenModal"
+              : ""
           } `}
           style={style}
         >

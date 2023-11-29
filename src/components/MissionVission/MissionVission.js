@@ -96,7 +96,7 @@ const MissionVission = (props) => {
     // console.log("hi");
     try {
       const response = await getCardTypes();
-     if (response.cardtypesList) {
+      if (response.cardtypesList) {
         setisLoading(false);
       } else {
         alert("err");

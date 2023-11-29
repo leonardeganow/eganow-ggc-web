@@ -45,7 +45,7 @@ const membersGRPC = () => {
       request.setGender(params.gender);
       request.setAgerageid(params.ageRange);
       request.setCountrycode(
-        params.country == "Other" ? params.otherCountry : params.country
+        params.country === "Other" ? params.otherCountry : params.country
       );
       request.setRegionid(params.regions);
       request.setConstituencyid(params.constituencies);

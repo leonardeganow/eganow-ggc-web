@@ -1,5 +1,5 @@
-import data from './data.json';
+// import data from './data.json';
 
-export default () => {
-  return data;
-}
+// export default () => {
+//   return data;
+// }
