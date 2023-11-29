@@ -485,9 +485,11 @@ export default function TransactionsModal({ open, handleClose }) {
                             position: "absolute",
                             bottom: "20px",
                             left: "50px",
-                            color: "black",
+                            color: `${
+                              cardType === "AG050" ? "white" : "black"
+                            }`,
                             fontSize: "13px",
-                            fontWeight : "bold"
+                            fontWeight: "bold",
 
                             // color: "darkgray",
                           }}
@@ -499,11 +501,12 @@ export default function TransactionsModal({ open, handleClose }) {
                             position: "absolute",
                             top: "50%",
                             left: "50px",
-                            color: "black",
+                            color: `${
+                              cardType === "AG050" ? "white" : "black"
+                            }`,
                             letterSpacing: "4px",
                             // color: "darkgray",
-                            fontWeight : "bold"
-
+                            fontWeight: "bold",
                           }}
                         >
                           {cardNo}

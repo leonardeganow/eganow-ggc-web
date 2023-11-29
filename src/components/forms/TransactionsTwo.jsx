@@ -475,7 +475,8 @@ const TransactionsTwo = (props) => {
               <button
                 onClick={() => {
                   props.formHandler.setValue("amount", "");
-
+                  props.formHandler.setValue("momoname", "");
+                  props.formHandler.setValue("paymentMethodId", "");
                   props.handleBack(4);
                 }}
                 className="btn btn-danger w-100"

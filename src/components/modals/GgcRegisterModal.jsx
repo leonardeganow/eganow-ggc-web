@@ -97,7 +97,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
     })
     .required();
 
-  const defaultValues = {
+   const defaultValues = {
     telephoneNo: "",
     otp: "",
     pin: "",
