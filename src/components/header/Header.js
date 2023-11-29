@@ -10,9 +10,12 @@ import { useState } from "react";
 const Header = (props) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
+  const [showLogin, setShowLogin] = useState(true); //state to show or hide the login page
+
   const handleClose = () =>{
     setOpen(false);
-    window.location.reload(true);
+    // window.location.reload(true);
+    setShowLogin(true)
   }
   const ClickHandler = () => {
     window.scrollTo(10, 0);
@@ -298,6 +301,8 @@ const Header = (props) => {
         open={open}
         handleClose={handleClose}
         handleOpen={handleOpen}
+        loginState={showLogin}
+        setLoginState={setShowLogin}
       />
     </header>
   );

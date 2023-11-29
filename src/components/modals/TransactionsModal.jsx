@@ -48,7 +48,7 @@ const style = {
   borderRadius: "1rem",
   zIndex: "1099px",
 };
-export default function TransactionsModal({ open, handleClose }) {
+export default function TransactionsModal({ open, handleClose,loginState,setLoginState }) {
   const { getTransactions, getTotalDonations } = TransactionAPI();
   const { loginMember } = membersGRPC();
   const [showLogin, setShowLogin] = useState(true); //state to show or hide the login page
@@ -160,7 +160,8 @@ export default function TransactionsModal({ open, handleClose }) {
       if (response.message == "Success" && response.status == true) {
         // set showloging to false in other to display list of transactions
 
-        setShowLogin(false);
+        // setShowLogin(false);
+        setLoginState(false)
         setIsLoading(false);
         // setting the member id value from the response
         setValue("memberid", response.memberid);
@@ -370,7 +371,7 @@ export default function TransactionsModal({ open, handleClose }) {
         <div className="bg-white p-md-4 p-3" style={style}>
           <div>
             {/* if show login is true show the login page else hide */}
-            {showLogin == true && (
+            {loginState === true && (
               <div className="mx-auto d-flex flex-column align-items-center">
                 <h1 className="text-center">Login</h1>
                 <p className="text-center">Login to view transactions</p>
@@ -432,7 +433,7 @@ export default function TransactionsModal({ open, handleClose }) {
             {/* 
               if showLogin turns to false then we'll show list of transactions
              */}
-            {!showLogin && (
+            {!loginState && (
               <div className="">
                 <div className="position-relative">
                   {/* <h3 className="text-center m-0 p-0">Transactions</h3>
