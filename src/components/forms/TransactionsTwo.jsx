@@ -473,7 +473,11 @@ const TransactionsTwo = (props) => {
           <div className="row my-3 align-items-center">
             <div className="col-4 col-md-4">
               <button
-                onClick={() => props.handleBack(4)}
+                onClick={() => {
+                  props.formHandler.setValue("amount", "");
+
+                  props.handleBack(4);
+                }}
                 className="btn btn-danger w-100"
               >
                 Top Up

@@ -138,6 +138,9 @@ function ChoosePayMethod(props) {
                 props.formHandler.setValue("paymentMethodId", cardId);
                 setShowMomo(false);
                 setShowCard(true);
+                console.log(props.formHandler.getValues());
+
+                console.log("test");
               }}
             >
               {" "}
@@ -184,6 +187,7 @@ function ChoosePayMethod(props) {
                   placeholder="Enter your mobile number"
                   type="number"
                   required
+                  // value={props.formHandler.getValues("paymentMethod") === "momo" ? props.formHandler.getValues("telephoneNo"): "" }
                   className={`form-control w-100 ${
                     props.formHandler.formState.errors.paymentCardNo
                       ? " is-invalid"
@@ -232,10 +236,12 @@ function ChoosePayMethod(props) {
           <div className="d-flex  justify-content-between">
             <button
               onClick={async () => {
+                props.formHandler.setValue("amount", "");
+                props.formHandler.setValue("momoname", "");
+                props.formHandler.setValue("paymentMethodId", "");
+
                 props.handleBack(1);
-                props.formHandler.setValue("momoname","")
-                props.formHandler.setValue("paymentCardNo","")
-                props.formHandler.setValue("momoname","")
+                // props.formHandler.setValue("momoname", "");
               }}
               type="button"
               className="subscribe btn btn-success btn-block shadow-sm"
@@ -407,6 +413,7 @@ function ChoosePayMethod(props) {
             <div className="d-flex justify-content-between">
               <button
                 onClick={async () => {
+                  props.formHandler.setValue("amount", "");
                   props.handleBack(1);
                 }}
                 type="button"
