@@ -87,6 +87,8 @@ export default function TransactionsModal({ open, handleClose }) {
       endDate: "", // formatDate(formattedCurrentDate),
       memberid: "",
       cardTypeId: "",
+      fullname: "",
+      customerCardtype: "",
     },
   });
 
@@ -162,6 +164,7 @@ export default function TransactionsModal({ open, handleClose }) {
         // setting the member id value from the response
         setValue("memberid", response.memberid);
         setValue("cardTypeId", response.cardtypeid);
+        setValue("customerCardtype", response.cardtypename);
         setCardName(response.fullname);
         setCardNo(response.cardnumber);
         console.log("loginresp", response);
@@ -242,6 +245,11 @@ export default function TransactionsModal({ open, handleClose }) {
 
   const cardType = getValues("cardTypeId"); //store card type here
 
+  const newTransactions = transactions.map((item, i) => {
+    const formatDate = new Date(item.date).toLocaleDateString();
+
+    return { ...item, date: formatDate };
+  });
   function downloadHistory() {
     const pdf = new jsPDF();
 
@@ -252,23 +260,31 @@ export default function TransactionsModal({ open, handleClose }) {
     const centerX = (pdf.internal.pageSize.width - titleWidth) / 2;
 
     pdf.text(title, centerX, 15);
+
+    const heading = `Customer name: ${cardName}`;
+    const customerCardtype = `Card type: ${getValues("customerCardtype")}`;
+    pdf.setFontSize(12);
+
+    pdf.text(heading, 10, 40);
+    pdf.setFontSize(12);
+    pdf.text(customerCardtype, 10, 47);
     const columns = [
-      { header: "Transaction ID", dataKey: "transactionid" },
-      { header: "Member Name", dataKey: "membername" },
-      { header: "Amount", dataKey: "amount" },
+      { header: "Date", dataKey: "date" },
+      { header: "Payment Name", dataKey: "paymentname" },
+      { header: "Amount(GHS)", dataKey: "amount" },
       { header: "Status", dataKey: "status" },
-      { header: "Type", dataKey: "type" },
+      { header: "Transaction ID", dataKey: "transactionid" },
       // Add more columns as needed
     ];
 
     pdf.autoTable({
       head: [columns.map((column) => column.header)],
-      body: transactions.map((item) =>
+      body: newTransactions.map((item) =>
         columns.map((column) => {
           return item[column.dataKey];
         })
       ),
-      startY: 20,
+      startY: 55,
     });
 
     // transactions.forEach((item, index) => {
