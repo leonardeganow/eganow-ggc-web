@@ -478,16 +478,18 @@ export default function TransactionsModal({ open, handleClose }) {
                           width: "100%",
                           position: "relative",
                         }}
-                        className=" "
+                        className="text-uppercase "
                       >
                         <p
                           style={{
                             position: "absolute",
                             bottom: "20px",
                             left: "50px",
-                            color: "white",
+                            color: "black",
                             fontSize: "13px",
-                            color: "darkgray",
+                            fontWeight : "bold"
+
+                            // color: "darkgray",
                           }}
                         >
                           {cardName}
@@ -497,9 +499,11 @@ export default function TransactionsModal({ open, handleClose }) {
                             position: "absolute",
                             top: "50%",
                             left: "50px",
-                            color: "white",
+                            color: "black",
                             letterSpacing: "4px",
-                            color: "darkgray",
+                            // color: "darkgray",
+                            fontWeight : "bold"
+
                           }}
                         >
                           {cardNo}
