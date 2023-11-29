@@ -48,7 +48,7 @@ const style = {
   borderRadius: "1rem",
   zIndex: "1099px",
 };
-export default function TransactionsModal({ open, handleClose }) {
+export default function TransactionsModal({ open, handleClose,loginState,setLoginState }) {
   const { getTransactions, getTotalDonations } = TransactionAPI();
   const { loginMember } = membersGRPC();
   const [showLogin, setShowLogin] = useState(true); //state to show or hide the login page
@@ -160,7 +160,8 @@ export default function TransactionsModal({ open, handleClose }) {
       if (response.message == "Success" && response.status == true) {
         // set showloging to false in other to display list of transactions
 
-        setShowLogin(false);
+        // setShowLogin(false);
+        setLoginState(false)
         setIsLoading(false);
         // setting the member id value from the response
         setValue("memberid", response.memberid);
@@ -332,7 +333,7 @@ export default function TransactionsModal({ open, handleClose }) {
         imgData,
         "PNG",
         xPosition,
-        yPosition,
+        20,
         pdfWidth * scaleFactor,
         pdfHeight * scaleFactor
       );
@@ -370,13 +371,14 @@ export default function TransactionsModal({ open, handleClose }) {
         <div className="bg-white p-md-4 p-3" style={style}>
           <div>
             {/* if show login is true show the login page else hide */}
-            {showLogin == true && (
-              <div className="mx-auto ">
+            {loginState === true && (
+              <div className="mx-auto d-flex flex-column align-items-center">
                 <h1 className="text-center">Login</h1>
                 <p className="text-center">Login to view transactions</p>
                 <form
                   onSubmit={handleSubmit(login)}
-                  className="d-flex flex-column gap-4 align-items-center"
+                  className="d-flex flex-column gap-4 align-items-center justify-content-center w-75 mx-auto"
+                  style={{ maxWidth: "100%" }}
                 >
                   {/* SELECT INPUT FOR USER TO SELECT HIS MEMBER TYPE */}
                   <select
@@ -431,7 +433,7 @@ export default function TransactionsModal({ open, handleClose }) {
             {/* 
               if showLogin turns to false then we'll show list of transactions
              */}
-            {!showLogin && (
+            {!loginState && (
               <div className="">
                 <div className="position-relative">
                   {/* <h3 className="text-center m-0 p-0">Transactions</h3>
@@ -485,9 +487,11 @@ export default function TransactionsModal({ open, handleClose }) {
                             position: "absolute",
                             bottom: "20px",
                             left: "50px",
-                            color: "black",
+                            color: `${
+                              cardType === "AG050" ? "white" : "black"
+                            }`,
                             fontSize: "13px",
-                            fontWeight : "bold"
+                            fontWeight: "bold",
 
                             // color: "darkgray",
                           }}
@@ -499,11 +503,12 @@ export default function TransactionsModal({ open, handleClose }) {
                             position: "absolute",
                             top: "50%",
                             left: "50px",
-                            color: "black",
+                            color: `${
+                              cardType === "AG050" ? "white" : "black"
+                            }`,
                             letterSpacing: "4px",
                             // color: "darkgray",
-                            fontWeight : "bold"
-
+                            fontWeight: "bold",
                           }}
                         >
                           {cardNo}
@@ -583,11 +588,11 @@ export default function TransactionsModal({ open, handleClose }) {
                     </div>
                     {/* end of search form */}
                   </div>
-                  <div className="row justify-content-around my-3  align-items-center">
+                  <div className="row justify-content-evenly my-3 gy-2  align-items-center">
                     {/* <div className="col-4">
                       <button className="btn btn-danger w-100">Top Up</button>
                     </div> */}
-                    <div className="col-4">
+                    <div className="col-12 col-md-6">
                       <button
                         onClick={handleDownload}
                         className="btn btn-success w-100"
@@ -595,7 +600,7 @@ export default function TransactionsModal({ open, handleClose }) {
                         Download Card
                       </button>
                     </div>
-                    <div className="col-4">
+                    <div className="col-12 col-md-6">
                       <button
                         onClick={downloadHistory}
                         className="btn btn-success w-100"

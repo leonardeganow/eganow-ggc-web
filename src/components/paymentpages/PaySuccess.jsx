@@ -15,34 +15,9 @@ function PaySuccess(props) {
       cardTypeId: "",
     },
   });
+  const data = props.formHandler.getValues();
+  console.log(data);
 
-  // const onSubmitTransaction = async (start, end) => {
-  //   const data = getValues();
-  //   console.log(data);
-  //   setIsLoading(true);
-  //   const formatedData = {
-  //     ...data,
-  //     // startDate: formatDate(data?.startDate), //sending formated startDate
-  //     // endDate: formatDate(data?.endDate), //seending formated endDate
-  //     startDate: start, //sending formated startDate
-  //     endDate: end, //seending formated endDate
-  //   };
-  //   try {
-  //     // sending api request
-  //     const transaction = await getTransactions(formatedData);
-  //     console.log(transaction);
-  //     setIsLoading(false);
-  //     setShowTable(true);
-  //     setTransaction(transaction.translistList); //assigning the reponse to the state
-  //   } catch (err) {
-  //     if (err.message) {
-  //       setIsLoading(false);
-  //       // toast("Network Error");
-  //     }
-  //     console.log(err);
-  //     toast("Invalid date format");
-  //   }
-  // };
   return (
     <div>
       <h1 className="text-center text-success">Payment Initiated</h1>
@@ -54,9 +29,15 @@ function PaySuccess(props) {
       </div>
 
       <h5 className="text-center my-4">
-        {transType === "Debit card"
-          ? "Your payment was successful"
-          : "You will receive a prompt from your mobile operator to confirm."}
+        {transType === "Debit card" ? (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: `${props.formHandler.getValues("paymentUrl")}`,
+            }}
+          ></div>
+        ) : (
+          "You will receive a prompt from your mobile operator to confirm."
+        )}
       </h5>
       <div className="d-flex justify-content-end my-2">
         <button onClick={() => props.handleNext(1)} className="btn btn-success">
