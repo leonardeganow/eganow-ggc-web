@@ -69,7 +69,7 @@ function SelectAmount(props) {
                     ? "is-invalid"
                     : null
                 }`}
-                type="input"
+                type="number"
                 placeholder="Enter an amount"
               />
             </div>

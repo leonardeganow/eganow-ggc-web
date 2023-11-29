@@ -15,7 +15,7 @@ function TransactionAPI() {
     const request = new PostDataRequest(); //initalize request
     console.log(request);
     // SETTING REQUEST BODY TO POST
-    request.setMobileno(data.telephoneNo);
+    request.setMobileno(data.telephoneNo ? data.telephoneNo : data.email);
     request.setMemberid(data.memberId);
     request.setTranstypejmorgcc(data.transType);
     request.setTransamount(data.amount);
