@@ -233,6 +233,9 @@ function ChoosePayMethod(props) {
             <button
               onClick={async () => {
                 props.handleBack(1);
+                props.formHandler.setValue("momoname","")
+                props.formHandler.setValue("paymentCardNo","")
+                props.formHandler.setValue("momoname","")
               }}
               type="button"
               className="subscribe btn btn-success btn-block shadow-sm"

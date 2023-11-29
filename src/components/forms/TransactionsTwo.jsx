@@ -13,6 +13,7 @@ import platinum from "../../images/cardImages/Platinum_105319.png";
 import prestige from "../../images/cardImages/prestige_105320.png";
 import silver from "../../images/cardImages/Silver_105322.png";
 import standard from "../../images/cardImages/Standard_105323.png";
+import starter from "../../images/cardImages/starter.png";
 import "jspdf-autotable";
 import html2canvas from "html2canvas";
 import { IoIosRefresh } from "react-icons/io";
@@ -201,10 +202,19 @@ const TransactionsTwo = (props) => {
       case "AG010":
         return arise;
         break;
+      default:
+        return starter;
     }
   }
 
   const cardType = getValues("cardTypeId"); //store card type here
+  const newTransactions = transactions.map((item, i) => {
+    const formatDate = new Date(item.date).toLocaleDateString();
+
+    return { ...item, date: formatDate };
+  });
+
+  console.log(newTransactions);
 
   function downloadHistory() {
     const pdf = new jsPDF();
@@ -216,23 +226,36 @@ const TransactionsTwo = (props) => {
     const centerX = (pdf.internal.pageSize.width - titleWidth) / 2;
 
     pdf.text(title, centerX, 15);
+
+    const heading = `Customer name: ${props.formHandler.getValues("fullName")}`;
+    const customerCardtype = `Card type: ${props.formHandler.getValues(
+      "plan"
+    )}`;
+    pdf.setFontSize(12);
+
+    pdf.text(heading, 10, 40);
+    pdf.setFontSize(12);
+    pdf.text(customerCardtype, 10, 47);
+
     const columns = [
-      { header: "Transaction ID", dataKey: "transactionid" },
-      { header: "Member Name", dataKey: "membername" },
-      { header: "Amount", dataKey: "amount" },
+      { header: "Date", dataKey: "date" },
+      { header: "Payment Name", dataKey: "paymentname" },
+      { header: "Amount(GHS)", dataKey: "amount" },
       { header: "Status", dataKey: "status" },
-      { header: "Type", dataKey: "type" },
+      { header: "Transaction ID", dataKey: "transactionid" },
+
+      // { header: "Type", dataKey: "type" },
       // Add more columns as needed
     ];
 
     pdf.autoTable({
       head: [columns.map((column) => column.header)],
-      body: transactions.map((item) =>
+      body: newTransactions.map((item) =>
         columns.map((column) => {
           return item[column.dataKey];
         })
       ),
-      startY: 20,
+      startY: 55,
     });
 
     // transactions.forEach((item, index) => {
@@ -291,7 +314,7 @@ const TransactionsTwo = (props) => {
       pdf.setFontSize(fontSize);
       pdf.text(heading, textXPosition, textYPosition);
 
-      pdf.save("output.pdf");
+      pdf.save("GGC.pdf");
     });
   };
 
@@ -306,11 +329,13 @@ const TransactionsTwo = (props) => {
 
   return (
     <div>
-
       <div className="position-relative">
         <h3 className="text-center m-0 p-0">Transactions</h3>
         <p className="text-center m-0 p-0">View your transaction</p>
-        <FaWindowClose className="position-absolute end-0 top-0 text-danger" onClick={()=>props.handleClose()}/>
+        <FaWindowClose
+          className="position-absolute end-0 top-0 text-danger"
+          onClick={() => props.handleClose()}
+        />
 
         <hr />
         <div className="px-3">
@@ -335,7 +360,7 @@ const TransactionsTwo = (props) => {
                 id="divId"
                 style={{
                   backgroundImage: `url(${memberCards(
-                    props.formHandler.getValues("cardId")
+                    props.formHandler.getValues("userCardType")
                   )})`,
                   backgroundSize: "cover",
                   backgroundAttachment: "fixed",
@@ -389,7 +414,7 @@ const TransactionsTwo = (props) => {
                 <form
                   // onSubmit={handleSubmit(onSubmitTransaction)}
                   className="mt-3"
-                // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
+                  // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
                 >
                   {/* forms cards */}
                   <div className="row">

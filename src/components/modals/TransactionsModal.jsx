@@ -18,6 +18,7 @@ import "jspdf-autotable";
 import html2canvas from "html2canvas";
 import { IoIosRefresh } from "react-icons/io";
 import { jsPDF } from "jspdf";
+import starter from "../../images/cardImages/starter.png";
 
 // MATERIAL UI FOR TABLE
 import Table from "@mui/material/Table";
@@ -30,8 +31,7 @@ import Paper from "@mui/material/Paper";
 import TransactionAPI from "../../api/grpcapi/TransactionGRPC";
 import { Avatar, Skeleton } from "@mui/material";
 import { IoSearchCircleSharp } from "react-icons/io5";
-import { FaSearch,FaWindowClose } from "react-icons/fa";
-
+import { FaSearch, FaWindowClose } from "react-icons/fa";
 
 const style = {
   position: "relative",
@@ -88,6 +88,8 @@ export default function TransactionsModal({ open, handleClose }) {
       endDate: "", // formatDate(formattedCurrentDate),
       memberid: "",
       cardTypeId: "",
+      fullname: "",
+      customerCardtype: "",
     },
   });
 
@@ -163,6 +165,7 @@ export default function TransactionsModal({ open, handleClose }) {
         // setting the member id value from the response
         setValue("memberid", response.memberid);
         setValue("cardTypeId", response.cardtypeid);
+        setValue("customerCardtype", response.cardtypename);
         setCardName(response.fullname);
         setCardNo(response.cardnumber);
         console.log("loginresp", response);
@@ -238,11 +241,19 @@ export default function TransactionsModal({ open, handleClose }) {
       case "AG010":
         return arise;
         break;
+
+      default:
+        return starter;
     }
   }
 
   const cardType = getValues("cardTypeId"); //store card type here
 
+  const newTransactions = transactions.map((item, i) => {
+    const formatDate = new Date(item.date).toLocaleDateString();
+
+    return { ...item, date: formatDate };
+  });
   function downloadHistory() {
     const pdf = new jsPDF();
 
@@ -253,23 +264,31 @@ export default function TransactionsModal({ open, handleClose }) {
     const centerX = (pdf.internal.pageSize.width - titleWidth) / 2;
 
     pdf.text(title, centerX, 15);
+
+    const heading = `Customer name: ${cardName}`;
+    const customerCardtype = `Card type: ${getValues("customerCardtype")}`;
+    pdf.setFontSize(12);
+
+    pdf.text(heading, 10, 40);
+    pdf.setFontSize(12);
+    pdf.text(customerCardtype, 10, 47);
     const columns = [
-      { header: "Transaction ID", dataKey: "transactionid" },
-      { header: "Member Name", dataKey: "membername" },
-      { header: "Amount", dataKey: "amount" },
+      { header: "Date", dataKey: "date" },
+      { header: "Payment Name", dataKey: "paymentname" },
+      { header: "Amount(GHS)", dataKey: "amount" },
       { header: "Status", dataKey: "status" },
-      { header: "Type", dataKey: "type" },
+      { header: "Transaction ID", dataKey: "transactionid" },
       // Add more columns as needed
     ];
 
     pdf.autoTable({
       head: [columns.map((column) => column.header)],
-      body: transactions.map((item) =>
+      body: newTransactions.map((item) =>
         columns.map((column) => {
           return item[column.dataKey];
         })
       ),
-      startY: 20,
+      startY: 55,
     });
 
     // transactions.forEach((item, index) => {
@@ -418,13 +437,15 @@ export default function TransactionsModal({ open, handleClose }) {
                   {/* <h3 className="text-center m-0 p-0">Transactions</h3>
                   <p className="text-center m-0 p-0">View your transaction</p>
                   <hr /> */}
-                    <h3 className="text-center m-0 p-0">Transactions</h3>
-                    <p className="text-center m-0 p-0">View your transaction</p>
-                    <FaWindowClose className="position-absolute end-0 top-0 text-danger" onClick={()=>handleClose()} />
+                  <h3 className="text-center m-0 p-0">Transactions</h3>
+                  <p className="text-center m-0 p-0">View your transaction</p>
+                  <FaWindowClose
+                    className="position-absolute end-0 top-0 text-danger"
+                    onClick={() => handleClose()}
+                  />
 
-                    <hr />
+                  <hr />
                 </div>
-
 
                 <div className="p-3">
                   <div className="text-center">
@@ -444,9 +465,7 @@ export default function TransactionsModal({ open, handleClose }) {
                     </h2>
                   </div>
                   <div className="row ">
-
                     <div className="col-md-6 text-center ">
-
                       {/* card */}
                       <div
                         id="divId"
@@ -459,16 +478,18 @@ export default function TransactionsModal({ open, handleClose }) {
                           width: "100%",
                           position: "relative",
                         }}
-                        className=" "
+                        className="text-uppercase "
                       >
                         <p
                           style={{
                             position: "absolute",
                             bottom: "20px",
                             left: "50px",
-                            color: "white",
+                            color: "black",
                             fontSize: "13px",
-                            color: "darkgray",
+                            fontWeight : "bold"
+
+                            // color: "darkgray",
                           }}
                         >
                           {cardName}
@@ -478,9 +499,11 @@ export default function TransactionsModal({ open, handleClose }) {
                             position: "absolute",
                             top: "50%",
                             left: "50px",
-                            color: "white",
+                            color: "black",
                             letterSpacing: "4px",
-                            color: "darkgray",
+                            // color: "darkgray",
+                            fontWeight : "bold"
+
                           }}
                         >
                           {cardNo}
@@ -502,7 +525,7 @@ export default function TransactionsModal({ open, handleClose }) {
                         <form
                           // onSubmit={handleSubmit(onSubmitTransaction)}
                           className="mt-3"
-                        // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
+                          // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
                         >
                           {/* forms cards */}
                           <div className="row">

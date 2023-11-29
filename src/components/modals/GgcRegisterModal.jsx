@@ -119,6 +119,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
     industry: "other",
     occupation: "other",
     ageRange: "other",
+    userCardType: "",
   };
 
   const formHandler = useForm({
@@ -214,7 +215,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
       >
         <div
           className={`bg-white p-3 p-md-3 ${
-            currentStep === 2 || currentStep === 4 || currentStep === 7 ? "modalbehav" : ""
+            currentStep === 2 || currentStep === 4 ? "modalbehav" : currentStep === 7 ? "sevenModal":""
           } `}
           style={style}
         >
