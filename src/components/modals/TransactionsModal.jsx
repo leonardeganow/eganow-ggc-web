@@ -371,12 +371,13 @@ export default function TransactionsModal({ open, handleClose }) {
           <div>
             {/* if show login is true show the login page else hide */}
             {showLogin == true && (
-              <div className="mx-auto ">
+              <div className="mx-auto d-flex flex-column align-items-center">
                 <h1 className="text-center">Login</h1>
                 <p className="text-center">Login to view transactions</p>
                 <form
                   onSubmit={handleSubmit(login)}
-                  className="d-flex flex-column gap-4 align-items-center"
+                  className="d-flex flex-column gap-4 align-items-center justify-content-center w-75 mx-auto"
+                  style={{maxWidth:"100%"}}
                 >
                   {/* SELECT INPUT FOR USER TO SELECT HIS MEMBER TYPE */}
                   <select
@@ -583,11 +584,11 @@ export default function TransactionsModal({ open, handleClose }) {
                     </div>
                     {/* end of search form */}
                   </div>
-                  <div className="row justify-content-around my-3  align-items-center">
+                  <div className="row justify-content-evenly my-3 gy-2  align-items-center">
                     {/* <div className="col-4">
                       <button className="btn btn-danger w-100">Top Up</button>
                     </div> */}
-                    <div className="col-4">
+                    <div className="col-12 col-md-6">
                       <button
                         onClick={handleDownload}
                         className="btn btn-success w-100"
@@ -595,7 +596,7 @@ export default function TransactionsModal({ open, handleClose }) {
                         Download Card
                       </button>
                     </div>
-                    <div className="col-4">
+                    <div className="col-12 col-md-6">
                       <button
                         onClick={downloadHistory}
                         className="btn btn-success w-100"
