@@ -27,7 +27,10 @@ const AgentLoginPage = () => {
           />
         </div>
         <div className="d-flex justify-content-center mt-2">
-          <input type="submit" className="btn btn-success" />
+          <button type="submit" className="btn btn-success">
+            {" "}
+            Login
+          </button>
         </div>
       </form>
     </div>

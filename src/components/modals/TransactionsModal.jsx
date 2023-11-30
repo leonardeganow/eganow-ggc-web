@@ -449,12 +449,26 @@ export default function TransactionsModal({
                   <FaWindowClose
                     className="position-absolute end-0 top-0 text-danger"
                     onClick={() => handleClose()}
+                    size={25}
                   />
 
                   <hr />
                 </div>
 
                 <div className="p-3">
+                  <div className="d-flex justify-content-end">
+                    <button
+                      onClick={refreshData}
+                      className="btn d-flex align-items-center gap-2 btn-sm btn-danger"
+                    >
+                      {" "}
+                      <IoIosRefresh />
+                      Refresh
+                    </button>
+
+                    <div></div>
+                  </div>
+
                   <div className="text-center">
                     <h6>Donated Amount</h6>
                     <h2 className="display-5 text-success">
@@ -466,9 +480,7 @@ export default function TransactionsModal({
                           marginLeft: "5px",
                           cursor: "pointer",
                         }}
-                      >
-                        <IoIosRefresh onClick={refreshData} />
-                      </span>
+                      ></span>
                     </h2>
                   </div>
                   <div className="row ">

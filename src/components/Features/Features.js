@@ -12,6 +12,7 @@ import fImg3 from "../../images/election-donation/3.svg";
 import { Link } from "react-scroll";
 import { Link as MyLink } from "react-router-dom";
 import follow from "../../images/marketwomen.jpg";
+import { create } from "zustand";
 
 const ClickHandler = () => {
   window.scrollTo(10, 0);
@@ -23,9 +24,9 @@ const Features = (props) => {
       className={`wpo-election-donation-section-s2 section-padding ${props.fClass}`}
     >
       <div className="container py-md-4 py-2">
-        <div className="row p-6 g-lg-5 g-md-3">
-          <div className="col-md-4">
-            <div className="wpo-service-item shadow rounded-3">
+        <div className="row p-6 g-lg-5 g-md-3 align-items-stretch ">
+          <div className="col-md-4  ">
+            <div className="wpo-service-item shadow rounded-3 h-100">
               <div className="wpo-service-text p-2">
                 <div className="service-icon overflow-hidden rounded-3">
                   <img src={jm} alt="imag1" />
@@ -34,8 +35,8 @@ const Features = (props) => {
                   donate to support the 24 hour economy agenda
                 </h4>
                 <p className="p-2 m-0 text-center">
-                  Lorem Ipsum is simply dummy text the industrey's standard
-                  dummy text ever scrambled type specimen
+                  To create an enabling environent that promotes
+                  productivity,competitiveness and well paying jobs.
                 </p>
                 <div className="text-center p-2 m-0">
                   <Link to="getggc" smooth={true} duration={500}>
@@ -48,7 +49,7 @@ const Features = (props) => {
             </div>
           </div>
           <div className="col-md-4">
-            <div className="wpo-service-item shadow rounded-3">
+            <div className="wpo-service-item shadow rounded-3 h-100">
               <div className="wpo-service-text p-2">
                 <div className="service-icon overflow-hidden rounded-3">
                   <img src={ggc} alt="imag1" className="img-fluid" />
@@ -70,12 +71,13 @@ const Features = (props) => {
               </div>
             </div>
           </div>
-          <div className="col-md-4">
-            <div className="wpo-service-item shadow rounded-3">
+          <div className="col-md-4 ">
+            <div className="wpo-service-item shadow rounded-3  h-100">
               <div className="wpo-service-text p-2">
                 <div className="service-icon overflow-hidden rounded-3">
                   <img src={follow} alt="imag1" className="img-fluid" />
                 </div>
+
                 <h4 className="text-center text-danger mt-md-2">
                   DONATE TOWARDS VICTORY 2024
                 </h4>
@@ -87,7 +89,7 @@ const Features = (props) => {
                     to="https://x.com/OfficialNDCGh?s=20"
                     target={"_blank"}
                   >
-                    <button type="button" className="btn btn-success">
+                    <button type="button" className="btn btn-success mt-4">
                       Follow Us
                     </button>
                   </MyLink>

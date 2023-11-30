@@ -12,11 +12,11 @@ const Header = (props) => {
   const handleOpen = () => setOpen(true);
   const [showLogin, setShowLogin] = useState(true); //state to show or hide the login page
 
-  const handleClose = () =>{
+  const handleClose = () => {
     setOpen(false);
     // window.location.reload(true);
-    setShowLogin(true)
-  }
+    setShowLogin(true);
+  };
   const ClickHandler = () => {
     window.scrollTo(10, 0);
   };
@@ -285,7 +285,7 @@ const Header = (props) => {
                 <div className="header-right">
                   <div className="close-form">
                     <Link onClick={handleOpen} className="theme-btn" to="/">
-                      <span className="text">LOGIN</span>
+                      <span className="text">DONOR LOGIN</span>
                       <span className="mobile">
                         <i className="fi flaticon-user"></i>
                       </span>

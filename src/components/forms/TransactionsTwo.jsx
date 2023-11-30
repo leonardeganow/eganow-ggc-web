@@ -333,12 +333,25 @@ const TransactionsTwo = (props) => {
         <h3 className="text-center m-0 p-0">Transactions</h3>
         <p className="text-center m-0 p-0">View your transaction</p>
         <FaWindowClose
+          size={25}
           className="position-absolute end-0 top-0 text-danger"
           onClick={() => props.handleClose()}
         />
 
         <hr />
         <div className="px-3">
+          <div className="d-flex justify-content-end">
+            <button
+              onClick={refreshData}
+              className="btn d-flex align-items-center gap-2 btn-sm btn-danger"
+            >
+              {" "}
+              <IoIosRefresh />
+              Refresh
+            </button>
+
+            <div></div>
+          </div>
           <div className="row">
             <h6 className="text-center">Donated Amount</h6>
             <h2 className="display-5  align-items-center text-success text-center">
@@ -351,7 +364,7 @@ const TransactionsTwo = (props) => {
                   cursor: "pointer",
                 }}
               >
-                <IoIosRefresh onClick={refreshData} />
+                {/* <IoIosRefresh onClick={refreshData} /> */}
               </span>
             </h2>
             <div className="col-md-6 text-center ">
