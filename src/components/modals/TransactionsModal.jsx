@@ -46,9 +46,14 @@ const style = {
   overflow: "auto",
   maxHeight: "600px",
   borderRadius: "1rem",
-  zIndex: "1099px",
+  zIndex: "999px",
 };
-export default function TransactionsModal({ open, handleClose,loginState,setLoginState }) {
+export default function TransactionsModal({
+  open,
+  handleClose,
+  loginState,
+  setLoginState,
+}) {
   const { getTransactions, getTotalDonations } = TransactionAPI();
   const { loginMember } = membersGRPC();
   const [showLogin, setShowLogin] = useState(true); //state to show or hide the login page
@@ -161,7 +166,7 @@ export default function TransactionsModal({ open, handleClose,loginState,setLogi
         // set showloging to false in other to display list of transactions
 
         // setShowLogin(false);
-        setLoginState(false)
+        setLoginState(false);
         setIsLoading(false);
         // setting the member id value from the response
         setValue("memberid", response.memberid);
@@ -473,7 +478,8 @@ export default function TransactionsModal({ open, handleClose,loginState,setLogi
                         id="divId"
                         style={{
                           backgroundImage: `url(${memberCards(cardType)})`,
-                          backgroundSize: "cover",
+                          backgroundSize: "contain",
+                          backgroundRepeat: "no-repeat",
                           backgroundAttachment: "fixed",
                           backgroundPosition: "center",
                           height: "200px",
@@ -485,12 +491,12 @@ export default function TransactionsModal({ open, handleClose,loginState,setLogi
                         <p
                           style={{
                             position: "absolute",
-                            bottom: "20px",
-                            left: "50px",
+                            bottom: "15%",
+                            left: "10%",
                             color: `${
                               cardType === "AG050" ? "white" : "black"
                             }`,
-                            fontSize: "13px",
+                            fontSize: "0.6rem",
                             fontWeight: "bold",
 
                             // color: "darkgray",
@@ -502,11 +508,11 @@ export default function TransactionsModal({ open, handleClose,loginState,setLogi
                           style={{
                             position: "absolute",
                             top: "50%",
-                            left: "50px",
+                            left: "10%",
                             color: `${
                               cardType === "AG050" ? "white" : "black"
                             }`,
-                            letterSpacing: "4px",
+                            letterSpacing: "2px",
                             // color: "darkgray",
                             fontWeight: "bold",
                           }}
@@ -534,7 +540,7 @@ export default function TransactionsModal({ open, handleClose,loginState,setLogi
                         >
                           {/* forms cards */}
                           <div className="row">
-                            <div className="col-5 col-md-12">
+                            <div className="col-12 col-md-12">
                               <div>
                                 <label htmlFor="">Start Date</label> <br />
                                 <input
@@ -548,7 +554,7 @@ export default function TransactionsModal({ open, handleClose,loginState,setLogi
                                 />
                               </div>
                             </div>
-                            <div className="col-5 col-md-12">
+                            <div className="col-12 col-md-12">
                               <div>
                                 <label htmlFor="">End Dates</label> <br />
                                 <input
@@ -563,7 +569,7 @@ export default function TransactionsModal({ open, handleClose,loginState,setLogi
                               </div>
                             </div>
                             <div
-                              className="col-2 col-md-12"
+                              className="col-12 col-md-12"
                               style={{ paddingLeft: "10px" }}
                             >
                               <button
@@ -578,7 +584,8 @@ export default function TransactionsModal({ open, handleClose,loginState,setLogi
                                 {isLoading ? (
                                   <span className="spinner-border spinner-border-sm mr-1"></span>
                                 ) : (
-                                  <FaSearch className="" />
+                                  // <FaSearch className="" />
+                                  "search"
                                 )}
                               </button>
                             </div>

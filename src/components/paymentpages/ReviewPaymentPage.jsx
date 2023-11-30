@@ -57,62 +57,62 @@ const ReviewPaymentPage = (props) => {
       <div className="d-flex flex-column gap-4">
         <div
           style={{ backgroundColor: "#CFDFD6", borderRadius: "0.25rem" }}
-          className="  p-4"
+          className="  p-2 p-md-4"
         >
           <div className="d-flex justify-content-between align-items-center">
             <p>Sender name:</p>
-            <h5 className="fs-5 fs-md-6">
+            <p className="fs-5 fs-md-6 fw-bold text-dark text-capitalize text-end">
               {props.formHandler.getValues("paymentMethod") === "Debit card"
                 ? data.fullName || data.nameOnPaymentCard
                 : data.fullName
                 ? data.fullName
                 : data.momoname}
-            </h5>
+            </p>
           </div>
           <div>
             <div className="d-flex justify-content-between align-items-center">
               <p>Payment method:</p>
-              <h5>
+              <p className="fw-bold text-dark">
                 {props.formHandler.getValues("paymentMethod") === "Debit card"
                   ? "CARD"
                   : "Mobile money"}
-              </h5>
+              </p>
             </div>
           </div>
           {props.formHandler.getValues("paymentMethod") === "Debit card" ? (
             <div>
               <div className="d-flex justify-content-between align-items-center">
                 <p>Card number: </p>
-                <h5>{maskCreditCardNumber(creditCardNo)}</h5>
+                <p className="fw-bold text-dark">{maskCreditCardNumber(creditCardNo)}</p>
               </div>
             </div>
           ) : (
             <div className="d-flex justify-content-between align-items-center">
               <p>Momo number: </p>
-              <h5>{data.paymentCardNo}</h5>
+              <p className="fw-bold text-dark">{data.paymentCardNo}</p>
             </div>
           )}
         </div>
 
         <div
           style={{ backgroundColor: "#CFDFD6", borderRadius: "0.25rem" }}
-          className="  p-4"
+          className="  p-2 p-md-4"
         >
           {info.role === "GGC" && (
             <div className="d-flex justify-content-between align-items-center">
               <p>Good gov. ID:</p>
-              <h5>
+              <p className="fw-bold text-dark">
                 {props.formHandler.getValues("userStatus") === "INCOMPLETE"
                   ? ""
                   : data.memberId}
-              </h5>
+              </p>
             </div>
           )}
           {info.role === "GGC" ? (
             <div>
               <div className="d-flex justify-content-between align-items-center">
                 <p>Plan:</p>
-                <h5>{data.plan}</h5>
+                <p className="fw-bold text-dark">{data.plan}</p>
               </div>
             </div>
           ) : (
@@ -121,10 +121,10 @@ const ReviewPaymentPage = (props) => {
           <div>
             <div className="d-flex justify-content-between align-items-center">
               <p>Donation Amount</p>
-              <h5>
+              <p className="fw-bold text-dark">
                 GHS{" "}
                 {data.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-              </h5>
+              </p>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../../images/instragram/ndclogo-removebg-preview.png";
-
+import Header from "../../components/Navbar/Navbar";
 const AgentLoginPage = () => {
   return (
     <div
