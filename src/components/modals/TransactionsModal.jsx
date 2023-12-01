@@ -35,7 +35,7 @@ import { FaSearch, FaWindowClose } from "react-icons/fa";
 
 const style = {
   position: "relative",
-  top: "54%",
+  top: "60%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   height: "auto",
@@ -373,7 +373,7 @@ export default function TransactionsModal({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div className="bg-white p-md-4 p-3" style={style}>
+        <div className="bg-white p-md-4 p-3 " style={style}>
           <div>
             {/* if show login is true show the login page else hide */}
             {loginState === true && (
