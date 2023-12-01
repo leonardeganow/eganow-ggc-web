@@ -333,12 +333,25 @@ const TransactionsTwo = (props) => {
         <h3 className="text-center m-0 p-0">Transactions</h3>
         <p className="text-center m-0 p-0">View your transaction</p>
         <FaWindowClose
+          size={25}
           className="position-absolute end-0 top-0 text-danger"
           onClick={() => props.handleClose()}
         />
 
         <hr />
         <div className="px-3">
+          <div className="d-flex justify-content-end">
+            <button
+              onClick={refreshData}
+              className="btn d-flex align-items-center gap-2 btn-sm btn-danger"
+            >
+              {" "}
+              <IoIosRefresh />
+              Refresh
+            </button>
+
+            <div></div>
+          </div>
           <div className="row">
             <h6 className="text-center">Donated Amount</h6>
             <h2 className="display-5  align-items-center text-success text-center">
@@ -351,7 +364,7 @@ const TransactionsTwo = (props) => {
                   cursor: "pointer",
                 }}
               >
-                <IoIosRefresh onClick={refreshData} />
+                {/* <IoIosRefresh onClick={refreshData} /> */}
               </span>
             </h2>
             <div className="col-md-6 text-center ">
@@ -418,7 +431,7 @@ const TransactionsTwo = (props) => {
                 >
                   {/* forms cards */}
                   <div className="row">
-                    <div className="col-5 col-md-12">
+                    <div className="col-12 col-md-12">
                       <div>
                         <label htmlFor="">Start Date</label> <br />
                         <input
@@ -432,9 +445,9 @@ const TransactionsTwo = (props) => {
                         />
                       </div>
                     </div>
-                    <div className="col-5 col-md-12">
+                    <div className="col-12 col-md-12">
                       <div>
-                        <label htmlFor="">End Dates</label> <br />
+                        <label htmlFor="">End Date</label> <br />
                         <input
                           value={endDate}
                           type="date"
@@ -447,7 +460,7 @@ const TransactionsTwo = (props) => {
                       </div>
                     </div>
                     <div
-                      className="col-2 col-md-12"
+                      className="col-12 col-md-12"
                       style={{ paddingLeft: "10px" }}
                     >
                       <button
@@ -455,12 +468,13 @@ const TransactionsTwo = (props) => {
                         onClick={() => submitTransaction(startDate, endDate)}
                         style={{ marginTop: "20px" }}
                         type="button"
-                        className="btn btn-success w-100"
+                        className="btn btn-success w-100 "
                       >
                         {isLoading ? (
                           <span className="spinner-border spinner-border-sm mr-1"></span>
                         ) : (
-                          <FaSearch className="" />
+                          // <FaSearch className="" />
+                          "search"
                         )}
                       </button>
                     </div>
@@ -470,8 +484,8 @@ const TransactionsTwo = (props) => {
             </div>
             {/* end of search form */}
           </div>
-          <div className="row my-3 align-items-center">
-            <div className="col-4 col-md-4">
+          <div className="row gy-2 my-3 align-items-center">
+            <div className="col-12  col-md-4">
               <button
                 onClick={() => {
                   props.formHandler.setValue("amount", "");
@@ -484,7 +498,7 @@ const TransactionsTwo = (props) => {
                 Top Up
               </button>
             </div>
-            <div className="col-8 col-md-4">
+            <div className="col-12 col-md-4">
               <button
                 onClick={handleDownload}
                 className="btn btn-success w-100"

@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../../images/instragram/ndclogo-removebg-preview.png";
-
+import Header from "../../components/Navbar/Navbar";
 const AgentLoginPage = () => {
   return (
     <div
@@ -27,7 +27,10 @@ const AgentLoginPage = () => {
           />
         </div>
         <div className="d-flex justify-content-center mt-2">
-          <input type="submit" className="btn btn-success" />
+          <button type="submit" className="btn btn-success">
+            {" "}
+            Login
+          </button>
         </div>
       </form>
     </div>
