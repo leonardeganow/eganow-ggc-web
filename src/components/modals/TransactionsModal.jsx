@@ -35,7 +35,7 @@ import { FaSearch, FaWindowClose } from "react-icons/fa";
 
 const style = {
   position: "relative",
-  top: "55%",
+  top: "60%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   height: "auto",

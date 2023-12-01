@@ -313,17 +313,17 @@ function PhoneNumberForm(props) {
             </p>
             <div className="text-center ">
               <div
-                style={{ width: "100%", padding: "0px 40px" }}
-                className="  d-flex    gap-4 "
+                style={{ width: "100%", padding: "0px 0px" }}
+                className="w-md-75  px-md-5    "
               >
-                <select
+                {/* <select
                   style={{ height: "55px", width: "90px" }}
                   className="form-select h-7  d-none"
                   {...props.formHandler.register("countryCode")}
                 >
                   <option value={233}>+233</option>
-                </select>
-                <div className=" w-75 w-md-50 mx-auto ">
+                </select> */}
+                <div className=" w-100 w-md-50  ">
                   <input
                     // style={{ width: "100%" }}
                     {...props.formHandler.register("telephoneNo")}
