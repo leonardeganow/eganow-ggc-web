@@ -35,7 +35,7 @@ const Features = (props) => {
                   donate to support the 24 hour economy agenda
                 </h4>
                 <p className="p-2 m-0 text-center">
-                  To create an enabling environent that promotes
+                  To create an enabling environment that promotes
                   productivity,competitiveness and well paying jobs.
                 </p>
                 <div className="text-center p-2 m-0">
