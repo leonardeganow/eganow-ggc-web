@@ -33,21 +33,7 @@ import { Avatar, Skeleton } from "@mui/material";
 import { IoSearchCircleSharp } from "react-icons/io5";
 import { FaSearch, FaWindowClose } from "react-icons/fa";
 
-const style = {
-  position: "relative",
-  top: "60%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  height: "auto",
-  width: "95vw", // Use viewport width
-  maxWidth: "800px", // Set a maximum width if needed
-  boxShadow: "40px",
-  padding: "1rem",
-  overflow: "auto",
-  maxHeight: "600px",
-  borderRadius: "1rem",
-  zIndex: "999px",
-};
+
 export default function TransactionsModal({
   open,
   handleClose,
@@ -72,6 +58,22 @@ export default function TransactionsModal({
     // splitdate string
     let dateSplit = dateString?.split("-");
     return `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`;
+  };
+
+  const style = {
+    position: "relative",
+    top: "54%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    height: loginState  ? "auto" : "500px",
+    width: "95vw", // Use viewport width
+    maxWidth: "800px", // Set a maximum width if needed
+    boxShadow: "40px",
+    padding: "1rem",
+    overflow: "auto",
+    maxHeight: "600px",
+    borderRadius: "1rem",
+    zIndex: 6666,
   };
 
   // Get the current date
