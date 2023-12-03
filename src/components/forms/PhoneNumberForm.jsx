@@ -620,6 +620,7 @@ function PhoneNumberForm(props) {
                 Reset pin{" "}
               </button> */}
               <p
+              role="button"
                 onClick={() => {
                   setCondition(false);
                   setResetPin(true);
