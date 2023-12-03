@@ -606,6 +606,33 @@ function PhoneNumberForm(props) {
                 {props.formHandler.formState.errors.pin.message}
               </p>
             )}
+            <di className="d-flex justify-content-center">
+              {/* <button
+                type="button"
+                onClick={() => {
+                  setCondition(false);
+                  setResetPin(true);
+                  setShowInput(false);
+                  setShowEnterPin(false);
+                }}
+                className="btn btn-danger"
+              >
+                Reset pin{" "}
+              </button> */}
+              <p
+                onClick={() => {
+                  setCondition(false);
+                  setResetPin(true);
+                  setShowInput(false);
+                  setShowEnterPin(false);
+                }}
+                href=""
+                style={{fontSize: "12px"}}
+                className="text-center mt-1 text-info"
+              >
+                Forgot pin?
+              </p>
+            </di>
 
             <div className="d-flex justify-content-between mt-4">
               <button
@@ -622,18 +649,7 @@ function PhoneNumberForm(props) {
               >
                 back
               </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setCondition(false);
-                  setResetPin(true);
-                  setShowInput(false);
-                  setShowEnterPin(false)
-                }}
-                className="btn btn-danger"
-              >
-                Reset pin{" "}
-              </button>
+
               <button
                 onClick={handleLogin}
                 type="button"
