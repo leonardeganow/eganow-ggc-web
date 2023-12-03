@@ -67,7 +67,7 @@ export default function TransactionsModal({
     transform: "translate(-50%, -50%)",
     height: loginState  ? "auto" : "500px",
     width: "95vw", // Use viewport width
-    maxWidth: "800px", // Set a maximum width if needed
+    maxWidth: loginState ?"400px": "800px", // Set a maximum width if needed
     boxShadow: "40px",
     padding: "1rem",
     overflow: "auto",

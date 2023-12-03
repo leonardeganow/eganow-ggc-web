@@ -16,6 +16,7 @@ function PhoneNumberForm(props) {
 
   const [condition, setCondition] = React.useState(false);
   const [showpin, setShowpin] = React.useState(false);
+  const [resetPin, setResetPin] = React.useState(false);
   const [showInput, setShowInput] = React.useState(false);
   const [showCountries, setShowCountries] = React.useState(true);
   const [country, setCountry] = React.useState(null);
@@ -622,11 +623,79 @@ function PhoneNumberForm(props) {
                 back
               </button>
               <button
+                type="button"
+                onClick={() => {
+                  setCondition(false);
+                  setResetPin(true);
+                  setShowInput(false);
+                  setShowEnterPin(false)
+                }}
+                className="btn btn-danger"
+              >
+                Reset pin{" "}
+              </button>
+              <button
                 onClick={handleLogin}
                 type="button"
                 disabled={isLoading}
                 className="btn btn-success  "
               >
+                {isLoading ? (
+                  <span className="spinner-border spinner-border-sm mr-1"></span>
+                ) : (
+                  "continue"
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {resetPin && (
+        <div>
+          <form>
+            <h3 className="text-center">Reset Pin</h3>
+            <p className="text-center">
+              {/* "Create pin to protect the card you will acquire" */}
+              Enter your phone number to reset your pin
+            </p>
+            <div className="text-center ">
+              <div
+                style={{ width: "100%", padding: "0px 0px" }}
+                className="w-md-75  px-md-5    "
+              >
+                <div className=" w-100 w-md-50  ">
+                  <input
+                    // style={{ width: "100%" }}
+                    {...props.formHandler.register("telephoneNo")}
+                    placeholder="Telephone Number"
+                    className={`form-control w-100 ${
+                      props.formHandler.formState.errors.telephoneNo
+                        ? "is-invalid"
+                        : ""
+                    }  outline-none p-3`}
+                  />
+
+                  {props.formHandler.formState.errors.telephoneNo && (
+                    <div className="invalid-feedback">
+                      {props.formHandler.formState.errors.telephoneNo.message}
+                    </div>
+                  )}
+                  {!props.formHandler.formState.errors.telephoneNo && (
+                    <div className="valid-feedback">Looks good!</div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="d-flex justify-content-end">
+              <button
+                disabled={isLoading}
+                type="button"
+                style={{ width: "160px" }}
+                className="btn btn-success mt-4 "
+              >
+                {" "}
                 {isLoading ? (
                   <span className="spinner-border spinner-border-sm mr-1"></span>
                 ) : (

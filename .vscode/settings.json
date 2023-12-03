@@ -27,5 +27,7 @@
     "titleBar.inactiveBackground": "#75672899",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#756728"
+  "peacock.color": "#756728",
+  "editor.fontFamily": "MonoLisa",
+  "editor.fontLigatures": true
 }
