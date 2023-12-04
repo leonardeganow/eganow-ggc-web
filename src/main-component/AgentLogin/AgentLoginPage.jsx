@@ -1,7 +1,9 @@
 import React from "react";
 import logo from "../../images/instragram/ndclogo-removebg-preview.png";
 import Header from "../../components/Navbar/Navbar";
+import { useNavigate } from "react-router-dom";
 const AgentLoginPage = () => {
+  const navigate = useNavigate();
   return (
     <div
       style={{ height: "100vh", backgroundColor: "#006436" }}
@@ -26,8 +28,13 @@ const AgentLoginPage = () => {
             placeholder="Password"
           />
         </div>
-        <div className="d-flex justify-content-center mt-2">
-          <button type="submit" className="btn btn-success">
+        <div className="d-flex justify-content-end mt-2">
+       
+          <button
+            onClick={() => navigate("/agentdashboard")}
+            type="submit"
+            className="btn btn-success"
+          >
             {" "}
             Login
           </button>

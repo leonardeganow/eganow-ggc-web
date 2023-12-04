@@ -709,6 +709,7 @@ function PhoneNumberForm(props) {
               <button
                 disabled={isLoading}
                 type="button"
+                onClick=""
                 style={{ width: "160px" }}
                 className="btn btn-success mt-4 "
               >

@@ -34,6 +34,11 @@ import SignUpPage from "../SignUpPage";
 import ForgotPassword from "../ForgotPassword";
 import GgcRegForm from "../../components/forms/GgcRegForm";
 import AgentLoginPage from "../AgentLogin/AgentLoginPage";
+import AgentDashboard from "../AgentDashboard/AgentDashboard";
+import RegisterUser from "../AgentDashboard/RegisterUser";
+import AgentCommission from "../AgentDashboard/AgentCommission";
+import AgentRegisteredUsers from "../AgentDashboard/AgentRegisteredUsers";
+import AgentChangePin from "../AgentDashboard/AgentChangePin";
 
 const AllRoute = () => {
   return (
@@ -43,6 +48,12 @@ const AllRoute = () => {
           <Route path="/" element={<Homepage />} />
           <Route path="home" element={<Homepage />} />
           <Route path="/agentlogin" element={<AgentLoginPage />} />
+          <Route path="/agentdashboard" element={<AgentDashboard />}>
+            <Route index element={<RegisterUser />} />
+            <Route path="transactions" element={<AgentCommission />} />
+            <Route path="registeredusers" element={<AgentRegisteredUsers />} />
+            <Route path="changepin" element={<AgentChangePin />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>
