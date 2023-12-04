@@ -443,6 +443,67 @@ proto.Transaction.TransactionSvcPromiseClient.prototype.getMemberTransactions =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.Transaction.TransactionHistoryRequest,
+ *   !proto.Transaction.TransactionResponse>}
+ */
+const methodDescriptor_TransactionSvc_GetMemberTransactionHistory = new grpc.web.MethodDescriptor(
+  '/Transaction.TransactionSvc/GetMemberTransactionHistory',
+  grpc.web.MethodType.UNARY,
+  proto.Transaction.TransactionHistoryRequest,
+  proto.Transaction.TransactionResponse,
+  /**
+   * @param {!proto.Transaction.TransactionHistoryRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.Transaction.TransactionResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.Transaction.TransactionHistoryRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.Transaction.TransactionResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.Transaction.TransactionResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.Transaction.TransactionSvcClient.prototype.getMemberTransactionHistory =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/Transaction.TransactionSvc/GetMemberTransactionHistory',
+      request,
+      metadata || {},
+      methodDescriptor_TransactionSvc_GetMemberTransactionHistory,
+      callback);
+};
+
+
+/**
+ * @param {!proto.Transaction.TransactionHistoryRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.Transaction.TransactionResponse>}
+ *     Promise that resolves to the response
+ */
+proto.Transaction.TransactionSvcPromiseClient.prototype.getMemberTransactionHistory =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/Transaction.TransactionSvc/GetMemberTransactionHistory',
+      request,
+      metadata || {},
+      methodDescriptor_TransactionSvc_GetMemberTransactionHistory);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.Transaction.TransAdminRequest,
  *   !proto.Transaction.TransactionResponse>}
  */

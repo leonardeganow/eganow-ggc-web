@@ -5,6 +5,7 @@ import {
   KycRequest,
   TransactionRequest,
   DonatedAmountRequest,
+  TotalTransactionDoneByAgentRequest
 } from "../../protos/gen/Transaction_pb";
 
 function TransactionAPI() {
@@ -46,6 +47,23 @@ function TransactionAPI() {
     console.log(request);
     request.setMemberid(data.memberid);
     request.setMembertype(data.role);
+
+    return new Promise((resolve, reject) => {
+      client.getTotalAmountDonated(request, METADATA, (err, resp) => {
+        if (err) {
+          reject(err);
+        }
+        const result = resp?.toObject();
+        resolve(result);
+      });
+    });
+  }
+  //get total transactions by member
+  function getTotalCommission(data) {
+    const request = new TotalTransactionDoneByAgentRequest(); //initalize request
+    console.log(request);
+    // request.setMemberid(data.memberid);
+    // request.setMembertype(data.role);
 
     return new Promise((resolve, reject) => {
       client.getTotalAmountDonated(request, METADATA, (err, resp) => {
@@ -129,7 +147,7 @@ function TransactionAPI() {
     });
   }
 
-  return { postNewTransaction, getKyc, getTransactions, getTotalDonations };
+  return { postNewTransaction, getKyc, getTransactions, getTotalDonations,getTotalCommission };
 }
 
 export default TransactionAPI;

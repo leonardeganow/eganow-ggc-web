@@ -76,7 +76,7 @@ const MissionVission = (props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { updateRoleAndCardType } = useStore(); //zustand state to hanndle role annd card select
+  const { updateRoleAndCardType ,info } = useStore(); //zustand state to hanndle role annd card select
 
   const { getCardTypes } = CardTypeAPI();
 
@@ -84,11 +84,12 @@ const MissionVission = (props) => {
 
   //get ggc card packages and store in zustand state
   function handleCardGet(cardtype, cardamount, cardId) {
+  
     const newRole = "GGC";
 
     const cardDisplay = `${cardtype} card - ${cardamount}`;
 
-    updateRoleAndCardType(newRole, cardDisplay, cardId, cardamount);
+    updateRoleAndCardType(newRole, cardDisplay, cardId, cardamount, info.agentId);
   }
 
   const getCardTypeHandler = async () => {

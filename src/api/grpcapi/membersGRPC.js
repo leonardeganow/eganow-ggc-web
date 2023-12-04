@@ -18,13 +18,12 @@ const membersGRPC = () => {
         param.telephoneNo ? param.telephoneNo : param.email
       );
       request.setMembertype(JMOrGGCValues[param.role]);
-      console.log(request);
+
       return new Promise((resolve, reject) => {
         client.checkIfMemberExist(request, METADATA, (err, response) => {
           if (err) {
             reject(err);
           }
-          console.log(response);
 
           resolve(response?.toObject());
         });
@@ -52,7 +51,7 @@ const membersGRPC = () => {
       request.setIndustry(params.industry);
       request.setOccupation(params.occupation);
       request.setNdcmemberidno(null);
-      request.setAgentid(null);
+      request.setAgentid(params.agentId ? params.agentId:null);
       request.setPin(params.pin);
       request.setMobielwebussd("WEB");
       request.setAge(null);
@@ -60,10 +59,9 @@ const membersGRPC = () => {
       request.setCardpickuplocation(params.card_pickup_location);
       request.setCardtypeid(params.cards);
       // request.setAccountcreationstatus(null);
-      console.log(request);
+
       return new Promise((resolve, reject) => {
         client.createMember(request, METADATA, (err, response) => {
-          console.log(request);
           if (err) {
             reject(err);
           }
@@ -71,9 +69,7 @@ const membersGRPC = () => {
           resolve(result);
         });
       });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   function createJmMember(params) {
@@ -88,7 +84,6 @@ const membersGRPC = () => {
 
       return new Promise((resolve, reject) => {
         client.createJMMember(request, METADATA, (err, response) => {
-          console.log(request);
           if (err) {
             reject(err);
           }
@@ -96,22 +91,18 @@ const membersGRPC = () => {
           resolve(result);
         });
       });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   function loginMember(params) {
     try {
       const request = new MemberLoginRequest();
 
-      console.log(request);
       request.setMobilenumberoremailaddress(
         params.telephoneNo ? params.telephoneNo : params.email
       );
       request.setPin(params.pin);
       request.setAccounttype(JMOrGGCValues[params.role]);
-      console.log(request);
 
       return new Promise((resolve, reject) => {
         client.loginMember(request, METADATA, (err, response) => {

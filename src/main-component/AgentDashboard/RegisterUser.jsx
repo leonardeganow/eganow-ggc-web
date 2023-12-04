@@ -1,13 +1,17 @@
 import React from "react";
 import AgentInfoCards from "./AgentInfoCards";
-import MissionVission from "../../components/MissionVission/MissionVission";
 import AgentCards from "./AgentCards";
+import useStore from "../../formstore/formStore";
+
 
 function RegisterUser() {
+const {info} = useStore()
+console.log(info);
+
   return (
-    <div className=" pt-3" style={{ height: "100vh" }}>
+    <div className=" pt-3" style={{ height: "100vh" , overflow: "auto"}}>
       <div className="row m-0 p-0">
-        <div className="col-12  d-flex justify-content-end py-2 px-5">agent name</div>
+        <div className="col-12  d-flex justify-content-end py-2 px-5 text-dark fw-bolder">Agent Id: {info.agentId}</div>
           <AgentInfoCards/>
       </div>
       <h3 className="text-center mt-5">Good Governance packages</h3>

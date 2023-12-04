@@ -76,19 +76,19 @@ function AgentCards() {
       const handleOpen = () => setOpen(true);
       const handleClose = () => setOpen(false);
     
-      const { updateRoleAndCardType } = useStore(); //zustand state to hanndle role annd card select
+      const { updateRoleAndCardType, info } = useStore(); //zustand state to hanndle role annd card select
     
       const { getCardTypes } = CardTypeAPI();
     
       //
     
       //get ggc card packages and store in zustand state
-      function handleCardGet(cardtype, cardamount, cardId) {
+      function handleCardGet(cardtype, cardamount, cardId,agentId) {
         const newRole = "GGC";
     
         const cardDisplay = `${cardtype} card - ${cardamount}`;
     
-        updateRoleAndCardType(newRole, cardDisplay, cardId, cardamount);
+        updateRoleAndCardType(newRole, cardDisplay, cardId, cardamount,agentId);
       }
     
       const getCardTypeHandler = async () => {
@@ -212,7 +212,8 @@ function AgentCards() {
                     handleCardGet(
                       card.cardtypename,
                       card.cardamount,
-                      card.cardtypeid
+                      card.cardtypeid,
+                      info.agentId
                     );
                   }}
                   className="col-lg-4 col-md-4 col-sm-6 col-12"

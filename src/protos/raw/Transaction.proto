@@ -12,6 +12,7 @@ service TransactionSvc {
     rpc GetChargesOnTransactionUssd(UssdChargesRequest) returns (ChargesResponse);
     rpc GetCustomerKYC(KycRequest) returns (KycResponse);
     rpc GetMemberTransactions(TransactionRequest) returns (TransactionResponse);
+    rpc GetMemberTransactionHistory(TransactionHistoryRequest) returns (TransactionResponse);
     rpc GetMemberTransactionsForAdmin(TransAdminRequest) returns (TransactionResponse);
     rpc GetTransactionStatus(StatusRequest) returns (StatusResponse);
     rpc GetTotalAmountDonated(DonatedAmountRequest) returns (DontaedAmountResponse);
@@ -109,6 +110,11 @@ message TransactionRequest {
     string endDate = 4;
 }
 
+message TransactionHistoryRequest {
+     string memberId = 1;
+    string memberType = 2;
+}
+
 message TransactionData { 
     string transactionId =1;
     string memberName = 2;
@@ -153,4 +159,5 @@ message TotalTransactionDoneByAgentRequest {
 
 message TotalTransactionDoneByAgentResponse {
     double totalAmount = 1;
+    double totalCommission = 2;
 }

@@ -33,11 +33,9 @@ function GgcRegForm(props) {
     try {
       const response = await getRegions();
       setRegions(response.regionsList);
-      console.log(response);
     } catch (error) {}
   }
 
-  console.log(props.formHandler.watch("cards"));
 
   const filteredList = constituencies.filter(
     (constituency, i) => constituency.regionid === watchRegions
@@ -56,7 +54,6 @@ function GgcRegForm(props) {
 
   React.useEffect(() => {
     // console.log(watchCountries);
-    console.log(otherCountries);
     if (watchCountries === "GH0233") {
       handleGetRegions();
       handleGetConstituencies();
@@ -81,7 +78,12 @@ function GgcRegForm(props) {
   const onSubmit = async () => {
     const data = props.formHandler.getValues();
 
-    console.log(data);
+
+    const newData = {
+      ...data,
+      agentId: info.agentId
+    }
+    console.log(newData);
     const result = await props.formHandler.trigger([
       "cards",
       "card_pickup_location",
@@ -98,7 +100,7 @@ function GgcRegForm(props) {
 
     setIsLoading(true);
     try {
-      const response = await registerMember(data);
+      const response = await registerMember(newData);
       // toast(response.message);
       setIsLoading(false);
       props.formHandler.reset(data);
@@ -118,7 +120,6 @@ function GgcRegForm(props) {
     }
   };
 
-  console.log(props.formHandler.getValues());
 
   const cardDisplay = props.cardTypeValues?.filter(
     (params, i) => params.cardtypeid === info.cardid

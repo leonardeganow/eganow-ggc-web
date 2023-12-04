@@ -73,7 +73,7 @@ const AgentSidebar = () => {
           Change pin
         </div>
       </Link>
-      <Link className="text-white" to="">
+      <Link className="text-white" to="/agentlogin">
         <div role="button" className=" d-flex  align-items-center gap-3   p-3">
           <RiLogoutCircleRLine size={20} />
           Log out
