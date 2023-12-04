@@ -58,20 +58,20 @@ function agentAPI() {
 
     //TODO GET MEMEBERS TRANSACTIONS
     async function getMemberTransactions(params) {
-        // ANCHOR INITIALIZING A CHANGE PIN REQUEST
+        // ANCHOR INITIALIZING A GET TRANSACTION LIST
         const request = new TransactionListAgentRequest()
         request.setAgentid(params.Agentid) //ANCHOR - SETTING AGENT ID
         request.setMembertype(params.Membertype) //ANCHOR -  SETTING MEMEBER TYPER
-        // console.log(request);
+        console.log(request);
 
         return new Promise(( resolve,reject) => {
-
             // ANCHOR CREATE A REQUEST TO CHANGE AGENT PING
-            client.agentChangePin(request, METADATA, (err, response) => {
+            client.getTransactionListForAgent(request, METADATA, (err, response) => {
                 if (err) {
                     reject(err)
                 }
                 const result = response?.toObject() //ANCHOR CONVERTING RESULTS TO OBJECT
+                
                 resolve(result)
             })
         })
@@ -98,8 +98,6 @@ function agentAPI() {
         })
     }
 
-
-    
 
 
     // TODO - GET MEMBERS CREATED BY AGENT
