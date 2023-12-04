@@ -631,7 +631,7 @@ function PhoneNumberForm(props) {
                 style={{fontSize: "12px"}}
                 className="text-center mt-1 text-info"
               >
-                Forgot pin?
+                Forgot your pin?
               </p>
             </di>
 
