@@ -42,9 +42,9 @@ function agentAPI() {
     try{
       // ANCHOR INITIALIZING A CHANGE PIN REQUEST
     const request = new ChangePinRequest();
-    request.setMobilenumber(params.Mobilenumber); //ANCHOR - setting the mobile number
-    request.setNewpin(params.Newpin); //ANCHOR setting new pin
-    request.setOldpin(params.Oldpin); //ANCHOR - setting old pin
+    request.setMobilenumber(params.agentMobileNo); //ANCHOR - setting the mobile number
+    request.setNewpin(params.newPin); //ANCHOR setting new pin
+    request.setOldpin(params.oldPin); //ANCHOR - setting old pin
 
     // console.log(request);
 

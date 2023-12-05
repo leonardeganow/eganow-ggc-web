@@ -66,7 +66,6 @@ function AgentCommission() {
                 <TableCell className="fw-bold text-muted fs-6">Mobile No.</TableCell>
                 <TableCell className="fw-bold text-muted fs-6">Amount (GH)</TableCell>
                 <TableCell className="fw-bold text-muted fs-6">transstatus</TableCell>
-                <TableCell className="fw-bold text-muted fs-6">Card Type</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -78,7 +77,6 @@ function AgentCommission() {
                       <TableCell ><span className="bg-success text-white px-2 py-1 rounded-pill">{trans.mobilenumber}</span></TableCell>
                       <TableCell >{trans.transamount}</TableCell>
                       <TableCell >{trans.transstatus}</TableCell>
-                      <TableCell >{trans.cardid}</TableCell>
                     </TableRow>
                   )
                 }) : 
