@@ -5,6 +5,7 @@ import {
   MemberLoginRequest,
   JMRequest,
   JMOrGGCValues,
+  ResetPinRequest
 } from "../../protos/gen/Members_pb";
 import { URL, METADATA } from "../../utils/constants";
 
@@ -118,8 +119,29 @@ const membersGRPC = () => {
     }
   }
 
+
+  function resetPin (params){
+    try {
+      const request = new ResetPinRequest()
+      
+     
+
+      return new Promise((resolve, reject) => {
+        client.resetMemberPin(request, METADATA, (err, response) => {
+          if (err) {
+            reject(err);
+          }
+
+          resolve(response?.toObject());
+        });
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  } 
+
   // returning function to use in our app
-  return { checkIfUserExist, registerMember, loginMember, createJmMember };
+  return { checkIfUserExist, registerMember, loginMember, createJmMember,resetPin};
 };
 
 export default membersGRPC;

@@ -1,12 +1,13 @@
 import React from "react";
 import logo from "../../images/instragram/ndclogo-removebg-preview.png";
 import Header from "../../components/Navbar/Navbar";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import agentAPI from "../../api/grpcapi/AgentGRPC";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { RpcError } from "grpc-web";
 import useStore from "../../formstore/formStore";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 const AgentLoginPage = () => {
   const { updateRoleAndCardType } = useStore();
@@ -23,7 +24,7 @@ const AgentLoginPage = () => {
     try {
       const response = await loginAgent(data);
       if (response.status) {
-        updateRoleAndCardType("", "", "", "",response.message);
+        updateRoleAndCardType("", "", "", "", response.message);
         navigate("/agentdashboard");
       } else {
         toast(response.message);
@@ -48,8 +49,12 @@ const AgentLoginPage = () => {
       <form
         onSubmit={handleSubmit(agentLoginHandler)}
         action=""
-        className="bg-white p-5 rounded"
+        className="bg-white p-5 rounded relative"
       >
+        <Link to="/" className="text-success">
+          <IoArrowBackOutline size={20} className="" />
+        </Link>
+
         <div className="d-flex justify-content-center mb-1">
           <img style={{ width: "60px" }} src={logo} alt="" />
         </div>

@@ -158,7 +158,7 @@ function PhoneNumberForm(props) {
   //verify otp function
   const handleOtpVerify = async () => {
     const data = props.formHandler.getValues();
-
+console.log(data);
     const result = await props.formHandler.trigger("otp");
     console.log(result);
     if (!result) {
@@ -452,6 +452,7 @@ function PhoneNumberForm(props) {
           <div className="d-flex justify-content-between ">
             <button
               onClick={() => {
+              
                 if (props.formHandler.getValues("email")) {
                   setCondition(false);
                   setShowEmail(true);
@@ -537,7 +538,7 @@ function PhoneNumberForm(props) {
                 {isLoading ? (
                   <span className="spinner-border spinner-border-sm mr-1"></span>
                 ) : (
-                  "continue"
+                  "back"
                 )}
               </button>
               <button
@@ -556,20 +557,25 @@ function PhoneNumberForm(props) {
                   if (!result) {
                     return;
                   }
-                  if (info.role === "JM") {
-                    try {
-                      const data = props.formHandler.getValues();
-                      const response = await createJmMember(data);
-                      setIsLoading(false);
-                      if (response.status === false) {
-                        toast(response.message);
-                      } else {
-                        props.handleNext(3);
-                      }
-                      console.log(response);
-                    } catch (error) {
-                      console.log(error);
-                    }
+                  // if (info.role === "JM") {
+                  //   try {
+                  //     const data = props.formHandler.getValues();
+                  //     const response = await createJmMember(data);
+                  //     setIsLoading(false);
+                  //     if (response.status === false) {
+                  //       toast(response.message);
+                  //     } else {
+                  //       props.handleNext(3);
+                  //     }
+                  //     console.log(response);
+                  //   } catch (error) {
+                  //     console.log(error);
+                  //   }
+                  // } else 
+                  if (
+                    props.formHandler.getValues("resetPin") === "yes"
+                  ) {
+                    alert("hi");
                   } else {
                     props.handleNext(1);
                   }
@@ -619,20 +625,21 @@ function PhoneNumberForm(props) {
               >
                 Reset pin{" "}
               </button> */}
-              <p
-              role="button"
+              <button
+                role="button"
                 onClick={() => {
+                  props.formHandler.setValue("resetPin", "yes");
                   setCondition(false);
                   setResetPin(true);
                   setShowInput(false);
                   setShowEnterPin(false);
                 }}
                 href=""
-                style={{fontSize: "12px"}}
+                style={{ fontSize: "12px" }}
                 className="text-center mt-1 text-info"
               >
                 Forgot your pin?
-              </p>
+              </button>
             </di>
 
             <div className="d-flex justify-content-between mt-4">
@@ -709,7 +716,11 @@ function PhoneNumberForm(props) {
               <button
                 disabled={isLoading}
                 type="button"
-                onClick=""
+                onClick={() => {
+                  handleOtp();
+                  setResetPin(false);
+                  setCondition(true);
+                }}
                 style={{ width: "160px" }}
                 className="btn btn-success mt-4 "
               >

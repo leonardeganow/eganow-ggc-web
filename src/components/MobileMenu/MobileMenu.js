@@ -5,6 +5,7 @@ import Collapse from "@mui/material/Collapse";
 import { NavLink } from "react-router-dom";
 import "./style.css";
 import { Link } from "react-scroll";
+import {Link as MyLink} from "react-router-dom"
 
 const menus = [
   {
@@ -17,6 +18,12 @@ const menus = [
     id: 2,
     title: "Get GGC",
     link: ".getggc",
+  },
+
+  {
+    id: 3,
+    title: "Agent",
+    link: "/agentlogin",
   },
 
   //   {
@@ -248,6 +255,14 @@ const MobileMenu = () => {
           >
             <li className="active text-white  text-center my-3">Get GGC</li>
           </Link>
+          <MyLink
+            to="/agentlogin"
+            smooth={true}
+            duration={500}
+            onClick={() => setMenuState(!menuActive)}
+          >
+            <li className="active text-white  text-center my-3">Agent</li>
+          </MyLink>
 
           {/* <Link
             to="donate"

@@ -5,7 +5,7 @@ import {
   KycRequest,
   TransactionRequest,
   DonatedAmountRequest,
-  TotalTransactionDoneByAgentRequest
+  TotalTransactionDoneByAgentRequest,
 } from "../../protos/gen/Transaction_pb";
 
 function TransactionAPI() {
@@ -14,7 +14,7 @@ function TransactionAPI() {
   // FUNCTION TO POST A NEW TRANSACTION
   function postNewTransaction(data) {
     const request = new PostDataRequest(); //initalize request
-    console.log(request);
+    
     // SETTING REQUEST BODY TO POST
     request.setMobileno(data.telephoneNo ? data.telephoneNo : data.email);
     request.setMemberid(data.memberId);
@@ -44,7 +44,7 @@ function TransactionAPI() {
   //get total transactions by member
   function getTotalDonations(data) {
     const request = new DonatedAmountRequest(); //initalize request
-    console.log(request);
+    
     request.setMemberid(data.memberid);
     request.setMembertype(data.role);
 
@@ -61,29 +61,34 @@ function TransactionAPI() {
   //get total transactions by member
   function getTotalCommission(data) {
     const request = new TotalTransactionDoneByAgentRequest(); //initalize request
-    console.log(request);
+    
+    request.setAgentid(data.agentId);
     // request.setMemberid(data.memberid);
     // request.setMembertype(data.role);
 
     return new Promise((resolve, reject) => {
-      client.getTotalAmountDonated(request, METADATA, (err, resp) => {
-        if (err) {
-          reject(err);
+      client.getTotalTransactionsDoneByAgent(
+        request,
+        METADATA,
+        (err, resp) => {
+          if (err) {
+            reject(err);
+          }
+          const result = resp?.toObject();
+          resolve(result);
         }
-        const result = resp?.toObject();
-        resolve(result);
-      });
+      );
     });
   }
 
   function getKyc(data) {
     const request = new KycRequest(); //initalize request
     // SETTING REQUEST BODY TO POST
-    console.log(data);
-    console.log(request);
+    
+    
     request.setMobilenumber(data.watchMomoNumber);
     request.setNetworkid(data.watchMomoId);
-    console.log(request);
+    
     return new Promise((resolve, reject) => {
       client.getCustomerKYC(request, METADATA, (err, resp) => {
         if (err) {
@@ -98,7 +103,7 @@ function TransactionAPI() {
   // FUNCTION FOR CARD TRANSACTION
   //   function postCardTransaction(data) {
   //     // INITALIZE A REQUEST TO POST CARD DATA
-  //     console.log(data);
+  //     
   //     const request = new CardDataRequest();
 
   //     // SETTING REQUEST BODY
@@ -121,7 +126,7 @@ function TransactionAPI() {
   //           reject(err); //reject nad return from function when error is encounted
   //         }
   //         const result = response?.toObject();
-  //         console.log(result);
+  //         
   //         resolve(result);
   //       });
   //     });
@@ -130,7 +135,7 @@ function TransactionAPI() {
   // FUNCTION TO GET TRANSACTIONS
   function getTransactions(data) {
     const request = new TransactionRequest(); //initalize request
-    console.log(request);
+    
     request.setEnddate(data.endDate);
     request.setMemberid(data.memberid);
     request.setMembertype(data.role);
@@ -147,7 +152,13 @@ function TransactionAPI() {
     });
   }
 
-  return { postNewTransaction, getKyc, getTransactions, getTotalDonations,getTotalCommission };
+  return {
+    postNewTransaction,
+    getKyc,
+    getTransactions,
+    getTotalDonations,
+    getTotalCommission,
+  };
 }
 
 export default TransactionAPI;

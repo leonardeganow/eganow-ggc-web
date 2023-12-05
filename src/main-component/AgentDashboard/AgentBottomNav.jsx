@@ -9,11 +9,11 @@ function AgentBottomNav() {
   return (
     <div className="d-md-none ">
       {" "}
-      <div className="anavbar navbar border">
+      <div className="anavbar navbar ">
         <Link className="text-white" to="/agentdashboard">
           <div
             role="button"
-            className={`d-flex border  align-items-center ${
+            className={`d-flex   align-items-center ${
               location.pathname == "/agentdashboard"
                 ? "bg-white p-3 text-dark rounded"
                 : ""
@@ -60,7 +60,7 @@ function AgentBottomNav() {
             <RiLockPasswordFill size={20} />
           </div>
         </Link>
-        <Link className="text-white" to="">
+        <Link className="text-white" to="/agentlogin">
           <div
             role="button"
             className={`d-flex  align-items-center ${

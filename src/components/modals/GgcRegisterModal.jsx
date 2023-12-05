@@ -123,6 +123,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
     ageRange: "other",
     userCardType: "",
     paymentUrl: "",
+    resetPin: ""
   };
 
   const formHandler = useForm({
