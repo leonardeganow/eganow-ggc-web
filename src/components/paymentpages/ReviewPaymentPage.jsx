@@ -22,32 +22,32 @@ const ReviewPaymentPage = (props) => {
 
   //initiate payment
   const completePayment = async () => {
-    // props.handleNext(1);
-    setIsLoading(true);
-    const newData = {
-      ...data,
-      narration: `${
-        props.formHandler.getValues("paymentMethod") === "Debit card"
-          ? data.nameOnPaymentCard
-          : data.momoname
-      } has paid GHS${data.amount}`,
-    };
+    props.handleNext(1);
+    // setIsLoading(true);
+    // const newData = {
+    //   ...data,
+    //   narration: `${
+    //     props.formHandler.getValues("paymentMethod") === "Debit card"
+    //       ? data.nameOnPaymentCard
+    //       : data.momoname
+    //   } has paid GHS${data.amount}`,
+    // };
 
-    try {
-      const response = await postNewTransaction(newData);
-      console.log(response);
-      setIsLoading(false);
-      if (response.status === true) {
-        props.formHandler.setValue("paymentUrl", response.threedsurl);
-        props.handleNext(1);
-      } else {
-        setIsLoading(false);
-        toast.error(response.message);
-      }
-    } catch (error) {
-      setIsLoading(false);
-      console.log(error);
-    }
+    // try {
+    //   const response = await postNewTransaction(newData);
+    //   console.log(response);
+    //   setIsLoading(false);
+    //   if (response.status === true) {
+    //     props.formHandler.setValue("paymentUrl", response.threedsurl);
+    //     props.handleNext(1);
+    //   } else {
+    //     setIsLoading(false);
+    //     toast.error(response.message);
+    //   }
+    // } catch (error) {
+    //   setIsLoading(false);
+    //   console.log(error);
+    // }
   };
 
   return (
@@ -83,7 +83,9 @@ const ReviewPaymentPage = (props) => {
             <div>
               <div className="d-flex justify-content-between align-items-center">
                 <p>Card number: </p>
-                <p className="fw-bold text-dark">{maskCreditCardNumber(creditCardNo)}</p>
+                <p className="fw-bold text-dark">
+                  {maskCreditCardNumber(creditCardNo)}
+                </p>
               </div>
             </div>
           ) : (

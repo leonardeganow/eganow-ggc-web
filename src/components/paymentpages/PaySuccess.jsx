@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { FaCheckCircle } from "react-icons/fa";
 
 function PaySuccess(props) {
   const transType = props.formHandler.getValues("paymentMethod");
+  const ref = useRef();
+  // ref.current.innerHTML = `<div id="redirectTo3ds1AcsSimple" xmlns="http://www.w3.org/1999/html"> <iframe id="redirectTo3ds1Frame"  name="redirectTo3ds1Frame" height="100%" width="100%"> </iframe><form id="redirectTo3ds1Form" method="POST" action="https://authentication.cardinalcommerce.com/ThreeDSecure/V2_1_0/CReq" target="redirectTo3ds1Frame"> <input type="hidden" name="creq" value="eyJ0aHJlZURTU2VydmVyVHJhbnNJRCI6ImMzMDQ3YzNlLTM0ZTMtNGYwNy1iNDk2LTc4YjM2Mzk4NjFjZCIsImFjc1RyYW5zSUQiOiJlOWYxOTllZC0zMzkwLTQ4NGUtYWViYy1mYzQwY2Y2N2E0NzYiLCJjaGFsbGVuZ2VXaW5kb3dTaXplIjoiMDUiLCJtZXNzYWdlVHlwZSI6IkNSZXEiLCJtZXNzYWdlVmVyc2lvbiI6IjIuMi4wIn0" />  <input type="hidden" /> </form><script id="authenticate-payer-script"> var e=document.getElementById("redirectTo3ds1Form");if (e) { e.submit(); if (e.parentNode !== null) { e.parentNode.removeChild(e); } } </script></div>`;
+  // ref.current.innerHTML = props.formHandler.getValues();
+
+  console.log(ref.current);
+
   const { register, handleSubmit, setValue, watch, getValues } = useForm({
     defaultValues: {
       // memeberType: props.formHandler.getValues("role"),
@@ -28,13 +34,20 @@ function PaySuccess(props) {
         />
       </div>
 
+      <iframe src="" frameborder="0">
+   {   `<div id="redirectTo3ds1AcsSimple" xmlns="http://www.w3.org/1999/html"> <iframe id="redirectTo3ds1Frame"  name="redirectTo3ds1Frame" height="100%" width="100%"> </iframe><form id="redirectTo3ds1Form" method="POST" action="https://authentication.cardinalcommerce.com/ThreeDSecure/V2_1_0/CReq" target="redirectTo3ds1Frame"> <input type="hidden" name="creq" value="eyJ0aHJlZURTU2VydmVyVHJhbnNJRCI6ImMzMDQ3YzNlLTM0ZTMtNGYwNy1iNDk2LTc4YjM2Mzk4NjFjZCIsImFjc1RyYW5zSUQiOiJlOWYxOTllZC0zMzkwLTQ4NGUtYWViYy1mYzQwY2Y2N2E0NzYiLCJjaGFsbGVuZ2VXaW5kb3dTaXplIjoiMDUiLCJtZXNzYWdlVHlwZSI6IkNSZXEiLCJtZXNzYWdlVmVyc2lvbiI6IjIuMi4wIn0" />  <input type="hidden" /> </form>
+      <script id="authenticate-payer-script"> 
+      var e=document.getElementById("redirectTo3ds1Form");
+      if (e) { 
+         e.submit() 
+      } 
+      </script>
+      </div>`}
+      </iframe>
+
       <h5 className="text-center my-4">
         {transType === "Debit card" ? (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: `${props.formHandler.getValues("paymentUrl")}`,
-            }}
-          ></div>
+          <div ref={ref}></div>
         ) : (
           "You will receive a prompt from your mobile operator to confirm."
         )}
