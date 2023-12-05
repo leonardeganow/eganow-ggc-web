@@ -16,26 +16,31 @@ function agentAPI() {
 
   // ANCHOR AGENT LOGIN
   async function loginAgent(params) {
-    // ANCHOR INITIALIZING A LOGIN REQUEST
-    const request = new LoginRequest();
-    request.setMobilenumber(params.agentMobileNo); //ANCHOR - setting phone number
-    request.setPin(params.agentPassword); //ANCHOR - setting pin
-
-    return new Promise((resolve, reject) => {
-      // ANCHOR CREATE A REQUEST TO LOGIN AN AGENT
-      client.agentLogin(request, METADATA, (err, response) => {
-        if (err) {
-          reject(err);
-        }
-        const result = response?.toObject(); //ANCHOR CONVERTING RESULTS TO OBJECT
-        resolve(result);
-      });
-    });
+   try{
+     // ANCHOR INITIALIZING A LOGIN REQUEST
+     const request = new LoginRequest();
+     request.setMobilenumber(params.agentMobileNo); //ANCHOR - setting phone number
+     request.setPin(params.agentPassword); //ANCHOR - setting pin
+ 
+     return new Promise((resolve, reject) => {
+       // ANCHOR CREATE A REQUEST TO LOGIN AN AGENT
+       client.agentLogin(request, METADATA, (err, response) => {
+         if (err) {
+           reject(err);
+         }
+         const result = response?.toObject(); //ANCHOR CONVERTING RESULTS TO OBJECT
+         resolve(result);
+       });
+     });
+   }catch(err){
+    console.log(err)
+   }
   }
 
   // ANCHOR CHANGE AGENT PIN
   async function changeAgentPin(params) {
-    // ANCHOR INITIALIZING A CHANGE PIN REQUEST
+    try{
+      // ANCHOR INITIALIZING A CHANGE PIN REQUEST
     const request = new ChangePinRequest();
     request.setMobilenumber(params.Mobilenumber); //ANCHOR - setting the mobile number
     request.setNewpin(params.Newpin); //ANCHOR setting new pin
@@ -53,11 +58,15 @@ function agentAPI() {
         resolve(result);
       });
     });
+    }catch(err){
+      console.log(err)
+    }
   }
 
     //TODO GET MEMEBERS TRANSACTIONS
     async function getMemberTransactions(params) {
-        // ANCHOR INITIALIZING A GET TRANSACTION LIST
+        try{
+          // ANCHOR INITIALIZING A GET TRANSACTION LIST
         const request = new TransactionListAgentRequest()
         request.setAgentid(params.Agentid) //ANCHOR - SETTING AGENT ID
         request.setMembertype(params.Membertype) //ANCHOR -  SETTING MEMEBER TYPER
@@ -74,12 +83,16 @@ function agentAPI() {
                 resolve(result)
             })
         })
+        }catch(err){
+          console.log(err)
+        }
     }
 
 
   //TODO - GET TOTAL DONATIONS
   async function getTotalDonation(params) {
-    // ANCHOR - INITIALIZING A GET DONATION REQUEST
+    try{
+      // ANCHOR - INITIALIZING A GET DONATION REQUEST
     const request = new DonationCollectedRequest();
     request.setAgentid(params.agentId); //ANCHOR - SETTING AGENT ID
     request.setMembertype(params.Membertype); //ANCHOR - SETTING MEMBER TYPE (GGC)
@@ -99,15 +112,17 @@ function agentAPI() {
         }
       );
     });
+    }catch(err){
+      console.log(err)
+    }
   }
 
   // TODO - GET MEMBERS CREATED BY AGENT
   async function getMemberCreateByAgent(params) {
-    // ANCHOR - INITIALIZING A GET DONATION REQUEST
+    try{
+      // ANCHOR - INITIALIZING A GET DONATION REQUEST
     const request = new MemberCreatedByAgentRequest();
     request.setAgentid(params.agentId); //ANCHOR - SETTING AGENT ID
-
-    console.log(request);
 
     return new Promise((resolve, reject) => {
       client.getListOfGGCMembersCreatedByAgent(
@@ -122,6 +137,9 @@ function agentAPI() {
         }
       );
     });
+    }catch(err){
+      console.error(error);
+    }
   }
 
   // ANCHOR - EXPORTING AGENT API FUNCTIONS
