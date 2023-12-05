@@ -25,11 +25,12 @@ const AgentLoginPage = () => {
       const response = await loginAgent(data);
       if (response.status) {
         updateRoleAndCardType("", "", "", "", response.message);
+        localStorage.setItem("agentid", response.message)
         navigate("/agentdashboard");
       } else {
         toast(response.message);
       }
-      console.log(response);
+      
     } catch (error) {
       console.error("err", error instanceof RpcError);
       if (error instanceof RpcError) {

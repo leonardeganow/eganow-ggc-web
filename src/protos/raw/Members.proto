@@ -12,7 +12,8 @@ service MembersSvc {
 	rpc CheckIfMemberExist(MemberExistRequest) returns (MemberExistResponse);
 	rpc CreateJMMember(JMRequest) returns (JMResponse);
 	rpc CreateMemberByAgent(MemberRequest) returns (CreateMemberResponse);
-	rpc ResetMemberPin(ResetPinRequest) returns (ResetPinResponse);
+	rpc ResetMemberPin(ResetPinRequest) returns (ResetPinResponse); // CHANGE PIN
+
 }
 
 message MemberEmptyRequest {
@@ -35,7 +36,7 @@ message MemberExistRequest {
 
 message ResetPinRequest {
 	string PIN= 1;
-	string mobileNumber = 2;
+	string mobileNumberOrEmailAddress = 2;
 }
 
 message ResetPinResponse {
@@ -117,6 +118,7 @@ message Member {
 	string cardStatus = 18;
 	string cardNumber = 19;
 	int32 id = 20;
+	double transAmount = 21;
 }
 
 message MemberListResponse {
@@ -160,7 +162,7 @@ message MemberLoginResponse {
 
 
 message JMRequest {
-	string MobileNumber = 1;
+	string mobileNumberOrEmailAddress = 1;
 	string PIN =2;
 	string agentId = 3;
 }
