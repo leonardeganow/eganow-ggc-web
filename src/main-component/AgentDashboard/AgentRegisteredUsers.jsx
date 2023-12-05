@@ -22,7 +22,7 @@ function AgentRegisteredUsers() {
   async function consumeRegisteredMembers() {
     //ANCHOR GRABBING GLOBAL STATE VARIABLES
     const data = {
-      agentId: "AG001",//info.agentId,
+      agentId: info.agentId,
       Membertype: "GGC"
     }
     try {

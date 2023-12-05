@@ -24,7 +24,7 @@ function AgentCommission() {
     try {
       //ANCHOR - GETTING LIST OF MEMEBERS TRANSACTIONS
       const data = {
-        Agentid: "AG001",//info.agentId,
+        Agentid: info.agentId,
         Membertype: "GGC"
       }
       const getTrans = await getMemberTransactions(data)
