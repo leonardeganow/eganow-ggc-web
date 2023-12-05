@@ -88,7 +88,7 @@ const TransactionsTwo = (props) => {
     };
     try {
       const response = await getTotalDonations(newData);
-      console.log(response);
+      // console.log(response);
       if (response.status) {
         setTotalDonations(response.message);
       }
@@ -100,7 +100,7 @@ const TransactionsTwo = (props) => {
   // function to get all tranactions
   const onSubmitTransaction = async (start, end) => {
     const data = getValues();
-    console.log(data);
+    // console.log(data);
     setIsLoading(true);
     const formatedData = {
       ...data,
@@ -111,11 +111,11 @@ const TransactionsTwo = (props) => {
       startDate: start, //sending formated startDate
       endDate: end, //seending formated endDate
     };
-    console.log(formatedData);
+    // console.log(formatedData);
     try {
       // sending api request
       const transaction = await getTransactions(formatedData);
-      console.log(transaction);
+      // console.log(transaction);
       setIsLoading(false);
       setShowTable(true);
       setTransaction(transaction.translistList); //assigning the reponse to the state
@@ -214,7 +214,6 @@ const TransactionsTwo = (props) => {
     return { ...item, date: formatDate };
   });
 
-  console.log(newTransactions);
 
   function downloadHistory() {
     const pdf = new jsPDF();
@@ -258,23 +257,7 @@ const TransactionsTwo = (props) => {
       startY: 55,
     });
 
-    // transactions.forEach((item, index) => {
-    //   const xPos = 10;
-    //   const yPos = index * 40 + 20;
-
-    //   pdf.text(`Transaction ID: ${item.transactionid}`, xPos, yPos);
-    //   pdf.text(`Member Name: ${item.membername}`, xPos, yPos + 10);
-    //   pdf.text(`Amount: ${item.amount}`, xPos, yPos + 20);
-    //   pdf.text(`Status: ${item.status}`, xPos, yPos + 30);
-    //   pdf.text(`Type: ${item.type}`, xPos, yPos + 40);
-
-    //   // Add more fields as needed
-
-    //   // Add a new page for every item (optional)
-    //   // if (index < transactions.length - 1) {
-    //   //   pdf.addPage();
-    //   // }
-    // });
+    
 
     pdf.save("GGChistory.pdf");
   }

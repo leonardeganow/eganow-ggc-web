@@ -25,11 +25,12 @@ const AgentLoginPage = () => {
       const response = await loginAgent(data);
       if (response.status) {
         updateRoleAndCardType("", "", "", "", response.message);
+        localStorage.setItem("agentid", response.message)
         navigate("/agentdashboard");
       } else {
         toast(response.message);
       }
-      console.log(response);
+      
     } catch (error) {
       console.error("err", error instanceof RpcError);
       if (error instanceof RpcError) {
@@ -56,7 +57,7 @@ const AgentLoginPage = () => {
         </Link>
 
         <div className="d-flex justify-content-center mb-1">
-          <img style={{ width: "60px" }} src={logo} alt="" />
+          <img style={{ width: "80px" }} src={logo} alt="" />
         </div>
         <h3 className="text-center mb-4">Agent Login</h3>
         <div>

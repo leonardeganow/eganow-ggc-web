@@ -16,6 +16,8 @@ function PhoneNumberForm(props) {
 
   const [condition, setCondition] = React.useState(false);
   const [showpin, setShowpin] = React.useState(false);
+  const [pinReset, setPinReset] = React.useState(false);
+  const [resetEmailPin, setResetEmailPin] = React.useState(false);
   const [resetPin, setResetPin] = React.useState(false);
   const [showInput, setShowInput] = React.useState(false);
   const [showCountries, setShowCountries] = React.useState(true);
@@ -25,7 +27,8 @@ function PhoneNumberForm(props) {
   const [showEnterPin, setShowEnterPin] = React.useState(false);
   const [mobileNumber, setMobileNumber] = React.useState("");
 
-  const { checkIfUserExist, loginMember, createJmMember } = membersGRPC();
+  const { checkIfUserExist, loginMember, createJmMember, resetMemberPin } =
+    membersGRPC();
   const { sendOtp, verifyOtp, sendEmailOtp } = otpGRPC();
   const { getOtherCountries } = customerSetupsGRPC();
 
@@ -33,7 +36,6 @@ function PhoneNumberForm(props) {
   const onSubmit = async () => {
     setIsLoading(true);
     const data = props.formHandler.getValues();
-    console.log(data);
     // const result = await props.formHandler.trigger("telephoneNo");
     // // console.log(result);
     // if (!result) {
@@ -48,8 +50,8 @@ function PhoneNumberForm(props) {
       const response = await checkIfUserExist(newData);
       setIsLoading(false);
       // console.log(newData);
-      console.log(response);
-      console.log(newData);
+      // console.log(response);
+      // console.log(newData);
       props.formHandler.reset(newData);
       if (response.message === "COMPLETE") {
         // handleOtp(data.telephoneNo);
@@ -104,7 +106,7 @@ function PhoneNumberForm(props) {
   async function handleGetOtherCountries() {
     try {
       const response = await getOtherCountries();
-      console.log(response);
+      // console.log(response);
       setCountry(response.countrylistList);
     } catch (error) {
       console.log(error.type);
@@ -121,7 +123,7 @@ function PhoneNumberForm(props) {
         mobileNo: `${233}${a}`,
       };
       const response = await sendOtp(newData);
-      console.log(response);
+      // console.log(response);
       props.formHandler.reset();
 
       if (response.status === true) {
@@ -141,7 +143,7 @@ function PhoneNumberForm(props) {
     console.log(data);
     try {
       const response = await sendEmailOtp(data);
-      console.log(response);
+      // console.log(response);
       props.formHandler.reset();
 
       if (response.status === true) {
@@ -158,9 +160,9 @@ function PhoneNumberForm(props) {
   //verify otp function
   const handleOtpVerify = async () => {
     const data = props.formHandler.getValues();
-console.log(data);
+    // console.log(data);
     const result = await props.formHandler.trigger("otp");
-    console.log(result);
+    // console.log(result);
     if (!result) {
       return;
     }
@@ -182,7 +184,7 @@ console.log(data);
         setCondition(false);
         toast(response.message);
       }
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       setIsLoading(false);
       console.log(error);
@@ -205,7 +207,7 @@ console.log(data);
       setIsLoading(true);
 
       const response = await loginMember(data);
-      console.log(response);
+      // console.log(response);
       setIsLoading(false);
       props.formHandler.setValue("userStatus", response.message);
       props.formHandler.setValue("fullName", response.fullname);
@@ -236,7 +238,7 @@ console.log(data);
 
   React.useEffect(() => {
     // setShowEmail(false);
-    console.log(props.formHandler.getValues());
+    // console.log(props.formHandler.getValues());
     handleGetOtherCountries();
     props.formHandler.setValue("amount", info.amount);
     if (props.formHandler.watch("country") === "GH0233") {
@@ -452,7 +454,6 @@ console.log(data);
           <div className="d-flex justify-content-between ">
             <button
               onClick={() => {
-              
                 if (props.formHandler.getValues("email")) {
                   setCondition(false);
                   setShowEmail(true);
@@ -535,14 +536,11 @@ console.log(data);
                 type="button"
                 className="btn btn-success"
               >
-                {isLoading ? (
-                  <span className="spinner-border spinner-border-sm mr-1"></span>
-                ) : (
-                  "back"
-                )}
+                back
               </button>
               <button
                 type="button"
+                disabled={isLoading}
                 // disabled={
                 //   props.formHandler.formState.errors.pin ||
                 //   props.formHandler.formState.errors.confirmPin ||
@@ -551,9 +549,9 @@ console.log(data);
                 // }
                 className="btn btn-success   "
                 onClick={async () => {
-                  setIsLoading(true);
+                  // setIsLoading(true);
                   const result = await props.formHandler.trigger("pin");
-                  console.log(result);
+                  // console.log(result);
                   if (!result) {
                     return;
                   }
@@ -571,17 +569,37 @@ console.log(data);
                   //   } catch (error) {
                   //     console.log(error);
                   //   }
-                  // } else 
-                  if (
-                    props.formHandler.getValues("resetPin") === "yes"
-                  ) {
-                    alert("hi");
+                  // } else
+                  if (pinReset) {
+                    try {
+                      setIsLoading(true);
+                      const data = {
+                        mobileNumber:
+                          props.formHandler.getValues("telephoneNo"),
+                        pin: props.formHandler.getValues("pin"),
+                        email: props.formHandler.getValues("email"),
+                      };
+                      const response = await resetMemberPin(data);
+                      setIsLoading(false);
+                      console.log(response);
+                      if (response.status) {
+                        props.handleNext(2);
+                        toast(response.message);
+                      }
+                    } catch (error) {
+                      setIsLoading(false);
+                      console.error(error);
+                    }
                   } else {
                     props.handleNext(1);
                   }
                 }}
               >
-                continue
+                {isLoading ? (
+                  <span className="spinner-border spinner-border-sm mr-1"></span>
+                ) : (
+                  "continue"
+                )}
               </button>
             </div>
           </div>
@@ -625,21 +643,32 @@ console.log(data);
               >
                 Reset pin{" "}
               </button> */}
-              <button
+              <p
                 role="button"
                 onClick={() => {
-                  props.formHandler.setValue("resetPin", "yes");
-                  setCondition(false);
-                  setResetPin(true);
-                  setShowInput(false);
-                  setShowEnterPin(false);
+                  if (props.formHandler.getValues("telephoneNo")) {
+                    setPinReset(true);
+                    // props.formHandler.setValue("resetPin", "yes");
+                    setCondition(false);
+                    setResetPin(true);
+                    setShowInput(false);
+                    setShowEnterPin(false);
+                  } else {
+                    setPinReset(true);
+                    // props.formHandler.setValue("resetPin", "yes");
+                    setCondition(false);
+                    setResetPin(false);
+                    setResetEmailPin(true);
+                    setShowInput(false);
+                    setShowEnterPin(false);
+                  }
                 }}
                 href=""
                 style={{ fontSize: "12px" }}
                 className="text-center mt-1 text-info"
               >
                 Forgot your pin?
-              </button>
+              </p>
             </di>
 
             <div className="d-flex justify-content-between mt-4">
@@ -719,6 +748,68 @@ console.log(data);
                 onClick={() => {
                   handleOtp();
                   setResetPin(false);
+                  setCondition(true);
+                }}
+                style={{ width: "160px" }}
+                className="btn btn-success mt-4 "
+              >
+                {" "}
+                {isLoading ? (
+                  <span className="spinner-border spinner-border-sm mr-1"></span>
+                ) : (
+                  "continue"
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {resetEmailPin && (
+        <div>
+          <form>
+            <h3 className="text-center">Reset Pin</h3>
+            <p className="text-center">
+              {/* "Create pin to protect the card you will acquire" */}
+              Enter your email to reset your pin
+            </p>
+            <div className="text-center ">
+              <div
+                style={{ width: "100%", padding: "0px 0px" }}
+                className="w-md-75  px-md-5    "
+              >
+                <div className=" w-100 w-md-50  ">
+                  <input
+                    // style={{ width: "100%" }}
+                    {...props.formHandler.register("email")}
+                    placeholder="Telephone Number"
+                    className={`form-control w-100 ${
+                      props.formHandler.formState.errors.email
+                        ? "is-invalid"
+                        : ""
+                    }  outline-none p-3`}
+                  />
+
+                  {props.formHandler.formState.errors.email && (
+                    <div className="invalid-feedback">
+                      {props.formHandler.formState.errors.email.message}
+                    </div>
+                  )}
+                  {!props.formHandler.formState.errors.email && (
+                    <div className="valid-feedback">Looks good!</div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="d-flex justify-content-end">
+              <button
+                disabled={isLoading}
+                type="button"
+                onClick={() => {
+                  handleOtpEmail()
+                  setResetPin(false);
+                  setResetEmailPin(false)
                   setCondition(true);
                 }}
                 style={{ width: "160px" }}

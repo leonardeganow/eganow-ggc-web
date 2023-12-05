@@ -3,12 +3,18 @@ import logo from "../../images/instragram/ndclogo-removebg-preview.png";
 import { FaHome } from "react-icons/fa";
 import { GiReceiveMoney } from "react-icons/gi";
 import { FaUsers } from "react-icons/fa6";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,useNavigate } from "react-router-dom";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 
 const AgentSidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate()
+
+  const logOut = ()=>{
+    localStorage.clear()
+    navigate("/agentlogin")
+  }
   return (
     <div
       style={{ height: "100vh", backgroundColor: "#006436" }}
@@ -73,12 +79,12 @@ const AgentSidebar = () => {
           Change pin
         </div>
       </Link>
-      <Link className="text-white" to="/agentlogin">
-        <div role="button" className=" d-flex  align-items-center gap-3   p-3">
+   
+        <div onClick={logOut} role="button" className=" d-flex  align-items-center gap-3   p-3">
           <RiLogoutCircleRLine size={20} />
           Log out
         </div>
-      </Link>
+
     </div>
   );
 };

@@ -120,11 +120,14 @@ const membersGRPC = () => {
   }
 
 
-  function resetPin (params){
+  function resetMemberPin (params){
+    console.log(params);
     try {
       const request = new ResetPinRequest()
-      
+      console.log(request);
      
+      request.setMobilenumberoremailaddress(params.mobileNumber ? params.mobileNumber : params.email)
+      request.setPin(params.pin)
 
       return new Promise((resolve, reject) => {
         client.resetMemberPin(request, METADATA, (err, response) => {
@@ -141,7 +144,7 @@ const membersGRPC = () => {
   } 
 
   // returning function to use in our app
-  return { checkIfUserExist, registerMember, loginMember, createJmMember,resetPin};
+  return { checkIfUserExist, registerMember, loginMember, createJmMember,resetMemberPin};
 };
 
 export default membersGRPC;

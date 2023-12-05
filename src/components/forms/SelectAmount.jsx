@@ -20,7 +20,7 @@ function SelectAmount(props) {
 
   const onSubmit = async () => {
     const result = await props.formHandler.trigger("amount");
-    console.log(result);
+    // console.log(result);
     if (!result) {
       return;
     }

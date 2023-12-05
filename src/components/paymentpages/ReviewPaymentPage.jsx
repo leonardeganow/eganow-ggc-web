@@ -83,7 +83,9 @@ const ReviewPaymentPage = (props) => {
             <div>
               <div className="d-flex justify-content-between align-items-center">
                 <p>Card number: </p>
-                <p className="fw-bold text-dark">{maskCreditCardNumber(creditCardNo)}</p>
+                <p className="fw-bold text-dark">
+                  {maskCreditCardNumber(creditCardNo)}
+                </p>
               </div>
             </div>
           ) : (

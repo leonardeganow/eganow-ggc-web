@@ -2,10 +2,15 @@ import React from "react";
 import { FaHome, FaUsers } from "react-icons/fa";
 import { GiReceiveMoney } from "react-icons/gi";
 import { RiLockPasswordFill, RiLogoutCircleRLine } from "react-icons/ri";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,useNavigate } from "react-router-dom";
 
 function AgentBottomNav() {
   const location = useLocation();
+const navigate = useNavigate()
+  const logOut = ()=>{
+    localStorage.clear()
+    navigate("/agentlogin")
+  }
   return (
     <div className="d-md-none ">
       {" "}
@@ -60,8 +65,9 @@ function AgentBottomNav() {
             <RiLockPasswordFill size={20} />
           </div>
         </Link>
-        <Link className="text-white" to="/agentlogin">
+      
           <div
+          onClick={logOut}
             role="button"
             className={`d-flex  align-items-center ${
               location.pathname == "" ? "bg-white p-3 text-dark" : ""
@@ -69,7 +75,7 @@ function AgentBottomNav() {
           >
             <RiLogoutCircleRLine size={20} />
           </div>
-        </Link>
+   
       </div>
     </div>
   );

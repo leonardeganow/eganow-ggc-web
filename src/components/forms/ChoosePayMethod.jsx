@@ -60,7 +60,7 @@ function ChoosePayMethod(props) {
       props.formHandler.getValues("telephoneNo")
     );
     props.formHandler.reset(props.formHandler.getValues());
-    console.log(props.formHandler.getValues());
+    // console.log(props.formHandler.getValues());
   }, []);
 
   React.useEffect(() => {
@@ -79,7 +79,7 @@ function ChoosePayMethod(props) {
     // alert("hi");
     try {
       const response = await getKyc({ watchMomoId, watchMomoNumber });
-      console.log(response);
+      // console.log(response);
       if (response.status === true) {
         setLoading(false);
         props.formHandler.setValue("momoname", response.message);
@@ -130,7 +130,7 @@ function ChoosePayMethod(props) {
               <FaMoneyBill1Wave />
               <span> Mobile money</span>
             </div>
-            {/* <div
+            <div
               role="button"
               className={` p-md-3 p-2 d-flex gap-2 align-items-center ${
                 showCard ? "bg-success text-white" : " text-success"
@@ -152,7 +152,7 @@ function ChoosePayMethod(props) {
               {" "}
               <FaCreditCard className="mr-2" />
               <span className="ml-1"> Credit/Debit Card</span>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>

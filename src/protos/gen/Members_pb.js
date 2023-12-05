@@ -923,7 +923,7 @@ proto.Members.ResetPinRequest.prototype.toObject = function(opt_includeInstance)
 proto.Members.ResetPinRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     pin: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    mobilenumber: jspb.Message.getFieldWithDefault(msg, 2, "")
+    mobilenumberoremailaddress: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -966,7 +966,7 @@ proto.Members.ResetPinRequest.deserializeBinaryFromReader = function(msg, reader
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setMobilenumber(value);
+      msg.setMobilenumberoremailaddress(value);
       break;
     default:
       reader.skipField();
@@ -1004,7 +1004,7 @@ proto.Members.ResetPinRequest.serializeBinaryToWriter = function(message, writer
       f
     );
   }
-  f = message.getMobilenumber();
+  f = message.getMobilenumberoremailaddress();
   if (f.length > 0) {
     writer.writeString(
       2,
@@ -1033,10 +1033,10 @@ proto.Members.ResetPinRequest.prototype.setPin = function(value) {
 
 
 /**
- * optional string mobileNumber = 2;
+ * optional string mobileNumberOrEmailAddress = 2;
  * @return {string}
  */
-proto.Members.ResetPinRequest.prototype.getMobilenumber = function() {
+proto.Members.ResetPinRequest.prototype.getMobilenumberoremailaddress = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -1045,7 +1045,7 @@ proto.Members.ResetPinRequest.prototype.getMobilenumber = function() {
  * @param {string} value
  * @return {!proto.Members.ResetPinRequest} returns this
  */
-proto.Members.ResetPinRequest.prototype.setMobilenumber = function(value) {
+proto.Members.ResetPinRequest.prototype.setMobilenumberoremailaddress = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -2840,7 +2840,8 @@ proto.Members.Member.toObject = function(includeInstance, msg) {
     cardpickuplocation: jspb.Message.getFieldWithDefault(msg, 17, ""),
     cardstatus: jspb.Message.getFieldWithDefault(msg, 18, ""),
     cardnumber: jspb.Message.getFieldWithDefault(msg, 19, ""),
-    id: jspb.Message.getFieldWithDefault(msg, 20, 0)
+    id: jspb.Message.getFieldWithDefault(msg, 20, 0),
+    transamount: jspb.Message.getFloatingPointFieldWithDefault(msg, 21, 0.0)
   };
 
   if (includeInstance) {
@@ -2952,6 +2953,10 @@ proto.Members.Member.deserializeBinaryFromReader = function(msg, reader) {
     case 20:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setId(value);
+      break;
+    case 21:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setTransamount(value);
       break;
     default:
       reader.skipField();
@@ -3112,6 +3117,13 @@ proto.Members.Member.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0) {
     writer.writeInt32(
       20,
+      f
+    );
+  }
+  f = message.getTransamount();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      21,
       f
     );
   }
@@ -3457,6 +3469,24 @@ proto.Members.Member.prototype.getId = function() {
  */
 proto.Members.Member.prototype.setId = function(value) {
   return jspb.Message.setProto3IntField(this, 20, value);
+};
+
+
+/**
+ * optional double transAmount = 21;
+ * @return {number}
+ */
+proto.Members.Member.prototype.getTransamount = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 21, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.Members.Member} returns this
+ */
+proto.Members.Member.prototype.setTransamount = function(value) {
+  return jspb.Message.setProto3FloatField(this, 21, value);
 };
 
 
@@ -4212,7 +4242,7 @@ proto.Members.JMRequest.prototype.toObject = function(opt_includeInstance) {
  */
 proto.Members.JMRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    mobilenumber: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    mobilenumberoremailaddress: jspb.Message.getFieldWithDefault(msg, 1, ""),
     pin: jspb.Message.getFieldWithDefault(msg, 2, ""),
     agentid: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
@@ -4253,7 +4283,7 @@ proto.Members.JMRequest.deserializeBinaryFromReader = function(msg, reader) {
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setMobilenumber(value);
+      msg.setMobilenumberoremailaddress(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
@@ -4292,7 +4322,7 @@ proto.Members.JMRequest.prototype.serializeBinary = function() {
  */
 proto.Members.JMRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getMobilenumber();
+  f = message.getMobilenumberoremailaddress();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -4317,10 +4347,10 @@ proto.Members.JMRequest.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional string MobileNumber = 1;
+ * optional string mobileNumberOrEmailAddress = 1;
  * @return {string}
  */
-proto.Members.JMRequest.prototype.getMobilenumber = function() {
+proto.Members.JMRequest.prototype.getMobilenumberoremailaddress = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -4329,7 +4359,7 @@ proto.Members.JMRequest.prototype.getMobilenumber = function() {
  * @param {string} value
  * @return {!proto.Members.JMRequest} returns this
  */
-proto.Members.JMRequest.prototype.setMobilenumber = function(value) {
+proto.Members.JMRequest.prototype.setMobilenumberoremailaddress = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
