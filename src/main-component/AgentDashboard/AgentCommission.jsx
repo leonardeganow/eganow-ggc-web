@@ -10,31 +10,36 @@ import agentAPI from "../../api/grpcapi/AgentGRPC";
 import useStore from "../../formstore/formStore";
 import { toast } from "react-toastify";
 import { FaDownload } from "react-icons/fa";
-import { jsPDF } from 'jspdf';
+import { jsPDF } from "jspdf";
 
 function AgentCommission() {
   const { info } = useStore();
-  const agentCode = localStorage.getItem("agentid")
+  const agentCode = localStorage.getItem("agentid");
 
   //ANCHOR - GETTING THE GET MEMBER TRANSACTION API FUNCTION
   const { getMemberTransactions } = agentAPI();
 
   const [transaction, setTransactions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   //TODO CONSUME DATA FROM API
   async function consumeTransactions() {
     //ANCHOR GRABBING GLOBAL STATE VARIABLES
     try {
+      setIsLoading(true);
       //ANCHOR - GETTING LIST OF MEMEBERS TRANSACTIONS
       const data = {
         Agentid: agentCode,
         Membertype: "GGC",
       };
       const getTrans = await getMemberTransactions(data);
+      setIsLoading(false);
       if (getTrans) {
         setTransactions(getTrans.transactionlistList); //ANCHOR - SETTING THE VALUE TO THE STATE
         console.log(getTrans.transactionlistList);
       }
     } catch (err) {
+      setIsLoading(false);
+
       toast.error("Network Error");
       console.log(err);
     }
@@ -43,7 +48,6 @@ function AgentCommission() {
   useEffect(() => {
     consumeTransactions();
   }, []);
-
 
   function downloadHistory() {
     const pdf = new jsPDF();
@@ -87,8 +91,6 @@ function AgentCommission() {
       startY: 30,
     });
 
-    
-
     pdf.save("membertansactions.pdf");
   }
 
@@ -103,7 +105,10 @@ function AgentCommission() {
       {/* NOTE LIST OF TRANSACTION (TABLE) */}
       <div className="my-md-5 my-4">
         <div className="d-flex justify-content-end py-3">
-          <button onClick={downloadHistory} className="btn btn-success btn-sm d-inline-flex align-items-center gap-2">
+          <button
+            onClick={downloadHistory}
+            className="btn btn-success btn-sm d-inline-flex align-items-center gap-2"
+          >
             <FaDownload /> Download
           </button>
         </div>
@@ -155,7 +160,11 @@ function AgentCommission() {
                     align="center"
                   >
                     {" "}
-                    <span className="spinner-border spinner-border-sm mr-1"></span>
+                    {isLoading ? (
+                      <span className="spinner-border spinner-border-sm mr-1"></span>
+                    ) : (
+                      "no data available"
+                    )}
                   </TableCell>
                 </TableRow>
               )}

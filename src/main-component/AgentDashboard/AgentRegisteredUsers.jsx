@@ -19,6 +19,7 @@ function AgentRegisteredUsers() {
   const agentCode = localStorage.getItem("agentid")
 
   const [regMembers, setRegMembers] = useState([]); //ANCHOR - SETTING STATE TO KEEP THE ARRAY OF MEMEBERS
+  const [isLoading, setIsLoading] = useState(false); //ANCHOR - SETTING STATE TO KEEP THE ARRAY OF MEMEBERS
   //TODO CONSUME DATA FROM API
   async function consumeRegisteredMembers() {
     //ANCHOR GRABBING GLOBAL STATE VARIABLES
@@ -27,12 +28,15 @@ function AgentRegisteredUsers() {
       Membertype: "GGC",
     };
     try {
-      const getRegisteredMembers = await getMemberCreateByAgent(data);
+      setIsLoading(false)     
+       const getRegisteredMembers = await getMemberCreateByAgent(data);
+      setIsLoading(false)
       if (getRegisteredMembers) {
         setRegMembers(getRegisteredMembers.membersList);
         console.log(getRegisteredMembers.membersList);
       }
     } catch (err) {
+      setIsLoading(false)
       toast.error("Network Error");
     }
   }
@@ -157,7 +161,7 @@ function AgentRegisteredUsers() {
                     align="center"
                   >
                     {" "}
-                    <span className="spinner-border spinner-border-sm mr-1"></span>
+                   {isLoading ? <span className="spinner-border spinner-border-sm mr-1"></span> : "no data available"}
                   </TableCell>
                 </TableRow>
               )}

@@ -88,7 +88,7 @@ const TransactionsTwo = (props) => {
     };
     try {
       const response = await getTotalDonations(newData);
-      console.log(response);
+      // console.log(response);
       if (response.status) {
         setTotalDonations(response.message);
       }
@@ -100,7 +100,7 @@ const TransactionsTwo = (props) => {
   // function to get all tranactions
   const onSubmitTransaction = async (start, end) => {
     const data = getValues();
-    console.log(data);
+    // console.log(data);
     setIsLoading(true);
     const formatedData = {
       ...data,
@@ -111,11 +111,11 @@ const TransactionsTwo = (props) => {
       startDate: start, //sending formated startDate
       endDate: end, //seending formated endDate
     };
-    console.log(formatedData);
+    // console.log(formatedData);
     try {
       // sending api request
       const transaction = await getTransactions(formatedData);
-      console.log(transaction);
+      // console.log(transaction);
       setIsLoading(false);
       setShowTable(true);
       setTransaction(transaction.translistList); //assigning the reponse to the state

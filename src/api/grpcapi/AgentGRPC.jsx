@@ -41,17 +41,10 @@ function agentAPI() {
   async function changeAgentPin(params) {
     try {
       // ANCHOR INITIALIZING A CHANGE PIN REQUEST
-<<<<<<< HEAD
-      const request = new ChangePinRequest();
-      request.setMobilenumber(params.Mobilenumber); //ANCHOR - setting the mobile number
-      request.setNewpin(params.Newpin); //ANCHOR setting new pin
-      request.setOldpin(params.Oldpin); //ANCHOR - setting old pin
-=======
     const request = new ChangePinRequest();
     request.setMobilenumber(params.agentMobileNo); //ANCHOR - setting the mobile number
     request.setNewpin(params.newPin); //ANCHOR setting new pin
     request.setOldpin(params.oldPin); //ANCHOR - setting old pin
->>>>>>> e7095a263b86cdf4e579213fc26ae627c292dbae
 
       // console.log(request);
 

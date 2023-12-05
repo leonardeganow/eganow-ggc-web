@@ -22,7 +22,7 @@ function GgcRegForm(props) {
   async function handleGetOtherCountries() {
     try {
       const response = await getOtherCountries();
-      console.log(response);
+      // console.log(response);
       setOtherCountries(response.countrylistList);
     } catch (error) {
       console.log(error);
@@ -83,7 +83,7 @@ function GgcRegForm(props) {
       ...data,
       agentId: info.agentId
     }
-    console.log(newData);
+    // console.log(newData);
     const result = await props.formHandler.trigger([
       "cards",
       "card_pickup_location",
@@ -105,7 +105,7 @@ function GgcRegForm(props) {
       setIsLoading(false);
       props.formHandler.reset(data);
       props.formHandler.setValue("memberId", response.memberid);
-      console.log(response);
+      // console.log(response);
       if (response.status) {
         toast.success(response.message);
 

@@ -60,7 +60,7 @@ function ChoosePayMethod(props) {
       props.formHandler.getValues("telephoneNo")
     );
     props.formHandler.reset(props.formHandler.getValues());
-    console.log(props.formHandler.getValues());
+    // console.log(props.formHandler.getValues());
   }, []);
 
   React.useEffect(() => {
@@ -79,7 +79,7 @@ function ChoosePayMethod(props) {
     // alert("hi");
     try {
       const response = await getKyc({ watchMomoId, watchMomoNumber });
-      console.log(response);
+      // console.log(response);
       if (response.status === true) {
         setLoading(false);
         props.formHandler.setValue("momoname", response.message);

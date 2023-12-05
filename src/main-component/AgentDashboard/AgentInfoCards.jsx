@@ -12,15 +12,14 @@ function AgentInfoCards() {
   const { getTotalCommission } = TransactionAPI();
   const [registeredMembers, setRegisteredMembers] = useState([]); //registered members list
   const [totalDonations, setTotalDonations] = useState(null); //total amount donated
-  const [totalCommission, setTotalCommission] = useState(null); //total commission received
+  const [totalCommission, setTotalCommission] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); //total commission received
 
   const { info } = useStore();
-  const agentCode = localStorage.getItem("agentid")
-
+  const agentCode = localStorage.getItem("agentid");
 
   //this functions get all members created by agent
   const getMemberCreatedByAgentTransactionsHandler = async () => {
-
     try {
       const data = {
         agentId: agentCode,
@@ -51,13 +50,17 @@ function AgentInfoCards() {
   //this gets agents commissions
   const getCommissions = async () => {
     try {
+      setIsLoading(true);
       const data = {
         agentId: agentCode,
       };
       const response = await getTotalCommission(data);
+      setIsLoading(false);
+      console.log(response);
       setTotalDonations(response?.totalamount);
       setTotalCommission(response?.totalcommission);
     } catch (error) {
+      setIsLoading(false);
       console.error(error);
     }
   };
@@ -74,10 +77,10 @@ function AgentInfoCards() {
           <div className="shadow rounded p-4 border border-2 border-success">
             <p className=" fs-5 ">Total commission</p>
             <div className="d-flex justify-content-between align-items-center">
-              {totalCommission ? (
-                <h2 className=" m-0">GHS{totalCommission}</h2>
-              ) : (
+              {isLoading ? (
                 <span className="spinner-border spinner-border-sm mr-1"></span>
+              ) : (
+                <h2 className=" m-0">GHS{totalCommission}</h2>
               )}
               <GiCash size={40} className="text-dark" />
             </div>
@@ -87,10 +90,10 @@ function AgentInfoCards() {
           <div className="shadow  rounded p-4 border border-2 border-danger">
             <p className=" fs-5 ">Total amount donated</p>
             <div className="d-flex justify-content-between align-items-center">
-              {totalDonations ? (
-                <h2 className=" m-0">GHS{totalDonations}</h2>
-              ) : (
+              {isLoading ? (
                 <span className="spinner-border spinner-border-sm mr-1"></span>
+              ) : (
+                <h2 className=" m-0">GHS{totalDonations}</h2>
               )}
               <GiReceiveMoney size={40} className="text-dark" />
             </div>
