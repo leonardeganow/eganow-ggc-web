@@ -17,19 +17,19 @@ function AgentRegisteredUsers() {
   //ANCHOR - GETTING THE GET MEMBER TRANSACTION FUNCTION
   const { getMemberCreateByAgent } = agentAPI()
 
-  const [transaction, setTransactions] = useState([])
+  const [regMembers, setRegMembers] = useState([]) //ANCHOR - SETTING STATE TO KEEP THE ARRAY OF MEMEBERS
   //TODO CONSUME DATA FROM API
-  async function consumeTransactions() {
+  async function consumeRegisteredMembers() {
     //ANCHOR GRABBING GLOBAL STATE VARIABLES
     const data = {
-      Agentid: "AG036",//info.agentId,
+      agentId: "AG001",//info.agentId,
       Membertype: "GGC"
     }
     try {
-      const getTrans = await getMemberCreateByAgent(data)
-      if(getTrans) {
-        setTransactions(getTrans.membersList)
-        console.log(getTrans.membersList)
+      const getRegisteredMembers = await getMemberCreateByAgent(data)
+      if(getRegisteredMembers) {
+        setRegMembers(getRegisteredMembers.membersList)
+        console.log(getRegisteredMembers.membersList)
       }
     } catch (err) {
       toast.error("Network Error");
@@ -37,7 +37,7 @@ function AgentRegisteredUsers() {
   }
 
   useEffect(() => {
-    consumeTransactions()
+    consumeRegisteredMembers()
   }, [])
 
 
@@ -69,15 +69,15 @@ function AgentRegisteredUsers() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {transaction.length > 0 ?
-                transaction.map((item,index) => {
+              {regMembers.length > 0 ?
+                regMembers.map((member,index) => {
                   return (
                     <TableRow key={index}>
-                      <TableCell component="th" scope="row">{new Date(item.registrationdate).toLocaleDateString()}</TableCell>
-                      <TableCell ><span className="bg-success text-white px-2 py-1 rounded-pill">{item.membername}</span></TableCell>
-                      <TableCell >{item.cardnumber}</TableCell>
-                      <TableCell >{item.memberid}</TableCell>
-                      <TableCell >{item.cardname}</TableCell>
+                      <TableCell component="th" scope="row">{new Date(member.registrationdate).toLocaleDateString()}</TableCell>
+                      <TableCell ><span className="bg-success text-white px-2 py-1 rounded-pill">{member.membername}</span></TableCell>
+                      <TableCell >{member.cardnumber}</TableCell>
+                      <TableCell >{member.memberid}</TableCell>
+                      <TableCell >{member.cardname}</TableCell>
                     </TableRow>
                   )
                 }) : 

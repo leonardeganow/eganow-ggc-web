@@ -14,31 +14,33 @@ import { FaDownload } from "react-icons/fa";
 
 function AgentCommission() {
   const { info } = useStore()
-  //ANCHOR - GETTING THE GET MEMBER TRANSACTION FUNCTION
+  //ANCHOR - GETTING THE GET MEMBER TRANSACTION API FUNCTION
   const { getMemberTransactions } = agentAPI()
 
   const [transaction, setTransactions] = useState([])
   //TODO CONSUME DATA FROM API
   async function consumeTransactions() {
     //ANCHOR GRABBING GLOBAL STATE VARIABLES
-    const data = {
-      Agentid: "AG036",//info.agentId,
-      Membertype: "GGC"
-    }
     try {
+      //ANCHOR - GETTING LIST OF MEMEBERS TRANSACTIONS
+      const data = {
+        Agentid: "AG001",//info.agentId,
+        Membertype: "GGC"
+      }
       const getTrans = await getMemberTransactions(data)
       if (getTrans) {
-        setTransactions(getTrans.transactionlistList)
+        setTransactions(getTrans.transactionlistList) //ANCHOR - SETTING THE VALUE TO THE STATE
+        console.log(getTrans.transactionlistList)
       }
     } catch (err) {
       toast.error("Network Error");
+      console.log(err)
     }
   }
 
   useEffect(() => {
     consumeTransactions()
   }, [])
-
 
 
   return (
@@ -60,23 +62,23 @@ function AgentCommission() {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell className="fw-bold text-muted fs-6">Reg. Date</TableCell>
                 <TableCell className="fw-bold text-muted fs-6">Member Name</TableCell>
-                <TableCell className="fw-bold text-muted fs-6">Card Name</TableCell>
-                <TableCell className="fw-bold text-muted fs-6">Member ID</TableCell>
-                <TableCell className="fw-bold text-muted fs-6">Status</TableCell>
+                <TableCell className="fw-bold text-muted fs-6">Mobile No.</TableCell>
+                <TableCell className="fw-bold text-muted fs-6">Amount (GH)</TableCell>
+                <TableCell className="fw-bold text-muted fs-6">transstatus</TableCell>
+                <TableCell className="fw-bold text-muted fs-6">Card Type</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {transaction.length > 0 ?
-                transaction.map((item,index) => {
+                transaction.map((trans,index) => {
                   return (
                     <TableRow key={index}>
-                      <TableCell component="th" scope="row">{new Date(item.registrationdate).toLocaleDateString()}</TableCell>
-                      <TableCell ><span className="bg-success text-white px-2 py-1 rounded-pill">{item.membername}</span></TableCell>
-                      <TableCell >{item.cardnumber}</TableCell>
-                      <TableCell >{item.memberid}</TableCell>
-                      <TableCell >{item.cardname}</TableCell>
+                      <TableCell component="th" scope="row">{trans.membername}</TableCell>
+                      <TableCell ><span className="bg-success text-white px-2 py-1 rounded-pill">{trans.mobilenumber}</span></TableCell>
+                      <TableCell >{trans.transamount}</TableCell>
+                      <TableCell >{trans.transstatus}</TableCell>
+                      <TableCell >{trans.cardid}</TableCell>
                     </TableRow>
                   )
                 }) : 
