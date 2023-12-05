@@ -56,7 +56,7 @@ const AgentLoginPage = () => {
         </Link>
 
         <div className="d-flex justify-content-center mb-1">
-          <img style={{ width: "60px" }} src={logo} alt="" />
+          <img style={{ width: "80px" }} src={logo} alt="" />
         </div>
         <h3 className="text-center mb-4">Agent Login</h3>
         <div>

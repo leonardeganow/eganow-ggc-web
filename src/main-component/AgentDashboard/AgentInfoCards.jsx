@@ -73,7 +73,7 @@ function AgentInfoCards() {
         <div className="shadow rounded p-4 border border-2 border-success">
           <p className=" fs-5 ">Total commission</p>
           <div className="d-flex justify-content-between align-items-center">
-            <h2 className=" m-0">GHS1,620</h2>
+            <h2 className=" m-0">GHS{totalCommission}</h2>
             <GiCash size={40} className="text-dark" />
           </div>
         </div>
