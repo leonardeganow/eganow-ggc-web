@@ -19,6 +19,7 @@ import html2canvas from "html2canvas";
 import { IoIosRefresh } from "react-icons/io";
 import { jsPDF } from "jspdf";
 import starter from "../../images/cardImages/starter.png";
+import ResetPinModal from "./ResetPinModal";
 
 // MATERIAL UI FOR TABLE
 import Table from "@mui/material/Table";
@@ -29,7 +30,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TransactionAPI from "../../api/grpcapi/TransactionGRPC";
-import { Avatar, Skeleton } from "@mui/material";
+import { Avatar, Box, Skeleton } from "@mui/material";
 import { IoSearchCircleSharp } from "react-icons/io5";
 import { FaSearch, FaWindowClose } from "react-icons/fa";
 
@@ -50,6 +51,7 @@ import agentAPI from "../../api/grpcapi/AgentGRPC";
 export default function TransactionsModal({
   open,
   handleClose,
+  handleOpen,
   loginState,
   setLoginState,
 }) {
@@ -66,6 +68,13 @@ export default function TransactionsModal({
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
+  // pinModal
+  const [openPinModal, setOpenPinModal] = React.useState(false);
+  const handlePinOpen = () => setOpenPinModal(true);
+  const handlePinClose = () => setOpenPinModal(false);
+
+
+
   // DATE FORMATTER FUNCTION
   const formatDate = (dateString) => {
     // splitdate string
@@ -78,15 +87,27 @@ export default function TransactionsModal({
     top: "54%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    height: loginState  ? "auto" : "500px",
+    height: loginState ? "auto" : "500px",
     width: "95vw", // Use viewport width
-    maxWidth: loginState ?"400px": "800px", // Set a maximum width if needed
+    maxWidth: loginState ? "400px" : "800px", // Set a maximum width if needed
     boxShadow: "40px",
     padding: "1rem",
     overflow: "auto",
     maxHeight: "600px",
     borderRadius: "1rem",
     zIndex: 6666,
+  };
+
+  const style2 = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
   };
 
   // Get the current date
@@ -275,6 +296,7 @@ export default function TransactionsModal({
 
     return { ...item, date: formatDate };
   });
+
   function downloadHistory() {
     const pdf = new jsPDF();
 
@@ -380,8 +402,11 @@ export default function TransactionsModal({
       formatDate(formattedCurrentDate)
     );
   };
+
+
+
   return (
-    <div>
+    <div className="position-relative bg-danger">
       <Modal
         open={open}
         onClose={handleClose}
@@ -389,6 +414,7 @@ export default function TransactionsModal({
         aria-describedby="modal-modal-description"
       >
         <div className="bg-white p-md-4 p-3 " style={style}>
+          
           <div>
             {/* if show login is true show the login page else hide */}
             {loginState === true && (
@@ -429,15 +455,7 @@ export default function TransactionsModal({
                     maxlength={4}
                   />
 
-                  <div className="d-flex  justify-content-center w-md-50 w-100">
-                    {/* RESETBUTTON */}
-                    {/* <button
-                    onClick={() => setShowReset(true)}
-                    role="button"
-                    className="btn btn-info text-light"
-                  >
-                    Reset pin
-                  </button> */}
+                  <div className="d-flex justify-content-center w-md-50 w-100">
 
                     <button type="submit" className="btn btn-success w-100">
                       {isLoading ? (
@@ -447,12 +465,18 @@ export default function TransactionsModal({
                       )}
                     </button>
                   </div>
+                  <small className="text-info text-end w-100" style={{ cursor: "pointer" }} onClick={()=>{
+                    handlePinOpen()
+                    handleClose()
+                  }}>Forgot Pin?</small>
                 </form>
               </div>
             )}
             {/* 
               if showLogin turns to false then we'll show list of transactions
              */}
+
+
             {!loginState && (
               <div className="">
                 <div className="position-relative">
@@ -520,9 +544,8 @@ export default function TransactionsModal({
                             position: "absolute",
                             bottom: "15%",
                             left: "10%",
-                            color: `${
-                              cardType === "AG050" ? "white" : "black"
-                            }`,
+                            color: `${cardType === "AG050" ? "white" : "black"
+                              }`,
                             fontSize: "0.6rem",
                             fontWeight: "bold",
 
@@ -536,9 +559,8 @@ export default function TransactionsModal({
                             position: "absolute",
                             top: "50%",
                             left: "10%",
-                            color: `${
-                              cardType === "AG050" ? "white" : "black"
-                            }`,
+                            color: `${cardType === "AG050" ? "white" : "black"
+                              }`,
                             letterSpacing: "2px",
                             // color: "darkgray",
                             fontWeight: "bold",
@@ -563,7 +585,7 @@ export default function TransactionsModal({
                         <form
                           // onSubmit={handleSubmit(onSubmitTransaction)}
                           className="mt-3"
-                          // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
+                        // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
                         >
                           {/* forms cards */}
                           <div className="row">
@@ -718,9 +740,28 @@ export default function TransactionsModal({
                 </div>
               </div>
             )}
+
           </div>
+
         </div>
       </Modal>
+
+       
+      <Modal
+          open={openPinModal}
+          onClose={handlePinClose}
+      >
+          <div className="p-md-4 p-3 bg-white" style={{
+            position:"absolute",
+            top:"50%",
+            left: "50%"
+          }}>
+            
+          </div>
+      </Modal>
+
+      
+
     </div>
   );
 }
