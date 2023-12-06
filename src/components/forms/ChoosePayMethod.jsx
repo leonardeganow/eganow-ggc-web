@@ -145,8 +145,6 @@ function ChoosePayMethod(props) {
                 setShowMomo(false);
                 setShowCard(true);
                 console.log(props.formHandler.getValues());
-
-                console.log("test");
               }}
             >
               {" "}

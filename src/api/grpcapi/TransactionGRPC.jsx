@@ -14,7 +14,7 @@ function TransactionAPI() {
   // FUNCTION TO POST A NEW TRANSACTION
   function postNewTransaction(data) {
     const request = new PostDataRequest(); //initalize request
-    
+    console.log(request);
     // SETTING REQUEST BODY TO POST
     request.setMobileno(data.telephoneNo ? data.telephoneNo : data.email);
     request.setMemberid(data.memberId);
@@ -24,7 +24,7 @@ function TransactionAPI() {
     request.setPaymentaccountname(data.nameOnPaymentCard);
     request.setNetworkid(data.paymentMethodId);
     request.setNarration(data.narration);
-    request.setAgentid(data.Agentid);
+    request.setAgentid(data.agentid ? data.agentId : null);
     request.setCvv(data.cvv);
     request.setExpirydatemonth(data.expiryDateMonth);
     request.setExpirydateyear(data.expiryDateYear);

@@ -32,6 +32,7 @@ const ReviewPaymentPage = (props) => {
           : data.momoname
       } has paid GHS${data.amount}`,
     };
+    console.log(newData);
 
     try {
       const response = await postNewTransaction(newData);

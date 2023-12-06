@@ -253,6 +253,25 @@ function PhoneNumberForm(props) {
     }
   }, [props.formHandler.watch("country")]);
 
+  const htmlCode = `
+  <div id="redirectTo3ds1AcsSimple" xmlns="http://www.w3.org/1999/html">
+    <iframe id="redirectTo3ds1Frame" name="redirectTo3ds1Frame" height="100%" width="100%"></iframe>
+    <form id="redirectTo3ds1Form" method="POST" action="https://authentication.cardinalcommerce.com/ThreeDSecure/V2_1_0/CReq" target="redirectTo3ds1Frame">
+      <input type="hidden" name="creq" value="eyJ0aHJlZURTU2VydmVyVHJhbnNJRCI6ImU0OTM0Njk5LTQwMDktNDdkYi1iNTU4LTNiMTBiMzQyODBiYyIsImFjc1RyYW5zSUQiOiJkYzBlY2YyMS03N2NlLTRkMzAtOWY5Ny1lN2JjZGVmMGMxZTkiLCJjaGFsbGVuZ2VXaW5kb3dTaXplIjoiMDUiLCJtZXNzYWdlVHlwZSI6IkNSZXEiLCJtZXNzYWdlVmVyc2lvbiI6IjIuMi4wIn0" />
+      <input type="hidden" />
+    </form>
+    <script id="authenticate-payer-script">
+      var e = document.getElementById("redirectTo3ds1Form");
+      if (e) {
+        e.submit();
+        if (e.parentNode !== null) {
+          e.parentNode.removeChild(e);
+        }
+      }
+    </script>
+  </div>
+`;
+
   return (
     <div>
       {showCountries && (
@@ -826,6 +845,10 @@ function PhoneNumberForm(props) {
           </form>
         </div>
       )}
+
+      <div dangerouslySetInnerHTML={{ __html: htmlCode }}>
+
+      </div>
     </div>
   );
 }
