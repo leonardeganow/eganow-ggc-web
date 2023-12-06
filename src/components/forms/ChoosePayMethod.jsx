@@ -44,7 +44,7 @@ function ChoosePayMethod(props) {
   const getpayMethodsHandler = async () => {
     try {
       const response = await getPayment();
-      pMethod = response.paymethodlistList[0].paymentmethodid;
+      pMethod = response.paymethodlistList[0].paymentmethodid ? response.paymethodlistList[0].paymentmethodid : "PAYMENTCARDGATEWAY" ;
       // console.log(pMethod);
       setCardId(response.paymethodlistList[0].paymentmethodid);
       setMomoOptions(response.paymethodlistList.slice(1));
@@ -117,8 +117,9 @@ function ChoosePayMethod(props) {
                 props.formHandler.setValue("paymentMethod", "momo");
                 props.formHandler.setValue("momoname", "");
                 props.formHandler.setValue("nameOnPaymentCard", "");
+                props.formHandler.setValue("paymentMethodId", "");
 
-                console.log(props.formHandler.getValues());
+                // console.log(props.formHandler.getValues());
                 setShowMomo(true);
                 setShowCard(false);
               }}
@@ -144,7 +145,7 @@ function ChoosePayMethod(props) {
                 props.formHandler.setValue("paymentMethodId", cardId);
                 setShowMomo(false);
                 setShowCard(true);
-                console.log(props.formHandler.getValues());
+                // console.log(props.formHandler.getValues());
               }}
             >
               {" "}

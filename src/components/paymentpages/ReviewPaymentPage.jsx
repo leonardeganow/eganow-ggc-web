@@ -31,6 +31,7 @@ const ReviewPaymentPage = (props) => {
           ? data.nameOnPaymentCard
           : data.momoname
       } has paid GHS${data.amount}`,
+      agentId: info.agentId
     };
     console.log(newData);
 

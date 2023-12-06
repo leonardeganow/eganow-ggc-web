@@ -28,12 +28,12 @@ function AgentRegisteredUsers() {
       Membertype: "GGC",
     };
     try {
-      setIsLoading(false)     
+      setIsLoading(true)     
        const getRegisteredMembers = await getMemberCreateByAgent(data);
       setIsLoading(false)
       if (getRegisteredMembers) {
         setRegMembers(getRegisteredMembers.membersList);
-        console.log(getRegisteredMembers.membersList);
+        // console.log(getRegisteredMembers.membersList);
       }
     } catch (err) {
       setIsLoading(false)

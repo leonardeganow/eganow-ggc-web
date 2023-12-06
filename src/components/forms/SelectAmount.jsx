@@ -24,7 +24,7 @@ function SelectAmount(props) {
     if (!result) {
       return;
     }
-    console.log(info.role);
+    // console.log(info.role);
     if (info.role === "JM") {
       props.formHandler.setValue("transType", info.role);
 

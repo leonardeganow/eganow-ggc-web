@@ -140,7 +140,7 @@ export default function TransactionsModal({
     const data = getValues();
     try {
       const response = await getTotalDonations(data);
-      console.log(response);
+      // console.log(response);
       if (response.status) {
         setTotalDonations(response.message);
       }
@@ -152,7 +152,7 @@ export default function TransactionsModal({
   // function to get all tranactions
   const onSubmitTransaction = async (start, end) => {
     const data = getValues();
-    console.log(data);
+    // console.log(data);
     setIsLoading(true);
     const formatedData = {
       ...data,
@@ -164,7 +164,7 @@ export default function TransactionsModal({
     try {
       // sending api request
       const transaction = await getTransactions(formatedData);
-      console.log(transaction);
+      // console.log(transaction);
       setIsLoading(false);
       setShowTable(true);
       setTransaction(transaction.translistList); //assigning the reponse to the state
@@ -190,7 +190,7 @@ export default function TransactionsModal({
   // function to search date
   function submitTransaction(startDate, endDate) {
     onSubmitTransaction(formatDate(startDate), formatDate(endDate));
-    console.log(getValues());
+    // console.log(getValues());
   }
 
   //login member
@@ -210,7 +210,7 @@ export default function TransactionsModal({
         setValue("customerCardtype", response.cardtypename);
         setCardName(response.fullname);
         setCardNo(response.cardnumber);
-        console.log("loginresp", response);
+        // console.log("loginresp", response);
         toast(response.message);
         onSubmitTransaction(
           formatDate(formattedLastMonthDate),
@@ -544,7 +544,7 @@ export default function TransactionsModal({
                             position: "absolute",
                             bottom: "15%",
                             left: "10%",
-                            color: `${cardType === "AG050" ? "white" : "black"
+                            color: `${cardType === "AG050" || "AG011" || "AG006"  ? "white" : "black"
                               }`,
                             fontSize: "0.6rem",
                             fontWeight: "bold",
@@ -559,7 +559,7 @@ export default function TransactionsModal({
                             position: "absolute",
                             top: "50%",
                             left: "10%",
-                            color: `${cardType === "AG050" ? "white" : "black"
+                            color: `${cardType === "AG050" || "AG011" ||"AG006" ? "white" : "black"
                               }`,
                             letterSpacing: "2px",
                             // color: "darkgray",

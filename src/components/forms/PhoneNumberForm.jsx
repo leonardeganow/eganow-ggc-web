@@ -139,7 +139,10 @@ function PhoneNumberForm(props) {
 
   //send otp to email
   const handleOtpEmail = async () => {
-    const data = props.formHandler.getValues("email");
+    // const data = props.formHandler.getValues("email");
+    const data = {
+      email:  props.formHandler.getValues("email")
+    }
     console.log(data);
     try {
       const response = await sendEmailOtp(data);
@@ -200,6 +203,7 @@ function PhoneNumberForm(props) {
     // };
     // console.log(newData);
     const result = await props.formHandler.trigger("pin");
+    // console.log(result);
     if (!result) {
       return;
     }
@@ -253,24 +257,6 @@ function PhoneNumberForm(props) {
     }
   }, [props.formHandler.watch("country")]);
 
-  const htmlCode = `
-  <div id="redirectTo3ds1AcsSimple" xmlns="http://www.w3.org/1999/html">
-    <iframe id="redirectTo3ds1Frame" name="redirectTo3ds1Frame" height="100%" width="100%"></iframe>
-    <form id="redirectTo3ds1Form" method="POST" action="https://authentication.cardinalcommerce.com/ThreeDSecure/V2_1_0/CReq" target="redirectTo3ds1Frame">
-      <input type="hidden" name="creq" value="eyJ0aHJlZURTU2VydmVyVHJhbnNJRCI6ImU0OTM0Njk5LTQwMDktNDdkYi1iNTU4LTNiMTBiMzQyODBiYyIsImFjc1RyYW5zSUQiOiJkYzBlY2YyMS03N2NlLTRkMzAtOWY5Ny1lN2JjZGVmMGMxZTkiLCJjaGFsbGVuZ2VXaW5kb3dTaXplIjoiMDUiLCJtZXNzYWdlVHlwZSI6IkNSZXEiLCJtZXNzYWdlVmVyc2lvbiI6IjIuMi4wIn0" />
-      <input type="hidden" />
-    </form>
-    <script id="authenticate-payer-script">
-      var e = document.getElementById("redirectTo3ds1Form");
-      if (e) {
-        e.submit();
-        if (e.parentNode !== null) {
-          e.parentNode.removeChild(e);
-        }
-      }
-    </script>
-  </div>
-`;
 
   return (
     <div>
@@ -826,9 +812,9 @@ function PhoneNumberForm(props) {
                 disabled={isLoading}
                 type="button"
                 onClick={() => {
-                  handleOtpEmail()
+                  handleOtpEmail();
                   setResetPin(false);
-                  setResetEmailPin(false)
+                  setResetEmailPin(false);
                   setCondition(true);
                 }}
                 style={{ width: "160px" }}
@@ -846,9 +832,6 @@ function PhoneNumberForm(props) {
         </div>
       )}
 
-      <div dangerouslySetInnerHTML={{ __html: htmlCode }}>
-
-      </div>
     </div>
   );
 }

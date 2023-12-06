@@ -121,10 +121,10 @@ const membersGRPC = () => {
 
 
   function resetMemberPin (params){
-    console.log(params);
+    // console.log(params);
     try {
       const request = new ResetPinRequest()
-      console.log(request);
+      // console.log(request);
      
       request.setMobilenumberoremailaddress(params.mobileNumber ? params.mobileNumber : params.email)
       request.setPin(params.pin)

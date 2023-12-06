@@ -14,10 +14,10 @@ const otpGRPC = () => {
     try {
       return new Promise((resolve, reject) => {
         const request = new MemberOtpRequest();
-        console.log(params.mobileNo);
+        // console.log(params.mobileNo);
         request.setMobilenumber(params.mobileNo);
-        console.log(params.mobileNo);
-        console.log(request);
+        // console.log(params.mobileNo);
+        // console.log(request);
         client.sendSMSOTPToMemberPhoneNumber(
           request,
           METADATA,
@@ -41,8 +41,8 @@ const otpGRPC = () => {
     try {
       return new Promise((resolve, reject) => {
         const request = new MemberEmailOtpRequest();
-        console.log(params);
-        request.setEmailaddress(params);
+        // console.log(params);
+        request.setEmailaddress(params.email);
         console.log(request);
         client.sendOTPToMemberEmailAddress(
           request,
@@ -66,8 +66,8 @@ const otpGRPC = () => {
     try {
       return new Promise((resolve, reject) => {
         const request = new VerifyOtpRequest();
-        console.log(request);
-        console.log(params);
+        // console.log(request);
+        // console.log(params);
         request.setOtpvalue(params.otp);
         request.setMobilenumberoremailaddress(
           params.telephoneNo ? params.telephoneNo : params.email

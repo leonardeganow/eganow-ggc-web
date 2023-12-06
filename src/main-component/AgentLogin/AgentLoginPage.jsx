@@ -50,7 +50,7 @@ const AgentLoginPage = () => {
       <form
         onSubmit={handleSubmit(agentLoginHandler)}
         action=""
-        className="bg-white p-5 rounded relative"
+        className="bg-white p-5 rounded relative m-3 m-md-0"
       >
         <Link to="/" className="text-success">
           <IoArrowBackOutline size={20} className="" />

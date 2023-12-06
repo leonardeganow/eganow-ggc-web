@@ -31,7 +31,7 @@ function AgentChangePin() {
       } else {
         toast(response.message);
       }
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       console.error("err", error instanceof RpcError);
       if (error instanceof RpcError) {

@@ -122,10 +122,10 @@ const TransactionsTwo = (props) => {
     } catch (err) {
       if (err.message) {
         setIsLoading(false);
-        // toast("Network Error");
+        toast("Network Error");
       }
-      console.log(err);
-      toast("Invalid date format");
+      // console.log(err);
+      // toast("Invalid date format");
     }
   };
 
@@ -356,7 +356,7 @@ const TransactionsTwo = (props) => {
                 id="divId"
                 style={{
                   backgroundImage: `url(${memberCards(
-                    props.formHandler.getValues("userCardType")
+                    props.formHandler.getValues("cardId")
                   )})`,
                   backgroundSize: "cover",
                   backgroundAttachment: "fixed",
@@ -375,7 +375,8 @@ const TransactionsTwo = (props) => {
                     left: "35px",
                     color: "white",
                     fontSize: "13px",
-                    color: "darkgray",
+                    color: `${ props.formHandler.getValues("cardId") === "AG050" || "AG011" || "AG006"  ? "white" : "black"
+                  }`,
                   }}
                 >
                   {props.formHandler.getValues("fullName")}
@@ -387,7 +388,8 @@ const TransactionsTwo = (props) => {
                     left: "35px",
                     color: "white",
                     // letterSpacing: "1px",
-                    color: "darkgray",
+                    color: `${ props.formHandler.getValues("cardId") === "AG050" || "AG011" || "AG006"  ? "white" : "black"
+                  }`,
                     fontSize: "14px",
                   }}
                 >
