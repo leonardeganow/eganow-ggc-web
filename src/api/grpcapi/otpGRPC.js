@@ -42,7 +42,7 @@ const otpGRPC = () => {
       return new Promise((resolve, reject) => {
         const request = new MemberEmailOtpRequest();
         console.log(params);
-        request.setEmailaddress(params);
+        request.setEmailaddress(params.email);
         console.log(request);
         client.sendOTPToMemberEmailAddress(
           request,

@@ -747,7 +747,7 @@ export default function TransactionsModal({
       </Modal>
 
        
-      <Modal
+      {/* <Modal
           open={openPinModal}
           onClose={handlePinClose}
       >
@@ -758,7 +758,8 @@ export default function TransactionsModal({
           }}>
             
           </div>
-      </Modal>
+      </Modal> */}
+      <ResetPinModal open={openPinModal} close={handlePinClose}/>
 
       
 
