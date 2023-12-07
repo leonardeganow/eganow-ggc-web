@@ -144,15 +144,16 @@ function PhoneNumberForm(props) {
   //function to send otp
   const handleOtp = async () => {
     const data = props.formHandler.getValues("telephoneNo");
-
+    console.log(data);
     try {
       const a = data.slice(0);
       const newData = {
         mobileNo: `${233}${a}`,
       };
+      console.log(newData);
       const response = await sendOtp(newData);
       // console.log(response);
-      props.formHandler.reset();
+      // props.formHandler.reset();
 
       if (response.status === true) {
         toast.success(response.message); //add field name
@@ -175,7 +176,7 @@ function PhoneNumberForm(props) {
     try {
       const response = await sendEmailOtp(data);
       // console.log(response);
-      props.formHandler.reset();
+      // props.formHandler.reset();
 
       if (response.status === true) {
         toast.success(response.message); //add field name
@@ -191,7 +192,7 @@ function PhoneNumberForm(props) {
   //verify otp function
   const handleOtpVerify = async () => {
     const data = props.formHandler.getValues();
-    // console.log(data);
+    console.log(data);
     const result = await props.formHandler.trigger("otp");
     // console.log(result);
     if (!result) {
@@ -201,13 +202,14 @@ function PhoneNumberForm(props) {
     // condition;
     const updatedData = {
       ...data,
-      mobileNo: `${233}${num}`,
+      mobileNo: `${233}${num || data.mobileNo}`,
     };
+    console.log(updatedData);
     try {
       setIsLoading(true);
       const response = await verifyOtp(updatedData);
       setIsLoading(false);
-      props.formHandler.reset();
+    
       if (response.status === false) {
         toast.warning(response.message);
       } else {
@@ -239,9 +241,10 @@ function PhoneNumberForm(props) {
       setIsLoading(true);
 
       const response = await loginMember(data);
-      // console.log(response);
+      console.log(response);
       setIsLoading(false);
       props.formHandler.setValue("userStatus", response.message);
+      props.formHandler.setValue("baseCardId", response.cardtypeid);
       props.formHandler.setValue("fullName", response.fullname);
       toast.success(response.message);
       props.formHandler.reset(data);
@@ -641,6 +644,7 @@ function PhoneNumberForm(props) {
                         pin: props.formHandler.getValues("pin"),
                         email: props.formHandler.getValues("email"),
                       };
+                      console.log(data);
                       const response = await resetMemberPin(data);
                       setIsLoading(false);
                       console.log(response);

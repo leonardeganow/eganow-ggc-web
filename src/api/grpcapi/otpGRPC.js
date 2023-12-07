@@ -63,6 +63,7 @@ const otpGRPC = () => {
   };
 
   const verifyOtp = (params) => {
+    console.log(params);
     try {
       return new Promise((resolve, reject) => {
         const request = new VerifyOtpRequest();

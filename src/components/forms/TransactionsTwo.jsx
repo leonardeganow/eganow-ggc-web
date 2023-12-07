@@ -214,7 +214,6 @@ const TransactionsTwo = (props) => {
     return { ...item, date: formatDate };
   });
 
-
   function downloadHistory() {
     const pdf = new jsPDF();
 
@@ -256,8 +255,6 @@ const TransactionsTwo = (props) => {
       ),
       startY: 55,
     });
-
-    
 
     pdf.save("GGChistory.pdf");
   }
@@ -356,7 +353,7 @@ const TransactionsTwo = (props) => {
                 id="divId"
                 style={{
                   backgroundImage: `url(${memberCards(
-                    props.formHandler.getValues("cardId")
+                    props.formHandler.getValues("baseCardId")
                   )})`,
                   backgroundSize: "cover",
                   backgroundAttachment: "fixed",
@@ -375,11 +372,17 @@ const TransactionsTwo = (props) => {
                     left: "35px",
                     color: "white",
                     fontSize: "13px",
-                    color: `${ props.formHandler.getValues("cardId") === "AG050" || "AG011" || "AG006"  ? "white" : "black"
-                  }`,
+                    color: `${
+                      props.formHandler.getValues("cardId") === "AG050" ||
+                      "AG011" ||
+                      "AG006"
+                        ? "white"
+                        : "black"
+                    }`,
                   }}
                 >
-                  {props.formHandler.getValues("fullName")||props.formHandler.getValues("membername")}
+                  {props.formHandler.getValues("fullName") ||
+                    props.formHandler.getValues("membername")}
                 </p>
                 <p
                   style={{
@@ -388,8 +391,13 @@ const TransactionsTwo = (props) => {
                     left: "35px",
                     color: "white",
                     // letterSpacing: "1px",
-                    color: `${ props.formHandler.getValues("cardId") === "AG050" || "AG011" || "AG006"  ? "white" : "black"
-                  }`,
+                    color: `${
+                      props.formHandler.getValues("cardId") === "AG050" ||
+                      "AG011" ||
+                      "AG006"
+                        ? "white"
+                        : "black"
+                    }`,
                     fontSize: "14px",
                   }}
                 >

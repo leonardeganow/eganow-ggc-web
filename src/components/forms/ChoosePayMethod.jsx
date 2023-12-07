@@ -124,7 +124,7 @@ function ChoosePayMethod(props) {
                 setShowCard(false);
               }}
               className={` p-md-3 p-2 d-flex gap-2 align-items-center ${
-                showMomo ? "bg-success text-white" : " text-success"
+                showMomo ? "bg-white text-success" : " bg-success text-white"
               }`}
             >
               {" "}
@@ -134,7 +134,7 @@ function ChoosePayMethod(props) {
             <div
               role="button"
               className={` p-md-3 p-2 d-flex gap-2 align-items-center ${
-                showCard ? "bg-success text-white" : " text-success"
+                showCard ? "bg-white text-success" : "  bg-success text-white"
               }`}
               onClick={() => {
                 setIsCard("Debit card");
