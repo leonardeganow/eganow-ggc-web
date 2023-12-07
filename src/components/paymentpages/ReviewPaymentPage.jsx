@@ -18,8 +18,8 @@ const ReviewPaymentPage = (props) => {
     return maskedNumbers;
   };
   const data = props.formHandler.getValues();
-  console.log(data);
-
+  // console.log(data);
+const agentId = localStorage.getItem("agentid")
   //initiate payment
   const completePayment = async () => {
     // props.handleNext(1);
@@ -31,7 +31,7 @@ const ReviewPaymentPage = (props) => {
           ? data.nameOnPaymentCard
           : data.momoname
       } has paid GHS${data.amount}`,
-      agentId: info.agentId
+      agentId: agentId
     };
     console.log(newData);
 

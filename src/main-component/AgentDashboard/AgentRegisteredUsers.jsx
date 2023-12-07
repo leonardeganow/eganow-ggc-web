@@ -143,7 +143,7 @@ function AgentRegisteredUsers() {
                         {new Date(member.registrationdate).toLocaleDateString()}
                       </TableCell>
                       <TableCell>
-                        <span className="bg-success text-white px-2 py-1 rounded-pill">
+                        <span className=" text-dark ">
                           {member.membername}
                         </span>
                       </TableCell>

@@ -24,7 +24,7 @@ const AgentLoginPage = () => {
     try {
       const response = await loginAgent(data);
       if (response.status) {
-        updateRoleAndCardType("", "", "", "", response.message);
+        updateRoleAndCardType("GGC", "", "", "", response.message); //HARDCODING GGC
         localStorage.setItem("agentid", response.message)
         navigate("/agentdashboard");
       } else {

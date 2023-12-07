@@ -135,11 +135,18 @@ function AgentCards() {
     <section
       id="getggc" 
     
-      className="wpo-election-mission-section  px-5"
+      className="wpo-election-mission-section  px-5  "
     >
+ 
       <div style={{ cursor: "pointer" }} className="container">
-        <div className="row justify-content-center">
-        
+        <div  className="row justify-content-between px-3">
+        <button onClick={()=>{
+          setOpen(true)
+          updateRoleAndCardType("GGC", "", "", "", ""); //HARDCODING GGC
+
+          }} style={{width: "30%"}} className="  btn btn-success  my-2">Top-up for member</button>
+        <button onClick={()=>setOpen(true)} style={{width: "30%"}} className="  btn btn-danger  my-2">Reset pin for member</button>
+
         </div>
         {isLoading ? (
           <div className=" d-flex flex-wrap justify-content-center gap-3">

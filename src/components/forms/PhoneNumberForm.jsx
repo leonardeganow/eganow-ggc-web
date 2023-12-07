@@ -32,6 +32,8 @@ function PhoneNumberForm(props) {
   const { sendOtp, verifyOtp, sendEmailOtp } = otpGRPC();
   const { getOtherCountries } = customerSetupsGRPC();
 
+  const agentId = localStorage.getItem("agentid");
+
   //check if user exist funnction
   const onSubmit = async () => {
     setIsLoading(true);
@@ -46,27 +48,53 @@ function PhoneNumberForm(props) {
       ...data,
       role: info.role,
     };
+    console.log(newData);
     try {
       const response = await checkIfUserExist(newData);
+      console.log(response);
       setIsLoading(false);
       // console.log(newData);
       // console.log(response);
       // console.log(newData);
       props.formHandler.reset(newData);
       if (response.message === "COMPLETE") {
+        console.log(info);
         // handleOtp(data.telephoneNo);
+        if (agentId) {
+          props.handleNext(2);
+          props.formHandler.setValue("memberId", response.memberid);
+          props.formHandler.setValue("fullName", response.membername);
+          props.formHandler.setValue("ndcCardNo", response.cardno);
+          props.formHandler.setValue("userStatus", response.message);
+          props.formHandler.setValue("userCardType", response.cardtypeid);
+        } else {
+          props.formHandler.setValue("memberId", response.memberid);
+          props.formHandler.setValue("ndcCardNo", response.cardno);
+          props.formHandler.setValue("userStatus", response.message);
+          props.formHandler.setValue("userCardType", response.cardtypeid);
+
+          // props.formHandler.setValue("telephoneNo", data.telephoneNo);
+          setShowCountries(false);
+          setShowEmail(false);
+
+          setShowInput(false);
+          setCondition(false);
+          setShowEnterPin(true);
+        }
+      } else if (response.message === "COMPLETE" && info.agentId === true) {
         props.formHandler.setValue("memberId", response.memberid);
         props.formHandler.setValue("ndcCardNo", response.cardno);
         props.formHandler.setValue("userStatus", response.message);
         props.formHandler.setValue("userCardType", response.cardtypeid);
 
         // props.formHandler.setValue("telephoneNo", data.telephoneNo);
-        setShowCountries(false);
-        setShowEmail(false);
+        // setShowCountries(false);
+        // setShowEmail(false);
 
-        setShowInput(false);
-        setCondition(false);
-        setShowEnterPin(true);
+        // setShowInput(false);
+        // setCondition(false);
+        // setShowEnterPin(false);
+        props.handleNext(2);
       } else if (response.message === "DOES_NOT_EXIST" && data.email) {
         // console.log(newData.email);
         handleOtpEmail();
@@ -141,8 +169,8 @@ function PhoneNumberForm(props) {
   const handleOtpEmail = async () => {
     // const data = props.formHandler.getValues("email");
     const data = {
-      email:  props.formHandler.getValues("email")
-    }
+      email: props.formHandler.getValues("email"),
+    };
     console.log(data);
     try {
       const response = await sendEmailOtp(data);
@@ -257,7 +285,6 @@ function PhoneNumberForm(props) {
     }
   }, [props.formHandler.watch("country")]);
 
-
   return (
     <div>
       {showCountries && (
@@ -353,6 +380,36 @@ function PhoneNumberForm(props) {
                   )}
                 </div>
               </div>
+              {agentId && (
+                <p
+                  role="button"
+                  onClick={() => {
+                    // if (props.formHandler.getValues("telephoneNo")) {
+                    setPinReset(true);
+                    // props.formHandler.setValue("resetPin", "yes");
+                    setCondition(false);
+                    setResetPin(true);
+                    setShowInput(false);
+                    setShowEnterPin(false);
+                    setShowCountries(false);
+                    // } else {
+                    //   setPinReset(true);
+                    //   // props.formHandler.setValue("resetPin", "yes");
+                    //   setCondition(false);
+                    //   setResetPin(false);
+                    //   setResetEmailPin(true);
+                    //   setShowCountries(false);
+                    //   setShowInput(false);
+                    //   setShowEnterPin(false);
+                    // }
+                  }}
+                  href=""
+                  style={{ fontSize: "12px" }}
+                  className="text-center mt-1 text-info"
+                >
+                  Reset Member pin?
+                </p>
+              )}
             </div>
 
             <div className="d-flex justify-content-end">
@@ -744,6 +801,23 @@ function PhoneNumberForm(props) {
                   )}
                 </div>
               </div>
+              <p
+                role="button"
+                onClick={() => {
+                  setPinReset(true);
+                  // props.formHandler.setValue("resetPin", "yes");
+                  setCondition(false);
+                  setResetPin(false);
+                  setResetEmailPin(true);
+                  setShowInput(false);
+                  setShowEnterPin(false);
+                }}
+                href=""
+                style={{ fontSize: "12px" }}
+                className="text-center mt-1 text-info"
+              >
+                Reset pin for email?
+              </p>
             </div>
 
             <div className="d-flex justify-content-end">
@@ -787,7 +861,7 @@ function PhoneNumberForm(props) {
                   <input
                     // style={{ width: "100%" }}
                     {...props.formHandler.register("email")}
-                    placeholder="Telephone Number"
+                    placeholder="Email"
                     className={`form-control w-100 ${
                       props.formHandler.formState.errors.email
                         ? "is-invalid"
@@ -805,6 +879,24 @@ function PhoneNumberForm(props) {
                   )}
                 </div>
               </div>
+
+              <p
+                role="button"
+                onClick={() => {
+                  setPinReset(true);
+                  // props.formHandler.setValue("resetPin", "yes");
+                  setCondition(false);
+                  setResetPin(true);
+                  setResetEmailPin(false);
+                  setShowInput(false);
+                  setShowEnterPin(false);
+                }}
+                href=""
+                style={{ fontSize: "12px" }}
+                className="text-center mt-1 text-info"
+              >
+                Reset pin for Telephone number?
+              </p>
             </div>
 
             <div className="d-flex justify-content-end">
@@ -831,7 +923,6 @@ function PhoneNumberForm(props) {
           </form>
         </div>
       )}
-
     </div>
   );
 }

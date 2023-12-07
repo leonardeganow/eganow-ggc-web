@@ -379,7 +379,7 @@ const TransactionsTwo = (props) => {
                   }`,
                   }}
                 >
-                  {props.formHandler.getValues("fullName")}
+                  {props.formHandler.getValues("fullName")||props.formHandler.getValues("membername")}
                 </p>
                 <p
                   style={{

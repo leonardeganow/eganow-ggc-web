@@ -75,13 +75,16 @@ function GgcRegForm(props) {
     getAgeRangeHandler();
   }, []);
 
+  const agentId = localStorage.getItem("agentid")//getting agent id from localstorage
+
+
   const onSubmit = async () => {
     const data = props.formHandler.getValues();
 
 
     const newData = {
       ...data,
-      agentId: info.agentId
+      agentId: agentId
     }
     // console.log(newData);
     const result = await props.formHandler.trigger([
