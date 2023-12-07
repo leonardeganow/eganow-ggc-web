@@ -11,6 +11,7 @@ import useStore from "../../formstore/formStore";
 import { toast } from "react-toastify";
 import { FaDownload } from "react-icons/fa";
 import { jsPDF } from "jspdf";
+import { height } from "@mui/system";
 
 function AgentCommission() {
   const { info } = useStore();
@@ -95,7 +96,7 @@ function AgentCommission() {
   }
 
   return (
-    <div className="p-md-5 p-4 h-100">
+    <div className="p-md-5 p-4" style={{height:"100vh"}}>
       {/* NOTE PAGE HEADING */}
       <div>
         <h1 className="text-muted">Agent Transactions</h1>
@@ -103,7 +104,7 @@ function AgentCommission() {
       </div>
 
       {/* NOTE LIST OF TRANSACTION (TABLE) */}
-      <div className="my-md-5 my-4">
+      <div className="my-md-3 my-4 h-50">
         <div className="d-flex justify-content-end py-3">
           <button
             onClick={downloadHistory}
@@ -112,65 +113,70 @@ function AgentCommission() {
             <FaDownload /> Download
           </button>
         </div>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell className="fw-bold text-muted fs-6">
-                  Member Name
-                </TableCell>
-                <TableCell className="fw-bold text-muted fs-6">
-                  Mobile No.
-                </TableCell>
-                <TableCell className="fw-bold text-muted fs-6">
-                  Amount
-                </TableCell>
-                <TableCell className="fw-bold text-muted fs-6">
-                  trans-status
-                </TableCell>
-                <TableCell className="fw-bold text-muted fs-6">
-                  Card Type
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {transaction.length > 0 ? (
-                transaction.map((trans, index) => {
-                  return (
-                    <TableRow key={index}>
-                      <TableCell component="th" scope="row">
-                        {trans.membername}
-                      </TableCell>
-                      <TableCell>
-                        <span className="bg-success text-white px-2 py-1 rounded-pill">
-                          {trans.mobilenumber}
-                        </span>
-                      </TableCell>
-                      <TableCell>GHS {trans.transamount.toFixed(2)}</TableCell>
-                      <TableCell>{trans.transstatus}</TableCell>
-                      <TableCell>{trans.cardid}</TableCell>
-                    </TableRow>
-                  );
-                })
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={5}
-                    className="fw-bold text-danger fs-3"
-                    align="center"
-                  >
-                    {" "}
-                    {isLoading ? (
-                      <span className="spinner-border spinner-border-sm mr-1"></span>
-                    ) : (
-                      "no data available"
-                    )}
+
+        <div className="pb-5 shadow-lg rounded" style={{height:"70vh",overflowY:"auto"}}>
+          <TableContainer sx={{ minWidth: 650,maxHeight: "100%"}} component={Paper}>
+            <Table  aria-label="simple table" stickyHeader>
+              <TableHead className="bg-dark">
+                <TableRow >
+                  <TableCell className="fw-bold   fs-6">
+                    Member Name
+                  </TableCell>
+                  <TableCell className="fw-bold   fs-6">
+                    Mobile No.
+                  </TableCell>
+                  <TableCell className="fw-bold fs-6">
+                    Amount
+                  </TableCell>
+                  <TableCell className="fw-bold fs-6">
+                    trans-status
+                  </TableCell>
+                  <TableCell className="fw-bold fs-6">
+                    Card Type
                   </TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+
+              <TableBody>
+                {transaction.length > 0 ? (
+                  transaction.map((trans, index) => {
+                    return (
+                      <TableRow key={index}>
+                        <TableCell component="th" scope="row">
+                          {trans.membername}
+                        </TableCell>
+                        <TableCell>
+                          <span className="bg-success text-white px-2 py-1 rounded-pill">
+                            {trans.mobilenumber}
+                          </span>
+                        </TableCell>
+                        <TableCell>GHS {trans.transamount.toFixed(2)}</TableCell>
+                        <TableCell>{trans.transstatus}</TableCell>
+                        <TableCell>{trans.cardid}</TableCell>
+                      </TableRow>
+                    );
+                  })
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={5}
+                      className="fw-bold text-danger fs-3"
+                      align="center"
+                    >
+                      {" "}
+                      {isLoading ? (
+                        <span className="spinner-border spinner-border-sm mr-1"></span>
+                      ) : (
+                        "no data available"
+                      )}
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+
       </div>
     </div>
   );
