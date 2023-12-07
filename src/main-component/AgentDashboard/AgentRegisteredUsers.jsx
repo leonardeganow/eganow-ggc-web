@@ -28,8 +28,8 @@ function AgentRegisteredUsers() {
       Membertype: "GGC",
     };
     try {
-      setIsLoading(true)     
-       const getRegisteredMembers = await getMemberCreateByAgent(data);
+      setIsLoading(true)
+      const getRegisteredMembers = await getMemberCreateByAgent(data);
       setIsLoading(false)
       if (getRegisteredMembers) {
         setRegMembers(getRegisteredMembers.membersList);
@@ -93,13 +93,13 @@ function AgentRegisteredUsers() {
       startY: 30,
     });
 
-    
+
 
     pdf.save("registeredmembers.pdf");
   }
 
   return (
-    <div className="p-md-5 p-4 h-100">
+    <div className="p-md-5 p-4" style={{ height: "100vh" }}>
       {/* NOTE PAGE HEADING */}
       <div>
         <h1 className="text-muted">Registered Members</h1>
@@ -113,61 +113,64 @@ function AgentRegisteredUsers() {
             <FaDownload /> Download
           </button>
         </div>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell className="fw-bold text-muted fs-6">
-                  Reg. Date
-                </TableCell>
-                <TableCell className="fw-bold text-muted fs-6">
-                  Member Name
-                </TableCell>
-                <TableCell className="fw-bold text-muted fs-6">
-                  Card Number
-                </TableCell>
-                <TableCell className="fw-bold text-muted fs-6">
-                  Member ID
-                </TableCell>
-                <TableCell className="fw-bold text-muted fs-6">
-                  Card type
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {regMembers.length > 0 ? (
-                regMembers.map((member, index) => {
-                  return (
-                    <TableRow key={index}>
-                      <TableCell component="th" scope="row">
-                        {new Date(member.registrationdate).toLocaleDateString()}
-                      </TableCell>
-                      <TableCell>
-                        <span className=" text-dark ">
-                          {member.membername}
-                        </span>
-                      </TableCell>
-                      <TableCell>{member.cardnumber}</TableCell>
-                      <TableCell>{member.memberid}</TableCell>
-                      <TableCell>{member.cardname}</TableCell>
-                    </TableRow>
-                  );
-                })
-              ) : (
+
+        <div style={{ height: "70vh", overflowY: "auto" }}>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650,maxHeight: "100%"}} aria-label="simple table">
+              <TableHead aria-label="simple table" stickyHeader>
                 <TableRow>
-                  <TableCell
-                    colSpan={5}
-                    className="fw-bold text-danger fs-3"
-                    align="center"
-                  >
-                    {" "}
-                   {isLoading ? <span className="spinner-border spinner-border-sm mr-1"></span> : "no data available"}
+                  <TableCell className="fw-bold text-muted fs-6">
+                    Reg. Date
+                  </TableCell>
+                  <TableCell className="fw-bold text-muted fs-6">
+                    Member Name
+                  </TableCell>
+                  <TableCell className="fw-bold text-muted fs-6">
+                    Card Number
+                  </TableCell>
+                  <TableCell className="fw-bold text-muted fs-6">
+                    Member ID
+                  </TableCell>
+                  <TableCell className="fw-bold text-muted fs-6">
+                    Card type
                   </TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {regMembers.length > 0 ? (
+                  regMembers.map((member, index) => {
+                    return (
+                      <TableRow key={index}>
+                        <TableCell component="th" scope="row">
+                          {new Date(member.registrationdate).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell>
+                          <span className="bg-success text-white px-2 py-1 rounded-pill">
+                            {member.membername}
+                          </span>
+                        </TableCell>
+                        <TableCell>{member.cardnumber}</TableCell>
+                        <TableCell>{member.memberid}</TableCell>
+                        <TableCell>{member.cardname}</TableCell>
+                      </TableRow>
+                    );
+                  })
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={5}
+                      className="fw-bold text-danger fs-3"
+                      align="center"
+                    >
+                      {" "}
+                      {isLoading ? <span className="spinner-border spinner-border-sm mr-1"></span> : "no data available"}
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
       </div>
     </div>
   );
