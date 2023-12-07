@@ -9,8 +9,6 @@ import membersGRPC from '../../api/grpcapi/membersGRPC';
 import otpGRPC from '../../api/grpcapi/otpGRPC';
 
 
-
-
 function ResetPinModal({ open, close }) {
 
     //ANCHOR -GETTING API FUNCTIONS
@@ -47,19 +45,16 @@ function ResetPinModal({ open, close }) {
                 const response = await checkIfUserExist(payload); //REVIEW - checking if user exist with nunber 
                 if (response.status === true) {
                     const response = await sendOtp({ mobileNo: phoneValue }); //TODO - sending otp
-                    console.log(response)
                     if (response.status == true) {
                         setShowOTP(true); //ANCHOR - set otp form 
                         setShowPhone(false) //ANCHOR - set the show phone 
                         toast(response?.message);
                         setIsLoading(false) //ANCHOR - setting loading state to false
-                        console.log("sendOtp", response)
                     } else if (response.status === false && response.message == 'OTP already exist, Kindly enter the otp sent to your email.') {
                         setShowOTP(true); //ANCHOR - set otp form 
                         setShowPhone(false) //ANCHOR - set the show phone 
                         toast(response?.message);
                         setIsLoading(false) //ANCHOR - seting loading state
-                        console.log("sendOtp", response)
                     } else {
                         toast(response?.message);
                         setIsLoading(false) //ANCHOR - setting loading state to false
@@ -81,13 +76,11 @@ function ResetPinModal({ open, close }) {
                 setIsLoading(true)
                 if (response.status === true) {
                     const response = await sendEmailOtp({ email: phoneValue }); //TODO - sending otp
-                    console.log(response)
                     if (response?.status == true) {
                         setShowOTP(true); //ANCHOR - set otp form 
                         setShowPhone(false) //ANCHOR - set the show phone 
                         toast(response?.message);
                         setIsLoading(false) //ANCHOR - seting loading state
-                        console.log("sendOtp", response)
                     } else {
                         toast.error(response?.message);
                         setIsLoading(false)
@@ -98,14 +91,12 @@ function ResetPinModal({ open, close }) {
                     setShowPhone(false) //ANCHOR - set the show phone 
                     toast(response?.message);
                     setIsLoading(false) //ANCHOR - seting loading state
-                    console.log("sendOtp", response)
                 } else {
                     toast.error(response.message)
                     setIsLoading(false)
                     return;
                 }
             } catch (err) {
-                console.error(err)
                 toast(err.message);
                 setIsLoading(false)
             }
@@ -151,7 +142,6 @@ function ResetPinModal({ open, close }) {
         let pinValue = getValues('pin')
         let confirmPin = getValues('confirmpin')
         let phoneValue = getValues('phoneemail')
-        console.log(pinValue)
         if (pinValue === confirmPin) { //ANCHOR if confirm pin and pin is equals
             let payload = {
                 mobileNumber: phoneValue,
@@ -170,7 +160,6 @@ function ResetPinModal({ open, close }) {
                     setShowPin(false)
                     toast(response?.message);
                     setIsLoading(false)
-                    console.log(response)
                 } else {
                     toast(response?.message);
                     setIsLoading(false)
@@ -227,12 +216,12 @@ function ResetPinModal({ open, close }) {
                             )
                         }
 
-                        {/* TODO SHOW OTP WHEN NAME IS PHONE IS TRUE */}
+                        {/* REVIEW SHOW OTP WHEN NAME IS PHONE IS TRUE */}
                         {
                             showOTP && (
                                 <div>
                                     <label htmlFor="">Enter OTP</label>
-                                    <input type="text" className='form-control my-1' {...register('otp', { require: true })} />
+                                    <input type="text" maxlength="4" className='form-control my-1' {...register('otp', { require: true })} />
                                     <div className='text-end mt-2'>
                                         <button type='button' className='btn btn-success' onClick={getOtp} >{isLoading ? <span className="spinner-border spinner-border-sm mr-1"></span> : "Next"}</button>
                                     </div>
@@ -246,10 +235,10 @@ function ResetPinModal({ open, close }) {
                             showPin && (
                                 <div>
                                     <label htmlFor="">Create New Pin</label>
-                                    <input type="text" className='form-control my-1' {...register('pin', { require: true })} />
+                                    <input type="text" maxlength="4" className='form-control my-1' {...register('pin', { require: true })} />
                                     <br />
                                     <label htmlFor="">Confirm New Pin</label>
-                                    <input type="text" className='form-control my-1' {...register('confirmpin', { require: true })} />
+                                    <input type="text" maxlength="4" className='form-control my-1' {...register('confirmpin', { require: true })} />
                                     <div className='text-end mt-2'>
                                         <button type='button' className='btn btn-success' onClick={getPin} >{isLoading ? <span className="spinner-border spinner-border-sm mr-1"></span> : "Submit"}</button>
                                     </div>
