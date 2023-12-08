@@ -261,7 +261,10 @@ const MobileMenu = () => {
             duration={500}
             onClick={() => setMenuState(!menuActive)}
           >
-            <li className="active text-white  text-center my-3">Agent</li>
+            <li className="active text-white  text-center my-3 ">
+
+              <span className="bg-success p-1 rounded shadow">Agent login</span>
+            </li>
           </MyLink>
 
           {/* <Link

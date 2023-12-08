@@ -90,14 +90,26 @@ const Header = (props) => {
                         Get GOOD GOVERNANCE CARD
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      style={{ margin: "0px", height: "5px", padding: 0 }}
+                      // className="bg-info my-0 p-0 "
+                    >
                       <MyLink
                         to="/agentlogin"
                         smooth={true}
                         duration={500}
                         onClick={ClickHandler}
+                        className=""
+                        // style={{ margin: 0, height: "5px" }}
                       >
-                        AGENT
+                        {/*                         
+                        <span className="btn btn-sm btn-outline-success text-white"> AGENT LOGIN</span> */}
+                        <main
+                          // style={{ color: "red", border: "solid" }}
+                          className="bg-success px-2 text-white rounded shadow"
+                        >
+                          agent login
+                        </main>
                       </MyLink>
                     </li>
                     {/* <li className="menu-item-has-children">
