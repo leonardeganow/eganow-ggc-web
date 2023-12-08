@@ -44,11 +44,13 @@ const agentId = localStorage.getItem("agentid")
         props.handleNext(1);
       } else {
         setIsLoading(false);
-        toast.error(response.message);
+        toast.error("please try again");
       }
     } catch (error) {
       setIsLoading(false);
       console.log(error);
+      toast.error("network error");
+
     }
   };
 

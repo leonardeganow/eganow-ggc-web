@@ -13,7 +13,8 @@ function TransactionAPI() {
 
   // FUNCTION TO POST A NEW TRANSACTION
   function postNewTransaction(data) {
-    const request = new PostDataRequest(); //initalize request
+    const request = new PostDataRequest();
+    console.log(request); //initalize request
     // console.log(request);
     // SETTING REQUEST BODY TO POST
     request.setMobileno(data.telephoneNo ? data.telephoneNo : data.email);
