@@ -419,7 +419,7 @@ export default function TransactionsModal({
             {/* if show login is true show the login page else hide */}
             {loginState === true && (
               <div className="mx-auto d-flex flex-column align-items-center">
-                <h1 className="text-center">Login</h1>
+                <h1 className="text-center">Donor Login</h1>
                 <p className="text-center">Login to view transactions</p>
                 <form
                   onSubmit={handleSubmit(login)}

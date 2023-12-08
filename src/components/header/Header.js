@@ -6,6 +6,8 @@ import HeaderTopbar from "../HeaderTopbar/HeaderTopbar";
 import { Link } from "react-scroll";
 import TransactionsModal from "../modals/TransactionsModal";
 import { useState } from "react";
+import { RiAdminFill } from "react-icons/ri";
+
 
 const Header = (props) => {
   const [open, setOpen] = useState(false);
@@ -27,13 +29,13 @@ const Header = (props) => {
       <div className="wpo-site-header">
         <nav className="navigation navbar navbar-expand-lg navbar-light">
           <div className="container-fluid">
-            <div className="row align-items-center py-3 py-md-0">
+            <div className="row  align-items-center py-3 py-md-0">
               <div className="col-lg-3 col-md-3 col-sm-6  col-3 d-lg-none dl-block">
                 <div className="mobail-menu">
                   <MobileMenu />
                 </div>
               </div>
-              <div className="col-lg-2 col-md-5 col-sm-4 col-6 ">
+              <div className="col-lg-2  col-md-5 col-sm-4 col-6 ">
                 <div className="navbar-header d-none d-md-block">
                   <MyLink
                     onClick={ClickHandler}
@@ -44,7 +46,7 @@ const Header = (props) => {
                   </MyLink>
                 </div>
               </div>
-              <div className="col-lg-8 col-md-1 col-sm-6 col-1">
+              <div className="col-lg-7 col-md-1 col-sm-6 col-1">
                 <div
                   id="navbar"
                   className="collapse navbar-collapse navigation-holder"
@@ -90,28 +92,28 @@ const Header = (props) => {
                         Get GOOD GOVERNANCE CARD
                       </Link>
                     </li>
-                    <li
-                      style={{ margin: "0px", height: "5px", padding: 0 }}
-                      // className="bg-info my-0 p-0 "
-                    >
-                      <MyLink
+                    {/* <li */}
+                      {/* // style={{ margin: "0px", height: "5px", padding: 0 }} */}
+                    
+                    {/* > */}
+                      {/* <MyLink
                         to="/agentlogin"
                         smooth={true}
                         duration={500}
                         onClick={ClickHandler}
-                        className=""
-                        // style={{ margin: 0, height: "5px" }}
-                      >
+                        className="" */}
+                        {/* // style={{ margin: 0, height: "5px" }} */}
+                      {/* > */}
+                        
                         {/*                         
                         <span className="btn btn-sm btn-outline-success text-white"> AGENT LOGIN</span> */}
-                        <main
-                          // style={{ color: "red", border: "solid" }}
+                        {/* <main
                           className="bg-success px-2 text-white rounded shadow"
                         >
                           agent login
-                        </main>
-                      </MyLink>
-                    </li>
+                        </main> */}
+                      {/* </MyLink>
+                    </li> */}
                     {/* <li className="menu-item-has-children">
                       <Link
                         to="donate"
@@ -293,10 +295,21 @@ const Header = (props) => {
                   </ul>
                 </div>
               </div>
-              <div className="col-lg-2 col-md-3 col-sm-4 col-2">
+              <div className="col-lg-3  col-md-3 col-sm-4 col-2">
                 <div className="header-right">
                   <div className="close-form">
-                    <Link onClick={handleOpen} className="theme-btn" to="/">
+                    <MyLink to="/agentlogin"  className="theme-btn" >
+                      <span className="text">AGENT LOGIN</span>
+                      <span className="mobile">
+                      <RiAdminFill size={28}/>
+
+                      </span>
+                    </MyLink>
+                  
+                  </div>
+
+                  <div className="close-form ms-3">
+                    <Link onClick={handleOpen} className="theme-btn theme-btn" to="/">
                       <span className="text">DONOR LOGIN</span>
                       <span className="mobile">
                         <i className="fi flaticon-user"></i>
