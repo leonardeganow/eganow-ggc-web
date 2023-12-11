@@ -25,7 +25,7 @@ const Header = (props) => {
   };
 
   return (
-    <header id="header" className={`${props.hclass} ${location.pathname === "/about" ? "bg-dark": ""}`}>
+    <header style={{backgroundColor: location.pathname === "/about" ? "#900000": ""}} id="header" className={`${props.hclass} }`}>
       {/* <HeaderTopbar /> */}
       <div className="wpo-site-header">
         <nav className="navigation navbar navbar-expand-lg navbar-light">

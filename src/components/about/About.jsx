@@ -6,14 +6,16 @@ import Footer from '../footer/Footer'
 import Scrollbar from '../scrollbar/scrollbar'
 import MissionVission from '../MissionVission/MissionVission'
 import AboutContent from './AboutContent'
+import AboutHero from './AboutHero'
+import AboutFaq from './AboutFaq'
 
 const About = () => {
   return (
     <div>
       <Navbar  hclass={"wpo-header-style-4"}/>
+      <AboutHero/>
       <AboutContent/>
-      {/* <Hero/> */}
-{/* <MissionVission/> */}
+      <AboutFaq/>
       <Footer />
       <Scrollbar />
     </div>
