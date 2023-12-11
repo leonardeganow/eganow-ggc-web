@@ -7,7 +7,7 @@ const AboutContent = () => {
       className=" py-5"
     >
       <h1 className="text-center text-danger">About</h1>
-      <p className="text-white text-center px-3 ">
+      <p className="text-white text-center px-3 h6 fw-bold">
         INTRODUCING THE GOOD GOVERNANCE CARD: <br /> SHAPING GHANA'S FUTURE
         THROUGH INCLUSIVE PARTICIPATION
       </p>
