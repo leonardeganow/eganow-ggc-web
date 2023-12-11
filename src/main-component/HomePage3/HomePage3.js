@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import Navbar2 from '../../components/Navbar2/Navbar2';
 import Hero3 from '../../components/hero3/hero3';
-import About from '../../components/about/about';
+// import About from '../../components/about/about';
 import CampaignCountdown from '../../components/CampaignCountdown/CampaignCountdown';
 import PortfolioSection from '../../components/PortfolioSection';
 import EventSection from '../../components/EventSection/EventSection';
@@ -17,7 +17,7 @@ const HomePage3 =() => {
         <Fragment>
             <Navbar2 hclass={'wpo-header-style-2'}/>
             <Hero3/>
-            <About/>
+            {/* <About/> */}
             <EventSection/>
             <CampaignCountdown/>
             <PortfolioSection/>

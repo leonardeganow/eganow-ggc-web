@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import Navbar2 from '../../components/Navbar2/Navbar2';
 import Hero4 from '../../components/hero4/Hero4';
 import Features from '../../components/Features/Features';
-import About from '../../components/about/about';
+// import About from '../../components/about/about';
 import MissionVission from '../../components/MissionVission/MissionVission';
 import CampaignSection from '../../components/CampaignSection/CampaignSection';
 import CtaSection from '../../components/CtaSection/CtaSection';
@@ -18,7 +18,7 @@ const HomePage = () => {
             <Navbar2 />
             <Hero4 />
             <Features />
-            <About />
+            {/* <About /> */}
             <CampaignSection />
             <MissionVission />
             <CtaSection ctaClass={'wpo-cta-section-s2 pb-0'} />

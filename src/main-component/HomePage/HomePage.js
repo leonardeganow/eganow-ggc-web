@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Hero from "../../components/hero/hero";
 import Features from "../../components/Features/Features";
-import About from "../../components/about/about";
+// import About from "../../components/about/about";
 import CampaignSection from "../../components/CampaignSection/CampaignSection";
 import MissionVission from "../../components/MissionVission/MissionVission";
 import EventSection from "../../components/EventSection/EventSection";

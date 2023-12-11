@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as MyLink } from "react-router-dom";
+import { Link as MyLink , useLocation } from "react-router-dom";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import Logo from "../../images/logo-s3.png";
 import HeaderTopbar from "../HeaderTopbar/HeaderTopbar";
@@ -13,6 +13,7 @@ const Header = (props) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const [showLogin, setShowLogin] = useState(true); //state to show or hide the login page
+  const location = useLocation()
 
   const handleClose = () => {
     setOpen(false);
@@ -24,7 +25,7 @@ const Header = (props) => {
   };
 
   return (
-    <header id="header" className={`${props.hclass}`}>
+    <header id="header" className={`${props.hclass} ${location.pathname === "/about" ? "bg-dark": ""}`}>
       {/* <HeaderTopbar /> */}
       <div className="wpo-site-header">
         <nav className="navigation navbar navbar-expand-lg navbar-light">
@@ -46,7 +47,7 @@ const Header = (props) => {
                   </MyLink>
                 </div>
               </div>
-              <div className="col-lg-7 col-md-1 col-sm-6 col-1">
+              <div className="col-lg-6  col-md-1 col-sm-6 col-1">
                 <div
                   id="navbar"
                   className="collapse navbar-collapse navigation-holder"
@@ -92,7 +93,14 @@ const Header = (props) => {
                         Get GOOD GOVERNANCE CARD
                       </Link>
                     </li>
-                    {/* <li */}
+                    <li>
+                      <MyLink
+                        to="/about"
+                
+                      >
+                        About
+                      </MyLink>
+                    </li>
                       {/* // style={{ margin: "0px", height: "5px", padding: 0 }} */}
                     
                     {/* > */}
@@ -295,8 +303,8 @@ const Header = (props) => {
                   </ul>
                 </div>
               </div>
-              <div className="col-lg-3  col-md-3 col-sm-4 col-2">
-                <div className="header-right">
+              <div className="col-lg-4  col-md-3 col-sm-4 col-2">
+                <div className="header-right ">
                   <div className="close-form">
                     <MyLink to="/agentlogin"  className="theme-btn" >
                       <span className="text">AGENT LOGIN</span>
