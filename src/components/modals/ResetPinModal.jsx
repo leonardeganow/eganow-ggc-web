@@ -142,7 +142,7 @@ function ResetPinModal({ open, close }) {
         let pinValue = getValues('pin')
         let confirmPin = getValues('confirmpin')
         let phoneValue = getValues('phoneemail')
-        if (pinValue === confirmPin) { //ANCHOR if confirm pin and pin is equals
+        if (pinValue === confirmPin && pinValue.length == 4 && confirmPin.length == 4) { //ANCHOR if confirm pin and pin is equals
             let payload = {
                 mobileNumber: phoneValue,
                 pin: pinValue,
@@ -201,12 +201,12 @@ function ResetPinModal({ open, close }) {
                     </div>
 
                     {/* REVIEW FORM FOR NAME FORM OR EMAIL */}
-                    <form action="" className='my-3'>
+                    <form className='my-3' >
                         {
                             showphone && (
                                 <div>
                                     <label htmlFor="">Phone or Email</label>
-                                    <input type="text" className='form-control my-1' {...register('phoneemail', { require: true })} />
+                                    <input type="text" className='form-control my-1' {...register('phoneemail', { require: true })} required />
                                     <div className='text-end mt-2'>
                                         <button type='button' className='btn btn-success' onClick={getPhone} >
                                             {isLoading ? <span className="spinner-border spinner-border-sm mr-1"></span> : "Next"}
@@ -221,7 +221,7 @@ function ResetPinModal({ open, close }) {
                             showOTP && (
                                 <div>
                                     <label htmlFor="">Enter OTP</label>
-                                    <input type="text" maxlength="4" className='form-control my-1' {...register('otp', { require: true })} />
+                                    <input type="text" required maxlength="4" minlength="4" className='form-control my-1' {...register('otp', { require: true })} />
                                     <div className='text-end mt-2'>
                                         <button type='button' className='btn btn-success' onClick={getOtp} >{isLoading ? <span className="spinner-border spinner-border-sm mr-1"></span> : "Next"}</button>
                                     </div>
@@ -235,10 +235,10 @@ function ResetPinModal({ open, close }) {
                             showPin && (
                                 <div>
                                     <label htmlFor="">Create New Pin</label>
-                                    <input type="text" maxlength="4" className='form-control my-1' {...register('pin', { require: true })} />
+                                    <input type="text" maxlength="4" minlength="4" className='form-control my-1' {...register('pin', { require: true })} />
                                     <br />
                                     <label htmlFor="">Confirm New Pin</label>
-                                    <input type="text" maxlength="4" className='form-control my-1' {...register('confirmpin', { require: true })} />
+                                    <input type="text" maxlength="4" minlength="4" className='form-control my-1' {...register('confirmpin', { require: true })} />
                                     <div className='text-end mt-2'>
                                         <button type='button' className='btn btn-success' onClick={getPin} >{isLoading ? <span className="spinner-border spinner-border-sm mr-1"></span> : "Submit"}</button>
                                     </div>
@@ -252,7 +252,7 @@ function ResetPinModal({ open, close }) {
                                 <div>
                                     <h3 className='text-success text-center'>Successful</h3>
                                     <div className='text-end'>
-                                        <button className='btn btn-sm btn-success' onClick={close}>Back</button>
+                                        <button type='button' className='btn btn-sm btn-success' onClick={close}>Back</button>
                                     </div>
                                 </div>
                             ) : ""
