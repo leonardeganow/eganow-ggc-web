@@ -5,7 +5,7 @@ import Collapse from "@mui/material/Collapse";
 import { NavLink } from "react-router-dom";
 import "./style.css";
 import { Link } from "react-scroll";
-import {Link as MyLink} from "react-router-dom"
+import { Link as MyLink, useLocation } from "react-router-dom";
 
 const menus = [
   {
@@ -178,6 +178,8 @@ const MobileMenu = () => {
     window.scrollTo(10, 0);
   };
 
+  const location = useLocation();
+
   return (
     <div>
       <div className={`mobileMenu ${menuActive ? "show" : ""}`}>
@@ -243,9 +245,20 @@ const MobileMenu = () => {
             );
           })} */}
 
-          <Link to="" onClick={() => setMenuState(!menuActive)}>
-            <li className="active text-white  text-center">Home</li>
-          </Link>
+          {location.pathname === "/about" ? (
+            <MyLink
+              to="/"
+              smooth={true}
+              duration={500}
+              onClick={() => setMenuState(!menuActive)}
+            >
+              <li className="active text-white  text-center">Home</li>
+            </MyLink>
+          ) : (
+            <Link to="" onClick={() => setMenuState(!menuActive)}>
+              <li className="active text-white  text-center">Home</li>
+            </Link>
+          )}
 
           <Link
             to="getggc"
@@ -262,10 +275,7 @@ const MobileMenu = () => {
             duration={500}
             onClick={() => setMenuState(!menuActive)}
           >
-            <li className="active text-white  text-center my-3 ">
-
-              About
-            </li>
+            <li className="active text-white  text-center my-3 ">About</li>
           </MyLink>
           <MyLink
             to="/agentlogin"
@@ -274,12 +284,9 @@ const MobileMenu = () => {
             onClick={() => setMenuState(!menuActive)}
           >
             <li className="active text-white  text-center my-3 ">
-
               <span className="bg-success p-1 rounded shadow">Agent login</span>
             </li>
           </MyLink>
-
-         
 
           {/* <Link
             to="donate"
