@@ -7,10 +7,6 @@ package CustomerSetups;
 service CustomerSetupsSvc {
 	rpc GetRegions(EmptySetupRequest) returns (RegionResponse);
 	rpc GetConstituencies(EmptySetupRequest) returns (ConstituenciesResponse);
-	rpc CreateAgents(AgentRequest) returns (AgentResponse);
-	rpc PasswordResetAdminForAgents(PasswordResetRequest) returns (AgentResponse);
-	rpc UpdateAgent(AgentUpdateRequest) returns (AgentResponse);
-	rpc GetListOfAgents(EmptySetupRequest) returns (ListOfAgentsResponse);
 	rpc GetListOfAgeRange(EmptySetupRequest) returns (ListOfAgeRanges);
 	rpc GetPaymentMethods(EmptySetupRequest) returns (ListOfPaymentMethods);
 	rpc GetSetupCountry(EmptySetupRequest) returns (ListOfSetupCountryResponse);
@@ -24,13 +20,6 @@ message RegionData {
 	string regionId = 1;
 	string regionName = 2;
 }
-
-message PasswordResetRequest {
-	string agentId = 1;
-	string mobileNumber = 2;
-	string updatedBy =3;
-}
-
 
 message RegionResponse {
 	
@@ -48,37 +37,6 @@ message ConstituencyData {
 message ConstituenciesResponse {
 
    repeated ConstituencyData constituencies = 1;
-}
-
-
-message AgentRequest {
-	string mobileNumber = 1;
-	string agentName =2;
-	string createdBy =3;
-}
-
-message AgentUpdateRequest {
-	string agentId = 1;
-	string mobileNumber = 2;
-	string agentName =3; 
-	string updatedBy = 4;
-}
-
-message AgentResponse {
-	bool status = 1;
-	string message =2;
-
-}
-
-message Agent {
-	string agentId=1;
-	string agentName = 2;
-	string mobileNumber = 3;
-}
-
-
-message ListOfAgentsResponse {
-	repeated Agent listOfAgents = 1;
 }
 
 message AgeRangeData {

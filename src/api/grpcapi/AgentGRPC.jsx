@@ -1,18 +1,18 @@
 import { METADATA, URL } from "../../utils/constants";
 //TODO importing Agent Service
-import { AgentMobileSvcClient } from "../../protos/gen/AgentMobile_grpc_web_pb";
+import { AgentMobileWebSvcClient } from "../../protos/gen/AgentMobileWeb_grpc_web_pb";
 import {
   LoginRequest,
   ChangePinRequest,
   MemberCreatedByAgentRequest,
   DonationCollectedRequest,
   TransactionListAgentRequest,
-} from "../../protos/gen/AgentMobile_pb";
+} from "../../protos/gen/AgentMobileWeb_pb";
 
 //NOTE MAIN FUNCTION TO RUN ALL APIS
 function agentAPI() {
   // TODO INITIALIZING CLIENT
-  const client = new AgentMobileSvcClient(URL, null, null);
+  const client = new AgentMobileWebSvcClient(URL, null, null);
 
   // ANCHOR AGENT LOGIN
   async function loginAgent(params) {
@@ -41,10 +41,10 @@ function agentAPI() {
   async function changeAgentPin(params) {
     try {
       // ANCHOR INITIALIZING A CHANGE PIN REQUEST
-    const request = new ChangePinRequest();
-    request.setMobilenumber(params.agentMobileNo); //ANCHOR - setting the mobile number
-    request.setNewpin(params.newPin); //ANCHOR setting new pin
-    request.setOldpin(params.oldPin); //ANCHOR - setting old pin
+      const request = new ChangePinRequest();
+      request.setMobilenumber(params.agentMobileNo); //ANCHOR - setting the mobile number
+      request.setNewpin(params.newPin); //ANCHOR setting new pin
+      request.setOldpin(params.oldPin); //ANCHOR - setting old pin
 
       // console.log(request);
 

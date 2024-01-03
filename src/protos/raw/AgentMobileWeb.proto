@@ -1,0 +1,165 @@
+syntax = "proto3";
+
+option csharp_namespace = "NDC_DONATION_2024.Protos";
+
+package AgentMobileWeb;
+
+service AgentMobileWebSvc {
+	rpc CreateAgents(AgentRequest) returns (AgentResponse);
+	rpc PasswordResetAdminForAgents(PasswordResetRequest) returns (AgentResponse);
+	rpc UpdateAgent(AgentUpdateRequest) returns (AgentResponse);
+	rpc GetListOfAgents(AgentEmptyRequest) returns (ListOfAgentsResponse);
+	rpc AgentLogin(LoginRequest) returns (LoginResponse);
+	rpc AgentChangePin(ChangePinRequest) returns (ChangePinResponse);
+	rpc GetListOfGGCMembersCreatedByAgent(MemberCreatedByAgentRequest) returns (MembersCreatedByAgentResponse);
+	rpc GetTransactionListForAgent(TransactionListAgentRequest) returns (TransactionListResponse);
+	rpc GetTotalDonationCollectedByAgent(DonationCollectedRequest) returns (DonationCollectedResponse);
+}
+
+
+message CreateAgentRequest {
+	string fullName = 1;
+	string mobileNumber = 2;
+	string emailAddress = 3;
+	string gender = 4;
+	int32 age = 5;
+	string countryOfResidence = 6;
+	string regionId = 7;
+	string constituencyId = 8;
+	string industry = 9;
+	string occupation = 10;
+	string NDCMemberIdNo = 11;
+	string agentId = 12;
+	string PIN = 13;
+	string mobielWebUssd = 14;
+	string ageRageId = 15;
+	string displayNameOnCard =16;
+	string cardPickUpLocation =17;
+	string cardTypeId = 18;
+	AcctCreationStatus accountCreationStatus = 19;
+}
+
+message CreateAgentResponse {
+	bool status = 1;
+	string message = 2;
+	string agentId = 3;
+	string cardNumber = 4;
+}
+
+message ChangePinRequest {
+	string mobileNumber = 1;
+	string oldPin = 2;
+	string newPin = 3;
+}
+
+message ChangePinResponse {
+	bool status = 1;
+	string message = 2;
+}
+
+message LoginRequest {
+	string mobileNumber =1;
+	string pin = 2;
+}
+
+message LoginResponse {
+	bool status = 1;
+	string message = 2;
+}
+
+enum AcctCreationStatus {
+	COMPLETE = 0;
+	INCOMPLETE =1;
+	DOES_NOT_EXIST=2;
+}
+
+message MemberCreatedByAgentRequest {
+	string agentId = 1;
+}
+
+message MemberCreatedByAgent {
+	string memberId =1;
+	string memberName = 2;
+	string registrationDate = 3;
+	string cardNumber = 4;
+	double cardAmount = 5;
+	string cardPickUpLocation = 6;
+	string cardName = 7;
+	string cardId = 8;
+	string mobileNumberOrEmailAddress = 9;
+}
+
+message MembersCreatedByAgentResponse {
+	repeated MemberCreatedByAgent members = 1;
+}
+
+
+message TransactionListAgentRequest {
+	string agentId = 1;
+	string memberType = 2;
+}
+
+message DonationCollectedRequest {
+  	string agentId = 1;
+	string memberType = 2;
+}
+
+message AgentTransactionData {
+	string memberName = 1;
+	string mobileNumber = 2;
+	string cardId = 3;
+	string cardName = 4;
+	string transStatus = 5;
+	double transAmount = 6;
+}
+
+message TransactionListResponse {
+	repeated AgentTransactionData transactionList = 1;
+}
+
+message DonationCollectedResponse {
+	double totalDonation = 1;
+}
+
+message AgentEmptyRequest {
+
+}
+
+message PasswordResetRequest {
+	string agentId = 1;
+	string mobileNumber = 2;
+	string updatedBy =3;
+}
+
+message AgentResponse {
+	bool status = 1;
+	string message =2;
+	string pin = 3;
+}
+
+message AgentUpdateRequest {
+	string agentId = 1;
+	string mobileNumber = 2;
+	string agentName =3; 
+	string updatedBy = 4;
+}
+
+
+
+message AgentRequest {
+	string mobileNumber = 1;
+	string agentName =2;
+	string createdBy =3;
+}
+
+
+message Agent {
+	string agentId=1;
+	string agentName = 2;
+	string mobileNumber = 3;
+}
+
+
+message ListOfAgentsResponse {
+	repeated Agent listOfAgents = 1;
+}

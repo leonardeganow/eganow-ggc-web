@@ -29,6 +29,7 @@ function GgcRegForm(props) {
     }
   }
 
+
   async function handleGetRegions() {
     try {
       const response = await getRegions();
