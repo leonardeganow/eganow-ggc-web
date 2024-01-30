@@ -60,6 +60,7 @@ export default function TransactionsModal({
   const [showLogin, setShowLogin] = useState(true); //state to show or hide the login page
   const [isLoading, setIsLoading] = useState(false);
   const [cardName, setCardName] = useState(null);
+  const [cardType, setCardType] = useState(null);//state to manage card type 
   const [cardNo, setCardNo] = useState(false);
   const [transactions, setTransaction] = useState([]); //transaction data
   const { showReset, setShowReset } = useState(false);
@@ -198,8 +199,12 @@ export default function TransactionsModal({
     setIsLoading(true);
     try {
       const response = await loginMember(data);
+      console.log(response);
       if (response.message == "Success" && response.status == true) {
         // set showloging to false in other to display list of transactions
+
+        //set card type to from backend
+        setCardType(response.cardtypeid)
 
         // setShowLogin(false);
         setLoginState(false);
@@ -289,7 +294,7 @@ export default function TransactionsModal({
     }
   }
 
-  const cardType = getValues("cardTypeId"); //store card type here
+  // const cardType = getValues("cardTypeId"); //store card type here
 
   const newTransactions = transactions.map((item, i) => {
     const formatDate = new Date(item.date).toLocaleDateString();
@@ -334,23 +339,7 @@ export default function TransactionsModal({
       startY: 55,
     });
 
-    // transactions.forEach((item, index) => {
-    //   const xPos = 10;
-    //   const yPos = index * 40 + 20;
-
-    //   pdf.text(`Transaction ID: ${item.transactionid}`, xPos, yPos);
-    //   pdf.text(`Member Name: ${item.membername}`, xPos, yPos + 10);
-    //   pdf.text(`Amount: ${item.amount}`, xPos, yPos + 20);
-    //   pdf.text(`Status: ${item.status}`, xPos, yPos + 30);
-    //   pdf.text(`Type: ${item.type}`, xPos, yPos + 40);
-
-    //   // Add more fields as needed
-
-    //   // Add a new page for every item (optional)
-    //   // if (index < transactions.length - 1) {
-    //   //   pdf.addPage();
-    //   // }
-    // });
+ 
 
     pdf.save("GGChistory.pdf");
   }

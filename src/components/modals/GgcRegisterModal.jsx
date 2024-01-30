@@ -234,36 +234,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
           </div>
 
           {renderForm()}
-          {/* <div
-            style={{
-              display: currentStep === 1 ? "" : "",
-            }}
-            className=" d-flex justify-content-between "
-          >
-            {currentStep > 1 && (
-              <button
-                style={{
-                  display: currentStep === 2 || currentStep === 3 ? "none" : "",
-                }}
-                className="bg-success btn text-light" 
-                onClick={handleBack}
-              >
-                Back
-              </button>
-            )}
-            {currentStep < totalSteps && (
-              <button
-                style={{
-                  display: currentStep === 0 || currentStep === 2 || currentStep === 3 ? "none" : "",
-                }}
-                // disabled={!btnOpen}
-                className="bg-success btn text-light"
-                onClick={handleNext}
-              >
-                Next
-              </button>
-            )}
-          </div> */}
+       
         </div>
       </Modal>
     </div>
