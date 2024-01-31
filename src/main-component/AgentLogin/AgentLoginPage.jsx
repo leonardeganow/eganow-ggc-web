@@ -25,12 +25,11 @@ const AgentLoginPage = () => {
       const response = await loginAgent(data);
       if (response.status) {
         updateRoleAndCardType("GGC", "", "", "", response.message); //HARDCODING GGC
-        localStorage.setItem("agentid", response.message)
+        localStorage.setItem("agentid", response.message);
         navigate("/agentdashboard");
       } else {
         toast(response.message);
       }
-      
     } catch (error) {
       console.error("err", error instanceof RpcError);
       if (error instanceof RpcError) {
@@ -52,8 +51,8 @@ const AgentLoginPage = () => {
         action=""
         className="bg-white p-5 rounded relative m-3 m-md-0"
       >
-        <Link to="/" className="text-success">
-          <IoArrowBackOutline size={20} className="" />
+        <Link to="/" className="text-success  border-bottom-2 py-1">
+          <IoArrowBackOutline size={20} className="pr-1" />
         </Link>
 
         <div className="d-flex justify-content-center mb-1">

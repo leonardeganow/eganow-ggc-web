@@ -44,8 +44,10 @@ function ChoosePayMethod(props) {
   const getpayMethodsHandler = async () => {
     try {
       const response = await getPayment();
-      pMethod = response.paymethodlistList[0].paymentmethodid ? response.paymethodlistList[0].paymentmethodid : "PAYMENTCARDGATEWAY" ;
-      props.formHandler.setValue("paymentMethodId",pMethod)
+      pMethod = response.paymethodlistList[0].paymentmethodid
+        ? response.paymethodlistList[0].paymentmethodid
+        : "PAYMENTCARDGATEWAY";
+      props.formHandler.setValue("paymentMethodId", pMethod);
       // console.log(pMethod);
       setCardId(response.paymethodlistList[0].paymentmethodid);
       setMomoOptions(response.paymethodlistList.slice(1));
