@@ -14,6 +14,8 @@ service AgentMobileWebSvc {
 	rpc GetListOfGGCMembersCreatedByAgent(MemberCreatedByAgentRequest) returns (MembersCreatedByAgentResponse);
 	rpc GetTransactionListForAgent(TransactionListAgentRequest) returns (TransactionListResponse);
 	rpc GetTotalDonationCollectedByAgent(DonationCollectedRequest) returns (DonationCollectedResponse);
+	rpc GetListOfAgentsAndTotalTransactionAndCommissions(TotalTransactionCommissionRequest) returns (TotalTransactionCommissionResponse);
+	rpc GetListOfAgentsAndTotalTransactionAndCommissionsDetails(TotalTransactionCommissionRequest) returns (TransactionCommissionDetailResponse);
 }
 
 
@@ -65,6 +67,7 @@ message LoginRequest {
 message LoginResponse {
 	bool status = 1;
 	string message = 2;
+	string agentName = 3;
 }
 
 enum AcctCreationStatus {
@@ -97,6 +100,10 @@ message MembersCreatedByAgentResponse {
 message TransactionListAgentRequest {
 	string agentId = 1;
 	string memberType = 2;
+	 string startDate = 3; // dd-mm-yyyy
+    string endDate = 4;
+	TransStatus status = 5;
+	
 }
 
 message DonationCollectedRequest {
@@ -105,12 +112,20 @@ message DonationCollectedRequest {
 }
 
 message AgentTransactionData {
-	string memberName = 1;
-	string mobileNumber = 2;
-	string cardId = 3;
-	string cardName = 4;
-	string transStatus = 5;
-	double transAmount = 6;
+	string transactionId =1;
+    string memberName = 2;
+    double transAmount =3;
+    string cardId = 4;
+    string type = 5;
+    string date = 6;
+    string paymentName = 7;
+    string paymentAccountNumberOrMomoNumber = 8;
+    string transStatus = 9;
+    string paymentMethod = 10;
+    string agentName = 11;
+	string cardName = 12;
+	string mobileNumber = 13;
+
 }
 
 message TransactionListResponse {
@@ -162,4 +177,45 @@ message Agent {
 
 message ListOfAgentsResponse {
 	repeated Agent listOfAgents = 1;
+}
+
+enum TransStatus {
+    SUCCESSFUL =0;
+    PENDING =1;
+    FAILED = 2;
+    ALL = 3;
+}
+
+message TotalTransactionCommissionRequest {
+
+	 string startDate = 1; // dd-mm-yyyy
+	 string endDate = 2;
+}
+
+message TotalTransactionAndCommission {
+	string agentName = 1;
+	double totalTransaction = 2;
+	double totalCommission = 3;
+	string mobileNumber = 4;
+}
+
+message TotalTransactionCommissionResponse {
+	repeated TotalTransactionAndCommission agentData = 1;
+}
+
+message TransactionCommissionDetailData {
+	string agentId = 1;
+	string agentName = 2;
+	double totalDonationMobilized = 3;
+	double totalCommission = 4;
+	string agentMobileNumber = 5;
+	string donorMobileNumber = 6;
+	string donorName = 7;
+	string paymentAccountNumberOrMomoNumber = 8;
+	string paymentMethod = 9;
+	string memberId = 10;
+}
+
+message TransactionCommissionDetailResponse {
+	repeated TransactionCommissionDetailData response = 1;
 }

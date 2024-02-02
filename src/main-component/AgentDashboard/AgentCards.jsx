@@ -20,133 +20,149 @@ import Skeleton from "@mui/material/Skeleton";
 import { Avatar } from "@mui/material";
 
 function AgentCards() {
+  const Mission = [
+    {
+      id: "01",
+      mImg: pristige,
+    },
+    {
+      id: "02",
+      mImg: platinum,
+    },
+    {
+      id: "03",
+      mImg: gold,
+    },
+    {
+      id: "04",
+      mImg: silver,
+    },
+    {
+      id: "05",
+      mImg: bronze,
+    },
+    {
+      id: "06",
+      mImg: standard,
+    },
+    {
+      id: "07",
+      mImg: loyalty,
+    },
 
-    const Mission = [
-        {
-          id: "01",
-          mImg: pristige,
-        },
-        {
-          id: "02",
-          mImg: platinum,
-        },
-        {
-          id: "03",
-          mImg: gold,
-        },
-        {
-          id: "04",
-          mImg: silver,
-        },
-        {
-          id: "05",
-          mImg: bronze,
-        },
-        {
-          id: "06",
-          mImg: standard,
-        },
-        {
-          id: "07",
-          mImg: loyalty,
-        },
-      
-        {
-          id: "08",
-          mImg: freedom,
-        },
-        {
-          id: "9",
-          mImg: justice,
-        },
-        {
-          id: "10",
-          mImg: arise,
-        },
-        {
-          id: "11",
-          mImg: hope,
-        },
-      ];
+    {
+      id: "08",
+      mImg: freedom,
+    },
+    {
+      id: "9",
+      mImg: justice,
+    },
+    {
+      id: "10",
+      mImg: arise,
+    },
+    {
+      id: "11",
+      mImg: hope,
+    },
+  ];
 
-      const [cardTypeValues, setCardTypeValues] = useState(null);
-      const [open, setOpen] = useState(false);
-      const [isLoading, setisLoading] = useState(false);
-      // const [isError, setIsError] = useState(false);
-      const handleOpen = () => setOpen(true);
-      const handleClose = () => setOpen(false);
-    
-      const { updateRoleAndCardType, info } = useStore(); //zustand state to hanndle role annd card select
-    
-      const { getCardTypes } = CardTypeAPI();
-    
-      //
-    
-      //get ggc card packages and store in zustand state
-      function handleCardGet(cardtype, cardamount, cardId,agentId) {
-        const newRole = "GGC";
-    
-        const cardDisplay = `${cardtype} card - ${cardamount}`;
-    
-        updateRoleAndCardType(newRole, cardDisplay, cardId, cardamount,agentId);
+  const [cardTypeValues, setCardTypeValues] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
+  // const [isError, setIsError] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const { updateRoleAndCardType, info } = useStore(); //zustand state to hanndle role annd card select
+
+  const { getCardTypes } = CardTypeAPI();
+
+  //
+
+  //get ggc card packages and store in zustand state
+  function handleCardGet(cardtype, cardamount, cardId, agentId) {
+    const newRole = "GGC";
+
+    const cardDisplay = `${cardtype} card - ${cardamount}`;
+
+    updateRoleAndCardType(newRole, cardDisplay, cardId, cardamount, agentId);
+  }
+
+  const getCardTypeHandler = async () => {
+    setisLoading(true);
+    // console.log("hi");
+    try {
+      const response = await getCardTypes();
+      if (response.cardtypesList) {
+        setisLoading(false);
+      } else {
+        alert("err");
       }
-    
-      const getCardTypeHandler = async () => {
-        setisLoading(true);
-        // console.log("hi");
-        try {
-          const response = await getCardTypes();
-          if (response.cardtypesList) {
-            setisLoading(false);
-          } else {
-            alert("err");
-          }
-          // console.log(response.cardtypesList);
-          const cardsList = response.cardtypesList;
-    
-          if (cardsList.length < 0) {
-            alert("NO cards");
-            return;
-          }
-          const newCards = cardsList.map((card, i) => {
-            return { ...card, img: Mission[i]?.mImg };
-          });
-    
-          setCardTypeValues(newCards);
-        } catch (error) {
-          console.error(error);
-          if (error instanceof RpcError) {
-            toast("Network Error");
-            return;
-          } else {
-            toast("Please try again");
-          }
-          // setIsError(true);
-          setisLoading(false);
-        }
-      };
-      // console.log(cardTypeValues);
-    
-      useEffect(() => {
-        getCardTypeHandler();
-      }, []);
-      
+      // console.log(response.cardtypesList);
+      const cardsList = response.cardtypesList;
+
+      if (cardsList.length < 0) {
+        alert("NO cards");
+        return;
+      }
+      const newCards = cardsList.map((card, i) => {
+        return { ...card, img: Mission[i]?.mImg };
+      });
+
+      setCardTypeValues(newCards);
+    } catch (error) {
+      console.error(error);
+      if (error instanceof RpcError) {
+        toast("Network Error");
+        return;
+      } else {
+        toast("Please try again");
+      }
+      // setIsError(true);
+      setisLoading(false);
+    }
+  };
+  // console.log(cardTypeValues);
+
+  useEffect(() => {
+    getCardTypeHandler();
+  }, []);
+
   return (
-    <section
-      id="getggc" 
-    
-      className="wpo-election-mission-section  px-5  "
-    >
- 
+    <section id="getggc" className="wpo-election-mission-section  px-5  ">
       <div style={{ cursor: "pointer" }} className="container">
-        <div  className="row justify-content-between px-3">
-        <button onClick={()=>{
-          setOpen(true)
-          updateRoleAndCardType("GGC", "", "", "", ""); //HARDCODING GGC
-
-          }} style={{width: "30%"}} className="  btn btn-success  my-2">Top-up for member</button>
-        <button onClick={()=>setOpen(true)} style={{width: "30%"}} className="  btn btn-danger  my-2">Reset pin for member</button>
-
+        <div className="row justify-content-between px-3">
+          <button
+            onClick={() => {
+              setOpen(true);
+              updateRoleAndCardType("GGC", "", "", "", ""); //HARDCODING GGC
+            }}
+            style={{ width: "30%" }}
+            className="  btn btn-success  my-2"
+          >
+            Top-up for member
+          </button>
+          {/* <button
+            onClick={
+              () => {
+                setOpen(true);
+                updateRoleAndCardType("JM", "", "", "", "");
+              } //HARDCODING JM
+            }
+            style={{ width: "30%" }}
+            className="  btn btn-dark text-white fw-bold  my-2"
+          >
+            Donate to Jm
+          </button> */}
+          <button
+            onClick={() => setOpen(true)}
+            style={{ width: "30%" }}
+            className="  btn btn-danger  my-2"
+          >
+            Reset pin for member
+          </button>
         </div>
         {isLoading ? (
           <div className=" d-flex flex-wrap justify-content-center gap-3">
@@ -247,7 +263,6 @@ function AgentCards() {
         )}
       </div>
 
-    
       {open && (
         <GgcRegisterModal
           cardTypeValues={cardTypeValues}

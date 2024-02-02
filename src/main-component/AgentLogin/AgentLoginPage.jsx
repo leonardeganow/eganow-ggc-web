@@ -31,6 +31,7 @@ const AgentLoginPage = () => {
         toast(response.message);
       }
     } catch (error) {
+      console.log(error);
       console.error("err", error instanceof RpcError);
       if (error instanceof RpcError) {
         toast.error("Network Error");
@@ -40,7 +41,7 @@ const AgentLoginPage = () => {
       }
     }
   };
-
+  console.log("test");
   return (
     <div
       style={{ height: "100vh", backgroundColor: "#006436" }}
