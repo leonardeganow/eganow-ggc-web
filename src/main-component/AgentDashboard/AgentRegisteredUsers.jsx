@@ -146,8 +146,7 @@ function AgentRegisteredUsers() {
                     return (
                       <TableRow key={index}>
                         <TableCell component="th" scope="row">
-                          {member.registrationdate}
-                          {/* {new Date(member.registrationdate).toLocaleDateString()} */}
+                          {new Date(member.registrationdate).toLocaleDateString()}
                         </TableCell>
                         <TableCell>
                           <span className="s text-dark px-2 py-1 rounded-pill">

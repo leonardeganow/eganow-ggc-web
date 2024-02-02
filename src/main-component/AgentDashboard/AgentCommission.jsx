@@ -13,17 +13,45 @@ import { FaDownload } from "react-icons/fa";
 import { jsPDF } from "jspdf";
 import { height } from "@mui/system";
 
+
+// DATE FORMATTER FUNCTION
+const formatDate = (dateString) => {
+  // splitdate string
+  let dateSplit = dateString?.split("-");
+  return `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`;
+};
+
 function AgentCommission() {
+
+   // Get the current date
+   const currentDate = new Date();
+
+   // Get the last month's date
+   const lastMonthDate = new Date();
+   lastMonthDate.setMonth(currentDate.getMonth() - 1);
+ 
+   // Format the dates as strings (you can customize the format as needed)
+   const formattedCurrentDate = currentDate.toISOString().split("T")[0];
+   const formattedLastMonthDate = lastMonthDate.toISOString().split("T")[0];
+
+
+  // CHANGE DATE STATES
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+
   const { info } = useStore();
   const agentCode = localStorage.getItem("agentid");
+
+ 
 
   //ANCHOR - GETTING THE GET MEMBER TRANSACTION API FUNCTION
   const { getMemberTransactions } = agentAPI();
 
   const [transaction, setTransactions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   //TODO CONSUME DATA FROM API
-  async function consumeTransactions() {
+  async function consumeTransactions(s,d) {
     //ANCHOR GRABBING GLOBAL STATE VARIABLES
     try {
       setIsLoading(true);
@@ -31,7 +59,10 @@ function AgentCommission() {
       const data = {
         Agentid: agentCode,
         Membertype: "GGC",
+        startDate: formatDate(s),
+        endDate: formatDate(d)
       };
+      console.log(data)
       const getTrans = await getMemberTransactions(data);
       setIsLoading(false);
       if (getTrans) {
@@ -40,14 +71,24 @@ function AgentCommission() {
       }
     } catch (err) {
       setIsLoading(false);
-
       toast.error("Network Error");
       console.log(err);
     }
   }
 
+
+
+  const submitTransaction = ()=>{
+    // let start = formatDate(startDate)
+    // let end  = formatDate(endDate)
+    // console.log(start, end)
+    consumeTransactions(startDate,endDate)
+  }
+
   useEffect(() => {
-    consumeTransactions();
+    setEndDate(formattedCurrentDate)
+    setStartDate(formattedLastMonthDate)
+    consumeTransactions(formattedLastMonthDate,formattedCurrentDate);
   }, []);
 
   function downloadHistory() {
@@ -96,7 +137,7 @@ function AgentCommission() {
   }
 
   return (
-    <div className="p-md-5 p-4" style={{height:"100vh"}}>
+    <div className="p-md-5 p-4" style={{ height: "100vh" }}>
       {/* NOTE PAGE HEADING */}
       <div>
         <h1 className="text-muted">Agent Transactions</h1>
@@ -114,9 +155,68 @@ function AgentCommission() {
           </button>
         </div>
 
-        <div className="pb-5 shadow-lg rounded" style={{height:"70vh",overflowY:"auto"}}>
-          <TableContainer sx={{ minWidth: 650,maxHeight: "100%"}} component={Paper}>
-            <Table  aria-label="simple table" stickyHeader>
+        <div className="col-md-6 align-self-end">
+          <div>
+            <form
+              className="my-3"
+            >
+              {/* forms cards */}
+              <div className="row">
+                <div className="col-12 col-md-4">
+                  <div>
+                    <label htmlFor="">Start Date</label> <br />
+                    <input
+                      value={startDate}
+                      type="date"
+                      placeholder="End Date"
+                      className="form-control"
+                      onChange={(e) => setStartDate(e.target.value)}
+                      
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="col-12 col-md-4">
+                  <div>
+                    <label htmlFor="">End Date</label> <br />
+                    <input
+                      value={endDate}
+                      type="date"
+                      placeholder="End Date"
+                      className="form-control"
+                      
+                      required
+                    onChange={(e) => setEndDate(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div
+                  className="col-12 col-md-4"
+                  style={{ paddingLeft: "10px" }}
+                >
+                  <button
+                    // onClick={() => onSubmitTransaction()}
+                    onClick={() => submitTransaction(startDate, endDate)}
+                    style={{ marginTop: "20px" }}
+                    type="button"
+                    className="btn btn-success w-100 "
+                  >
+                    {isLoading ? (
+                      <span className="spinner-border spinner-border-sm mr-1"></span>
+                    ) : (
+                      // <FaSearch className="" />
+                      "search"
+                    )}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div className="pb-5 shadow-lg rounded" style={{ height: "70vh", overflowY: "auto" }}>
+          <TableContainer sx={{ minWidth: 650, maxHeight: "100%" }} component={Paper}>
+            <Table aria-label="simple table" stickyHeader>
               <TableHead className="bg-dark">
                 <TableRow >
                   <TableCell className="fw-bold   fs-6">
@@ -147,12 +247,12 @@ function AgentCommission() {
                         </TableCell>
                         <TableCell>
                           <span className="bg-success text-white px-2 py-1 rounded-pill">
-                            {trans.mobilenumber}
+                            {trans.paymentaccountnumberormomonumber}
                           </span>
                         </TableCell>
                         <TableCell>GHS {trans.transamount.toFixed(2)}</TableCell>
                         <TableCell>{trans.transstatus}</TableCell>
-                        <TableCell>{trans.cardid}</TableCell>
+                        <TableCell>{trans.cardname}</TableCell>
                       </TableRow>
                     );
                   })

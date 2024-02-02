@@ -144,10 +144,10 @@ const TransactionsTwo = (props) => {
   }, []);
 
   // function to search date
-  function submitTransaction(startDate, endDate) {
-    onSubmitTransaction(formatDate(startDate), formatDate(endDate));
-    // console.log(getValues());
-  }
+    function submitTransaction(startDate, endDate) {
+      onSubmitTransaction(formatDate(startDate), formatDate(endDate));
+
+    }
 
   // STATUS STYLINg
   function statusStyles(status) {

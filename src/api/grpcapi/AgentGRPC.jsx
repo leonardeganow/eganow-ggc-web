@@ -70,7 +70,11 @@ function agentAPI() {
       const request = new TransactionListAgentRequest();
       request.setAgentid(params.Agentid); //ANCHOR - SETTING AGENT ID
       request.setMembertype(params.Membertype); //ANCHOR -  SETTING MEMEBER TYPER
-      // console.log(request);
+      request.setEnddate(params.endDate)
+      request.setStartdate(params.startDate)
+
+      
+      console.log(request);
 
       return new Promise((resolve, reject) => {
         // ANCHOR CREATE A REQUEST TO CHANGE AGENT PING
