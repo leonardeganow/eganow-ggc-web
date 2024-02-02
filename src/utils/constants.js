@@ -1,4 +1,4 @@
-// export const URL = "https://192.168.10.49:7252";
+// export const URL = "https://192.168.10.64:7252";
 export const URL = "https://ndcandjmgrpcapi.azurewebsites.net:443"; //live
 
 export const METADATA = {

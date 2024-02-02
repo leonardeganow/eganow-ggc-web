@@ -10,13 +10,13 @@ import agentAPI from "../../api/grpcapi/AgentGRPC";
 import useStore from "../../formstore/formStore";
 import { toast } from "react-toastify";
 import { FaDownload } from "react-icons/fa";
-import { jsPDF } from 'jspdf';
+import { jsPDF } from "jspdf";
 
 function AgentRegisteredUsers() {
   const { info } = useStore();
   //ANCHOR - GETTING THE GET MEMBER TRANSACTION FUNCTION
   const { getMemberCreateByAgent } = agentAPI();
-  const agentCode = localStorage.getItem("agentid")
+  const agentCode = localStorage.getItem("agentid");
 
   const [regMembers, setRegMembers] = useState([]); //ANCHOR - SETTING STATE TO KEEP THE ARRAY OF MEMEBERS
   const [isLoading, setIsLoading] = useState(false); //ANCHOR - SETTING STATE TO KEEP THE ARRAY OF MEMEBERS
@@ -28,15 +28,15 @@ function AgentRegisteredUsers() {
       Membertype: "GGC",
     };
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const getRegisteredMembers = await getMemberCreateByAgent(data);
-      setIsLoading(false)
+      setIsLoading(false);
       if (getRegisteredMembers) {
         setRegMembers(getRegisteredMembers.membersList);
-        // console.log(getRegisteredMembers.membersList);
+        console.log(getRegisteredMembers.membersList);
       }
     } catch (err) {
-      setIsLoading(false)
+      setIsLoading(false);
       toast.error("Network Error");
     }
   }
@@ -93,8 +93,6 @@ function AgentRegisteredUsers() {
       startY: 30,
     });
 
-
-
     pdf.save("registeredmembers.pdf");
   }
 
@@ -109,14 +107,20 @@ function AgentRegisteredUsers() {
       {/* NOTE LIST OF TRANSACTION (TABLE) */}
       <div className="my-md-5 my-4">
         <div className="d-flex justify-content-end py-3">
-          <button onClick={download} className="btn btn-success btn-sm d-inline-flex align-items-center gap-2">
+          <button
+            onClick={download}
+            className="btn btn-success btn-sm d-inline-flex align-items-center gap-2"
+          >
             <FaDownload /> Download
           </button>
         </div>
 
         <div style={{ height: "70vh", overflowY: "auto" }}>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650,maxHeight: "100%"}} aria-label="simple table">
+            <Table
+              sx={{ minWidth: 650, maxHeight: "100%" }}
+              aria-label="simple table"
+            >
               <TableHead aria-label="simple table" stickyHeader>
                 <TableRow>
                   <TableCell className="fw-bold text-muted fs-6">
@@ -142,7 +146,8 @@ function AgentRegisteredUsers() {
                     return (
                       <TableRow key={index}>
                         <TableCell component="th" scope="row">
-                          {new Date(member.registrationdate).toLocaleDateString()}
+                          {member.registrationdate}
+                          {/* {new Date(member.registrationdate).toLocaleDateString()} */}
                         </TableCell>
                         <TableCell>
                           <span className="s text-dark px-2 py-1 rounded-pill">
@@ -163,7 +168,11 @@ function AgentRegisteredUsers() {
                       align="center"
                     >
                       {" "}
-                      {isLoading ? <span className="spinner-border spinner-border-sm mr-1"></span> : "no data available"}
+                      {isLoading ? (
+                        <span className="spinner-border spinner-border-sm mr-1"></span>
+                      ) : (
+                        "no data available"
+                      )}
                     </TableCell>
                   </TableRow>
                 )}

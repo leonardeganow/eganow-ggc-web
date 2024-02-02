@@ -623,5 +623,127 @@ proto.AgentMobileWeb.AgentMobileWebSvcPromiseClient.prototype.getTotalDonationCo
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.AgentMobileWeb.TotalTransactionCommissionRequest,
+ *   !proto.AgentMobileWeb.TotalTransactionCommissionResponse>}
+ */
+const methodDescriptor_AgentMobileWebSvc_GetListOfAgentsAndTotalTransactionAndCommissions = new grpc.web.MethodDescriptor(
+  '/AgentMobileWeb.AgentMobileWebSvc/GetListOfAgentsAndTotalTransactionAndCommissions',
+  grpc.web.MethodType.UNARY,
+  proto.AgentMobileWeb.TotalTransactionCommissionRequest,
+  proto.AgentMobileWeb.TotalTransactionCommissionResponse,
+  /**
+   * @param {!proto.AgentMobileWeb.TotalTransactionCommissionRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.AgentMobileWeb.TotalTransactionCommissionResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.AgentMobileWeb.TotalTransactionCommissionRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.AgentMobileWeb.TotalTransactionCommissionResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.AgentMobileWeb.TotalTransactionCommissionResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.AgentMobileWeb.AgentMobileWebSvcClient.prototype.getListOfAgentsAndTotalTransactionAndCommissions =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/AgentMobileWeb.AgentMobileWebSvc/GetListOfAgentsAndTotalTransactionAndCommissions',
+      request,
+      metadata || {},
+      methodDescriptor_AgentMobileWebSvc_GetListOfAgentsAndTotalTransactionAndCommissions,
+      callback);
+};
+
+
+/**
+ * @param {!proto.AgentMobileWeb.TotalTransactionCommissionRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.AgentMobileWeb.TotalTransactionCommissionResponse>}
+ *     Promise that resolves to the response
+ */
+proto.AgentMobileWeb.AgentMobileWebSvcPromiseClient.prototype.getListOfAgentsAndTotalTransactionAndCommissions =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/AgentMobileWeb.AgentMobileWebSvc/GetListOfAgentsAndTotalTransactionAndCommissions',
+      request,
+      metadata || {},
+      methodDescriptor_AgentMobileWebSvc_GetListOfAgentsAndTotalTransactionAndCommissions);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.AgentMobileWeb.TotalTransactionCommissionRequest,
+ *   !proto.AgentMobileWeb.TransactionCommissionDetailResponse>}
+ */
+const methodDescriptor_AgentMobileWebSvc_GetListOfAgentsAndTotalTransactionAndCommissionsDetails = new grpc.web.MethodDescriptor(
+  '/AgentMobileWeb.AgentMobileWebSvc/GetListOfAgentsAndTotalTransactionAndCommissionsDetails',
+  grpc.web.MethodType.UNARY,
+  proto.AgentMobileWeb.TotalTransactionCommissionRequest,
+  proto.AgentMobileWeb.TransactionCommissionDetailResponse,
+  /**
+   * @param {!proto.AgentMobileWeb.TotalTransactionCommissionRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.AgentMobileWeb.TransactionCommissionDetailResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.AgentMobileWeb.TotalTransactionCommissionRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.AgentMobileWeb.TransactionCommissionDetailResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.AgentMobileWeb.TransactionCommissionDetailResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.AgentMobileWeb.AgentMobileWebSvcClient.prototype.getListOfAgentsAndTotalTransactionAndCommissionsDetails =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/AgentMobileWeb.AgentMobileWebSvc/GetListOfAgentsAndTotalTransactionAndCommissionsDetails',
+      request,
+      metadata || {},
+      methodDescriptor_AgentMobileWebSvc_GetListOfAgentsAndTotalTransactionAndCommissionsDetails,
+      callback);
+};
+
+
+/**
+ * @param {!proto.AgentMobileWeb.TotalTransactionCommissionRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.AgentMobileWeb.TransactionCommissionDetailResponse>}
+ *     Promise that resolves to the response
+ */
+proto.AgentMobileWeb.AgentMobileWebSvcPromiseClient.prototype.getListOfAgentsAndTotalTransactionAndCommissionsDetails =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/AgentMobileWeb.AgentMobileWebSvc/GetListOfAgentsAndTotalTransactionAndCommissionsDetails',
+      request,
+      metadata || {},
+      methodDescriptor_AgentMobileWebSvc_GetListOfAgentsAndTotalTransactionAndCommissionsDetails);
+};
+
+
 module.exports = proto.AgentMobileWeb;
 
