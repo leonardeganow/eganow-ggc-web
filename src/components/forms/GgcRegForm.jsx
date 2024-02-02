@@ -143,9 +143,9 @@ function GgcRegForm(props) {
                 {...props.formHandler.register("cards")}
               >
                 <option value={info.cardid} selected>
-                  {info.cardType}
+                  {info?.cardType}
                 </option>
-                {props.cardTypeValues.map((cards, i) => {
+                {props.cardTypeValues?.map((cards, i) => {
                   return (
                     <option key={i} value={cards.cardtypeid}>
                       {cards.cardtypename}
