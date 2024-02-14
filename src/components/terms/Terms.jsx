@@ -10,7 +10,9 @@ const Terms = () => {
     <div>
       <Navbar hclass={"wpo-header-style-4"} />
       <section className="bg-dark py-5 px-sm-5 ">
-        <h1 className="text-white text-center">Terms and conditions</h1>
+        <h1 className="text-white text-center display-4">
+          Terms and conditions
+        </h1>
         <p className="text-white px-sm-5 text-sm-center container">
           These terms of use apply to your use of the John Mahama website,
           mobile app, USSD and other channels and all associated services
@@ -138,7 +140,7 @@ const Terms = () => {
             </p>
           </div>
           <div className="">
-            <h1>Refund policyt</h1>
+            <h1>Refund policy</h1>
             <p>
               JM 2024 Fund Raising Campaign Team does everything we can to
               accommodate requests for refunds. We do our best to honor refunds
@@ -245,9 +247,9 @@ const Terms = () => {
         </div>
       </section>
 
-      <section id="privacypolicy" className="container py-5">
+      <section id="privacypolicy" className="container py-2 ">
         <div className="">
-          <h1 className="text-center">Privacy Policy</h1>
+          <h1 className="text-center display-4">Privacy Policy</h1>
           <p>
             This mobile app privacy policy outlines how your personal
             information is utilized within our JM 2024 app. Throughout this
