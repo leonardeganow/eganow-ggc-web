@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as MyLink , useLocation } from "react-router-dom";
+import { Link as MyLink, useLocation } from "react-router-dom";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import Logo from "../../images/logo-s3.png";
 import HeaderTopbar from "../HeaderTopbar/HeaderTopbar";
@@ -8,12 +8,11 @@ import TransactionsModal from "../modals/TransactionsModal";
 import { useState } from "react";
 import { RiAdminFill } from "react-icons/ri";
 
-
 const Header = (props) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const [showLogin, setShowLogin] = useState(true); //state to show or hide the login page
-  const location = useLocation()
+  const location = useLocation();
 
   const handleClose = () => {
     setOpen(false);
@@ -25,7 +24,18 @@ const Header = (props) => {
   };
 
   return (
-    <header style={{backgroundColor: location.pathname === "/about" ? "#900000": ""}} id="header" className={`${props.hclass} }`}>
+    <header
+      style={{
+        backgroundColor:
+          location.pathname === "/about"
+            ? "#900000"
+            : location.pathname === "/terms"
+            ? "#212529"
+            : "",
+      }}
+      id="header"
+      className={`${props.hclass} }`}
+    >
       {/* <HeaderTopbar /> */}
       <div className="wpo-site-header">
         <nav className="navigation navbar navbar-expand-lg navbar-light">
@@ -94,33 +104,28 @@ const Header = (props) => {
                       </Link>
                     </li>
                     <li>
-                      <MyLink
-                        to="/about"
-                
-                      >
-                        About
-                      </MyLink>
+                      <MyLink to="/about">About</MyLink>
                     </li>
-                      {/* // style={{ margin: "0px", height: "5px", padding: 0 }} */}
-                    
+                    {/* // style={{ margin: "0px", height: "5px", padding: 0 }} */}
+
                     {/* > */}
-                      {/* <MyLink
+                    {/* <MyLink
                         to="/agentlogin"
                         smooth={true}
                         duration={500}
                         onClick={ClickHandler}
                         className="" */}
-                        {/* // style={{ margin: 0, height: "5px" }} */}
-                      {/* > */}
-                        
-                        {/*                         
+                    {/* // style={{ margin: 0, height: "5px" }} */}
+                    {/* > */}
+
+                    {/*                         
                         <span className="btn btn-sm btn-outline-success text-white"> AGENT LOGIN</span> */}
-                        {/* <main
+                    {/* <main
                           className="bg-success px-2 text-white rounded shadow"
                         >
                           agent login
                         </main> */}
-                      {/* </MyLink>
+                    {/* </MyLink>
                     </li> */}
                     {/* <li className="menu-item-has-children">
                       <Link
@@ -306,18 +311,20 @@ const Header = (props) => {
               <div className="col-lg-4  col-md-3 col-sm-4 col-2">
                 <div className="header-right ">
                   <div className="close-form">
-                    <MyLink to="/agentlogin"  className="theme-btn" >
+                    <MyLink to="/agentlogin" className="theme-btn">
                       <span className="text">AGENT LOGIN</span>
                       <span className="mobile">
-                      <RiAdminFill size={28}/>
-
+                        <RiAdminFill size={28} />
                       </span>
                     </MyLink>
-                  
                   </div>
 
                   <div className="close-form ms-3">
-                    <Link onClick={handleOpen} className="theme-btn theme-btn" to="/">
+                    <Link
+                      onClick={handleOpen}
+                      className="theme-btn theme-btn"
+                      to="/"
+                    >
                       <span className="text">DONOR LOGIN</span>
                       <span className="mobile">
                         <i className="fi flaticon-user"></i>

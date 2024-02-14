@@ -40,6 +40,7 @@ import AgentCommission from "../AgentDashboard/AgentCommission";
 import AgentRegisteredUsers from "../AgentDashboard/AgentRegisteredUsers";
 import AgentChangePin from "../AgentDashboard/AgentChangePin";
 import About from "../../components/about/About";
+import Terms from "../../components/terms/Terms";
 
 const AllRoute = () => {
   return (
@@ -49,6 +50,7 @@ const AllRoute = () => {
           <Route path="/" element={<Homepage />} />
           <Route path="/agentlogin" element={<AgentLoginPage />} />
           <Route path="/about" element={<About />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="/agentdashboard" element={<AgentDashboard />}>
             <Route index element={<RegisterUser />} />
             <Route path="transactions" element={<AgentCommission />} />

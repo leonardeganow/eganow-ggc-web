@@ -104,12 +104,14 @@ const Footer = (props) => {
                   </li>
                   <li>
                     <Link onClick={ClickHandler} to="#">
-                      GET GGC CARD
+                      Get ggc card
                     </Link>
                   </li>
-                  /
-                  {/* <li><Link onClick={ClickHandler} to="/team">Members</Link></li>
-                                    <li><Link onClick={ClickHandler} to="/events">Events</Link></li> */}
+                  <li>
+                    <Link onClick={ClickHandler} to="/terms">
+                      Terms and conditions
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>
