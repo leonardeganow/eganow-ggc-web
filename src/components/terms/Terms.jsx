@@ -247,7 +247,7 @@ const Terms = () => {
         </div>
       </section>
 
-      <section id="privacypolicy" className="container py-2 ">
+      <section id="privacypolicy" className="container py-2 pb-5 ">
         <div className="">
           <h1 className="text-center display-4">Privacy Policy</h1>
           <p>

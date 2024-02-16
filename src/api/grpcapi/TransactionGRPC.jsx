@@ -6,6 +6,7 @@ import {
   TransactionRequest,
   DonatedAmountRequest,
   TotalTransactionDoneByAgentRequest,
+  CardTypePerTransactionRequest,
 } from "../../protos/gen/Transaction_pb";
 
 function TransactionAPI() {
@@ -45,7 +46,7 @@ function TransactionAPI() {
   //get total transactions by member
   function getTotalDonations(data) {
     const request = new DonatedAmountRequest(); //initalize request
-    
+
     request.setMemberid(data.memberid);
     request.setMembertype(data.role);
 
@@ -62,34 +63,29 @@ function TransactionAPI() {
   //get total transactions by member
   function getTotalCommission(data) {
     const request = new TotalTransactionDoneByAgentRequest(); //initalize request
-    
+
     request.setAgentid(data.agentId);
     // request.setMemberid(data.memberid);
     // request.setMembertype(data.role);
 
     return new Promise((resolve, reject) => {
-      client.getTotalTransactionsDoneByAgent(
-        request,
-        METADATA,
-        (err, resp) => {
-          if (err) {
-            reject(err);
-          }
-          const result = resp?.toObject();
-          resolve(result);
+      client.getTotalTransactionsDoneByAgent(request, METADATA, (err, resp) => {
+        if (err) {
+          reject(err);
         }
-      );
+        const result = resp?.toObject();
+        resolve(result);
+      });
     });
   }
 
   function getKyc(data) {
     const request = new KycRequest(); //initalize request
     // SETTING REQUEST BODY TO POST
-    
-    
+
     request.setMobilenumber(data.watchMomoNumber);
     request.setNetworkid(data.watchMomoId);
-    
+
     return new Promise((resolve, reject) => {
       client.getCustomerKYC(request, METADATA, (err, resp) => {
         if (err) {
@@ -104,7 +100,7 @@ function TransactionAPI() {
   // FUNCTION FOR CARD TRANSACTION
   //   function postCardTransaction(data) {
   //     // INITALIZE A REQUEST TO POST CARD DATA
-  //     
+  //
   //     const request = new CardDataRequest();
 
   //     // SETTING REQUEST BODY
@@ -127,7 +123,7 @@ function TransactionAPI() {
   //           reject(err); //reject nad return from function when error is encounted
   //         }
   //         const result = response?.toObject();
-  //         
+  //
   //         resolve(result);
   //       });
   //     });
@@ -136,7 +132,7 @@ function TransactionAPI() {
   // FUNCTION TO GET TRANSACTIONS
   function getTransactions(data) {
     const request = new TransactionRequest(); //initalize request
-    
+
     request.setEnddate(data.endDate);
     request.setMemberid(data.memberid);
     request.setMembertype(data.role);
@@ -153,12 +149,32 @@ function TransactionAPI() {
     });
   }
 
+  function getCardPerTransaction(data) {
+    const request = new CardTypePerTransactionRequest();
+    console.log(data);
+    request.setMemberid(data.memberid);
+    return new Promise((resolve, reject) => {
+      client.getCardTypeDetailsPerTransactionByMemberId(
+        request,
+        METADATA,
+        (err, resp) => {
+          if (err) {
+            reject(err);
+          }
+          const result = resp?.toObject();
+          resolve(result);
+        }
+      );
+    });
+  }
+
   return {
     postNewTransaction,
     getKyc,
     getTransactions,
     getTotalDonations,
     getTotalCommission,
+    getCardPerTransaction,
   };
 }
 

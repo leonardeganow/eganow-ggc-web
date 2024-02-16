@@ -33,12 +33,14 @@ import { FaSearch, FaWindowClose } from "react-icons/fa";
 import { jsPDF } from "jspdf";
 
 const TransactionsTwo = (props) => {
-  const { getTransactions, getTotalDonations } = TransactionAPI();
+  const { getTransactions, getTotalDonations, getCardPerTransaction } =
+    TransactionAPI();
   const { loginMember } = membersGRPC();
   const [showLogin, setShowLogin] = useState(true); //state to show or hide the login page
   const [isLoading, setIsLoading] = useState(false);
   const [cardName, setCardName] = useState(null);
   const [cardNo, setCardNo] = useState(false);
+  const [cardType, setCardType] = useState(null); //state to manage card type
   const [transactions, setTransaction] = useState([]); //transaction data
   const { showReset, setShowReset } = useState(false);
   const [showTable, setShowTable] = useState(false);
@@ -87,11 +89,25 @@ const TransactionsTwo = (props) => {
       role: props.formHandler.getValues("role"),
     };
     try {
+      getCardPerTransactionHandler();
+
       const response = await getTotalDonations(newData);
       // console.log(response);
       if (response.status) {
         setTotalDonations(response.message);
       }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  //get carddetails per transaction handler
+  async function getCardPerTransactionHandler() {
+    const data = getValues();
+    try {
+      const response = await getCardPerTransaction(data);
+      console.log(response);
+      setCardType(response.cardtypeid);
     } catch (error) {
       console.error(error);
     }
@@ -144,10 +160,9 @@ const TransactionsTwo = (props) => {
   }, []);
 
   // function to search date
-    function submitTransaction(startDate, endDate) {
-      onSubmitTransaction(formatDate(startDate), formatDate(endDate));
-
-    }
+  function submitTransaction(startDate, endDate) {
+    onSubmitTransaction(formatDate(startDate), formatDate(endDate));
+  }
 
   // STATUS STYLINg
   function statusStyles(status) {
@@ -174,6 +189,9 @@ const TransactionsTwo = (props) => {
         break;
       case "AG006":
         return platinum;
+        break;
+      case "AG050":
+        return starter;
         break;
       case "AG009":
         return justice;
@@ -202,12 +220,13 @@ const TransactionsTwo = (props) => {
       case "AG010":
         return arise;
         break;
+
       default:
-        return starter;
+        return null;
     }
   }
 
-  const cardType = getValues("cardTypeId"); //store card type here
+  // const cardType = getValues("cardTypeId"); //store card type here
   const newTransactions = transactions.map((item, i) => {
     const formatDate = new Date(item.date).toLocaleDateString();
 
@@ -300,6 +319,7 @@ const TransactionsTwo = (props) => {
 
   const refreshData = () => {
     totalDonationsHandler();
+    getCardPerTransactionHandler();
 
     onSubmitTransaction(
       formatDate(formattedLastMonthDate),
@@ -352,9 +372,7 @@ const TransactionsTwo = (props) => {
               <div
                 id="divId"
                 style={{
-                  backgroundImage: `url(${memberCards(
-                    props.formHandler.getValues("baseCardId")
-                  )})`,
+                  backgroundImage: `url(${memberCards(cardType)})`,
                   backgroundSize: "cover",
                   backgroundAttachment: "fixed",
                   backgroundPosition: "center",
@@ -373,9 +391,7 @@ const TransactionsTwo = (props) => {
                     color: "white",
                     fontSize: "13px",
                     color: `${
-                      props.formHandler.getValues("cardId") === "AG050" ||
-                      "AG011" ||
-                      "AG006"
+                      cardType === "AG050" || "AG011" || "AG006"
                         ? "white"
                         : "black"
                     }`,
@@ -392,9 +408,7 @@ const TransactionsTwo = (props) => {
                     color: "white",
                     // letterSpacing: "1px",
                     color: `${
-                      props.formHandler.getValues("cardId") === "AG050" ||
-                      "AG011" ||
-                      "AG006"
+                      cardType === "AG050" || "AG011" || "AG006"
                         ? "white"
                         : "black"
                     }`,

@@ -37,7 +37,6 @@ import { FaSearch, FaWindowClose } from "react-icons/fa";
 // todo testing agent apis
 import agentAPI from "../../api/grpcapi/AgentGRPC";
 
-
 // const {loginAgent,changeAgentPin,getMemberTransactions,getTotalDonation,getMemberCreateByAgent} = agentAPI()
 
 // async function agent(){
@@ -47,7 +46,6 @@ import agentAPI from "../../api/grpcapi/AgentGRPC";
 
 // agent()
 
-
 export default function TransactionsModal({
   open,
   handleClose,
@@ -55,12 +53,13 @@ export default function TransactionsModal({
   loginState,
   setLoginState,
 }) {
-  const { getTransactions, getTotalDonations } = TransactionAPI();
+  const { getTransactions, getTotalDonations, getCardPerTransaction } =
+    TransactionAPI();
   const { loginMember } = membersGRPC();
   const [showLogin, setShowLogin] = useState(true); //state to show or hide the login page
   const [isLoading, setIsLoading] = useState(false);
   const [cardName, setCardName] = useState(null);
-  const [cardType, setCardType] = useState(null);//state to manage card type 
+  const [cardType, setCardType] = useState(null); //state to manage card type
   const [cardNo, setCardNo] = useState(false);
   const [transactions, setTransaction] = useState([]); //transaction data
   const { showReset, setShowReset } = useState(false);
@@ -73,8 +72,6 @@ export default function TransactionsModal({
   const [openPinModal, setOpenPinModal] = React.useState(false);
   const handlePinOpen = () => setOpenPinModal(true);
   const handlePinClose = () => setOpenPinModal(false);
-
-
 
   // DATE FORMATTER FUNCTION
   const formatDate = (dateString) => {
@@ -100,13 +97,13 @@ export default function TransactionsModal({
   };
 
   const style2 = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
+    bgcolor: "background.paper",
+    border: "2px solid #000",
     boxShadow: 24,
     p: 4,
   };
@@ -140,6 +137,7 @@ export default function TransactionsModal({
   async function totalDonationsHandler() {
     const data = getValues();
     try {
+      getCardPerTransactionHandler();
       const response = await getTotalDonations(data);
       // console.log(response);
       if (response.status) {
@@ -165,7 +163,6 @@ export default function TransactionsModal({
     try {
       // sending api request
       const transaction = await getTransactions(formatedData);
-      // console.log(transaction);
       setIsLoading(false);
       setShowTable(true);
       setTransaction(transaction.translistList); //assigning the reponse to the state
@@ -181,6 +178,7 @@ export default function TransactionsModal({
 
   //getting transactions one month before when user logs in
   useEffect(() => {
+    getCardPerTransactionHandler();
     setValue("endDate", formatDate(formattedCurrentDate));
     setValue("startDate", formatDate(formattedLastMonthDate));
     // onSubmitTransaction();
@@ -194,17 +192,29 @@ export default function TransactionsModal({
     // console.log(getValues());
   }
 
+  //get carddetails per transaction handler
+  async function getCardPerTransactionHandler() {
+    const data = getValues();
+    try {
+      const response = await getCardPerTransaction(data);
+      console.log(response);
+      setCardType(response.cardtypeid);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   //login member
   const login = async (data) => {
     setIsLoading(true);
     try {
       const response = await loginMember(data);
-      console.log(response);
+      // console.log(response);
       if (response.message == "Success" && response.status == true) {
         // set showloging to false in other to display list of transactions
 
         //set card type to from backend
-        setCardType(response.cardtypeid)
+        setCardType(response.cardtypeid);
 
         // setShowLogin(false);
         setLoginState(false);
@@ -261,6 +271,9 @@ export default function TransactionsModal({
       case "AG006":
         return platinum;
         break;
+      case "AG050":
+        return starter;
+        break;
       case "AG009":
         return justice;
         break;
@@ -290,7 +303,7 @@ export default function TransactionsModal({
         break;
 
       default:
-        return starter;
+        return null;
     }
   }
 
@@ -339,8 +352,6 @@ export default function TransactionsModal({
       startY: 55,
     });
 
- 
-
     pdf.save("GGChistory.pdf");
   }
 
@@ -385,14 +396,12 @@ export default function TransactionsModal({
 
   const refreshData = () => {
     totalDonationsHandler();
-
+    getCardPerTransactionHandler();
     onSubmitTransaction(
       formatDate(formattedLastMonthDate),
       formatDate(formattedCurrentDate)
     );
   };
-
-
 
   return (
     <div className="position-relative bg-danger">
@@ -403,7 +412,6 @@ export default function TransactionsModal({
         aria-describedby="modal-modal-description"
       >
         <div className="bg-white p-md-4 p-3 " style={style}>
-          
           <div>
             {/* if show login is true show the login page else hide */}
             {loginState === true && (
@@ -445,7 +453,6 @@ export default function TransactionsModal({
                   />
 
                   <div className="d-flex justify-content-center w-md-50 w-100">
-
                     <button type="submit" className="btn btn-success w-100">
                       {isLoading ? (
                         <span className="spinner-border spinner-border-sm mr-1"></span>
@@ -454,17 +461,22 @@ export default function TransactionsModal({
                       )}
                     </button>
                   </div>
-                  <small className="text-info text-end w-100" style={{ cursor: "pointer" }} onClick={()=>{
-                    handlePinOpen()
-                    handleClose()
-                  }}>Forgot Pin?</small>
+                  <small
+                    className="text-info text-end w-100"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      handlePinOpen();
+                      handleClose();
+                    }}
+                  >
+                    Forgot Pin?
+                  </small>
                 </form>
               </div>
             )}
             {/* 
               if showLogin turns to false then we'll show list of transactions
              */}
-
 
             {!loginState && (
               <div className="">
@@ -533,8 +545,11 @@ export default function TransactionsModal({
                             position: "absolute",
                             bottom: "15%",
                             left: "10%",
-                            color: `${cardType === "AG050" || "AG011" || "AG006"  ? "white" : "black"
-                              }`,
+                            color: `${
+                              cardType === "AG050" || "AG011" || "AG006"
+                                ? "white"
+                                : "black"
+                            }`,
                             fontSize: "0.6rem",
                             fontWeight: "bold",
 
@@ -548,8 +563,11 @@ export default function TransactionsModal({
                             position: "absolute",
                             top: "50%",
                             left: "10%",
-                            color: `${cardType === "AG050" || "AG011" ||"AG006" ? "white" : "black"
-                              }`,
+                            color: `${
+                              cardType === "AG050" || "AG011" || "AG006"
+                                ? "white"
+                                : "black"
+                            }`,
                             letterSpacing: "2px",
                             // color: "darkgray",
                             fontWeight: "bold",
@@ -574,7 +592,7 @@ export default function TransactionsModal({
                         <form
                           // onSubmit={handleSubmit(onSubmitTransaction)}
                           className="mt-3"
-                        // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
+                          // className="d-flex flex-md-row flex-column flex-wrap gap-2 my-md-3 justify-content-center py-2"
                         >
                           {/* forms cards */}
                           <div className="row">
@@ -729,13 +747,10 @@ export default function TransactionsModal({
                 </div>
               </div>
             )}
-
           </div>
-
         </div>
       </Modal>
 
-       
       {/* <Modal
           open={openPinModal}
           onClose={handlePinClose}
@@ -748,10 +763,7 @@ export default function TransactionsModal({
             
           </div>
       </Modal> */}
-      <ResetPinModal open={openPinModal} close={handlePinClose}/>
-
-      
-
+      <ResetPinModal open={openPinModal} close={handlePinClose} />
     </div>
   );
 }

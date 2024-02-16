@@ -45,7 +45,7 @@ import Terms from "../../components/terms/Terms";
 const AllRoute = () => {
   return (
     <div className="App">
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/agentlogin" element={<AgentLoginPage />} />
