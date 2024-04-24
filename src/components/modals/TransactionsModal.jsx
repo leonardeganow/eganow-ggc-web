@@ -197,7 +197,7 @@ export default function TransactionsModal({
     const data = getValues();
     try {
       const response = await getCardPerTransaction(data);
-      console.log(response);
+      // console.log(response);
       setCardType(response.cardtypeid);
     } catch (error) {
       console.error(error);
