@@ -32,18 +32,19 @@ function ChoosePayMethod(props) {
       "expiryDateMonth",
       "nameOnPaymentCard",
     ]);
-    console.log(result);
+    // console.log(result);
     if (!result) {
       return;
     }
 
     props.handleNext(1);
   };
-
+// console.log(props.formHandler.getValues());
   let pMethod;
   const getpayMethodsHandler = async () => {
     try {
       const response = await getPayment();
+
       pMethod = response.paymethodlistList[0].paymentmethodid
         ? response.paymethodlistList[0].paymentmethodid
         : "PAYMENTCARDGATEWAY";
@@ -87,6 +88,8 @@ function ChoosePayMethod(props) {
         setLoading(false);
         props.formHandler.setValue("momoname", response.message);
         props.formHandler.setValue("nameOnPaymentCard", response.message);
+      } else if (response.status === false) {
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -94,7 +97,11 @@ function ChoosePayMethod(props) {
   };
 
   React.useEffect(() => {
-    if (watchMomoNumber?.toString().length === 10 && watchMomoId) {
+    if (
+      watchMomoNumber?.toString().length === 10 &&
+      watchMomoId !== "PAYMENTCARDGATEWAY" &&
+      watchMomoId !== ""
+    ) {
       getKycHandler();
     }
   }, [watchMomoId, watchMomoNumber]);
@@ -257,12 +264,13 @@ function ChoosePayMethod(props) {
               back
             </button>
             <button
+              disabled={loading}
               onClick={async () => {
                 const result = await props.formHandler.trigger([
                   "paymentCardNo",
                   "paymentMethodId",
                 ]);
-                console.log(result);
+                // console.log(result);
                 if (!result) {
                   return;
                 }
@@ -439,7 +447,7 @@ function ChoosePayMethod(props) {
                     "expiryDateYear",
                     "cvv",
                   ]);
-                  console.log(result);
+                  // console.log(result);
                   if (!result) {
                     return;
                   }

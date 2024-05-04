@@ -44,7 +44,7 @@ function PaySuccess(props) {
         document.body.appendChild(newScript);
 
         const divEl = redirectContainerRef.current.querySelector(
-          "#redirectTo3ds1AcsSimple"
+          "#challengeFrame"
         );
         console.log(divEl);
         if (divEl) {
@@ -54,7 +54,7 @@ function PaySuccess(props) {
         const spinner = document.querySelector("#spinner"); //target spinner
 
         const iFrame = redirectContainerRef.current.querySelector(
-          "#redirectTo3ds1Frame"
+          "#challengeFrame"
         ); //iframe container
         if (iFrame) {
           spinner.style.display = "block";
