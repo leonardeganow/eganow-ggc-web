@@ -47,7 +47,7 @@ function TransactionAPI() {
   function getTotalDonations(data) {
     const request = new DonatedAmountRequest(); //initalize request
 
-    request.setMemberid(data.memberid);
+    request.setMemberid(data.memberId);
     request.setMembertype(data.role);
 
     return new Promise((resolve, reject) => {
@@ -134,7 +134,7 @@ function TransactionAPI() {
     const request = new TransactionRequest(); //initalize request
 
     request.setEnddate(data.endDate);
-    request.setMemberid(data.memberid);
+    request.setMemberid(data.memberId);
     request.setMembertype(data.role);
     request.setStartdate(data.startDate);
 
@@ -152,7 +152,7 @@ function TransactionAPI() {
   function getCardPerTransaction(data) {
     const request = new CardTypePerTransactionRequest();
     console.log(data);
-    request.setMemberid(data.memberid);
+    request.setMemberid(data.memberId);
     return new Promise((resolve, reject) => {
       client.getCardTypeDetailsPerTransactionByMemberId(
         request,

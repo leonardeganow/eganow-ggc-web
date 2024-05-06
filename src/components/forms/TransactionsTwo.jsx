@@ -74,7 +74,7 @@ const TransactionsTwo = (props) => {
 
       startDate: "", //formatDate(formattedLastMonthDate),
       endDate: "", // formatDate(formattedCurrentDate),
-      memberid: props.formHandler.getValues("memberId"),
+      memberId: props.formHandler.getValues("memberId"),
       cardTypeId: "",
     },
   });
@@ -85,8 +85,8 @@ const TransactionsTwo = (props) => {
     const data = getValues();
     const newData = {
       ...data,
-      memberid: props.formHandler.getValues("memberId"),
-      role: props.formHandler.getValues("role"),
+      memberId: props.formHandler.getValues("memberId"),
+      role: props.formHandler.getValues("role") ? props.formHandler.getValues("role") : "GGC",
     };
     try {
       getCardPerTransactionHandler();
@@ -126,6 +126,7 @@ const TransactionsTwo = (props) => {
       // endDate: formatDate(data?.endDate), //seending formated endDate
       startDate: start, //sending formated startDate
       endDate: end, //seending formated endDate
+      role:"GGC"
     };
     // console.log(formatedData);
     try {
@@ -328,8 +329,11 @@ const TransactionsTwo = (props) => {
   };
 
   return (
-    <div>
-      <div className="position-relative">
+    <div  >
+      <div className="position-relative" style={{
+        height: "70vh",
+        overflowY:'auto'
+      }} >
         <h3 className="text-center m-0 p-0">Transactions</h3>
         <p className="text-center m-0 p-0">View your transaction</p>
         <FaWindowClose

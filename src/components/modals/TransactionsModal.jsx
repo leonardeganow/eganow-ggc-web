@@ -34,6 +34,8 @@ import { Avatar, Box, Skeleton } from "@mui/material";
 import { IoSearchCircleSharp } from "react-icons/io5";
 import { FaSearch, FaWindowClose } from "react-icons/fa";
 
+import TopUpModal from "../modals/TopUpModal";
+
 // todo testing agent apis
 import agentAPI from "../../api/grpcapi/AgentGRPC";
 
@@ -68,10 +70,17 @@ export default function TransactionsModal({
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
+
+  const [showTopUpModal,setShowTopUpModal] = useState(false)
+  const handleTopUpModalOpen = ()=>setShowTopUpModal(true)
+  const handleTopUpModalClose = ()=>setShowTopUpModal(false)
+
   // pinModal
   const [openPinModal, setOpenPinModal] = React.useState(false);
   const handlePinOpen = () => setOpenPinModal(true);
   const handlePinClose = () => setOpenPinModal(false);
+
+  const [formValues,setFormValues] = useState(null)
 
   // DATE FORMATTER FUNCTION
   const formatDate = (dateString) => {
@@ -220,11 +229,15 @@ export default function TransactionsModal({
         setLoginState(false);
         setIsLoading(false);
         // setting the member id value from the response
-        setValue("memberid", response.memberid);
+        // setValue("memberid", response.memberid);
+        setValue("memberId", response.memberid);
         setValue("cardTypeId", response.cardtypeid);
         setValue("customerCardtype", response.cardtypename);
         setCardName(response.fullname);
         setCardNo(response.cardnumber);
+
+        setFormValues(getValues())
+
         // console.log("loginresp", response);
         toast(response.message);
         onSubmitTransaction(
@@ -655,7 +668,7 @@ export default function TransactionsModal({
                     {/* <div className="col-4">
                       <button className="btn btn-danger w-100">Top Up</button>
                     </div> */}
-                    <div className="col-12 col-md-6">
+                    <div className="col-12 col-md-4">
                       <button
                         onClick={handleDownload}
                         className="btn btn-success w-100"
@@ -663,12 +676,24 @@ export default function TransactionsModal({
                         Download Card
                       </button>
                     </div>
-                    <div className="col-12 col-md-6">
+
+                    <div className="col-12 col-md-4">
                       <button
                         onClick={downloadHistory}
                         className="btn btn-success w-100"
                       >
                         Download Statement
+                      </button>
+                    </div>
+                    <div className="col-12 col-md-4">
+                      <button
+                        onClick={()=>{
+                          handleTopUpModalOpen()
+                          handleClose();
+                        }}
+                        className="btn btn-danger w-100"
+                      >
+                        Top Up
                       </button>
                     </div>
                   </div>
@@ -764,6 +789,9 @@ export default function TransactionsModal({
           </div>
       </Modal> */}
       <ResetPinModal open={openPinModal} close={handlePinClose} />
+
+      {/* TOP UP MODAL */}
+      <TopUpModal open={showTopUpModal} cardName={cardName} cardNumber={cardNo} formValues={formValues} handleClose={handleTopUpModalClose} handleOpen={handleTopUpModalOpen} />
     </div>
   );
 }

@@ -31,7 +31,8 @@ const agentId = localStorage.getItem("agentid")
           ? data.nameOnPaymentCard
           : data.momoname
       } has paid GHS${data.amount}`,
-      agentId: agentId
+      agentId: agentId,
+      transType:"GGC",
     };
     console.log(newData);
 
