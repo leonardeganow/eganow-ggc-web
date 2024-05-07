@@ -2,7 +2,6 @@ import React from "react";
 import { Link as MyLink, useLocation } from "react-router-dom";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import Logo from "../../images/logo-s3.png";
-import HeaderTopbar from "../HeaderTopbar/HeaderTopbar";
 import { Link } from "react-scroll";
 import TransactionsModal from "../modals/TransactionsModal";
 import { useState } from "react";

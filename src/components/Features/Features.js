@@ -3,16 +3,12 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import fImg1 from "../../images/election-donation/1.svg";
 import jm from "../../images/portfolio/donate.png";
 import ggc from "../../images/portfolio/t2.png";
 // import follow from "../../images/portfolio/jm1.jpg";
-import fImg2 from "../../images/election-donation/2.svg";
-import fImg3 from "../../images/election-donation/3.svg";
 import { Link } from "react-scroll";
 import { Link as MyLink } from "react-router-dom";
 import follow from "../../images/marketwomen.jpg";
-import { create } from "zustand";
 
 const ClickHandler = () => {
   window.scrollTo(10, 0);

@@ -48,7 +48,7 @@ function PaySuccess(props) {
         );
         console.log(divEl);
         if (divEl) {
-          divEl.style.height = "100%";
+          divEl.style.height = "50%";
         }
 
         const spinner = document.querySelector("#spinner"); //target spinner
