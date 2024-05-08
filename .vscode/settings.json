@@ -1,33 +1,4 @@
 {
-  "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#9b8835",
-    "activityBar.background": "#9b8835",
-    "activityBar.foreground": "#15202b",
-    "activityBar.inactiveForeground": "#15202b99",
-    "activityBarBadge.background": "#88d6c8",
-    "activityBarBadge.foreground": "#15202b",
-    "commandCenter.border": "#e7e7e799",
-    "editorGroup.border": "#9b8835",
-    "panel.border": "#9b8835",
-    "sash.hoverBorder": "#9b8835",
-    "sideBar.border": "#9b8835",
-    "statusBar.background": "#756728",
-    "statusBar.border": "#756728",
-    "statusBar.debuggingBackground": "#283675",
-    "statusBar.debuggingBorder": "#283675",
-    "statusBar.debuggingForeground": "#e7e7e7",
-    "statusBar.foreground": "#e7e7e7",
-    "statusBarItem.hoverBackground": "#9b8835",
-    "statusBarItem.remoteBackground": "#756728",
-    "statusBarItem.remoteForeground": "#e7e7e7",
-    "tab.activeBorder": "#9b8835",
-    "titleBar.activeBackground": "#756728",
-    "titleBar.activeForeground": "#e7e7e7",
-    "titleBar.border": "#756728",
-    "titleBar.inactiveBackground": "#75672899",
-    "titleBar.inactiveForeground": "#e7e7e799"
-  },
-  "peacock.color": "#756728",
   "editor.fontFamily": "MonoLisa",
   "editor.fontLigatures": true
 }
