@@ -202,6 +202,8 @@ const MissionVission = (props) => {
               </div>
 
               <h2>Good Governance Card packages</h2>
+
+              <h4 className="m-0 pt-5">Select a card to Donate</h4>
             </div>
           </div>
         </div>

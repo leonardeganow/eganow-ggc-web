@@ -103,6 +103,16 @@ const Header = (props) => {
                       </Link>
                     </li>
                     <li>
+                      <Link
+                        to="getggc"
+                        smooth={true}
+                        duration={500}
+                        onClick={ClickHandler}
+                      >
+                       Donate
+                      </Link>
+                    </li>
+                    <li>
                       <MyLink to="/about">About</MyLink>
                     </li>
                     {/* // style={{ margin: "0px", height: "5px", padding: 0 }} */}
