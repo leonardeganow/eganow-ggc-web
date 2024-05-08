@@ -203,7 +203,7 @@ const MissionVission = (props) => {
 
               <h2>Good Governance Card packages</h2>
 
-              <h4 className="m-0 pt-5">Select a card to Donate</h4>
+              <h3 className="m-0 pt-5 text-danger fw-1">Select a card to Donate</h3>
             </div>
           </div>
         </div>
