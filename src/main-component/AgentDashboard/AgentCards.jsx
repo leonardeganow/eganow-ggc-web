@@ -18,6 +18,7 @@ import { RpcError } from "grpc-web";
 import { toast } from "react-toastify";
 import Skeleton from "@mui/material/Skeleton";
 import { Avatar } from "@mui/material";
+import { CARD_REPRINT, MONTHLY_SUBSCRIPTION, UPGRADE } from "../../utils/constants";
 
 function AgentCards() {
   const Mission = [
@@ -128,6 +129,8 @@ function AgentCards() {
 
   useEffect(() => {
     getCardTypeHandler();
+
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -137,25 +140,34 @@ function AgentCards() {
           <button
             onClick={() => {
               setOpen(true);
-              updateRoleAndCardType("GGC", "", "", "", ""); //HARDCODING GGC
+              updateRoleAndCardType("GGC", "", "", "", "",UPGRADE); //HARDCODING GGC
             }}
             style={{ width: "30%" }}
             className="  btn btn-success  my-2"
           >
-            Top-up for member
+            Upgrade for member
           </button>
-          {/* <button
-            onClick={
-              () => {
-                setOpen(true);
-                updateRoleAndCardType("JM", "", "", "", "");
-              } //HARDCODING JM
-            }
+
+          <button
+            onClick={() => {
+              setOpen(true);
+              updateRoleAndCardType("GGC", "", "", "", "",MONTHLY_SUBSCRIPTION); //HARDCODING GGC
+            }}
             style={{ width: "30%" }}
-            className="  btn btn-dark text-white fw-bold  my-2"
+            className="  btn btn-success  my-2"
           >
-            Donate to Jm
-          </button> */}
+            Monthly subscription for member
+          </button>
+          <button
+            onClick={() => {
+              setOpen(true);
+              updateRoleAndCardType("GGC", "", "", "", "",CARD_REPRINT); //HARDCODING GGC
+            }}
+            style={{ width: "30%" }}
+            className="  btn btn-success  my-2"
+          >
+            Reprint card for member
+          </button>
           <button
             onClick={() => setOpen(true)}
             style={{ width: "30%" }}

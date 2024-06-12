@@ -1,7 +1,7 @@
 import * as React from "react";
 import Modal from "@mui/material/Modal";
-import GgcRegForm from "../forms/GgcRegForm";
-import PhoneNumberForm from "../forms/PhoneNumberForm";
+// import GgcRegForm from "../forms/GgcRegForm";
+// import PhoneNumberForm from "../forms/PhoneNumberForm";
 import ChoosePayMethod from "../forms/ChoosePayMethod";
 import SelectAmount from "../forms/SelectAmount";
 import PaySuccess from "../paymentpages/PaySuccess";
@@ -24,19 +24,23 @@ const style = {
   // overflowY: "scroll",
   borderRadius: "1rem",
 };
-function TopUpModal({ open, handleClose, handleOpen, cardTypeValues,formValues,cardName,cardNumber }) {
+function TopUpModal({
+  open,
+  handleClose,
+  formValues,
+  cardName,
+ ssssss
+}) {
   const [btnOpen, setBtnOpen] = React.useState(false);
   const [currentStep, setCurrentStep] = React.useState(1);
   const { info } = useStore();
-  const totalSteps = 5;
+  // const totalSteps = 5;
 
   const handleNext = (page) => {
     // setBtnOpen(false);
     // setCurrentStep((prevStep) => prevStep + 1);
     setCurrentStep((prevStep) => prevStep + page);
   };
-
-  console.log('propsData',formValues);
 
   const schema = yup
     .object()
@@ -99,9 +103,8 @@ function TopUpModal({ open, handleClose, handleOpen, cardTypeValues,formValues,c
     })
     .required();
 
-   const defaultValues = {
-    telephoneNo: formValues?.telephoneNo
-    ,
+  const defaultValues = {
+    telephoneNo: formValues?.telephoneNo,
     otp: "",
     pin: "",
     fullName: "",
@@ -115,7 +118,7 @@ function TopUpModal({ open, handleClose, handleOpen, cardTypeValues,formValues,c
     memberId: formValues?.memberId,
     paymentCardNo: "",
     ndcCardNo: "",
-    transType:"GGC",
+    transType: "GGC",
     constituencies: "other",
     regions: "other",
     plan: "",
@@ -127,7 +130,8 @@ function TopUpModal({ open, handleClose, handleOpen, cardTypeValues,formValues,c
     userCardType: "",
     paymentUrl: "",
     resetPin: "",
-    baseCardId:""
+    baseCardId: "",
+    type: "",
   };
 
   const formHandler = useForm({
@@ -136,14 +140,14 @@ function TopUpModal({ open, handleClose, handleOpen, cardTypeValues,formValues,c
     resolver: yupResolver(schema),
   });
 
-  React.useEffect(()=>{
-    formHandler.setValue('telephoneNo',formValues?.telephoneNo)
-    formHandler.setValue('memberId',formValues?.memberId)
-    formHandler.setValue('transType',"GGC")
-    formHandler.setValue('ndcCardNo',cardNumber)
-    formHandler.setValue('fullName',cardName)
-    formHandler.setValue('membername',cardName)
-  },[formValues?.telephoneNo])
+  React.useEffect(() => {
+    formHandler.setValue("telephoneNo", formValues?.telephoneNo);
+    formHandler.setValue("memberId", formValues?.memberId);
+    formHandler.setValue("transType", "GGC");
+    formHandler.setValue("fullName", cardName);
+    formHandler.setValue("membername", cardName);
+
+  }, [formValues?.telephoneNo]);
 
   const handleBack = (page) => {
     setCurrentStep((prevStep) => prevStep - page);
@@ -228,7 +232,6 @@ function TopUpModal({ open, handleClose, handleOpen, cardTypeValues,formValues,c
           </div>
 
           {renderForm()}
-       
         </div>
       </Modal>
     </div>

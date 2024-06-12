@@ -1,18 +1,18 @@
 import React from 'react'
 import logo from "../../images/instragram/ndclogo-removebg-preview.png";
-import Header from "../../components/Navbar/Navbar";
-import { Link, useNavigate } from "react-router-dom";
+// import Header from "../../components/Navbar/Navbar";
+// import {  useNavigate } from "react-router-dom";
 import agentAPI from "../../api/grpcapi/AgentGRPC";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { RpcError } from "grpc-web";
-import useStore from "../../formstore/formStore";
-import { IoArrowBackOutline } from "react-icons/io5";
+// import useStore from "../../formstore/formStore";
+// import { IoArrowBackOutline } from "react-icons/io5";
 
 function AgentChangePin() {
 
-  const { updateRoleAndCardType } = useStore();
-  const navigate = useNavigate();
+  // const { updateRoleAndCardType } = useStore();
+  // const navigate = useNavigate();
   const {changeAgentPin } = agentAPI();
   const {
     register,

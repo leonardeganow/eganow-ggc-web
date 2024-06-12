@@ -29,7 +29,7 @@ const AgentSidebar = () => {
         <div
           role="button"
           className={` d-flex  align-items-center gap-3 p-3 ${
-            location.pathname == "/agentdashboard"
+            location.pathname === "/agentdashboard"
               ? "bg-white text-dark rounded"
               : ""
           }`}
@@ -43,7 +43,7 @@ const AgentSidebar = () => {
         <div
           role="button"
           className={` d-flex  align-items-center gap-3 p-3 ${
-            location.pathname == "/agentdashboard/transactions"
+            location.pathname === "/agentdashboard/transactions"
               ? "bg-white text-dark rounded"
               : ""
           }`}
@@ -57,7 +57,7 @@ const AgentSidebar = () => {
         <div
           role="button"
           className={` d-flex  align-items-center gap-3 p-3 ${
-            location.pathname == "/agentdashboard/registeredusers"
+            location.pathname === "/agentdashboard/registeredusers"
               ? "bg-white text-dark rounded"
               : ""
           }`}
@@ -70,7 +70,7 @@ const AgentSidebar = () => {
         <div
           role="button"
           className={` d-flex  align-items-center gap-3 p-3 ${
-            location.pathname == "/agentdashboard/changepin"
+            location.pathname === "/agentdashboard/changepin"
               ? "bg-white text-dark rounded"
               : ""
           }`}

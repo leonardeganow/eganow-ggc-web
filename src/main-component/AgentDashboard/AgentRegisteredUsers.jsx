@@ -7,13 +7,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import agentAPI from "../../api/grpcapi/AgentGRPC";
-import useStore from "../../formstore/formStore";
+// import useStore from "../../formstore/formStore";
 import { toast } from "react-toastify";
 import { FaDownload } from "react-icons/fa";
 import { jsPDF } from "jspdf";
 
 function AgentRegisteredUsers() {
-  const { info } = useStore();
+  // const { info } = useStore();
   //ANCHOR - GETTING THE GET MEMBER TRANSACTION FUNCTION
   const { getMemberCreateByAgent } = agentAPI();
   const agentCode = localStorage.getItem("agentid");

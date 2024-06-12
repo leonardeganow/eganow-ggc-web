@@ -7,9 +7,10 @@ const useStore = create((set) => ({
     cardid: "",
     amount: "",
     agentId: "",
+    type:""
   },
 
-  updateRoleAndCardType: (newRole, newCardType, id, cardamount,agentid) => {
+  updateRoleAndCardType: (newRole, newCardType, id, cardamount,agentid,type) => {
     set((state) => ({
       info: {
         ...state.info,
@@ -17,7 +18,8 @@ const useStore = create((set) => ({
         cardType: newCardType,
         cardid: id,
         amount: cardamount,
-        agentId: agentid
+        agentId: agentid,
+        type: type
       },
     }));
   },

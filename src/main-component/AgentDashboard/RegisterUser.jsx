@@ -1,11 +1,11 @@
 import React from "react";
 import AgentInfoCards from "./AgentInfoCards";
 import AgentCards from "./AgentCards";
-import useStore from "../../formstore/formStore";
+// import useStore from "../../formstore/formStore";
 
 
 function RegisterUser() {
-const {info} = useStore()
+// const {info} = useStore()
 const agentCode = localStorage.getItem("agentid")
 
 

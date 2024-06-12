@@ -1,6 +1,6 @@
 import React from "react";
 // import { Link } from "react-router-dom";
-import Slider from "react-slick";
+// import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import jm from "../../images/portfolio/donate.png";
@@ -10,9 +10,9 @@ import { Link } from "react-scroll";
 import { Link as MyLink } from "react-router-dom";
 import follow from "../../images/marketwomen.jpg";
 
-const ClickHandler = () => {
-  window.scrollTo(10, 0);
-};
+// const ClickHandler = () => {
+//   window.scrollTo(10, 0);
+// };
 
 const Features = (props) => {
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { Navigation, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -9,9 +9,9 @@ import hero2 from "../../images/slider/slide-4.jpg";
 import hero3 from "../../images/slider/slide-8.jpg";
 
 const Hero = () => {
-  const ClickHandler = () => {
-    window.scrollTo(10, 0);
-  };
+  // const ClickHandler = () => {
+  //   window.scrollTo(10, 0);
+  // };
 
   return (
     <section className="wpo-hero-slider-s2  wpo-hero-slider-1">

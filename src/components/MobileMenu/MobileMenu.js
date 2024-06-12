@@ -1,182 +1,182 @@
-import React, { Fragment, useState } from "react";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/List";
-import Collapse from "@mui/material/Collapse";
-import { NavLink } from "react-router-dom";
+import React, {  useState } from "react";
+// import List from "@mui/material/List";
+// import ListItem from "@mui/material/List";
+// import Collapse from "@mui/material/Collapse";
+// import { NavLink } from "react-router-dom";
 import "./style.css";
 import { Link } from "react-scroll";
 import { Link as MyLink, useLocation } from "react-router-dom";
 
-const menus = [
-  {
-    id: 1,
-    title: "Home",
-    link: "/home",
-  },
+// const menus = [
+//   {
+//     id: 1,
+//     title: "Home",
+//     link: "/home",
+//   },
 
-  {
-    id: 2,
-    title: "Get GGC",
-    link: ".getggc",
-  },
+//   {
+//     id: 2,
+//     title: "Get GGC",
+//     link: ".getggc",
+//   },
 
-  {
-    id: 3,
-    title: "Agent",
-    link: "/agentlogin",
-  },
+//   {
+//     id: 3,
+//     title: "Agent",
+//     link: "/agentlogin",
+//   },
 
-  //   {
-  //     id: 6,
-  //     title: "Event",
-  //     link: "/events",
-  //     submenu: [
-  //       {
-  //         id: 61,
-  //         title: "Event",
-  //         link: "/events",
-  //       },
-  //       {
-  //         id: 62,
-  //         title: "Event single",
-  //         link: "/event-single/Support-for-Womans",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Pages",
-  //     link: "/",
-  //     submenu: [
-  //       {
-  //         id: 31,
-  //         title: "Gallery",
-  //         link: "/gallery",
-  //       },
-  //       {
-  //         id: 321,
-  //         title: "Volunteer",
-  //         link: "/volunteer",
-  //       },
-  //       {
-  //         id: 322,
-  //         title: "Testimonial",
-  //         link: "/testimonial",
-  //       },
-  //       {
-  //         id: 385,
-  //         title: "Team",
-  //         link: "/team",
-  //       },
-  //       {
-  //         id: 386,
-  //         title: "Team Single",
-  //         link: "/team-single/Harry-Abraham",
-  //       },
-  //       {
-  //         id: 388,
-  //         title: "Services",
-  //         link: "/service",
-  //       },
-  //       {
-  //         id: 389,
-  //         title: "Services Style 2",
-  //         link: "/service-s2",
-  //       },
-  //       {
-  //         id: 371,
-  //         title: "Shop",
-  //         link: "/shop",
-  //       },
-  //       {
-  //         id: 375,
-  //         title: "Shop Single",
-  //         link: "/product-single/Newspaper",
-  //       },
-  //       {
-  //         id: 376,
-  //         title: "Cart",
-  //         link: "/cart",
-  //       },
-  //       {
-  //         id: 377,
-  //         title: "Checkout",
-  //         link: "/checkout",
-  //       },
-  //       {
-  //         id: 33,
-  //         title: "FAQ",
-  //         link: "/faq",
-  //       },
-  //       {
-  //         id: 34,
-  //         title: "404 Error",
-  //         link: "/404",
-  //       },
-  //       {
-  //         id: 35,
-  //         title: "Login",
-  //         link: "/login",
-  //       },
-  //       {
-  //         id: 36,
-  //         title: "Register",
-  //         link: "/register",
-  //       },
-  //     ],
-  //   },
+//   //   {
+//   //     id: 6,
+//   //     title: "Event",
+//   //     link: "/events",
+//   //     submenu: [
+//   //       {
+//   //         id: 61,
+//   //         title: "Event",
+//   //         link: "/events",
+//   //       },
+//   //       {
+//   //         id: 62,
+//   //         title: "Event single",
+//   //         link: "/event-single/Support-for-Womans",
+//   //       },
+//   //     ],
+//   //   },
+//   //   {
+//   //     id: 3,
+//   //     title: "Pages",
+//   //     link: "/",
+//   //     submenu: [
+//   //       {
+//   //         id: 31,
+//   //         title: "Gallery",
+//   //         link: "/gallery",
+//   //       },
+//   //       {
+//   //         id: 321,
+//   //         title: "Volunteer",
+//   //         link: "/volunteer",
+//   //       },
+//   //       {
+//   //         id: 322,
+//   //         title: "Testimonial",
+//   //         link: "/testimonial",
+//   //       },
+//   //       {
+//   //         id: 385,
+//   //         title: "Team",
+//   //         link: "/team",
+//   //       },
+//   //       {
+//   //         id: 386,
+//   //         title: "Team Single",
+//   //         link: "/team-single/Harry-Abraham",
+//   //       },
+//   //       {
+//   //         id: 388,
+//   //         title: "Services",
+//   //         link: "/service",
+//   //       },
+//   //       {
+//   //         id: 389,
+//   //         title: "Services Style 2",
+//   //         link: "/service-s2",
+//   //       },
+//   //       {
+//   //         id: 371,
+//   //         title: "Shop",
+//   //         link: "/shop",
+//   //       },
+//   //       {
+//   //         id: 375,
+//   //         title: "Shop Single",
+//   //         link: "/product-single/Newspaper",
+//   //       },
+//   //       {
+//   //         id: 376,
+//   //         title: "Cart",
+//   //         link: "/cart",
+//   //       },
+//   //       {
+//   //         id: 377,
+//   //         title: "Checkout",
+//   //         link: "/checkout",
+//   //       },
+//   //       {
+//   //         id: 33,
+//   //         title: "FAQ",
+//   //         link: "/faq",
+//   //       },
+//   //       {
+//   //         id: 34,
+//   //         title: "404 Error",
+//   //         link: "/404",
+//   //       },
+//   //       {
+//   //         id: 35,
+//   //         title: "Login",
+//   //         link: "/login",
+//   //       },
+//   //       {
+//   //         id: 36,
+//   //         title: "Register",
+//   //         link: "/register",
+//   //       },
+//   //     ],
+//   //   },
 
-  //   {
-  //     id: 5,
-  //     title: "Blog",
-  //     link: "/blog",
-  //     submenu: [
-  //       {
-  //         id: 51,
-  //         title: "Blog",
-  //         link: "/blog",
-  //       },
-  //       {
-  //         id: 52,
-  //         title: "Blog Left sidebar",
-  //         link: "/blog-left",
-  //       },
-  //       {
-  //         id: 53,
-  //         title: "Blog full width",
-  //         link: "/blog-fullwidth",
-  //       },
-  //       {
-  //         id: 54,
-  //         title: "Blog single",
-  //         link: "/blog-single/Letraset-Sheets-Passage-And-Recently",
-  //       },
-  //       {
-  //         id: 55,
-  //         title: "Blog single Left sidebar",
-  //         link: "/blog-single-left-sidebar/Letraset-Sheets-Passage-And-Recently",
-  //       },
-  //       {
-  //         id: 56,
-  //         title: "Blog single Left sidebar",
-  //         link: "/blog-single-fullwidth/Letraset-Sheets-Passage-And-Recently",
-  //       },
-  //     ],
-  //   },
-  {
-    id: 88,
-    title: "Donate",
-    link: "/donate",
-  },
-];
+//   //   {
+//   //     id: 5,
+//   //     title: "Blog",
+//   //     link: "/blog",
+//   //     submenu: [
+//   //       {
+//   //         id: 51,
+//   //         title: "Blog",
+//   //         link: "/blog",
+//   //       },
+//   //       {
+//   //         id: 52,
+//   //         title: "Blog Left sidebar",
+//   //         link: "/blog-left",
+//   //       },
+//   //       {
+//   //         id: 53,
+//   //         title: "Blog full width",
+//   //         link: "/blog-fullwidth",
+//   //       },
+//   //       {
+//   //         id: 54,
+//   //         title: "Blog single",
+//   //         link: "/blog-single/Letraset-Sheets-Passage-And-Recently",
+//   //       },
+//   //       {
+//   //         id: 55,
+//   //         title: "Blog single Left sidebar",
+//   //         link: "/blog-single-left-sidebar/Letraset-Sheets-Passage-And-Recently",
+//   //       },
+//   //       {
+//   //         id: 56,
+//   //         title: "Blog single Left sidebar",
+//   //         link: "/blog-single-fullwidth/Letraset-Sheets-Passage-And-Recently",
+//   //       },
+//   //     ],
+//   //   },
+//   {
+//     id: 88,
+//     title: "Donate",
+//     link: "/donate",
+//   },
+// ];
 
 const MobileMenu = () => {
-  const [openId, setOpenId] = useState(0);
+  // const [openId, setOpenId] = useState(0);
   const [menuActive, setMenuState] = useState(false);
 
-  const ClickHandler = () => {
-    window.scrollTo(10, 0);
-  };
+  // const ClickHandler = () => {
+  //   window.scrollTo(10, 0);
+  // };
 
   const location = useLocation();
 

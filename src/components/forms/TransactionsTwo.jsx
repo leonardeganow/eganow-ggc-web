@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import membersGRPC from "../../api/grpcapi/membersGRPC";
+// import membersGRPC from "../../api/grpcapi/membersGRPC";
 import { toast } from "react-toastify";
 import arise from "../../images/cardImages/arise_105325.png";
 import bronze from "../../images/cardImages/bronze_105326.png";
@@ -27,22 +27,17 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TransactionAPI from "../../api/grpcapi/TransactionGRPC";
-import { Avatar, Skeleton } from "@mui/material";
-import { IoSearchCircleSharp } from "react-icons/io5";
-import { FaSearch, FaWindowClose } from "react-icons/fa";
+import { FaWindowClose } from "react-icons/fa";
 import { jsPDF } from "jspdf";
+import useStore from "../../formstore/formStore";
+import { CARD_REPRINT, MONTHLY_SUBSCRIPTION, UPGRADE } from "../../utils/constants";
 
 const TransactionsTwo = (props) => {
   const { getTransactions, getTotalDonations, getCardPerTransaction } =
     TransactionAPI();
-  const { loginMember } = membersGRPC();
-  const [showLogin, setShowLogin] = useState(true); //state to show or hide the login page
   const [isLoading, setIsLoading] = useState(false);
-  const [cardName, setCardName] = useState(null);
-  const [cardNo, setCardNo] = useState(false);
   const [cardType, setCardType] = useState(null); //state to manage card type
   const [transactions, setTransaction] = useState([]); //transaction data
-  const { showReset, setShowReset } = useState(false);
   const [showTable, setShowTable] = useState(false);
   const [totalDonations, setTotalDonations] = useState(null);
   const [startDate, setStartDate] = useState("");
@@ -58,6 +53,9 @@ const TransactionsTwo = (props) => {
   // Get the current date
   const currentDate = new Date();
 
+  const { updateRoleAndCardType, info } = useStore(); //zustand state to hanndle role annd card select
+
+
   // Get the last month's date
   const lastMonthDate = new Date();
   lastMonthDate.setMonth(currentDate.getMonth() - 1);
@@ -65,9 +63,8 @@ const TransactionsTwo = (props) => {
   // Format the dates as strings (you can customize the format as needed)
   const formattedCurrentDate = currentDate.toISOString().split("T")[0];
   const formattedLastMonthDate = lastMonthDate.toISOString().split("T")[0];
-  // console.log(formattedLastMonthDate);
 
-  const { register, handleSubmit, setValue, watch, getValues } = useForm({
+  const { setValue, watch, getValues } = useForm({
     defaultValues: {
       // memeberType: props.formHandler.getValues("role"),
       role: props.formHandler.getValues("role"),
@@ -86,7 +83,9 @@ const TransactionsTwo = (props) => {
     const newData = {
       ...data,
       memberId: props.formHandler.getValues("memberId"),
-      role: props.formHandler.getValues("role") ? props.formHandler.getValues("role") : "GGC",
+      role: props.formHandler.getValues("role")
+        ? props.formHandler.getValues("role")
+        : "GGC",
     };
     try {
       getCardPerTransactionHandler();
@@ -106,7 +105,7 @@ const TransactionsTwo = (props) => {
     const data = getValues();
     try {
       const response = await getCardPerTransaction(data);
-      console.log(response);
+      // console.log(response);
       setCardType(response.cardtypeid);
     } catch (error) {
       console.error(error);
@@ -126,7 +125,7 @@ const TransactionsTwo = (props) => {
       // endDate: formatDate(data?.endDate), //seending formated endDate
       startDate: start, //sending formated startDate
       endDate: end, //seending formated endDate
-      role:"GGC"
+      role: "GGC",
     };
     // console.log(formatedData);
     try {
@@ -329,11 +328,14 @@ const TransactionsTwo = (props) => {
   };
 
   return (
-    <div  >
-      <div className="position-relative" style={{
-        height: "70vh",
-        overflowY:'auto'
-      }} >
+    <div>
+      <div
+        className="position-relative"
+        style={{
+          height: "70vh",
+          overflowY: "auto",
+        }}
+      >
         <h3 className="text-center m-0 p-0">Transactions</h3>
         <p className="text-center m-0 p-0">View your transaction</p>
         <FaWindowClose
@@ -495,21 +497,56 @@ const TransactionsTwo = (props) => {
             </div>
             {/* end of search form */}
           </div>
-          <div className="row gy-2 my-3 align-items-center">
-            <div className="col-12  col-md-4">
+          <div className="row gy-2 my-3 align-items-center ">
+            <div className="col-12  col-md-6">
               <button
                 onClick={() => {
                   props.formHandler.setValue("amount", "");
                   props.formHandler.setValue("momoname", "");
                   props.formHandler.setValue("paymentMethodId", "");
+                  // props.formHandler.setValue("type", "upgrade");
+                  updateRoleAndCardType("GGC", "", "", "", "",UPGRADE); //HARDCODING GGC
+
                   props.handleBack(4);
                 }}
                 className="btn btn-danger w-100"
               >
-                Top Up
+                Upgrade
               </button>
             </div>
-            <div className="col-12 col-md-4">
+            <div className="col-12  col-md-6">
+              <button
+                onClick={() => {
+                  props.formHandler.setValue("amount", "");
+                  props.formHandler.setValue("momoname", "");
+                  props.formHandler.setValue("paymentMethodId", "");
+                  // props.formHandler.setValue("type", "monthly contribution");
+                  updateRoleAndCardType("GGC", "", "", "", "",MONTHLY_SUBSCRIPTION); //HARDCODING GGC
+
+                  props.handleBack(4);
+                }}
+                className="btn btn-danger w-100"
+              >
+                Monthly contribution
+              </button>
+            </div>
+            <div className="col-12  col-md-6">
+              <button
+                onClick={() => {
+                  props.formHandler.setValue("amount", "");
+                  props.formHandler.setValue("momoname", "");
+                  props.formHandler.setValue("paymentMethodId", "");
+                  // props.formHandler.setValue("type", "card reprint");
+                  updateRoleAndCardType("GGC", "", "", "", "",CARD_REPRINT); //HARDCODING GGC
+
+                  props.handleBack(4);
+                }}
+                className="btn btn-danger w-100"
+              >
+                Card reprint{" "}
+              </button>
+            </div>
+            <div className="col-12 col-md-6">
               <button
                 onClick={handleDownload}
                 className="btn btn-success w-100"
@@ -517,7 +554,7 @@ const TransactionsTwo = (props) => {
                 Download card
               </button>
             </div>
-            <div className="col-12 col-md-4 mt-2 mt-md-0">
+            <div className="col-12 col-md-6 mt-2 ">
               <button
                 onClick={downloadHistory}
                 className="btn btn-success w-100"

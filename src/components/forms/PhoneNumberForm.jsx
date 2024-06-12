@@ -1,7 +1,7 @@
 import * as React from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+// import { useForm } from "react-hook-form";
+// import { yupResolver } from "@hookform/resolvers/yup";
+// import * as yup from "yup";
 import membersGRPC from "../../api/grpcapi/membersGRPC";
 import otpGRPC from "../../api/grpcapi/otpGRPC";
 import { toast } from "react-toastify";
@@ -12,7 +12,7 @@ import { RpcError } from "grpc-web";
 // import Select from "react-select";
 
 function PhoneNumberForm(props) {
-  const { info, updateRoleAndCardType } = useStore();
+  const { info } = useStore();
 
   const [condition, setCondition] = React.useState(false);
   const [showpin, setShowpin] = React.useState(false);
@@ -25,9 +25,9 @@ function PhoneNumberForm(props) {
   const [showEmail, setShowEmail] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [showEnterPin, setShowEnterPin] = React.useState(false);
-  const [mobileNumber, setMobileNumber] = React.useState("");
+  // const [mobileNumber, setMobileNumber] = React.useState("");
 
-  const { checkIfUserExist, loginMember, createJmMember, resetMemberPin } =
+  const { checkIfUserExist, loginMember,  resetMemberPin } =
     membersGRPC();
   const { sendOtp, verifyOtp, sendEmailOtp } = otpGRPC();
   const { getOtherCountries } = customerSetupsGRPC();

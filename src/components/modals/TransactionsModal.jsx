@@ -30,14 +30,20 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TransactionAPI from "../../api/grpcapi/TransactionGRPC";
-import { Avatar, Box, Skeleton } from "@mui/material";
-import { IoSearchCircleSharp } from "react-icons/io5";
-import { FaSearch, FaWindowClose } from "react-icons/fa";
+// import { Avatar, Box, Skeleton } from "@mui/material";
+// import { IoSearchCircleSharp } from "react-icons/io5";
+import { FaWindowClose } from "react-icons/fa";
 
 import TopUpModal from "../modals/TopUpModal";
+import useStore from "../../formstore/formStore";
+import {
+  CARD_REPRINT,
+  MONTHLY_SUBSCRIPTION,
+  UPGRADE,
+} from "../../utils/constants";
 
 // todo testing agent apis
-import agentAPI from "../../api/grpcapi/AgentGRPC";
+// import agentAPI from "../../api/grpcapi/AgentGRPC";
 
 // const {loginAgent,changeAgentPin,getMemberTransactions,getTotalDonation,getMemberCreateByAgent} = agentAPI()
 
@@ -58,29 +64,31 @@ export default function TransactionsModal({
   const { getTransactions, getTotalDonations, getCardPerTransaction } =
     TransactionAPI();
   const { loginMember } = membersGRPC();
-  const [showLogin, setShowLogin] = useState(true); //state to show or hide the login page
+  // const [showLogin, setShowLogin] = useState(true); //state to show or hide the login page
   const [isLoading, setIsLoading] = useState(false);
   const [cardName, setCardName] = useState(null);
+  // const [type, setType] = useState(null);
   const [cardType, setCardType] = useState(null); //state to manage card type
   const [cardNo, setCardNo] = useState(false);
   const [transactions, setTransaction] = useState([]); //transaction data
-  const { showReset, setShowReset } = useState(false);
+  // const { showReset, setShowReset } = useState(false);
   const [showTable, setShowTable] = useState(false);
   const [totalDonations, setTotalDonations] = useState(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
+  const { updateRoleAndCardType, info } = useStore(); //zustand state to hanndle role annd card select
 
-  const [showTopUpModal,setShowTopUpModal] = useState(false)
-  const handleTopUpModalOpen = ()=>setShowTopUpModal(true)
-  const handleTopUpModalClose = ()=>setShowTopUpModal(false)
+  const [showTopUpModal, setShowTopUpModal] = useState(false);
+  const handleTopUpModalOpen = () => setShowTopUpModal(true);
+  const handleTopUpModalClose = () => setShowTopUpModal(false);
 
   // pinModal
   const [openPinModal, setOpenPinModal] = React.useState(false);
   const handlePinOpen = () => setOpenPinModal(true);
   const handlePinClose = () => setOpenPinModal(false);
 
-  const [formValues,setFormValues] = useState(null)
+  const [formValues, setFormValues] = useState(null);
 
   // DATE FORMATTER FUNCTION
   const formatDate = (dateString) => {
@@ -105,18 +113,6 @@ export default function TransactionsModal({
     zIndex: 6666,
   };
 
-  const style2 = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-  };
-
   // Get the current date
   const currentDate = new Date();
 
@@ -138,6 +134,7 @@ export default function TransactionsModal({
       cardTypeId: "",
       fullname: "",
       customerCardtype: "",
+      // type: ""
     },
   });
 
@@ -193,6 +190,8 @@ export default function TransactionsModal({
     // onSubmitTransaction();
     setStartDate(formattedLastMonthDate); //setting form fields
     setEndDate(formattedCurrentDate); //setting form fields
+
+    // console.log(getValues());
   }, []);
 
   // function to search date
@@ -218,7 +217,7 @@ export default function TransactionsModal({
     setIsLoading(true);
     try {
       const response = await loginMember(data);
-      // console.log(response);
+      console.log(response);
       if (response.message == "Success" && response.status == true) {
         // set showloging to false in other to display list of transactions
 
@@ -236,7 +235,7 @@ export default function TransactionsModal({
         setCardName(response.fullname);
         setCardNo(response.cardnumber);
 
-        setFormValues(getValues())
+        setFormValues(getValues());
 
         // console.log("loginresp", response);
         toast(response.message);
@@ -664,11 +663,11 @@ export default function TransactionsModal({
                     </div>
                     {/* end of search form */}
                   </div>
-                  <div className="row justify-content-evenly my-3 gy-2  align-items-center">
+                  <div className="row justify-content-between my-3 gy-2  align-items-center">
                     {/* <div className="col-4">
                       <button className="btn btn-danger w-100">Top Up</button>
                     </div> */}
-                    <div className="col-12 col-md-4">
+                    <div className="col-12 col-md-6">
                       <button
                         onClick={handleDownload}
                         className="btn btn-success w-100"
@@ -677,7 +676,7 @@ export default function TransactionsModal({
                       </button>
                     </div>
 
-                    <div className="col-12 col-md-4">
+                    <div className="col-12 col-md-6">
                       <button
                         onClick={downloadHistory}
                         className="btn btn-success w-100"
@@ -685,15 +684,60 @@ export default function TransactionsModal({
                         Download Statement
                       </button>
                     </div>
-                    <div className="col-12 col-md-4">
+                    <div className="col-12 col-md-6">
                       <button
-                        onClick={()=>{
-                          handleTopUpModalOpen()
+                        onClick={() => {
+                          // setType("upgrade");
+                          updateRoleAndCardType("GGC", "", "", "", "", UPGRADE); //HARDCODING GGC
+
+                          handleTopUpModalOpen();
                           handleClose();
                         }}
                         className="btn btn-danger w-100"
                       >
-                        Top Up
+                        Upgrade
+                      </button>
+                    </div>
+                    <div className="col-12 col-md-6">
+                      <button
+                        onClick={() => {
+                          // setType("monthly subscription");
+                          updateRoleAndCardType(
+                            "GGC",
+                            "",
+                            "",
+                            "",
+                            "",
+                            MONTHLY_SUBSCRIPTION
+                          ); //HARDCODING GGC
+
+                          handleTopUpModalOpen();
+                          handleClose();
+                        }}
+                        className="btn btn-danger w-100"
+                      >
+                        Monthly subscription
+                      </button>
+                    </div>
+                    <div className="col-12  col-md-6">
+                      <button
+                        onClick={() => {
+                          // setType("card reprint")
+                          updateRoleAndCardType(
+                            "GGC",
+                            "",
+                            "",
+                            "",
+                            "",
+                            CARD_REPRINT
+                          ); //HARDCODING GGC
+
+                          handleTopUpModalOpen();
+                          handleClose();
+                        }}
+                        className="btn btn-danger w-100"
+                      >
+                        Card reprint{" "}
                       </button>
                     </div>
                   </div>
@@ -791,7 +835,14 @@ export default function TransactionsModal({
       <ResetPinModal open={openPinModal} close={handlePinClose} />
 
       {/* TOP UP MODAL */}
-      <TopUpModal open={showTopUpModal} cardName={cardName} cardNumber={cardNo} formValues={formValues} handleClose={handleTopUpModalClose} handleOpen={handleTopUpModalOpen} />
+      <TopUpModal
+        open={showTopUpModal}
+        cardName={cardName}
+        cardNumber={cardNo}
+        formValues={formValues}
+        handleClose={handleTopUpModalClose}
+        handleOpen={handleTopUpModalOpen}
+      />
     </div>
   );
 }

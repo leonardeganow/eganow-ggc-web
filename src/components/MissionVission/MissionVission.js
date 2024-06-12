@@ -130,6 +130,8 @@ const MissionVission = (props) => {
 
   useEffect(() => {
     getCardTypeHandler();
+
+    // eslint-disable-next-line
   }, []);
   return (
     <section

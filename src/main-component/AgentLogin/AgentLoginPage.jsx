@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../../images/instragram/ndclogo-removebg-preview.png";
-import Header from "../../components/Navbar/Navbar";
+// import Header from "../../components/Navbar/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import agentAPI from "../../api/grpcapi/AgentGRPC";
 import { useForm } from "react-hook-form";

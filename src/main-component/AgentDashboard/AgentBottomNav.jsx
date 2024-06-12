@@ -19,7 +19,7 @@ const navigate = useNavigate()
           <div
             role="button"
             className={`d-flex   align-items-center ${
-              location.pathname == "/agentdashboard"
+              location.pathname === "/agentdashboard"
                 ? "bg-white p-3 text-dark rounded"
                 : ""
             }`}
@@ -32,7 +32,7 @@ const navigate = useNavigate()
           <div
             role="button"
             className={`d-flex  align-items-center ${
-              location.pathname == "/agentdashboard/transactions"
+              location.pathname === "/agentdashboard/transactions"
                 ? "bg-white p-3 text-dark rounded"
                 : ""
             }`}
@@ -45,7 +45,7 @@ const navigate = useNavigate()
           <div
             role="button"
             className={`d-flex  align-items-center ${
-              location.pathname == "/agentdashboard/registeredusers"
+              location.pathname === "/agentdashboard/registeredusers"
                 ? "bg-white p-3 text-dark rounded"
                 : ""
             }`}
@@ -57,7 +57,7 @@ const navigate = useNavigate()
           <div
             role="button"
             className={`d-flex  align-items-center ${
-              location.pathname == "/agentdashboard/changepin"
+              location.pathname === "/agentdashboard/changepin"
                 ? "bg-white p-3 text-dark rounded"
                 : ""
             }`}
@@ -70,7 +70,7 @@ const navigate = useNavigate()
           onClick={logOut}
             role="button"
             className={`d-flex  align-items-center ${
-              location.pathname == "" ? "bg-white p-3 text-dark" : ""
+              location.pathname === "" ? "bg-white p-3 text-dark" : ""
             }`}
           >
             <RiLogoutCircleRLine size={20} />

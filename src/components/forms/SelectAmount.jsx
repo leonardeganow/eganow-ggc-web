@@ -40,6 +40,16 @@ function SelectAmount(props) {
     // console.log(pin);
   };
 
+  useEffect(() => {
+      props.formHandler.setValue("type", info.type);
+
+
+    if (info.type === "card reprint") {
+      props.formHandler.setValue("amount", 50);
+      setSelectedAmount(50);
+    }
+  }, [info.type]);
+
   return (
     <div>
       {" "}
@@ -49,6 +59,9 @@ function SelectAmount(props) {
           {[20000, 10000, 5000, 2000, 1000, 500, 250, 200].map((amount) => (
             <div key={amount} className="col-md-3 col-6">
               <button
+                disabled={
+                  info.type === "card reprint"
+                }
                 className="btn w-100 fw-bold btn-outline-success btn-md"
                 onClick={() => handleButtonClick(amount)}
               >
@@ -63,6 +76,9 @@ function SelectAmount(props) {
           <div className="col-md-10 ">
             <div>
               <input
+                disabled={
+                  info.type === "card reprint"
+                }
                 {...props.formHandler.register("amount")}
                 className={`form-control h-full ${
                   props.formHandler.formState.errors.amount

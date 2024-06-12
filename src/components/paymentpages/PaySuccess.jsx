@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {  useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaCheckCircle } from "react-icons/fa";
+// import { FaCheckCircle } from "react-icons/fa";
 
 function PaySuccess(props) {
   const transType = props.formHandler.getValues("paymentMethod");
@@ -24,7 +24,7 @@ function PaySuccess(props) {
     },
   });
   const data = props.formHandler.getValues();
-  console.log(data);
+  // console.log(data);
 
   const paymentUrl = props.formHandler.getValues("paymentUrl");
 

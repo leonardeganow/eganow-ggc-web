@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../footer/Footer";
 import Scrollbar from "../scrollbar/scrollbar";
-import aboutbackimage from "../../images/JMf.jpg";
+// import aboutbackimage from "../../images/JMf.jpg";
 import { Link } from "react-scroll";
 
 const Terms = () => {

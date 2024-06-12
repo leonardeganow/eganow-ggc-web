@@ -18,27 +18,27 @@ function ChoosePayMethod(props) {
   const [MomoOptions, setMomoOptions] = useState(null);
   const [cardId, setCardId] = useState(null);
 
-  const [phone, setPhone] = useState("");
+  // const [phone, setPhone] = useState("");
   const { info } = useStore();
   const { getPayment } = customerSetupsGRPC();
   const { getKyc } = TransactionAPI();
 
-  const onSubmit = async (data) => {
-    const result = await props.formHandler.trigger([
-      // "paymentCardNo",
-      "paymentMethodId",
-      "cvv",
-      "expiryDateYear",
-      "expiryDateMonth",
-      "nameOnPaymentCard",
-    ]);
-    // console.log(result);
-    if (!result) {
-      return;
-    }
+  // const onSubmit = async (data) => {
+  //   const result = await props.formHandler.trigger([
+  //     // "paymentCardNo",
+  //     "paymentMethodId",
+  //     "cvv",
+  //     "expiryDateYear",
+  //     "expiryDateMonth",
+  //     "nameOnPaymentCard",
+  //   ]);
+  //   // console.log(result);
+  //   if (!result) {
+  //     return;
+  //   }
 
-    props.handleNext(1);
-  };
+  //   props.handleNext(1);
+  // };
 // console.log(props.formHandler.getValues());
   let pMethod;
   const getpayMethodsHandler = async () => {

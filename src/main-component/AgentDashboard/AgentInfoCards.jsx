@@ -3,11 +3,11 @@ import { GiCash } from "react-icons/gi";
 import { GiReceiveMoney } from "react-icons/gi";
 import { FaUsers } from "react-icons/fa";
 import agentAPI from "../../api/grpcapi/AgentGRPC";
-import useStore from "../../formstore/formStore";
+// import useStore from "../../formstore/formStore";
 import TransactionAPI from "../../api/grpcapi/TransactionGRPC";
 
 function AgentInfoCards() {
-  const { getMemberTransactions, getTotalDonation, getMemberCreateByAgent } =
+  const {  getMemberCreateByAgent } =
     agentAPI(); //api calls
   const { getTotalCommission } = TransactionAPI();
   const [registeredMembers, setRegisteredMembers] = useState([]); //registered members list
@@ -15,7 +15,7 @@ function AgentInfoCards() {
   const [totalCommission, setTotalCommission] = useState(null);
   const [isLoading, setIsLoading] = useState(false); //total commission received
 
-  const { info } = useStore();
+  // const { info } = useStore();
   const agentCode = localStorage.getItem("agentid");
 
   //this functions get all members created by agent
@@ -68,6 +68,8 @@ function AgentInfoCards() {
   useEffect(() => {
     getMemberCreatedByAgentTransactionsHandler();
     getCommissions();
+
+    // eslint-disable-next-line
   }, []);
 
   return (

@@ -28,7 +28,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
   const [btnOpen, setBtnOpen] = React.useState(false);
   const [currentStep, setCurrentStep] = React.useState(1);
   const { info } = useStore();
-  const totalSteps = 5;
+  // const totalSteps = 5;
 
   const handleNext = (page) => {
     // setBtnOpen(false);
@@ -124,8 +124,12 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
     userCardType: "",
     paymentUrl: "",
     resetPin: "",
-    baseCardId:""
+    baseCardId:"",
+    type: ""
   };
+
+
+
 
   const formHandler = useForm({
     mode: "onChange",

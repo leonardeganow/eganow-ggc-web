@@ -6,9 +6,9 @@ import Logo from "../../images/logo-s3.png";
 const ClickHandler = () => {
   window.scrollTo(10, 0);
 };
-const SubmitHandler = (e) => {
-  e.preventDefault();
-};
+// const SubmitHandler = (e) => {
+//   e.preventDefault();
+// };
 
 const Footer = (props) => {
   return (

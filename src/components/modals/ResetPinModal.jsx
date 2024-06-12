@@ -45,12 +45,12 @@ function ResetPinModal({ open, close }) {
                 const response = await checkIfUserExist(payload); //REVIEW - checking if user exist with nunber 
                 if (response.status === true) {
                     const response = await sendOtp({ mobileNo: phoneValue }); //TODO - sending otp
-                    if (response.status == true) {
+                    if (response.status === true) {
                         setShowOTP(true); //ANCHOR - set otp form 
                         setShowPhone(false) //ANCHOR - set the show phone 
                         toast(response?.message);
                         setIsLoading(false) //ANCHOR - setting loading state to false
-                    } else if (response.status === false && response.message == 'OTP already exist, Kindly enter the otp sent to your email.') {
+                    } else if (response.status === false && response.message === 'OTP already exist, Kindly enter the otp sent to your email.') {
                         setShowOTP(true); //ANCHOR - set otp form 
                         setShowPhone(false) //ANCHOR - set the show phone 
                         toast(response?.message);
@@ -76,7 +76,7 @@ function ResetPinModal({ open, close }) {
                 setIsLoading(true)
                 if (response.status === true) {
                     const response = await sendEmailOtp({ email: phoneValue }); //TODO - sending otp
-                    if (response?.status == true) {
+                    if (response?.status === true) {
                         setShowOTP(true); //ANCHOR - set otp form 
                         setShowPhone(false) //ANCHOR - set the show phone 
                         toast(response?.message);
@@ -86,7 +86,7 @@ function ResetPinModal({ open, close }) {
                         setIsLoading(false)
                         return
                     }
-                } else if (response.status === false && response.message == 'OTP already exist, Kindly enter the otp sent to your email.') {
+                } else if (response.status === false && response.message === 'OTP already exist, Kindly enter the otp sent to your email.') {
                     setShowOTP(true); //ANCHOR - set otp form 
                     setShowPhone(false) //ANCHOR - set the show phone 
                     toast(response?.message);
@@ -142,7 +142,7 @@ function ResetPinModal({ open, close }) {
         let pinValue = getValues('pin')
         let confirmPin = getValues('confirmpin')
         let phoneValue = getValues('phoneemail')
-        if (pinValue === confirmPin && pinValue.length == 4 && confirmPin.length == 4) { //ANCHOR if confirm pin and pin is equals
+        if (pinValue === confirmPin && pinValue.length === 4 && confirmPin.length === 4) { //ANCHOR if confirm pin and pin is equals
             let payload = {
                 mobileNumber: phoneValue,
                 pin: pinValue,
