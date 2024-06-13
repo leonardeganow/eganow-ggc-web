@@ -29,7 +29,6 @@ function TopUpModal({
   handleClose,
   formValues,
   cardName,
- ssssss
 }) {
   const [btnOpen, setBtnOpen] = React.useState(false);
   const [currentStep, setCurrentStep] = React.useState(1);
@@ -41,6 +40,8 @@ function TopUpModal({
     // setCurrentStep((prevStep) => prevStep + 1);
     setCurrentStep((prevStep) => prevStep + page);
   };
+
+  console.log(handleClose);
 
   const schema = yup
     .object()
@@ -213,7 +214,11 @@ function TopUpModal({
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={()=>{
+          handleClose()
+          setCurrentStep(1)
+
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
