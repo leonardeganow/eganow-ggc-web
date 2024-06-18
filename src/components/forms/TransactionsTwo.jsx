@@ -53,7 +53,7 @@ const TransactionsTwo = (props) => {
   // Get the current date
   const currentDate = new Date();
 
-  const { updateRoleAndCardType, info } = useStore(); //zustand state to hanndle role annd card select
+  const { updateRoleAndCardType } = useStore(); //zustand state to hanndle role annd card select
 
 
   // Get the last month's date
@@ -157,6 +157,8 @@ const TransactionsTwo = (props) => {
       formatDate(formattedLastMonthDate),
       formatDate(formattedCurrentDate)
     );
+
+    // eslint-disable-next-line
   }, []);
 
   // function to search date
@@ -169,13 +171,10 @@ const TransactionsTwo = (props) => {
     switch (status) {
       case "FAILED":
         return "bg-danger text-white p-1 rounded fw-semibold";
-        break;
       case "PENDING":
         return "bg-warning text-black p-1 rounded fw-semibold";
-        break;
       case "SUCCESSFUL":
         return "bg-success text-white p-1 rounded fw-semibold";
-        break;
       default:
         return "";
     }
@@ -186,40 +185,28 @@ const TransactionsTwo = (props) => {
     switch (cardId) {
       case "AG007":
         return prestige;
-        break;
       case "AG006":
         return platinum;
-        break;
       case "AG050":
         return starter;
-        break;
       case "AG009":
         return justice;
-        break;
       case "AG005":
         return gold;
-        break;
       case "AG004":
         return silver;
-        break;
       case "AG003":
         return bronze;
-        break;
       case "AG001":
         return standard;
-        break;
       case "AG002":
         return loyalty;
-        break;
       case "AG008":
         return freedom;
-        break;
       case "AG011":
         return hope;
-        break;
       case "AG010":
         return arise;
-        break;
 
       default:
         return null;
@@ -569,7 +556,7 @@ const TransactionsTwo = (props) => {
           {/* END OF START AND END DATE */}
 
           {/* LISTING OUT TRANSACTIONS TABLES */}
-          {showTable == false ? (
+          {showTable === false ? (
             ""
           ) : (
             <TableContainer

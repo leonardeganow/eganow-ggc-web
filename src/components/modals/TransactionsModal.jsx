@@ -77,7 +77,7 @@ export default function TransactionsModal({
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const { updateRoleAndCardType, info } = useStore(); //zustand state to hanndle role annd card select
+  const { updateRoleAndCardType } = useStore(); //zustand state to hanndle role annd card select
 
   const [showTopUpModal, setShowTopUpModal] = useState(false);
   const handleTopUpModalOpen = () => setShowTopUpModal(true);

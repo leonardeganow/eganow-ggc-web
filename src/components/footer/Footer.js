@@ -123,14 +123,15 @@ const Footer = (props) => {
                 <div className="contact-ft">
                   <ul>
                     <li>
-                      <i className="fi ti-location-pin"></i>641/4 Ringway Close,
-                      Kokomlemle,
-                      <br /> P. O. Box 5825, Accra- North
+                      <i className="fi ti-location-pin"></i>No.C10/12 Adama Avenue,
+                      Adabraka,
+                      {/* <br /> P. O. Box 5825, Accra- North */}
                     </li>
                     <li>
                       <i className="fi flaticon-phone-call-1"></i>+233 (30)
-                      2223195
-                      {/* <br />+ 8 (123) 123 456 789 */}
+                      2222222
+                      <br />+(233) 509823400
+                      <br />+(233) 531033503
                     </li>
                     <li>
                       <i className="fa fa-envelope-o" aria-hidden="true"></i>
