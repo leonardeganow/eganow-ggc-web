@@ -154,9 +154,9 @@ function AgentCards() {
               updateRoleAndCardType("GGC", "", "", "", "",MONTHLY_SUBSCRIPTION); //HARDCODING GGC
             }}
             style={{ width: "30%" }}
-            className="  btn btn-success  my-2"
+            className="  btn btn-dark  my-2"
           >
-            Monthly subscription for member
+            Monthly contribution for member
           </button>
           <button
             onClick={() => {
@@ -164,7 +164,7 @@ function AgentCards() {
               updateRoleAndCardType("GGC", "", "", "", "",CARD_REPRINT); //HARDCODING GGC
             }}
             style={{ width: "30%" }}
-            className="  btn btn-success  my-2"
+            className="  btn btn-info text-white  my-2"
           >
             Reprint card for member
           </button>

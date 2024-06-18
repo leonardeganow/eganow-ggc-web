@@ -512,7 +512,7 @@ const TransactionsTwo = (props) => {
 
                   props.handleBack(4);
                 }}
-                className="btn btn-danger w-100"
+                className="btn btn-dark w-100"
               >
                 Monthly contribution
               </button>
@@ -528,7 +528,7 @@ const TransactionsTwo = (props) => {
 
                   props.handleBack(4);
                 }}
-                className="btn btn-danger w-100"
+                className="btn btn-info text-white w-100"
               >
                 Card reprint{" "}
               </button>

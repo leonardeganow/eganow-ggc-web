@@ -18,6 +18,7 @@ service TransactionSvc {
     rpc GetTotalAmountDonated(DonatedAmountRequest) returns (DontaedAmountResponse);
     rpc GetCardTypeDetailsPerTransactionByMemberId(CardTypePerTransactionRequest) returns (CardTypePerTransactionResponse);
     rpc GetTotalTransactionsDoneByAgent(TotalTransactionDoneByAgentRequest) returns (TotalTransactionDoneByAgentResponse);
+    rpc UpdatePendingTransactionsCheckingWithEganow(StatusCheckRequest) returns (StatusCheckResponse);
 }
 
 
@@ -33,9 +34,21 @@ message PostDataRequest {
      string narration = 10;
      string agentId = 11;
      string CVV = 20;
-    int32 expiryDateMonth = 21; // example Jan, pass 1, Feb, pass 2 etc
-    int32 expiryDateYear = 22; 
-    string channel = 23;
+     int32 expiryDateMonth = 21; // example Jan, pass 1, Feb, pass 2 etc
+     int32 expiryDateYear = 22; 
+     string channel = 23;
+     TransactionTypeMonthlyOrUpgrade transType = 24;
+
+}
+
+enum TransactionTypeMonthlyOrUpgrade  {
+    UPGRADE = 0;
+    MONTHLY_CONTRIBUTION = 1;
+    CARD_REPRINT= 2;
+}
+
+message StatusCheckRequest {
+    string transTypeJMOrGCC = 1;
 }
 
 message DonatedAmountRequest{
@@ -55,7 +68,6 @@ message PostDataUssdRequest {
     string transAmount = 4; 
     string narration = 5;
     string transTypeJMOrGCC=6;
-    string agentId = 7;
 }
 
 message UssdChargesRequest {
@@ -72,12 +84,20 @@ message TransAdminRequest {
     string transTypeJMOrGGC =1;
     string startDate = 2; // dd-mm-yyyy
     string endDate = 3;
+    TransactionStatus status = 4;
 }
 
 message TransResponse {
 	bool status = 1;
 	string message = 2;
     string threedsurl = 3;
+}
+
+enum TransactionStatus {
+    SUCCESSFUL =0;
+    PENDING =1;
+    FAILED = 2;
+    ALL = 3;
 }
 
 message ChargesRequest {
@@ -126,6 +146,7 @@ message TransactionData {
     string paymentAccountNumberOrMomoNumber = 8;
     string transStatus = 9;
     string paymentMethod = 10;
+    string agentName = 11;
 }
 
 message TransactionResponse {
@@ -158,6 +179,15 @@ message TotalTransactionDoneByAgentRequest {
 }
 
 message TotalTransactionDoneByAgentResponse {
-    double totalAmount = 1;
-    double totalCommission = 2;
+    double totalAmountGGC = 1;
+    double totalCommissionGGC = 2;
+    double totalAmountJM =3;
+    double totalCommissionJM =4;
+    double totalAmountGGCJM =5;
+    double totalCommissionGGCJM=6;
+}
+
+message StatusCheckResponse {
+    bool status = 1;
+    string message = 2;
 }

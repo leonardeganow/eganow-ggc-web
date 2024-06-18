@@ -32,6 +32,7 @@ function TransactionAPI() {
     request.setExpirydatemonth(data.expiryDateMonth);
     request.setExpirydateyear(data.expiryDateYear);
     request.setChannel("WEB");
+    request.setTranstype(data.type)
 
     return new Promise((resolve, reject) => {
       client.postDataToTransaction(request, METADATA, (err, resp) => {
@@ -152,7 +153,7 @@ function TransactionAPI() {
 
   function getCardPerTransaction(data) {
     const request = new CardTypePerTransactionRequest();
-    console.log(data);
+    // console.log(data);
     request.setMemberid(data.memberId);
     return new Promise((resolve, reject) => {
       client.getCardTypeDetailsPerTransactionByMemberId(

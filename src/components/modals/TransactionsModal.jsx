@@ -714,9 +714,9 @@ export default function TransactionsModal({
                           handleTopUpModalOpen();
                           handleClose();
                         }}
-                        className="btn btn-danger w-100"
+                        className="btn btn-dark w-100"
                       >
-                        Monthly subscription
+                        Monthly contribution
                       </button>
                     </div>
                     <div className="col-12  col-md-6">
@@ -735,7 +735,7 @@ export default function TransactionsModal({
                           handleTopUpModalOpen();
                           handleClose();
                         }}
-                        className="btn btn-danger w-100"
+                        className="btn btn-info text-white w-100"
                       >
                         Card reprint{" "}
                       </button>
