@@ -41,7 +41,6 @@ function TopUpModal({
     setCurrentStep((prevStep) => prevStep + page);
   };
 
-  console.log(handleClose);
 
   const schema = yup
     .object()

@@ -48,17 +48,17 @@ function PhoneNumberForm(props) {
       ...data,
       role: info.role,
     };
-    console.log(newData);
+    // console.log(newData);
     try {
       const response = await checkIfUserExist(newData);
-      console.log(response);
+      // console.log(response);
       setIsLoading(false);
       // console.log(newData);
       // console.log(response);
       // console.log(newData);
       props.formHandler.reset(newData);
       if (response.message === "COMPLETE") {
-        console.log(info);
+        // console.log(info);
         // handleOtp(data.telephoneNo);
         if (agentId) {
           props.handleNext(2);

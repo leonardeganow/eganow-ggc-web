@@ -44,7 +44,7 @@ function SelectAmount(props) {
       props.formHandler.setValue("type", info.type);
 
 
-    if (info.type === "card reprint") {
+    if (info.type === 2) {
       props.formHandler.setValue("amount", 50);
       setSelectedAmount(50);
     }
@@ -60,7 +60,7 @@ function SelectAmount(props) {
             <div key={amount} className="col-md-3 col-6">
               <button
                 disabled={
-                  info.type === "card reprint"
+                  info.type === 2
                 }
                 className="btn w-100 fw-bold btn-outline-success btn-md"
                 onClick={() => handleButtonClick(amount)}
@@ -77,7 +77,7 @@ function SelectAmount(props) {
             <div>
               <input
                 disabled={
-                  info.type === "card reprint"
+                  info.type === 2
                 }
                 {...props.formHandler.register("amount")}
                 className={`form-control h-full ${

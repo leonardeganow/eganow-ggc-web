@@ -1,5 +1,5 @@
-export const URL = "https://192.168.1.64:7252";
-// export const URL = "https://ndcggc.egadevapi.com"; //live
+// export const URL = "https://192.168.1.64:7252";
+export const URL = "https://ndcggc.egadevapi.com"; //live
 
 export const METADATA = {
   custkey: "keY-a6ee91c7-493a-4e0d-814d-06919674cea1-Ey",

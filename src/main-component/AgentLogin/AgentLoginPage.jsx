@@ -41,7 +41,6 @@ const AgentLoginPage = () => {
       }
     }
   };
-  console.log("test");
   return (
     <div
       style={{ height: "100vh", backgroundColor: "#006436" }}

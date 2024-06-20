@@ -217,7 +217,7 @@ export default function TransactionsModal({
     setIsLoading(true);
     try {
       const response = await loginMember(data);
-      console.log(response);
+      // console.log(response);
       if (response.message == "Success" && response.status == true) {
         // set showloging to false in other to display list of transactions
 

@@ -119,7 +119,7 @@ const agentId = localStorage.getItem("agentid")
             <div>
               <div className="d-flex justify-content-between align-items-center">
                 <p>Plan:</p>
-                <p className="fw-bold text-dark">{data.plan === 0 ? "upgrade": data.plan === 1 ? "monthly contribution" : data.plan === 2 ? "card reprint"  : info.type}</p>
+                <p className="fw-bold text-dark">{ info.type === 0 ? "upgrade": info.type === 1 ? "monthly contribution" : info.type === 2 ? "card reprint" : data.plan }</p>
               </div>
             </div>
           ) : (
