@@ -56,9 +56,9 @@ function AgentInfoCards() {
       };
       const response = await getTotalCommission(data);
       setIsLoading(false);
-      // console.log(response);
-      setTotalDonations(response?.totalamount);
-      setTotalCommission(response?.totalcommission);
+      console.log(response);
+      setTotalDonations(response?.totalamountggc);
+      setTotalCommission(response?.totalcommissionggc);
     } catch (error) {
       setIsLoading(false);
       console.error(error);
