@@ -27,8 +27,7 @@ function PhoneNumberForm(props) {
   const [showEnterPin, setShowEnterPin] = React.useState(false);
   // const [mobileNumber, setMobileNumber] = React.useState("");
 
-  const { checkIfUserExist, loginMember,  resetMemberPin } =
-    membersGRPC();
+  const { checkIfUserExist, loginMember, resetMemberPin } = membersGRPC();
   const { sendOtp, verifyOtp, sendEmailOtp } = otpGRPC();
   const { getOtherCountries } = customerSetupsGRPC();
 
@@ -38,11 +37,6 @@ function PhoneNumberForm(props) {
   const onSubmit = async () => {
     setIsLoading(true);
     const data = props.formHandler.getValues();
-    // const result = await props.formHandler.trigger("telephoneNo");
-    // // console.log(result);
-    // if (!result) {
-    //   return;
-    // }
 
     const newData = {
       ...data,
@@ -51,6 +45,7 @@ function PhoneNumberForm(props) {
     // console.log(newData);
     try {
       const response = await checkIfUserExist(newData);
+
       // console.log(response);
       setIsLoading(false);
       // console.log(newData);
@@ -87,13 +82,6 @@ function PhoneNumberForm(props) {
         props.formHandler.setValue("userStatus", response.message);
         props.formHandler.setValue("userCardType", response.cardtypeid);
 
-        // props.formHandler.setValue("telephoneNo", data.telephoneNo);
-        // setShowCountries(false);
-        // setShowEmail(false);
-
-        // setShowInput(false);
-        // setCondition(false);
-        // setShowEnterPin(false);
         props.handleNext(2);
       } else if (response.message === "DOES_NOT_EXIST" && data.email) {
         // console.log(newData.email);
@@ -111,11 +99,6 @@ function PhoneNumberForm(props) {
         setCondition(true);
         setShowCountries(false);
       }
-      // } else {
-      //   setShowInput(false);
-      //   setCondition(false);
-      //   setShowEnterPin(true);
-      // }
     } catch (error) {
       console.log("err", error instanceof RpcError);
       props.formHandler.reset(newData);
@@ -209,7 +192,7 @@ function PhoneNumberForm(props) {
       setIsLoading(true);
       const response = await verifyOtp(updatedData);
       setIsLoading(false);
-    
+
       if (response.status === false) {
         toast.warning(response.message);
       } else {
@@ -227,11 +210,7 @@ function PhoneNumberForm(props) {
   //login user function
   const handleLogin = async () => {
     const data = props.formHandler.getValues();
-    // const newData = {
-    //   ...data,
-    //   accountType: info.role,
-    // };
-    // console.log(newData);
+
     const result = await props.formHandler.trigger("pin");
     // console.log(result);
     if (!result) {
@@ -241,15 +220,18 @@ function PhoneNumberForm(props) {
       setIsLoading(true);
 
       const response = await loginMember(data);
-      console.log(response);
       setIsLoading(false);
       props.formHandler.setValue("userStatus", response.message);
       props.formHandler.setValue("baseCardId", response.cardtypeid);
       props.formHandler.setValue("fullName", response.fullname);
+      props.formHandler.setValue("cardRegDate", response.registrationdate);
+      console.log(props.formHandler.getValues("cardRegDate"));
       toast.success(response.message);
       props.formHandler.reset(data);
       if (response.message === "Success" && info.role === "GGC") {
         props.formHandler.setValue("fullName", response.fullname);
+        props.formHandler.setValue("cardRegDate", response.registrationdate);
+
         props.handleNext(2);
       } else if (response.message === "Success" && info.role === "JM") {
         props.formHandler.setValue("fullName", response.fullname);
@@ -303,22 +285,10 @@ function PhoneNumberForm(props) {
             <select
               {...props.formHandler.register("country")}
               className={`form-select p-3 `}
-              // onChange={() => {
-              //   // setShowCountries(false)
-              //   if (props.formHandler.getValues("country") === "GHA0233") {
-              //     setCondition(true);
-              //   }
-
-              //   // alert("hi");
-              // }}
             >
-              {/* <option value="default" selected>
-                Select your Country
-              </option> */}
               <option value="GH0233" selected>
                 Ghana
               </option>
-              {/* <option value="other">other</option> */}
 
               {country?.map((counti, i) => {
                 return (
@@ -331,15 +301,7 @@ function PhoneNumberForm(props) {
           </div>
         </div>
       )}
-      {/* {
-        showCountries === true ? "empty" : <div>
-          {
-            props.formHandler.getValues("country") != "GHA0233"?(<div>ghanan</div>):(<div>email</div>)
-          }
-        </div>
-      } */}
 
-      {/* {!showCountries && ( */}
       <div>
         {showInput && (
           <form>
@@ -354,13 +316,6 @@ function PhoneNumberForm(props) {
                 style={{ width: "100%", padding: "0px 0px" }}
                 className="w-md-75  px-md-5    "
               >
-                {/* <select
-                  style={{ height: "55px", width: "90px" }}
-                  className="form-select h-7  d-none"
-                  {...props.formHandler.register("countryCode")}
-                >
-                  <option value={233}>+233</option>
-                </select> */}
                 <div className=" w-100 w-md-50  ">
                   <input
                     // style={{ width: "100%" }}
@@ -395,16 +350,6 @@ function PhoneNumberForm(props) {
                     setShowInput(false);
                     setShowEnterPin(false);
                     setShowCountries(false);
-                    // } else {
-                    //   setPinReset(true);
-                    //   // props.formHandler.setValue("resetPin", "yes");
-                    //   setCondition(false);
-                    //   setResetPin(false);
-                    //   setResetEmailPin(true);
-                    //   setShowCountries(false);
-                    //   setShowInput(false);
-                    //   setShowEnterPin(false);
-                    // }
                   }}
                   href=""
                   style={{ fontSize: "12px" }}

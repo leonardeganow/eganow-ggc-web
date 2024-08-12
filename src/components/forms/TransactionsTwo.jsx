@@ -30,7 +30,12 @@ import TransactionAPI from "../../api/grpcapi/TransactionGRPC";
 import { FaWindowClose } from "react-icons/fa";
 import { jsPDF } from "jspdf";
 import useStore from "../../formstore/formStore";
-import { CARD_REPRINT, MONTHLY_SUBSCRIPTION, UPGRADE } from "../../utils/constants";
+import {
+  CARD_REPRINT,
+  MONTHLY_SUBSCRIPTION,
+  UPGRADE,
+} from "../../utils/constants";
+import { formatCardDate, formatNdcCardNumber } from "../../utils";
 
 const TransactionsTwo = (props) => {
   const { getTransactions, getTotalDonations, getCardPerTransaction } =
@@ -54,7 +59,6 @@ const TransactionsTwo = (props) => {
   const currentDate = new Date();
 
   const { updateRoleAndCardType } = useStore(); //zustand state to hanndle role annd card select
-
 
   // Get the last month's date
   const lastMonthDate = new Date();
@@ -314,6 +318,8 @@ const TransactionsTwo = (props) => {
     );
   };
 
+  console.log(props.formHandler.getValues("cardRegDate"));
+
   return (
     <div>
       <div
@@ -379,10 +385,11 @@ const TransactionsTwo = (props) => {
                 <p
                   style={{
                     position: "absolute",
-                    bottom: "15px",
-                    left: "35px",
+                    bottom: "16%",
+                    left: "11%",
                     color: "white",
-                    fontSize: "13px",
+                    fontSize: "0.5rem",
+                    letterSpacing: "1px",
                     color: `${
                       cardType === "AG050" || "AG011" || "AG006"
                         ? "white"
@@ -396,8 +403,8 @@ const TransactionsTwo = (props) => {
                 <p
                   style={{
                     position: "absolute",
-                    top: "40%",
-                    left: "35px",
+                    top: "50%",
+                    left: "11%",
                     color: "white",
                     // letterSpacing: "1px",
                     color: `${
@@ -405,19 +412,32 @@ const TransactionsTwo = (props) => {
                         ? "white"
                         : "black"
                     }`,
-                    fontSize: "14px",
+                    fontSize: "13px",
+                    fontWeight: "bolder",
+                    letterSpacing: "1px",
                   }}
                 >
-                  {props.formHandler.getValues("ndcCardNo")}
+                  {formatNdcCardNumber(
+                    props.formHandler.getValues("ndcCardNo")
+                  )}
                 </p>
-                {/* <img  src={arise} alt="" /> */}
-                {/* <Skeleton
-                          variant="rectangular"
-                          width={"100%"}
-                          height={150}
-                        >
-                          <Avatar src="" className="w-25" />
-                        </Skeleton> */}
+                <p
+                  style={{
+                    position: "absolute",
+                    bottom: "5%",
+                    left: "11%",
+                    color: `${
+                      cardType === "AG050" || "AG011" || "AG006"
+                        ? "white"
+                        : "black"
+                    }`,
+                    fontSize: "0.5rem",
+                    letterSpacing: "1px",
+                  }}
+                >
+                  REG. DATE:{" "}
+                  {formatCardDate(props.formHandler.getValues("cardRegDate"))}
+                </p>
               </div>
             </div>
 
@@ -492,7 +512,7 @@ const TransactionsTwo = (props) => {
                   props.formHandler.setValue("momoname", "");
                   props.formHandler.setValue("paymentMethodId", "");
                   // props.formHandler.setValue("type", "upgrade");
-                  updateRoleAndCardType("GGC", "", "", "", "",UPGRADE); //HARDCODING GGC
+                  updateRoleAndCardType("GGC", "", "", "", "", UPGRADE); //HARDCODING GGC
 
                   props.handleBack(4);
                 }}
@@ -508,7 +528,14 @@ const TransactionsTwo = (props) => {
                   props.formHandler.setValue("momoname", "");
                   props.formHandler.setValue("paymentMethodId", "");
                   // props.formHandler.setValue("type", "monthly contribution");
-                  updateRoleAndCardType("GGC", "", "", "", "",MONTHLY_SUBSCRIPTION); //HARDCODING GGC
+                  updateRoleAndCardType(
+                    "GGC",
+                    "",
+                    "",
+                    "",
+                    "",
+                    MONTHLY_SUBSCRIPTION
+                  ); //HARDCODING GGC
 
                   props.handleBack(4);
                 }}
@@ -524,7 +551,7 @@ const TransactionsTwo = (props) => {
                   props.formHandler.setValue("momoname", "");
                   props.formHandler.setValue("paymentMethodId", "");
                   // props.formHandler.setValue("type", "card reprint");
-                  updateRoleAndCardType("GGC", "", "", "", "",CARD_REPRINT); //HARDCODING GGC
+                  updateRoleAndCardType("GGC", "", "", "", "", CARD_REPRINT); //HARDCODING GGC
 
                   props.handleBack(4);
                 }}

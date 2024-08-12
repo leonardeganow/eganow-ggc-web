@@ -97,7 +97,7 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
     })
     .required();
 
-   const defaultValues = {
+  const defaultValues = {
     telephoneNo: "",
     otp: "",
     pin: "",
@@ -123,13 +123,11 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
     ageRange: "other",
     userCardType: "",
     paymentUrl: "",
+    cardRegDate: "",
     resetPin: "",
-    baseCardId:"",
-    type: ""
+    baseCardId: "",
+    type: "",
   };
-
-
-
 
   const formHandler = useForm({
     mode: "onChange",
@@ -238,7 +236,6 @@ function GgcRegisterModal({ open, handleClose, handleOpen, cardTypeValues }) {
           </div>
 
           {renderForm()}
-       
         </div>
       </Modal>
     </div>

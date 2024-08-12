@@ -30,8 +30,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TransactionAPI from "../../api/grpcapi/TransactionGRPC";
-// import { Avatar, Box, Skeleton } from "@mui/material";
-// import { IoSearchCircleSharp } from "react-icons/io5";
+
 import { FaWindowClose } from "react-icons/fa";
 
 import TopUpModal from "../modals/TopUpModal";
@@ -41,18 +40,7 @@ import {
   MONTHLY_SUBSCRIPTION,
   UPGRADE,
 } from "../../utils/constants";
-
-// todo testing agent apis
-// import agentAPI from "../../api/grpcapi/AgentGRPC";
-
-// const {loginAgent,changeAgentPin,getMemberTransactions,getTotalDonation,getMemberCreateByAgent} = agentAPI()
-
-// async function agent(){
-//   const login = await loginAgent({Number : "0558628473",Pin : "1350"})
-//   console.log("agent" , login)
-// }
-
-// agent()
+import { formatCardDate, formatNdcCardNumber } from "../../utils";
 
 export default function TransactionsModal({
   open,
@@ -70,6 +58,7 @@ export default function TransactionsModal({
   // const [type, setType] = useState(null);
   const [cardType, setCardType] = useState(null); //state to manage card type
   const [cardNo, setCardNo] = useState(false);
+  const [cardRegDate, setCardRegDate] = useState();
   const [transactions, setTransaction] = useState([]); //transaction data
   // const { showReset, setShowReset } = useState(false);
   const [showTable, setShowTable] = useState(false);
@@ -223,7 +212,8 @@ export default function TransactionsModal({
 
         //set card type to from backend
         setCardType(response.cardtypeid);
-
+        console.log(response);
+        setCardRegDate(response.registrationdate);
         // setShowLogin(false);
         setLoginState(false);
         setIsLoading(false);
@@ -555,15 +545,15 @@ export default function TransactionsModal({
                         <p
                           style={{
                             position: "absolute",
-                            bottom: "15%",
-                            left: "10%",
+                            bottom: "22%",
+                            left: "15%",
                             color: `${
                               cardType === "AG050" || "AG011" || "AG006"
                                 ? "white"
                                 : "black"
                             }`,
                             fontSize: "0.6rem",
-                            fontWeight: "bold",
+                            letterSpacing: "1px",
 
                             // color: "darkgray",
                           }}
@@ -574,27 +564,36 @@ export default function TransactionsModal({
                           style={{
                             position: "absolute",
                             top: "50%",
-                            left: "10%",
+                            left: "15%",
                             color: `${
                               cardType === "AG050" || "AG011" || "AG006"
                                 ? "white"
                                 : "black"
                             }`,
-                            letterSpacing: "2px",
-                            // color: "darkgray",
-                            fontWeight: "bold",
+                            fontSize: "13px",
+                            fontWeight: "bolder",
+                            letterSpacing: "1px",
                           }}
                         >
-                          {cardNo}
+                          {formatNdcCardNumber(cardNo)}
                         </p>
-                        {/* <img  src={arise} alt="" /> */}
-                        {/* <Skeleton
-                          variant="rectangular"
-                          width={"100%"}
-                          height={150}
+
+                        <p
+                          style={{
+                            position: "absolute",
+                            bottom: "13%",
+                            left: "15%",
+                            color: `${
+                              cardType === "AG050" || "AG011" || "AG006"
+                                ? "white"
+                                : "black"
+                            }`,
+                            fontSize: "0.6rem",
+                            letterSpacing: "1px",
+                          }}
                         >
-                          <Avatar src="" className="w-25" />
-                        </Skeleton> */}
+                          REG. DATE: {formatCardDate(cardRegDate)}
+                        </p>
                       </div>
                     </div>
 

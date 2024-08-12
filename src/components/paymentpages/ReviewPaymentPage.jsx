@@ -19,7 +19,7 @@ const ReviewPaymentPage = (props) => {
   };
   const data = props.formHandler.getValues();
   // console.log(data);
-const agentId = localStorage.getItem("agentid")
+  const agentId = localStorage.getItem("agentid");
   //initiate payment
   const completePayment = async () => {
     // props.handleNext(1);
@@ -32,7 +32,7 @@ const agentId = localStorage.getItem("agentid")
           : data.momoname
       } has paid GHS${data.amount}`,
       agentId: agentId,
-      transType:"GGC",
+      transType: "GGC",
     };
     // console.log(newData);
 
@@ -51,7 +51,6 @@ const agentId = localStorage.getItem("agentid")
       setIsLoading(false);
       console.log(error);
       toast.error("network error");
-
     }
   };
 
@@ -119,7 +118,15 @@ const agentId = localStorage.getItem("agentid")
             <div>
               <div className="d-flex justify-content-between align-items-center">
                 <p>Plan:</p>
-                <p className="fw-bold text-dark">{ info.type === 0 ? "upgrade": info.type === 1 ? "monthly contribution" : info.type === 2 ? "card reprint" : data.plan }</p>
+                <p className="fw-bold text-dark">
+                  {info.type === 0
+                    ? "upgrade"
+                    : info.type === 1
+                    ? "monthly contribution"
+                    : info.type === 2
+                    ? "card reprint"
+                    : data.plan}
+                </p>
               </div>
             </div>
           ) : (
