@@ -18,6 +18,8 @@ import "jspdf-autotable";
 import html2canvas from "html2canvas";
 import { IoIosRefresh } from "react-icons/io";
 
+import { QRCode } from "react-qrcode-logo";
+
 // MATERIAL UI FOR TABLE
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -318,8 +320,6 @@ const TransactionsTwo = (props) => {
     );
   };
 
-  console.log(props.formHandler.getValues("cardRegDate"));
-
   return (
     <div>
       <div
@@ -348,8 +348,6 @@ const TransactionsTwo = (props) => {
               <IoIosRefresh />
               Refresh
             </button>
-
-            <div></div>
           </div>
           <div className="row">
             <h6 className="text-center">Donated Amount</h6>
@@ -382,6 +380,18 @@ const TransactionsTwo = (props) => {
                 }}
                 className="rounded"
               >
+                <QRCode
+                  style={{
+                    position: "absolute",
+                    transform: "scale(0.20)",
+                    right: "50%",
+                    bottom: "7%",
+                    // bottom: "16%",
+                    // left: "11%",
+                  }}
+                  value={props.formHandler.getValues("ndcCardNo")}
+                />
+
                 <p
                   style={{
                     position: "absolute",

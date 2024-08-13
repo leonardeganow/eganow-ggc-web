@@ -41,6 +41,7 @@ import {
   UPGRADE,
 } from "../../utils/constants";
 import { formatCardDate, formatNdcCardNumber } from "../../utils";
+import { QRCode } from "react-qrcode-logo";
 
 export default function TransactionsModal({
   open,
@@ -542,6 +543,17 @@ export default function TransactionsModal({
                         }}
                         className="text-uppercase "
                       >
+                        <QRCode
+                          style={{
+                            position: "absolute",
+                            transform: "scale(0.20)",
+                            right: "56%",
+                            bottom: "20%",
+                            // bottom: "16%",
+                            // left: "11%",
+                          }}
+                          value={cardNo}
+                        />
                         <p
                           style={{
                             position: "absolute",
